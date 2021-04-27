@@ -1,0 +1,1 @@
+server 'apps.varland.com', user: 'varland', roles: %w{app db web}

@@ -1,0 +1,99 @@
+@import "bootstrap";
+@import '@fortawesome/fontawesome-free';
+
+/* Import Varland utilities. */
+@import "utilities/variables.scss",
+        "utilities/functions.scss",
+        "utilities/fonts.scss",
+        "utilities/size.scss",
+        "utilities/typography.scss";
+
+/* Application variables. */
+$top-nav-height: 4rem;
+
+/* Base style overrides. */
+html { overflow: auto; height: 100%; }
+body {
+  @extend .pb-3;
+  height: 100%;
+  overflow: auto;
+  padding-top: $top-nav-height;
+}
+h1 {
+  line-height: 1;
+  margin: 0;
+}
+
+/* Primary navigation. */
+
+#primary-nav {
+  .navbar-logo {
+    height: 3rem;
+    margin-right: 1rem;
+  }
+  .nav-link,
+  .navbar-text {
+    color: #fff !important;
+    font-family: GothamCondensed-Bold, sans-serif;
+    font-size: 1.7rem;
+    padding-bottom: 0.15rem;
+    padding-top: 0.15rem;
+    text-transform: uppercase;
+    .badge {
+      font-size: 1rem;
+      margin-left: 0.5rem;
+    }
+    &:hover, &:active {
+      i, svg {
+        color: $color-varland-red !important
+      }
+      .label {
+        text-decoration: underline;
+        text-decoration-color: $color-varland-red;
+        text-decoration-thickness: 0.15em;
+      }
+    }
+    i, svg {
+      margin-right: 0.25em;
+    }
+  }
+  .navbar-text {
+    cursor: default;
+    i, svg {
+      color: $color-varland-red !important
+    }
+    .label {
+      text-decoration: underline;
+      text-decoration-color: $color-varland-red;
+      text-decoration-thickness: 0.15em;
+    }
+  }
+}
+
+/* Flash messages. */
+
+.flash-message {
+  align-items: center;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  margin-top: 1rem;
+  .icon {
+    background-color: #fff;
+    font-size: 2rem;
+    margin-right: 1rem;
+    padding: 0.25rem 0.5rem;
+  }
+  .message {
+    font-size: 0.9rem;
+    font-weight: 700;
+    text-transform: uppercase;
+  }
+}
+
+/* Buttons. */
+
+.btn {
+  font-weight: 700;
+  text-transform: uppercase;
+}

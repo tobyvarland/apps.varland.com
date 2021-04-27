@@ -1,0 +1,36 @@
+ruby:
+  title_parts = [content_for(:title)]
+  unless title_parts[-1] == "Varland Plating"
+    title_parts << "Varland Plating"
+  end
+
+doctype html
+html lang="en"
+
+  head
+
+    title = title_parts.compact.join(' - ')
+
+    = csrf_meta_tags
+    = csp_meta_tag
+    meta charset="utf-8"
+    meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no, viewport-fit=cover"
+    meta name="apple-mobile-web-app-capable" content="yes"
+    meta name="apple-mobile-web-app-status-bar-style" content="black"
+    meta name="apple-mobile-web-app-title" content="Varland Plating"
+
+    = stylesheet_pack_tag('application', media: 'all', 'data-turbolinks-track': 'reload')
+    = javascript_pack_tag('application', 'data-turbolinks-track': 'reload')
+
+    = favicon_link_tag asset_path('icon.png')
+    = favicon_link_tag asset_path('web-app-icon.png'), rel: 'apple-touch-icon', type: 'image/png'
+
+  body
+  
+    = render 'shared/nav'
+
+    .container-fluid
+
+      = render 'shared/flash'
+
+      == yield

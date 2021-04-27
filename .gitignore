@@ -34,3 +34,10 @@
 /yarn-error.log
 yarn-debug.log*
 .yarn-integrity
+
+.DS_Store
+._.DS_Store
+**/.DS_Store
+**/._.DS_Store
+
+.rbenv-vars

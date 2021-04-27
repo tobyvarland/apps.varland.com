@@ -1,0 +1,40 @@
+.text-uncolor {
+  color: $color-uncolor !important;
+}
+
+.text-varland-red,
+.text-vp-red {
+  color: $color-varland-red !important;
+}
+
+.text-inherit {
+  color: inherit !important;
+  text-decoration: inherit !important;
+}
+
+.font-varland,
+.font-vp,
+.font-brand {
+  font-family: GothamCondensed-Bold, sans-serif;
+  font-weight: normal;
+  line-height: 1;
+  text-transform: uppercase;
+}
+
+.font-default {
+  font-family: $font-default;
+}
+
+@each $key, $value in $grid-breakpoints {
+  @if $key == xs {
+    @each $weight in $weights {
+      .fw-#{$weight} { font-weight: #{$weight} !important; }
+    }
+  } @else {
+    @media (min-width: breakpoint($key)) {
+      @each $weight in $weights {
+        .fw-#{$key}-#{$weight} { font-weight: #{$weight} !important; }
+      }
+    }
+  }
+}
