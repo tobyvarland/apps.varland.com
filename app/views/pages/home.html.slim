@@ -32,6 +32,14 @@
       .icon = fa "link"
       .label
         span Prop 65 Customer:
-      input type="text" name="customer" maxlength="6" pattern="[A-Z]{1,6}" placeholder="Cust Code (All Caps)"
+      input type="text" name="customer" maxlength="6" pattern="[A-Z]{1,6}" placeholder="Customer Code ⏎"
       button.d-none type="submit"
         = fa "arrow-alt-circle-right"
+
+javascript:
+  $(function() {
+    $('input[name="customer"]').on("keyup", function() {
+      $this = $(this);
+      $this.val($this.val().toUpperCase());
+    });
+  });
