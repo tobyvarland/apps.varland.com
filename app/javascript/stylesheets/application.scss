@@ -73,20 +73,39 @@ h1 {
 /* Flash messages. */
 
 .flash-message {
-  align-items: center;
+  align-items: stretch;
   display: flex;
   flex-direction: row;
   justify-content: flex-start;
   margin-top: 1rem;
   .icon {
-    background-color: #fff;
-    font-size: 2rem;
-    margin-right: 1rem;
-    padding: 0.25rem 0.5rem;
+    @extend .rounded-start;
+    align-items: center;
+    color: #fff;
+    display: flex;
+    flex-direction: row;
+    font-size: 1.5rem;
+    justify-content: center;
+    margin: 0 1rem 0 0;
+    &.flash-notice {
+      @extend .bg-info;
+    }
+    &.flash-alert {
+      @extend .bg-danger;
+    }
+    i, svg {
+      display: block;
+      margin: 0.5rem;
+    }
   }
   .message {
+    align-items: center;
+    display: flex;
+    flex-direction: row;
     font-size: 0.9rem;
     font-weight: 700;
+    justify-content: flex-start;
+    margin: 0.5rem 1rem 0.5rem 0;
     text-transform: uppercase;
   }
 }
@@ -96,4 +115,45 @@ h1 {
 .btn {
   font-weight: 700;
   text-transform: uppercase;
+}
+
+/* Home page links. */
+
+.home-page-link {
+  @extend .bg-primary;
+  @extend .lh-1;
+  @extend .mt-3;
+  @extend .rounded-pill;
+  align-items: stretch;
+  color: #fff;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  text-decoration: none;
+  text-transform: uppercase;
+  &:hover, &:active {
+    background-color: darken($bg-primary, 10%) !important;
+    color: #fff;
+  }
+  .text {
+    align-items: center;
+    display: flex;
+    flex-direction: row;
+    font-family: GothamCondensed-Bold, sans-serif;
+    font-size: 2rem;
+    justify-content: flex-start;
+    margin: 1rem 1rem 1rem 0;
+  }
+  .icon {
+    align-items: center;
+    display: flex;
+    flex-direction: row;
+    font-size: 1.5rem;
+    justify-content: center;
+    margin: 0;
+    i, svg {
+      display: block;
+      margin: 1rem;
+    }
+  }
 }
