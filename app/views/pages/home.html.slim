@@ -25,3 +25,13 @@
   = home_page_link("link", "Timeclock", "http://timeclock.varland.com")
   = home_page_link("link", "Training Quizzes", "http://192.168.82.141/quizzes/")
   = home_page_link("link", "Vacation Calendars", "http://www.fastmail.com/calendar", tooltip: "Username: <code>vms@fastmail.com</code>, Password: <code>plantplant</code>")
+  = home_page_link("link", "Vat History Notes", "http://vms.varland.com/materials/vat_history_notes")
+.row
+  .col-12.col-md-6
+    form.home-page-form method="get" action="http://vms.varland.com/queries/prop65" target="_blank"
+      .icon = fa "link"
+      .label
+        span Prop 65 Customer:
+      input type="text" name="customer" maxlength="6" pattern="[A-Z]{1,6}"
+      button.d-none type="submit"
+        = fa "arrow-alt-circle-right"

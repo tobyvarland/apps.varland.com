@@ -119,6 +119,62 @@ h1 {
 
 /* Home page links. */
 
+.home-page-form {
+  @extend .bg-danger;
+  @extend .mt-3;
+  @extend .rounded-pill;
+  align-items: stretch;
+  color: #fff;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  .label {
+    @extend .lh-1;
+    align-items: center;
+    display: flex;
+    flex-direction: row;
+    font-family: GothamCondensed-Bold, sans-serif;
+    font-size: 1.7rem;
+    justify-content: center;
+    margin: 0.5rem 0.5rem 0.5rem 0;
+    text-transform: uppercase;
+  }
+  input {
+    @extend .flex-fill;
+    @extend .rounded-pill;
+    background: #fff !important;
+    border: none !important;
+    font-size: 1.5rem;
+    margin: 0.5rem 0.5rem 0.5rem 0;
+    outline: none !important;
+    padding: 0.25rem 0.5rem;
+    text-align: center;
+  }
+  button {
+    background: none !important;
+    border: none !important;
+    color: #fff;
+    font-size: 1.5rem;
+    margin: 0;
+    i, svg {
+      display: block;
+      margin: 1rem;
+    }
+  }
+  .icon {
+    align-items: center;
+    display: flex;
+    flex-direction: row;
+    font-size: 1.5rem;
+    justify-content: center;
+    margin: 0;
+    i, svg {
+      display: block;
+      margin: 1rem;
+    }
+  }
+}
+
 .home-page-link {
   @extend .bg-primary;
   @extend .lh-1;
