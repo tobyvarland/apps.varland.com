@@ -26,6 +26,63 @@ h1 {
 
 /* Primary navigation. */
 
+#app-nav {
+  .offcanvas-header {
+    @extend .lh-1;
+    align-items: center !important;
+    display: flex !important;
+    flex-direction: row !important;
+    justify-content: space-between !important;
+    .title {
+      font-family: GothamCondensed-Bold, sans-serif;
+      font-size: 1.7rem;
+      text-transform: uppercase;
+    }
+    button {
+      @extend .bg-danger;
+      @extend .rounded;
+      @extend .text-white;
+      border: none !important;
+      outline: none !important;
+      padding: 0.5rem;
+    }
+  }
+  .offcanvas-body {
+    ul {
+      @extend .mb-3;
+    }
+    li {
+      @extend .lh-1;
+    }
+    .header {
+      @extend .fs-5;
+      @extend .fw-200;
+      @extend .mb-2;
+    }
+    li + .header {
+      @extend .mt-2;
+    }
+    a {
+      align-items: center;
+      color: #fff;
+      display: flex;
+      flex-direction: row;
+      font-weight: 700;
+      justify-content: start;
+      padding: 0.5rem 0;
+      text-decoration: none;
+      text-transform: uppercase;
+      i, svg {
+        margin-right: 0.5rem;
+      }
+      &:hover, &:active {
+        background: lighten($bg-dark, 10%) !important;
+        padding-left: 0.5rem;
+      }
+    }
+  }
+}
+
 #primary-nav {
   .navbar-logo {
     height: 3rem;
