@@ -1,0 +1,6 @@
+/* Default header and cell styling. */
+
+th, td {
+  @extend .align-middle;
+  @extend .text-nowrap;
+}

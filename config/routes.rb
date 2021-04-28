@@ -1,5 +1,8 @@
 Rails.application.routes.draw do
 
+  # Resource routing.
+  resources :permissions, only: [:index, :update]
+
   # Devise routes for Google authentication.
   devise_for :users, controllers: { omniauth_callbacks: 'users/omniauth_callbacks' }
   devise_scope :user do

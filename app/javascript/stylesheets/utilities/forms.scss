@@ -1,0 +1,22 @@
+/* Form utility classes. */
+
+.check-centered {
+  @extend .text-center;
+  align-items: center;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  .form-check {
+    @extend .text-center;
+    @extend .p-0;
+    @extend .m-0;
+    align-items: center;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    .form-check-input {
+      float: none !important;
+      margin: 0 auto !important;
+    }
+  }
+}

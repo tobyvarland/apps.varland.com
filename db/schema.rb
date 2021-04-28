@@ -10,7 +10,16 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_04_27_000250) do
+ActiveRecord::Schema.define(version: 2021_04_28_204621) do
+
+  create_table "permissions", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.boolean "super_admin", default: false, null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["user_id"], name: "index_permissions_on_user_id"
+    t.index ["user_id"], name: "unique_permissions_user", unique: true
+  end
 
   create_table "users", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "email", null: false
@@ -28,9 +37,7 @@ ActiveRecord::Schema.define(version: 2021_04_27_000250) do
     t.datetime "discarded_at"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.index ["discarded_at"], name: "index_users_on_discarded_at"
-    t.index ["email"], name: "index_users_on_email", unique: true
-    t.index ["employee_number"], name: "index_users_on_employee_number", unique: true
   end
 
+  add_foreign_key "permissions", "users"
 end

@@ -9,6 +9,9 @@ class User < ApplicationRecord
   # Soft deletes.
   include Discard::Model
 
+  # Associations.
+  has_one   :permission
+
   # Scopes.
   scope :by_number, -> { order(:employee_number) }
         
@@ -22,7 +25,22 @@ class User < ApplicationRecord
   validates :employee_number,
             numericality: { only_integer: true, greater_than: 0 }
 
+  # Callbacks.
+  after_create  :create_permissions_if_not_exist
+
   # Instance methods.
+
+  # Method to be run after user logs in.
+  def after_login
+    self.create_permissions_if_not_exist
+    self.update_fields_from_system_i
+  end
+
+  # Creates user permission record if does not exist.
+  def create_permissions_if_not_exist
+    return if self.permission.present?
+    Permission.create(user_id: self.id)
+  end
 
   # Updates user fields from System i.
   def update_fields_from_system_i

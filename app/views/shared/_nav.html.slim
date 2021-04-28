@@ -22,14 +22,13 @@ nav.navbar.fixed-top.navbar-expand-md.navbar-dark.bg-dark id="primary-nav"
     .title Applications
     button type="button" = fa "times-circle"
   .offcanvas-body.py-0
-    /!
-      ul.list-unstyled
-        li.header H/R
-        - if policy(:home).employee_notes?
-          li
-            a href="http://vcms.varland.com/employee_notes?filterrific%5Breset_filterrific%5D=true"
-              = fa "link"
-              div Employee Notes
+    ul.list-unstyled
+      li.header Administration
+      - if policy(Permission).index?
+        li
+          = link_to permissions_url do
+            = fa "link"
+            div Manage Permissions
 
 javascript:
   $(function() {

@@ -41,6 +41,7 @@ gem 'discard', '~> 1.2'
 gem 'simple_form'
 gem 'friendly_id', '~> 5.4.0'
 gem 'chartkick'
+gem 'draper'
 
 gem 'capistrano', '~> 3.11'
 gem 'capistrano-rails', '~> 1.4'

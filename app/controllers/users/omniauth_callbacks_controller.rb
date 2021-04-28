@@ -5,7 +5,7 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
   def google_oauth2
     user = User.from_google(from_google_params)
     if user.present?
-      user.update_fields_from_system_i
+      user.after_login
       remember_me(user)
       sign_out_all_scopes
       sign_in_and_redirect user, event: :authentication

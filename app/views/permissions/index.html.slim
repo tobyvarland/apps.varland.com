@@ -1,0 +1,17 @@
+ruby:
+  provide(:title, 'Permission Management')
+
+h1.font-varland.mt-3 Permission Management
+
+.table-responsive.my-3
+  table.table.table-striped.table-hover
+    thead.table-dark
+      th Employee
+      th.w-1.text-center Super Admin?
+    tbody
+      - @permissions.each do |permission|
+        tr
+          td = permission.user.name_and_number
+          td.text-center
+            = simple_form_for(permission) do |f|
+              = f.input :super_admin, label: false, wrapper_html: { class: 'check-centered' }, input_html: { onchange: "this.form.submit();" }

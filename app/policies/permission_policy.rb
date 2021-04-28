@@ -1,0 +1,3 @@
+class PermissionPolicy < ApplicationPolicy
+  
+end
