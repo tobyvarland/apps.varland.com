@@ -8,7 +8,8 @@
   = home_page_link("link", "Days Turn", "http://daysturn.varland.com")
   = home_page_link("link", "Departmental Information", "https://drive.google.com/drive/u/0/folders/0ADakPLFe9iZlUk9PVA")
   = home_page_link("link", "DMRs", "http://dmr.varland.com")
-  = home_page_link("link", "Employee Notes", "http://vcms.varland.com/employee_notes?filterrific%5Breset_filterrific%5D=true")
+  - if policy(:home).employee_notes?
+    = home_page_link("link", "Employee Notes", "http://vcms.varland.com/employee_notes?filterrific%5Breset_filterrific%5D=true")
   = home_page_link("link", "IAO Bakesheets", "http://opto.varland.com/inert/bakesheets")
   = home_page_link("link", "Jobs on Receipt", "http://vms.varland.com/queries/receipts")
   = home_page_link("link", "Maintenance Work Orders", "http://maintenance.varland.com")
