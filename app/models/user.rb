@@ -11,6 +11,8 @@ class User < ApplicationRecord
 
   # Associations.
   has_one   :permission
+  has_many  :reviews
+  has_many  :comments
 
   # Scopes.
   scope :by_number, -> { order(:employee_number) }
