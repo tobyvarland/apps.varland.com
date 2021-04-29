@@ -1,0 +1,31 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  part: one
+  number: 1
+  purchase_order: MyString
+  containers: 1
+  container_type: MyString
+  received_on: 2021-04-29
+  written_up_on: 2021-04-29
+  promised_on: 2021-04-29
+  pounds: 1.5
+  pieces: 1
+  status: MyString
+  inspected_on: 2021-04-29
+  inspected_by: MyString
+
+two:
+  part: two
+  number: 1
+  purchase_order: MyString
+  containers: 1
+  container_type: MyString
+  received_on: 2021-04-29
+  written_up_on: 2021-04-29
+  promised_on: 2021-04-29
+  pounds: 1.5
+  pieces: 1
+  status: MyString
+  inspected_on: 2021-04-29
+  inspected_by: MyString

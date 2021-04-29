@@ -57,7 +57,7 @@ class User < ApplicationRecord
   # Method to create from Google authentication.
   def self.from_google(email:, name:, uid:)
     system_i = self.system_i_json(email)
-    return nil if system_i.blank? || !system_i[:is_valid]
+    return nil if system_i.blank? || !system_i[:valid]
     user_attributes = {
       uid: uid,
       name: name,
@@ -69,7 +69,7 @@ class User < ApplicationRecord
 
   # Method to lookup user information from System i.
   def self.system_i_json(email)
-    uri = URI.parse("http://json400.varland.com/validate_employee?email=#{email}")
+    uri = URI.parse("http://vcmsapi.varland.com/employee?email=#{email}")
     http = Net::HTTP.new(uri.host, uri.port)
     request = Net::HTTP::Get.new(uri.request_uri)
     response = http.request(request)

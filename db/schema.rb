@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_04_29_160807) do
+ActiveRecord::Schema.define(version: 2021_04_29_214039) do
 
   create_table "active_storage_attachments", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "name", null: false
@@ -38,6 +38,52 @@ ActiveRecord::Schema.define(version: 2021_04_29_160807) do
     t.bigint "blob_id", null: false
     t.string "variation_digest", null: false
     t.index ["blob_id", "variation_digest"], name: "index_active_storage_variant_records_uniqueness", unique: true
+  end
+
+  create_table "as400_customers", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.string "code", limit: 6, null: false
+    t.string "name", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["code"], name: "index_as400_customers_on_code", unique: true
+  end
+
+  create_table "as400_parts", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.bigint "customer_id", null: false
+    t.string "process", limit: 3, null: false
+    t.string "part", limit: 17, null: false
+    t.string "sub", limit: 1
+    t.integer "control_number", null: false
+    t.string "name", null: false
+    t.string "process_spec", null: false
+    t.string "description", null: false
+    t.float "square_feet", null: false
+    t.float "piece_weight", null: false
+    t.float "pounds_per_cubic", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["customer_id", "process", "part", "sub"], name: "unique_part_spec", unique: true
+    t.index ["customer_id"], name: "index_as400_parts_on_customer_id"
+  end
+
+  create_table "as400_shop_orders", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.bigint "part_id", null: false
+    t.integer "number", null: false
+    t.string "purchase_order"
+    t.integer "containers", null: false
+    t.string "container_type", null: false
+    t.date "received_on", null: false
+    t.date "written_up_on", null: false
+    t.date "promised_on"
+    t.float "pounds", null: false
+    t.integer "pieces", null: false
+    t.string "status"
+    t.date "inspected_on"
+    t.string "inspected_by"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["number"], name: "unique_shop_order", unique: true
+    t.index ["part_id"], name: "index_as400_shop_orders_on_part_id"
   end
 
   create_table "attachments", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
@@ -102,6 +148,8 @@ ActiveRecord::Schema.define(version: 2021_04_29_160807) do
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "as400_parts", "as400_customers", column: "customer_id"
+  add_foreign_key "as400_shop_orders", "as400_parts", column: "part_id"
   add_foreign_key "comments", "users"
   add_foreign_key "permissions", "users"
   add_foreign_key "reviews", "users"

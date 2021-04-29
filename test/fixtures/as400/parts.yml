@@ -1,0 +1,27 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  customer: one
+  process: MyString
+  part: MyString
+  sub: MyString
+  control_number: 1
+  name: MyString
+  process_spec: MyString
+  description: MyString
+  square_feet: 1.5
+  piece_weight: 1.5
+  pounds_per_cubic: 1.5
+
+two:
+  customer: two
+  process: MyString
+  part: MyString
+  sub: MyString
+  control_number: 1
+  name: MyString
+  process_spec: MyString
+  description: MyString
+  square_feet: 1.5
+  piece_weight: 1.5
+  pounds_per_cubic: 1.5
