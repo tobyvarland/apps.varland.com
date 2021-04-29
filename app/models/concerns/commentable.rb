@@ -4,10 +4,11 @@ module Commentable
 
   included do
     has_many  :comments,
-              as: :commentable
+              as: :commentable,
+              class_name: "::Comment"
     has_many  :comment_attachments,
               through: :comments,
-              class_name: "Attachment",
+              class_name: "::Attachment",
               source: :attachments
   end
 

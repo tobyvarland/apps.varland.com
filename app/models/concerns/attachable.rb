@@ -4,7 +4,8 @@ module Attachable
 
   included do
     has_many  :attachments,
-              as: :attachable
+              as: :attachable,
+              class_name: "::Attachment"
   end
 
 end

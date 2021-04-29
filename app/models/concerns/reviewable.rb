@@ -4,7 +4,8 @@ module Reviewable
 
   included do
     has_many  :reviews,
-              as: :reviewable
+              as: :reviewable,
+              class_name: "::Review"
   end
 
 end
