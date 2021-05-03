@@ -6,8 +6,6 @@ Rails.application.routes.draw do
   resources :attachments
   resources :comments
   namespace :as400 do
-    resources :customers
-    resources :parts
     resources :shop_orders
   end
 

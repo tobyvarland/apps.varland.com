@@ -2,12 +2,13 @@ class As400::ShopOrder < ApplicationRecord
 
   # Serialization.
   serialize :purchase_order
-
-  # Associations.
-  belongs_to  :part
+  serialize :customer_name
+  serialize :part_name
+  serialize :part_description
+  serialize :process_spec
 
   # Validations.
-  validates :number, :containers, :container_type, :received_on, :written_up_on, :pounds, :pieces,
+  validates :customer_code, :process_code, :part, :number, :customer_name, :part_name, :part_description, :process_spec, :received_on, :written_up_on, :pounds, :pieces,
             presence: true
 
   # Class methods.
@@ -17,19 +18,21 @@ class As400::ShopOrder < ApplicationRecord
     as400 = self.as400_json(number)
     return nil if as400.blank? || !as400[:valid]
     attributes = {
+      customer_code: as400[:customer],
+      process_code: as400[:process],
+      part: as400[:part],
+      sub: as400[:sub],
+      customer_name: as400[:customer_name],
+      part_name: as400[:part_name],
+      part_description: as400[:part_description],
+      process_spec: as400[:process_spec],
       purchase_order: as400[:purchase_order],
-      containers: as400[:containers],
-      container_type: as400[:container_type],
       received_on: as400[:received_on],
       written_up_on: as400[:written_up_on],
-      promised_on: as400[:promised_on],
       pounds: as400[:pounds],
-      pieces: as400[:pieces],
-      status: as400[:status],
-      inspected_on: as400[:inspected_on],
-      inspected_by: as400[:inspected_by]
+      pieces: as400[:pieces]
     }
-    create_with(attributes).find_or_create_by!(part: As400::Part.from_as400(as400[:customer], as400[:process], as400[:part], as400[:sub]), number: number)
+    create_with(attributes).find_or_create_by!(number: number)
   end
 
   # Method to lookup from AS400.
