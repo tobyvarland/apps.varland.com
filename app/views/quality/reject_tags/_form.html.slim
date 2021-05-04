@@ -102,13 +102,13 @@ javascript:
         });
 
         // Load reject tag number.
-        var url = "http://localhost:3000/quality/reject_tags/tag_number_for/" + shopOrder;
+        var url = "/quality/reject_tags/tag_number_for/" + shopOrder;
         $.ajax(url).done(function(data) {
           $("#quality_reject_tag_number").val(data);
         });
 
         // Load source options.
-        var url = "http://localhost:3000/quality/reject_tags/sources_for/" + shopOrder;
+        var url = "/quality/reject_tags/sources_for/" + shopOrder;
         $.ajax(url).done(function(data) {
           var dropdown = $("#quality_reject_tag_source_id");
           dropdown.html("");
