@@ -1,0 +1,135 @@
+= simple_form_for(@reject_tag, html: {class: ["vp-gray-form", "my-3"]}) do |f|
+
+  = f.error_notification
+  = f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present?
+
+  .row
+    .col-12.col-md-3.mt-3
+      = f.input :shop_order_number, required: true, label: "Shop Order:", autofocus: true
+    .col-12.col-md-3.mt-3
+      = f.input :number, required: true, label: "Reject Tag #:", readonly: true, input_html: { tabindex: -1 }
+    .col-12.col-md-3.mt-3
+      = f.input :source_id, required: true, label: "Source:", collection: Quality::RejectTag.source_options_for_tag(@reject_tag), input_html: { class: "form-select" }
+    .col-12.col-md-3.mt-3
+      = f.input :rejected_on, required: true, label: "Date:", as: :date, html5: true, input_html: { style: "margin: 0 !important;" }
+    .col-12.mt-3.d-none id="as400_info"
+      .shadow-sm.border.p-3.rounded
+        .fw-700.text-uncolor Order Info Pulled from System i
+        .d-flex.flex-col.flex-md-row.align-items-top.justify-content-between
+          .mt-3
+            .small Customer Code:
+            .fw-700 id="as400_customer_code"
+          .mt-3
+            .small Process Code:
+            .fw-700 id="as400_process_code"
+          .mt-3
+            .small Part ID:
+            .fw-700 id="as400_part_id"
+          .mt-3
+            .small Sub ID:
+            .fw-700 id="as400_sub_id"
+          .mt-3
+            .small Part Name:
+            .fw-700 id="as400_part_name"
+          .mt-3
+            .small Part Description:
+            .fw-700 id="as400_part_description"
+    .col-12.col-md-3.mt-3
+      = f.association :user, as: :hidden
+      = f.input :user_name, required: true, label: "Rejected By:", disabled: true, input_html: { tabindex: -1 }
+    .col-12.col-md-3.mt-3
+      = f.input :loads_rejected, required: true, label: "Loads Rejected:"
+    .col-12.col-md-3.mt-3
+      = f.input :pounds, required: true, label: "Pounds Rejected:", hint: "This is the total weight of all loads rejected, not the weight of a single load.", input_html: { max: @reject_tag.shop_order.present? ? @reject_tag.shop_order.pounds : "" }
+    .col-12.col-md-3.mt-3
+      = f.input :department, required: true, label: "Department:", collection: Quality::RejectTag.department_options, input_html: { class: "form-select" }
+    .col-12.col-md-3.mt-3
+      = f.input :print_partial_tag, label: "Print partial order tag"
+  .row
+    .col-12.col-md-3.mt-3
+      = f.input :defect, required: true, collection: Quality::RejectTag.defect_options, label: "Defect:", input_html: { class: "form-select" }
+    .col-12.col-md-9.mt-3
+      = f.input :defect_description, required: true, label: "Description of Defect/Problem:", input_html: { rows: 5 }, hint: "Be as descriptive as possible about the problem. Use this field to describe the problem, not to address the cause of the problem."
+    .col-12.col-md-3.mt-3
+      = f.input :cause, required: true, collection: Quality::RejectTag.cause_options, label: "Cause:", input_html: { class: "form-select" }
+    .col-12.col-md-9.mt-3    
+      = f.input :cause_description, label: "Cause of Defect/Problem:", input_html: { rows: 5 }, hint: "Use this field to describe the cause of the defect or problem, not to state what the problem is. Investigate the cause of the problem ASAP once it's discovered and use this field to record any/all known information that may have contributed to the problem."
+
+  .form-actions
+    = link_to "#{fa "times"} Cancel".html_safe, :back, class: ["btn", "btn-light", "btn-sm", "me-3"], tabindex: -1
+    = f.button :button, "#{fa "check"} Save Reject Tag".html_safe, class: ["btn-primary", "btn-sm"]
+
+javascript:
+  $(function() {
+
+    // Reference input.
+    var $shopOrderInput = $("#quality_reject_tag_shop_order_number");
+    var $poundsInput = $("#quality_reject_tag_pounds");
+    var $partialTagInputs = $("input[name*=print_partial_tag]");
+    var $partialTagCheckbox = $("#quality_reject_tag_print_partial_tag");
+
+    // Handle pounds change.
+    $poundsInput.on("change", function() {
+
+      // Read pounds and max.
+      var pounds = parseFloat($poundsInput.val());
+      var max = parseFloat($poundsInput.attr("max"));
+      $partialTagInputs.val(pounds < max ? 1 : 0);
+      $partialTagCheckbox.prop("checked", pounds < max);
+
+    });
+
+    // Handle shop order change.
+    $shopOrderInput.on("change", function() {
+
+      // Read shop order number.
+      var shopOrder = $shopOrderInput.val();
+
+      // Handle valid shop order number entry.
+      if (shopOrder.match(/^\d{6}$/) !== null) {
+        
+        // Load shop order details from System i.
+        var url = "http://vcmsapi.varland.com/shop_order?shop_order=" + shopOrder;
+        $.ajax(url).done(function(data) {
+          $("#as400_customer_code").text(data.customer);
+          $("#as400_process_code").text(data.process);
+          $("#as400_part_id").text(data.part);
+          $("#as400_sub_id").text(data.sub);
+          $("#as400_part_name").html(data.part_name.join("<br>"));
+          $("#as400_part_description").html(data.part_description.join("<br>"));
+          $("#as400_info").removeClass("d-none");
+          $("#quality_reject_tag_pounds").attr({"max": data.pounds});
+        });
+
+        // Load reject tag number.
+        var url = "http://localhost:3000/quality/reject_tags/tag_number_for/" + shopOrder;
+        $.ajax(url).done(function(data) {
+          $("#quality_reject_tag_number").val(data);
+        });
+
+        // Load source options.
+        var url = "http://localhost:3000/quality/reject_tags/sources_for/" + shopOrder;
+        $.ajax(url).done(function(data) {
+          var dropdown = $("#quality_reject_tag_source_id");
+          dropdown.html("");
+          for (var i = 0, c = data.length; i < c; i++) {
+            dropdown.append(new Option(data[i][0], data[i][1]));
+          }
+        });
+
+      } else {
+
+        // Hide System i info.
+        $("#as400_info").addClass("d-none");
+
+        // Clear reject tag number field.
+        $("#quality_reject_tag_number").val(null);
+
+        // Clear source options.
+        $("#quality_reject_tag_source_id").html(null);
+
+      }
+      
+    });
+
+  });

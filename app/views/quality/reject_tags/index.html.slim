@@ -1,0 +1,48 @@
+ruby:
+  provide(:title, 'Reject Tags')
+
+.d-flex.flex-row.align-items-center.justify-content-between.mt-3
+  h1.font-varland Reject Tags
+  - if policy(Quality::RejectTag).create?
+    = link_to "#{fa 'plus'} Reject Tag".html_safe, new_quality_reject_tag_path, class: ["btn", "btn-sm", "btn-primary"]
+
+.table-responsive.my-3
+  table.table.table-striped.table-hover
+    thead.table-dark
+      th.text-center.w-1 Shop Order
+      th.text-center.w-1 Reject Tag #
+      th.text-center.w-1 Source
+      th.text-center.w-1 Date
+      th.w-1 Rejected By
+      th.text-center.w-1 Department
+      th.text-center.w-1 Loads
+      th.text-center.w-1 Pounds
+      th Defect
+      th Cause
+      th.text-center.w-1 Options
+    tbody
+      - @reject_tags.each do |reject_tag|
+        tr
+          td.text-center.align-top = reject_tag.shop_order.number
+          td.text-center.align-top = reject_tag.number
+          td.text-center.align-top
+            - if reject_tag.source.blank?
+              | Original S.O.
+            - else
+              = reject_tag.source.description
+          td.text-center.align-top = reject_tag.rejected_on.strftime("%m/%d/%Y")
+          td.align-top = reject_tag.user.name_and_number
+          td.text-center.align-top = reject_tag.department
+          td.text-center.align-top = reject_tag.loads_rejected
+          td.text-center.align-top = number_with_precision reject_tag.pounds, precision: 2, strip_insignificant_zeros: true, delimiter: ","
+          td.text-wrap.align-top
+            .badge.bg-dark.fw-700.mb-2 = reject_tag.defect
+            div = simple_format reject_tag.defect_description
+          td.text-wrap.align-top
+            .badge.bg-dark.fw-700.mb-2 = reject_tag.cause
+            div = simple_format reject_tag.cause_description
+          td.text-center.align-top
+            - if policy(reject_tag).show?
+              = link_to "#{fa 'eye'} Details".html_safe, reject_tag, class: ["btn", "btn-sm", "btn-primary"]
+            - if policy(reject_tag).show?
+              = link_to "#{fa "file-pdf", text_class: "text-varland-red"} PDF".html_safe, quality_reject_tag_path(reject_tag, format: :pdf), class: ["btn", "btn-sm", "btn-dark"], target: "_blank"

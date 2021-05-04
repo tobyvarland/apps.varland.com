@@ -13,6 +13,8 @@ class User < ApplicationRecord
   has_one   :permission
   has_many  :reviews
   has_many  :comments
+  has_many  :reject_tags,
+            class_name: 'Quality::RejectTag'
 
   # Scopes.
   scope :by_number, -> { order(:employee_number) }
@@ -32,6 +34,11 @@ class User < ApplicationRecord
 
   # Instance methods.
 
+  # Returns user name and number.
+  def name_and_number
+    "<code class=\"fw-700\">#{self.employee_number}</code> #{self.name}".html_safe
+  end
+
   # Method to be run after user logs in.
   def after_login
     self.create_permissions_if_not_exist
@@ -47,7 +54,7 @@ class User < ApplicationRecord
   # Updates user fields from System i.
   def update_fields_from_system_i
     json = User.system_i_json(self.email)
-    self.employee_number = json[:employee_number]
+    self.employee_number = json[:number]
     self.title = json[:title]
     self.save
   end
@@ -61,7 +68,7 @@ class User < ApplicationRecord
     user_attributes = {
       uid: uid,
       name: name,
-      employee_number: system_i[:employee_number],
+      employee_number: system_i[:number],
       title: system_i[:title]
     }
     create_with(user_attributes).find_or_create_by!(email: email)

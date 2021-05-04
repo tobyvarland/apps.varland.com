@@ -7,7 +7,8 @@ h1.font-varland.mt-3 Permission Management
   table.table.table-striped.table-hover
     thead.table-dark
       th Employee
-      th.w-1.text-center Super Admin?
+      th.text-center Super Admin?
+      th.text-center Reject Tags
     tbody
       - @permissions.each do |permission|
         tr
@@ -15,3 +16,6 @@ h1.font-varland.mt-3 Permission Management
           td.text-center
             = simple_form_for(permission) do |f|
               = f.input :super_admin, label: false, wrapper_html: { class: 'check-centered' }, input_html: { onchange: "this.form.submit();" }
+          td.text-center
+            = simple_form_for(permission) do |f|
+              = f.input :reject_tags, collection: Quality::RejectTag.permission_options, include_blank: false, label: false, input_html: { class: ["form-select", "form-select-sm"], onchange: "this.form.submit();" }

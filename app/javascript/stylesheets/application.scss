@@ -272,3 +272,11 @@ h1 {
     }
   }
 }
+
+/* Miscellaneous */
+
+.card-body {
+  p:last-child {
+    @extend .mb-0;
+  }
+}

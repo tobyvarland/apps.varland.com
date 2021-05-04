@@ -29,6 +29,13 @@ nav.navbar.fixed-top.navbar-expand-md.navbar-dark.bg-dark id="primary-nav"
           = link_to permissions_url do
             = fa "link"
             div Manage Permissions
+    ul.list-unstyled
+      li.header Quality
+      - if policy(Quality::RejectTag).index?
+        li
+          = link_to quality_reject_tags_url do
+            = fa "link"
+            div Reject Tags
 
 javascript:
   $(function() {
@@ -38,6 +45,16 @@ javascript:
     if ($offcanvas.find(".offcanvas-body ul li a").length != 0) {
       $(".app-nav-toggler").parent().removeClass("d-none");
     }
+
+    // Hide lists with no visible links.
+    var $lists = $offcanvas.find(".offcanvas-body ul");
+    $lists.each(function() {
+      var $list = $(this);
+      var countLinks = $list.find('a').length;
+      if (countLinks == 0) {
+        $list.remove();
+      }
+    });
 
     // Hide offcanvas menu on escape key.
     $(document).on("keydown", function(event) {

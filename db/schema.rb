@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_04_29_214039) do
+ActiveRecord::Schema.define(version: 2021_05_03_182236) do
 
   create_table "active_storage_attachments", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "name", null: false
@@ -87,8 +87,31 @@ ActiveRecord::Schema.define(version: 2021_04_29_214039) do
     t.boolean "super_admin", default: false, null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.integer "reject_tags", default: 1, null: false
     t.index ["user_id"], name: "index_permissions_on_user_id"
     t.index ["user_id"], name: "unique_permissions_user", unique: true
+  end
+
+  create_table "quality_reject_tags", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.bigint "shop_order_id", null: false
+    t.integer "number", null: false
+    t.bigint "source_id"
+    t.date "rejected_on", null: false
+    t.bigint "user_id", null: false
+    t.string "loads_rejected", null: false
+    t.float "pounds", null: false
+    t.integer "department", null: false
+    t.string "defect", null: false
+    t.text "defect_description"
+    t.string "cause", null: false
+    t.text "cause_description"
+    t.boolean "print_partial_tag", default: false, null: false
+    t.datetime "discarded_at"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["shop_order_id"], name: "index_quality_reject_tags_on_shop_order_id"
+    t.index ["source_id"], name: "index_quality_reject_tags_on_source_id"
+    t.index ["user_id"], name: "index_quality_reject_tags_on_user_id"
   end
 
   create_table "reviews", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
@@ -124,5 +147,8 @@ ActiveRecord::Schema.define(version: 2021_04_29_214039) do
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "comments", "users"
   add_foreign_key "permissions", "users"
+  add_foreign_key "quality_reject_tags", "as400_shop_orders", column: "shop_order_id"
+  add_foreign_key "quality_reject_tags", "quality_reject_tags", column: "source_id"
+  add_foreign_key "quality_reject_tags", "users"
   add_foreign_key "reviews", "users"
 end

@@ -4,3 +4,12 @@ th, td {
   @extend .align-middle;
   @extend .text-nowrap;
 }
+
+td {
+  .btn + .btn {
+    @extend .ms-1;
+  }
+  p:last-child {
+    @extend .mb-0;
+  }
+}

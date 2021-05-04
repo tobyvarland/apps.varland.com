@@ -1,0 +1,23 @@
+class Quality::RejectTagPolicy < ApplicationPolicy
+
+  def index?
+    super || (user && user.permission && user.permission.reject_tags >= 1)
+  end
+
+  def create?
+    super || (user && user.permission && user.permission.reject_tags >= 2)
+  end
+
+  def update?
+    super || (user && user.permission && (user.permission.reject_tags > 2 || user.id == object.user_id))
+  end
+
+  def destroy?
+    super || (user && user.permission && user.permission.reject_tags == 3)
+  end
+
+  def add_upload?
+    update?
+  end
+  
+end

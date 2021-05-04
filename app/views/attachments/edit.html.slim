@@ -1,0 +1,36 @@
+ruby:
+  provide(:title, "Edit Attachment")
+
+.d-flex.flex-col.flex-md-row.align-items-center.justify-content-between.mt-3
+  h1.font-varland Edit Attachment
+
+.row.my-3
+
+  .col-12.col-md-3.order-2
+
+    .card.bg-light
+      h6.card-header Attachment Preview
+      .card-body.bg-white
+        - if @attachment.file.variable?
+          = link_to(image_tag(@attachment.file.variant(resize: "1000x1000", auto_orient: true), class: ["img-fluid"]), rails_blob_path(@attachment.file, disposition: :inline), target: "_blank")
+        - elsif @attachment.file.previewable?
+          = link_to(image_tag(@attachment.file.preview(resize: "1000x1000"), class: ["img-fluid"]), rails_blob_path(@attachment.file, disposition: :inline), target: "_blank")
+        - elsif @attachment.file.image?
+          = link_to(image_tag(@attachment.file, class: ["img-fluid"]), @attachment.file, target: "_blank")
+
+  .col-12.col-md-9.order-1
+
+    = form_with(model: @attachment, class: ["vp-gray-form"]) do |form|
+
+      .form-group
+        = form.label :name, "File Name:", class: "form-label"
+        = form.text_field :name, class: "form-control", required: true, autofocus: true
+        small.form-text Defaults to the name of the uploaded file, but may be changed.
+
+      .form-group.mt-3
+        = form.label :description, "Description:", class: "form-label"
+        = form.text_field :description, class: "form-control"
+
+      .d-flex.flex-row.align-items-center.justify-content-end.mt-3
+        = link_to "#{fa "times"} Cancel".html_safe, @attachment.attachable, class: ["btn", "btn-light", "btn-sm", "me-1"], tabindex: -1
+        = form.button "#{fa "check"} Save Attachment".html_safe, type: "submit", class: ["btn", "btn-primary", "btn-sm"]

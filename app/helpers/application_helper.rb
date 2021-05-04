@@ -2,6 +2,45 @@ module ApplicationHelper
 
   include Pagy::Frontend
 
+  def department_name(val)
+    case val.to_s
+    when "3"
+      return "3 - Department 3"
+    when "4"
+      return "4 - BNA"
+    when "5"
+      return "5 - Department 5"
+    when "6"
+      return "6 - Oil Dip"
+    when "7"
+      return "7 - Bake"
+    when "8"
+      return "8 - Robot"
+    when "9"
+      return "9 - Strip"
+    when "10"
+      return "10 - Miscellaneous"
+    when "11"
+      return "11 - Oil Dip"
+    when "12"
+      return "12 - EN"
+    else
+      return "Unknown Department"
+    end
+  end
+
+  def card_list(title, items)
+    list_items = []
+    items.each do |item|
+      label = content_tag(:div, "#{item[:label]}:", class: ["text-uncolor", "small", "text-nowrap", "lh-1"])
+      value = content_tag(:div, item[:value].to_s.html_safe, class: ["lh-sm", "my-0"])
+      list_items << content_tag(:li, label + value, class: ["list-group-item", "d-flex", "flex-column", "align-items-top", "justify-content-start", "bg-light"])
+    end
+    header = content_tag(:h6, title, class: ["card-header"])
+    list = content_tag(:ul, list_items.join.html_safe, class: ["list-group", "list-group-flush"])
+    content_tag(:div, header + list, class: ["card", "bg-light", "mt-3"])
+  end
+
   def fa(icon, options = {})
     fw = options.fetch(:fw, true)
     type = options.fetch(:type, "fas")

@@ -4,7 +4,7 @@ class PermissionsController < ApplicationController
 
   def index
     authorize Permission
-    @permissions = Permission.includes(:user).by_employee.decorate
+    @permissions = Permission.includes(:user).by_employee
   end
 
   def update
@@ -27,7 +27,7 @@ class PermissionsController < ApplicationController
     end
 
     def permission_params
-      params.require(:permission).permit(:user_id, :super_admin)
+      params.require(:permission).permit(:user_id, :super_admin, :reject_tags)
     end
 
 end

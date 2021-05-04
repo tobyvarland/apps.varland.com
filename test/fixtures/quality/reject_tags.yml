@@ -1,0 +1,29 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  shop_order: one
+  number: 1
+  source: MyString
+  rejected_on: 2021-05-03
+  user: one
+  loads_rejected: MyString
+  pounds: 1.5
+  defect: MyString
+  defect_description: MyText
+  cause: MyString
+  cause_description: MyText
+  department: 1
+
+two:
+  shop_order: two
+  number: 1
+  source: MyString
+  rejected_on: 2021-05-03
+  user: two
+  loads_rejected: MyString
+  pounds: 1.5
+  defect: MyString
+  defect_description: MyText
+  cause: MyString
+  cause_description: MyText
+  department: 1
