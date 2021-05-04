@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_05_03_182236) do
+ActiveRecord::Schema.define(version: 2021_05_04_201241) do
 
   create_table "active_storage_attachments", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "name", null: false
@@ -92,6 +92,16 @@ ActiveRecord::Schema.define(version: 2021_05_03_182236) do
     t.index ["user_id"], name: "unique_permissions_user", unique: true
   end
 
+  create_table "quality_reject_tag_loads", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.bigint "reject_tag_id", null: false
+    t.integer "number", null: false
+    t.integer "barrel"
+    t.integer "station"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["reject_tag_id"], name: "index_quality_reject_tag_loads_on_reject_tag_id"
+  end
+
   create_table "quality_reject_tags", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.bigint "shop_order_id", null: false
     t.integer "number", null: false
@@ -147,6 +157,7 @@ ActiveRecord::Schema.define(version: 2021_05_03_182236) do
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "comments", "users"
   add_foreign_key "permissions", "users"
+  add_foreign_key "quality_reject_tag_loads", "quality_reject_tags", column: "reject_tag_id"
   add_foreign_key "quality_reject_tags", "as400_shop_orders", column: "shop_order_id"
   add_foreign_key "quality_reject_tags", "quality_reject_tags", column: "source_id"
   add_foreign_key "quality_reject_tags", "users"

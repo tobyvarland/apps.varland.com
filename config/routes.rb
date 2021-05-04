@@ -9,9 +9,8 @@ Rails.application.routes.draw do
     resources :shop_orders
   end
   namespace :quality do
-    resources :reject_tags do
-      post  :add_upload
-    end
+    resources :reject_tags
+    resources :reject_tag_loads
   end
 
   # Devise routes for Google authentication.

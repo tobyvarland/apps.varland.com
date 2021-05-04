@@ -49,6 +49,7 @@ gem 'mini_magick'
 gem 'prawn'
 gem 'fastimage'
 gem 'combine_pdf'
+gem 'cocoon'
 
 gem 'capistrano', '~> 3.11'
 gem 'capistrano-rails', '~> 1.4'

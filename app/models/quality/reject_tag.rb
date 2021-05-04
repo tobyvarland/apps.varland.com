@@ -13,6 +13,13 @@ class Quality::RejectTag < ApplicationRecord
   belongs_to  :source,
               class_name: "Quality::RejectTag",
               optional: true
+  has_many    :loads,
+              class_name: "Quality::RejectTagLoad",
+              inverse_of: :reject_tag
+
+  # Nested attributes.
+  accepts_nested_attributes_for :attachments, reject_if: :all_blank, allow_destroy: true
+  accepts_nested_attributes_for :loads, reject_if: :all_blank, allow_destroy: true
 
   # Scopes.
   scope :with_shop_order, ->(value) {
@@ -26,8 +33,16 @@ class Quality::RejectTag < ApplicationRecord
 
   # Callbacks.
   before_validation :nullify_source
+  after_create      :update_as400_count
+  after_discard     :update_as400_count
+  after_undiscard   :update_as400_count
 
   # Instance methods.
+
+  # Updates reject tag count on System i.
+  def update_as400_count
+    self.shop_order.set_as400_reject_tag_count
+  end
 
   # Returns description.
   def description

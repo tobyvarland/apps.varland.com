@@ -48,16 +48,6 @@ class Quality::RejectTagsController < ApplicationController
     redirect_to quality_reject_tags_url
   end
 
-  def add_upload
-    authorize @reject_tag
-    params[:uploads].each do |upload|
-      attachment = @reject_tag.attachments.new
-      attachment.file.attach(upload)
-      attachment.save
-    end
-    redirect_to(@reject_tag)
-  end
-
   def source_options_for_shop_order
     render json: Quality::RejectTag.source_options_for_shop_order(params[:shop_order])
   end
@@ -93,7 +83,9 @@ class Quality::RejectTagsController < ApplicationController
                                                  :cause,
                                                  :cause_description,
                                                  :department,
-                                                 :print_partial_tag)
+                                                 :print_partial_tag,
+                                                 attachments_attributes: [:id, :name, :description, :file, :_destroy],
+                                                 loads_attributes: [:id, :number, :barrel, :station, :_destroy])
     end
 
 end

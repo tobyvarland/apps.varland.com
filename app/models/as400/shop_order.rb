@@ -22,6 +22,14 @@ class As400::ShopOrder < ApplicationRecord
 
   # Instance methods.
 
+  # Set reject tag count on System i.
+  def set_as400_reject_tag_count
+    return true
+    #uri = URI.parse("http://vcmsapi.varland.com/set_reject_tag_count")
+    #response = Net::HTTP.post_form(uri, shop_order: self.number, reject_tags: self.reject_tags.length)
+    #return response.is_a?(Net::HTTPSuccess)
+  end
+
   # Returns part spec fields.
   def part_spec
     fields = [self.customer_code, self.process_code, self.part]

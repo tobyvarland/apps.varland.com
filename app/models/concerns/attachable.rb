@@ -5,7 +5,8 @@ module Attachable
   included do
     has_many  :attachments,
               as: :attachable,
-              class_name: "::Attachment"
+              class_name: "::Attachment",
+              inverse_of: :attachable
   end
 
 end
