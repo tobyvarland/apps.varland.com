@@ -135,8 +135,10 @@ class VarlandPdf < Prawn::Document
   def load_fonts
 
     # Load fonts.
-    self.load_single_font('SF Mono')
+    self.load_single_font('Arial Narrow')
     self.load_single_font('Gotham Condensed')
+    self.load_single_font('SF Mono')
+    self.load_single_font('Whitney Index Squared')
 
   end
 
@@ -307,7 +309,7 @@ class VarlandPdf < Prawn::Document
   # Draws horizontal line.
   def hline(x, y, length, options = {})
     should_print = options.fetch(:print, true)
-    puts "🔴 hline - (#{x}, #{y}) - #{length}" if should_print
+    # puts "🔴 hline - (#{x}, #{y}) - #{length}" if should_print
     line_color = options.fetch(:line_color, self.class::DEFAULT_LINE_COLOR)
     return if line_color.blank?
     self.save_current_properties
@@ -320,7 +322,7 @@ class VarlandPdf < Prawn::Document
   # Draws vertical line.
   def vline(x, y, length, options = {})
     should_print = options.fetch(:print, true)
-    puts "🔴 vline - (#{x}, #{y}) - #{length}" if should_print
+    # puts "🔴 vline - (#{x}, #{y}) - #{length}" if should_print
     line_color = options.fetch(:line_color, self.class::DEFAULT_LINE_COLOR)
     return if line_color.blank?
     self.save_current_properties
@@ -403,6 +405,7 @@ class VarlandPdf < Prawn::Document
     h_pad = options.fetch(:h_pad, 0)
     v_pad = options.fetch(:v_pad, 0)
     transform = options.fetch(:transform, nil)
+    rotate = options.fetch(:rotate, nil)
 
     # If stroke/fill options passed, draw rectangle.
     if fill_color || line_color
@@ -439,6 +442,7 @@ class VarlandPdf < Prawn::Document
                   height: (height - 2 * v_pad).in,
                   align: h_align,
                   valign: v_align,
+                  rotate: rotate,
                   inline_format: true,
                   overflow: :shrink_to_fit)
 

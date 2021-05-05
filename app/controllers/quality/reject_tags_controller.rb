@@ -1,7 +1,7 @@
 class Quality::RejectTagsController < ApplicationController
 
   before_action :set_reject_tag,
-                only: %i[ show edit update destroy add_upload ]
+                only: %i[ show edit update destroy shop_order_partial_tag ]
 
   def index
     authorize Quality::RejectTag
@@ -18,6 +18,19 @@ class Quality::RejectTagsController < ApplicationController
       }
       format.pdf {
         pdf = Quality::RejectTagPdf.new(@reject_tag)
+        send_data(pdf.render,
+                  filename: "#{@reject_tag.description}.pdf",
+                  type: "application/pdf",
+                  disposition: "inline")
+      }
+    end
+  end
+
+  def shop_order_partial_tag
+    authorize @reject_tag
+    respond_to do |format|
+      format.pdf {
+        pdf = Quality::RejectTagPartialTagPdf.new(@reject_tag.shop_order)
         send_data(pdf.render,
                   filename: "#{@reject_tag.description}.pdf",
                   type: "application/pdf",

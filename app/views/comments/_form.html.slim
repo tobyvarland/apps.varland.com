@@ -6,7 +6,7 @@
 
   .row
     .col-12
-      = f.input :body, required: true, label: "Comment:", autofocus: true
+      = f.input :body, required: true, label: "Comment:"
     - if allow_manual_time
       .col-12.col-md-6.mt-3
         = f.input :comment_at, label: "Date/Time:", html5: true

@@ -23,5 +23,9 @@ class Quality::RejectTagPolicy < ApplicationPolicy
   def delete_comment?
     user && user.permission && (user.permission.super_admin || user.permission.reject_tags == 3)
   end
+
+  def shop_order_partial_tag?
+    show?
+  end
   
 end
