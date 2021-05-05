@@ -12,7 +12,7 @@ class As400::ShopOrder < ApplicationRecord
             class_name: 'Quality::RejectTag'
 
   # Validations.
-  validates :customer_code, :process_code, :part, :number, :customer_name, :part_name, :part_description, :process_spec, :received_on, :written_up_on, :pounds, :pieces,
+  validates :customer_code, :process_code, :part, :number, :customer_name, :part_name, :part_description, :process_spec, :received_on, :written_up_on, :pounds, :pieces, :schedule_code,
             presence: true
   validates :number,
             uniqueness: true
@@ -47,6 +47,7 @@ class As400::ShopOrder < ApplicationRecord
     self.process_code = as400[:process]
     self.part = as400[:part]
     self.sub = as400[:sub]
+    self.schedule_code = as400[:schedule_code]
     self.customer_name = as400[:customer_name]
     self.part_name = as400[:part_name]
     self.part_description = as400[:part_description]
@@ -69,6 +70,7 @@ class As400::ShopOrder < ApplicationRecord
       process_code: as400[:process],
       part: as400[:part],
       sub: as400[:sub],
+      schedule_code: as400[:schedule_code],
       customer_name: as400[:customer_name],
       part_name: as400[:part_name],
       part_description: as400[:part_description],
