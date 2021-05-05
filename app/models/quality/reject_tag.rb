@@ -41,6 +41,12 @@ class Quality::RejectTag < ApplicationRecord
 
   # Instance methods.
 
+  # Returns source description.
+  def source_description
+    return self.source.description if self.source.present?
+    return "Original S.O."
+  end
+
   # Add part history note to System i.
   def add_part_history_note
     uri = URI.parse("http://vcmsapi.varland.com/create_part_history_note")

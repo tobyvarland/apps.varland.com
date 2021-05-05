@@ -28,11 +28,7 @@ ruby:
         tr
           td.text-center.align-top = reject_tag.shop_order.number
           td.text-center.align-top = reject_tag.number
-          td.text-center.align-top
-            - if reject_tag.source.blank?
-              | Original S.O.
-            - else
-              = reject_tag.source.description
+          td.text-center.align-top = reject_tag.source_description
           td.text-center.align-top = reject_tag.rejected_on.strftime("%m/%d/%Y")
           td.align-top = reject_tag.user.name_and_number
           td.text-center.align-top = reject_tag.department

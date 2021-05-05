@@ -56,7 +56,7 @@ class Quality::RejectTagPdf < ::VarlandPdf
     # Draw data boxes.
     self.txtb(@reject_tag.shop_order.number, 0.25, 10.15, 2, 0.5, data_options_center_large)
     self.txtb(@reject_tag.number, 2.25, 10.15, 2, 0.5, data_options_center_large)
-    self.txtb(@reject_tag.source.present? ? @reject_tag.source.description : "Original S.O.", 4.25, 10.15, 2, 0.5, data_options_center_medium)
+    self.txtb(@reject_tag.source_description, 4.25, 10.15, 2, 0.5, data_options_center_medium)
     self.txtb(@reject_tag.rejected_on.strftime("%m/%d/%y"), 6.25, 10.15, 2, 0.5, data_options_center_medium)
     self.txtb(@reject_tag.shop_order.customer_code, 0.25, 9.4, 2, 0.35, data_options_center)
     self.txtb(@reject_tag.shop_order.process_code, 2.25, 9.4, 1, 0.35, data_options_center)
