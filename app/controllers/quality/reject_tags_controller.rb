@@ -10,6 +10,16 @@ class Quality::RejectTagsController < ApplicationController
 
   def show
     authorize @reject_tag
+    respond_to do |format|
+      format.html { }
+      format.pdf {
+        pdf = Quality::RejectTagPdf.new(@reject_tag)
+        send_data(pdf.render,
+                  filename: "#{@reject_tag.description}.pdf",
+                  type: "application/pdf",
+                  disposition: "inline")
+      }
+    end
   end
 
   def new

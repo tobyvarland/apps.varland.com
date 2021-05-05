@@ -27,6 +27,7 @@
   @extend .px-3;
   @extend .rounded;
   @extend .shadow-sm;
+  overflow: auto;
   label {
     @extend .fw-700;
     font-size: 0.85rem;
@@ -51,4 +52,23 @@
     cursor: default !important;
     text-decoration: none !important;
   }
+}
+
+.form-errors {
+  @extend .bg-dark;
+  @extend .border;
+  @extend .fw-700;
+  @extend .lh-sm;
+  @extend .mt-3;
+  @extend .p-2;
+  @extend .rounded;
+  @extend .shadow-sm;
+  @extend .text-danger;
+}
+
+.invalid-feedback {
+  @extend .bg-dark;
+  @extend .fw-700;
+  @extend .p-1;
+  @extend .text-danger;
 }

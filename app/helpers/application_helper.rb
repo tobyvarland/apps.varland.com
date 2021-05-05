@@ -2,28 +2,30 @@ module ApplicationHelper
 
   include Pagy::Frontend
 
-  def department_name(val)
+  def department_name(val, options = {})
+    prefix = options.fetch(:prefix, true)
+    prefix_text = prefix ? "#{val} - " : ""
     case val.to_s
     when "3"
-      return "3 - Department 3"
+      return "#{prefix_text}Department 3"
     when "4"
-      return "4 - BNA"
+      return "#{prefix_text}BNA"
     when "5"
-      return "5 - Department 5"
+      return "#{prefix_text}Department 5"
     when "6"
-      return "6 - Oil Dip"
+      return "#{prefix_text}Oil Dip"
     when "7"
-      return "7 - Bake"
+      return "#{prefix_text}Bake"
     when "8"
-      return "8 - Robot"
+      return "#{prefix_text}Robot"
     when "9"
-      return "9 - Strip"
+      return "#{prefix_text}Strip"
     when "10"
-      return "10 - Miscellaneous"
+      return "#{prefix_text}Miscellaneous"
     when "11"
-      return "11 - Oil Dip"
+      return "#{prefix_text}Oil Dip"
     when "12"
-      return "12 - EN"
+      return "#{prefix_text}EN"
     else
       return "Unknown Department"
     end
