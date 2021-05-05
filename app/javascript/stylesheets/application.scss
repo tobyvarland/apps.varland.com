@@ -279,4 +279,9 @@ h1 {
   p:last-child {
     @extend .mb-0;
   }
+  .comment + .comment {
+    @extend .border-top;
+    @extend .mt-2;
+    @extend .pt-2;
+  }
 }

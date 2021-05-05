@@ -6,7 +6,8 @@ module Attachable
     has_many  :attachments,
               as: :attachable,
               class_name: "::Attachment",
-              inverse_of: :attachable
+              inverse_of: :attachable,
+              dependent: :destroy
   end
 
 end

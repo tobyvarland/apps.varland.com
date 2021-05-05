@@ -6,6 +6,7 @@ class Quality::RejectTag < ApplicationRecord
 
   # Associations.
   include Attachable
+  include Commentable
   belongs_to  :shop_order,
               class_name: 'As400::ShopOrder'
   belongs_to  :user,

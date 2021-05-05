@@ -76,7 +76,7 @@
               th.text-center.w-1 Options
           tbody id="loads"
             = f.simple_fields_for :loads do |load|
-              = render "load_fields", f: load
+              = render "quality/reject_tags/load_fields", f: load
     .col-12.col-md-6.mt-3
       .shadow-sm.border.p-3.rounded
         .d-flex.flex-col.flex-md-row.align-items-center.justify-content-between
@@ -90,7 +90,7 @@
                                       'data-association-insertion-method': "append"
         div id="attachments"
           = f.simple_fields_for :attachments do |attachment|
-            = render "attachment_fields", f: attachment
+            = render "quality/reject_tags/attachment_fields", f: attachment
 
   .form-actions
     = link_to "#{fa "times"} Cancel".html_safe, quality_reject_tags_url, class: ["btn", "btn-light", "btn-sm", "me-3"], tabindex: -1

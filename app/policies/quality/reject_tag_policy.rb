@@ -16,7 +16,11 @@ class Quality::RejectTagPolicy < ApplicationPolicy
     super || (user && user.permission && user.permission.reject_tags == 3)
   end
 
-  def add_upload?
+  def add_comment?
+    update?
+  end
+
+  def delete_comment?
     update?
   end
   

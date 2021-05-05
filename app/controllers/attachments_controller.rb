@@ -9,7 +9,7 @@ class AttachmentsController < ApplicationController
     if @attachment.update(attachment_params)
       redirect_to @attachment.attachable
     else
-      redirect_to @attachment.attachable, error: "Error updating attachment. Please try again or contact IT for help."
+      redirect_to @attachment.attachable, alert: "Error updating attachment. Please try again or contact IT for help."
     end
   end
 

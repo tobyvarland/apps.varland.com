@@ -11,7 +11,11 @@ class Quality::RejectTagsController < ApplicationController
   def show
     authorize @reject_tag
     respond_to do |format|
-      format.html { }
+      format.html {
+        if current_user
+          @comment = current_user.comments.build
+        end
+      }
       format.pdf {
         pdf = Quality::RejectTagPdf.new(@reject_tag)
         send_data(pdf.render,
