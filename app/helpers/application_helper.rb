@@ -3,41 +3,42 @@ module ApplicationHelper
   include Pagy::Frontend
 
   def icon_for_file(file)
-    # puts "🔴 #{file.content_type}"
+    excel_types = ["application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+                   "application/vnd.ms-excel"]
+    word_types = ["application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+                  "application/msword"]
+    powerpoint_types = ["application/vnd.openxmlformats-officedocument.presentationml.presentation",
+                        "application/vnd.ms-powerpoint"]
+    code_types = ["application/json",
+                  "text/markdown",
+                  "application/xml",
+                  "text/xml",
+                  "text/html"]
     case file.content_type
+    when *::Attachment.allowable_image_types
+      return fa("file-image")
+    when *::Attachment.allowable_video_types
+      return fa("file-video")
+    when *::Attachment.allowable_audio_types
+      return fa("file-audio")
     when "application/pdf"
-      return fa("file-pdf", text_class: "text-varland-red")
-    when "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
-      return fa("file-excel", text_class: "text-success")
-    when "application/vnd.openxmlformats-officedocument.presentationml.presentation"
-      return fa("file-powerpoint", text_class: "text-dark")
-    when "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
-      return fa("file-word", text_class: "text-primary")
+      return fa("file-pdf")
+    when *excel_types
+      return fa("file-excel")
+    when *powerpoint_types
+      return fa("file-powerpoint")
+    when *word_types
+      return fa("file-word")
     when "application/zip"
-      return fa("file-archive", text_class: "text-warning")
+      return fa("file-archive")
     when "text/csv"
-      return fa("file-csv", text_class: "text-success")
-    when "text/markdown"
-      return fa("file-code", text_class: "text-warning")
-    when "video/mp4"
-      return fa("file-video", text_class: "text-info")
-    when "video/quicktime"
-      return fa("file-video", text_class: "text-info")
-    when "image/svg+xml"
-      return fa("file-image", text_class: "text-info")
-    when "image/png"
-      return fa("file-image", text_class: "text-info")
-    when "image/bmp"
-      return fa("file-image", text_class: "text-info")
-    when "text/plain"
-      return fa("file-alt", text_class: "text-dark")
-    when "text/html"
-      return fa("file-code", text_class: "text-warning")
-    when "application/json"
-      return fa("file-code", text_class: "text-warning")
+      return fa("file-csv")
+    when *code_types
+      return fa("file-code")
+    when "text/plain", "application/rtf"
+      return fa("file-alt")
     else
-      puts "🔴 #{file.content_type}"
-      return fa("file-alt", text_class: "text-dark")
+      return fa("file-alt")
     end
   end
 
