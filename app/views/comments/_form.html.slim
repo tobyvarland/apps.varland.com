@@ -22,10 +22,11 @@
                                         :attachments,
                                         class: ["btn", "btn-sm", "btn-secondary"],
                                         'data-association-insertion-node': "#attachments",
-                                        'data-association-insertion-method': "append"
+                                        'data-association-insertion-method': "append",
+                                        partial: "attachments/attachment_fields"
           div id="attachments"
             = f.simple_fields_for :attachments do |attachment|
-              = render "comments/attachment_fields", f: attachment
+              = render "attachments/attachment_fields", f: attachment
 
   .form-actions
     = f.button :button, "#{fa "check"} Save Comment".html_safe, class: ["btn-primary", "btn-sm"]

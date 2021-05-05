@@ -24,7 +24,7 @@ class CommentsController < ApplicationController
   end
 
   def destroy
-    @comment.destroy
+    @comment.discard
     redirect_to @comment.commentable
   end
 

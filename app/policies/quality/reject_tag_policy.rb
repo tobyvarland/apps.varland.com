@@ -21,7 +21,7 @@ class Quality::RejectTagPolicy < ApplicationPolicy
   end
 
   def delete_comment?
-    update?
+    user && user.permission && (user.permission.super_admin || user.permission.reject_tags == 3)
   end
   
 end

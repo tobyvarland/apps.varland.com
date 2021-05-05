@@ -59,7 +59,7 @@
     .col-12.col-md-6.mt-3
       .shadow-sm.border.p-3.rounded
         .d-flex.flex-col.flex-md-row.align-items-center.justify-content-between
-          .fw-700 Load Specific Information
+          .fw-700.small.text-uppercase Load Specific Information
           .links
             = link_to_add_association fa("plus"),
                                       f,
@@ -80,17 +80,18 @@
     .col-12.col-md-6.mt-3
       .shadow-sm.border.p-3.rounded
         .d-flex.flex-col.flex-md-row.align-items-center.justify-content-between
-          .fw-700 Attachments
+          .fw-700.small.text-uppercase Attachments
           .links
             = link_to_add_association fa("plus"),
                                       f,
                                       :attachments,
                                       class: ["btn", "btn-sm", "btn-secondary"],
                                       'data-association-insertion-node': "#attachments",
-                                      'data-association-insertion-method': "append"
+                                      'data-association-insertion-method': "append",
+                                      partial: "attachments/attachment_fields"
         div id="attachments"
           = f.simple_fields_for :attachments do |attachment|
-            = render "quality/reject_tags/attachment_fields", f: attachment
+            = render "attachments/attachment_fields", f: attachment
 
   .form-actions
     = link_to "#{fa "times"} Cancel".html_safe, quality_reject_tags_url, class: ["btn", "btn-light", "btn-sm", "me-3"], tabindex: -1
