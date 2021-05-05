@@ -35,10 +35,22 @@ class Quality::RejectTag < ApplicationRecord
   # Callbacks.
   before_validation :nullify_source
   after_create      :update_as400_count
+  after_create      :add_part_history_note
   after_discard     :update_as400_count
   after_undiscard   :update_as400_count
 
   # Instance methods.
+
+  # Add part history note to System i.
+  def add_part_history_note
+    uri = URI.parse("http://vcmsapi.varland.com/create_part_history_note")
+    response = Net::HTTP.post_form(uri, customer: self.shop_order.customer_code,
+                                        process: self.shop_order.process_code,
+                                        part: self.shop_order.part,
+                                        sub: self.shop_order.sub,
+                                        note: "Reject Tag #{self.description}: http://localhost:3000/quality/reject_tags/#{self.id}")
+    return response.is_a?(Net::HTTPSuccess)
+  end
 
   # Updates reject tag count on System i.
   def update_as400_count
