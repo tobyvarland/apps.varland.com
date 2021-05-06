@@ -42,7 +42,7 @@
     .col-12.col-md-3.mt-3
       = f.input :pounds, required: true, label: "Pounds Rejected:", hint: "This is the total weight of all loads rejected, not the weight of a single load.", input_html: { max: @reject_tag.shop_order.present? ? @reject_tag.shop_order.pounds : "" }
     .col-12.col-md-3.mt-3
-      = f.input :department, required: true, label: "Department:", collection: Quality::RejectTag.department_options, input_html: { class: "form-select" }
+      = f.input :department, required: true, label: "Department:", collection: Quality::RejectTag.department_options, input_html: { class: "form-select" }, hint: "Enter the department where the defect or problem occurred."
     .col-12.col-md-3.mt-3
       = f.input :print_partial_tag, label: "Print partial order tag"
   .row
