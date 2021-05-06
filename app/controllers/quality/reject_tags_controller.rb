@@ -21,7 +21,7 @@ class Quality::RejectTagsController < ApplicationController
         send_data(pdf.render,
                   filename: "#{@reject_tag.description}.pdf",
                   type: "application/pdf",
-                  disposition: "inline")
+                  disposition: "attachment")
       }
     end
   end
@@ -34,7 +34,7 @@ class Quality::RejectTagsController < ApplicationController
         send_data(pdf.render,
                   filename: "#{@reject_tag.description}.pdf",
                   type: "application/pdf",
-                  disposition: "inline")
+                  disposition: "attachment")
       }
     end
   end
@@ -55,6 +55,7 @@ class Quality::RejectTagsController < ApplicationController
     authorize @reject_tag
     if @reject_tag.save
       Quality::RejectTagMailer.with(reject_tag: @reject_tag).notification_email.deliver_later
+      Quality::PrintRejectTagJob.perform_later @reject_tag, "RejectTag", "RL"
       redirect_to @reject_tag
     else
       render :new, status: :unprocessable_entity

@@ -56,6 +56,8 @@ gem 'caxlsx'
 gem 'caxlsx_rails'
 gem 'redis'
 gem 'sidekiq', '~> 6.1.3'
+gem 'image_optim'
+gem 'image_optim_pack'
 
 gem 'capistrano', '~> 3.11'
 gem 'capistrano-rails', '~> 1.4'

@@ -8,6 +8,7 @@ require 'barby/outputter/prawn_outputter'
 require 'barby/outputter/png_outputter'
 require 'tempfile'
 require 'fastimage'
+require 'image_optim'
 
 # Parent class for all Varland PDFs. Defines common functions.
 class VarlandPdf < Prawn::Document
@@ -540,6 +541,7 @@ class VarlandPdf < Prawn::Document
     magick.resize("#{max_width_pixels}x#{max_height_pixels}") if magick.height > max_height_pixels || magick.width > max_width_pixels
     temp_path = "#{Dir.tmpdir}/#{SecureRandom.alphanumeric(50)}"
     magick.write(temp_path)
+    ImageOptim.optimize_image!(temp_path)
     return { path: temp_path, height: magick.height / 300.0, width: magick.width / 300.0 }
   end
 
