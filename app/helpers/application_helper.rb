@@ -108,7 +108,7 @@ module ApplicationHelper
   end
 
   def flash_message(msg, type)
-    message = content_tag(:div, msg.html_safe, class: "message")
+    message = content_tag(:div, msg.to_s.html_safe, class: "message")
     icon = case type
            when :alert then content_tag(:div, fa("exclamation"), class: ["icon", "flash-alert"])
            else content_tag(:div, fa("info"), class: ["icon", "flash-notice"])
