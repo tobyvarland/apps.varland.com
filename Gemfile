@@ -54,6 +54,8 @@ gem 'barby'
 gem 'rqrcode'
 gem 'caxlsx'
 gem 'caxlsx_rails'
+gem 'redis'
+gem 'sidekiq', '~> 6.1.3'
 
 gem 'capistrano', '~> 3.11'
 gem 'capistrano-rails', '~> 1.4'

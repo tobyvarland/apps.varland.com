@@ -1,3 +1,5 @@
+require 'sidekiq/web'
+
 Rails.application.routes.draw do
 
   # Resource routing.
@@ -29,5 +31,12 @@ Rails.application.routes.draw do
     get "reject_tags/sources_for/:shop_order",    to: "reject_tags#source_options_for_shop_order"
     get "reject_tags/tag_number_for/:shop_order", to: "reject_tags#tag_number_for_shop_order"
   end
+
+  # Mount Sidekiq.
+  mount Sidekiq::Web => "/sidekiq"
+  get "/reset_sidekiq", to: "pages#reset_sidekiq_stats"
+
+  # Set up ActionCable for live updates.
+  mount ActionCable.server => '/cable'
 
 end

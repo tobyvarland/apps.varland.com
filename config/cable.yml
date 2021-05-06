@@ -1,10 +1,12 @@
 development:
-  adapter: async
+  adapter: redis
+  url: redis://localhost:6379
+  channel_prefix: varland_apps_development
 
 test:
   adapter: test
 
 production:
   adapter: redis
-  url: <%= ENV.fetch("REDIS_URL") { "redis://localhost:6379/1" } %>
-  channel_prefix: apps_varland_com_production
+  url: redis://apps.varland.com:6379
+  channel_prefix: varland_apps_production
