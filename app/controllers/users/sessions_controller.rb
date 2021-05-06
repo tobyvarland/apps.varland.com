@@ -1,5 +1,7 @@
 class Users::SessionsController < Devise::SessionsController
 
+  layout 'login'
+
   after_action :remove_notice, only: [:destroy, :create]
   
   def after_sign_out_path_for(_resource_or_scope)
