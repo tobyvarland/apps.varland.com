@@ -9,6 +9,8 @@ module AppsVarlandCom
     config.load_defaults 6.1
 
     config.active_job.queue_adapter = :sidekiq
+    config.active_job.default_queue_name = :default
+    config.active_storage.queues.analysis = :default
 
     config.generators do |generate|
       generate.helper false
