@@ -54,8 +54,8 @@ class Quality::RejectTagsController < ApplicationController
     @reject_tag = Quality::RejectTag.new(reject_tag_params)
     authorize @reject_tag
     if @reject_tag.save
-      Quality::RejectTagMailer.with(reject_tag: @reject_tag).notification_email.deliver_later
-      Quality::PrintRejectTagJob.perform_later @reject_tag, "RejectTag", "RL"
+      Quality::RejectTagMailer.with(reject_tag: @reject_tag).notification_email.deliver_later(wait: 10.seconds)
+      Quality::PrintRejectTagJob.set(wait: 10.seconds).perform_later @reject_tag, "RejectTag", "RL"
       redirect_to @reject_tag
     else
       render :new, status: :unprocessable_entity
