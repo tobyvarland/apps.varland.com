@@ -1,4 +1,4 @@
-module As400
+module AS400
   def self.table_name_prefix
     'as400_'
   end

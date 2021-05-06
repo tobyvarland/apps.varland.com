@@ -1,4 +1,4 @@
-class As400::ShopOrder < ApplicationRecord
+class AS400::ShopOrder < ApplicationRecord
 
   # Serialization.
   serialize :purchase_order
@@ -41,7 +41,7 @@ class As400::ShopOrder < ApplicationRecord
   def get_from_as400
     return if self.number.blank?
     # return unless self.customer_code.blank?
-    as400 = As400::ShopOrder.as400_json(self.number)
+    as400 = AS400::ShopOrder.as400_json(self.number)
     return if as400.blank? || !as400[:valid]
     self.customer_code = as400[:customer]
     self.process_code = as400[:process]

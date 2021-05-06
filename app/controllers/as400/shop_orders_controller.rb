@@ -1,2 +1,2 @@
-class As400::ShopOrdersController < ApplicationController
+class AS400::ShopOrdersController < ApplicationController
 end

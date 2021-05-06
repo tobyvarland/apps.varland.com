@@ -1,4 +1,4 @@
-class CreateAs400ShopOrders < ActiveRecord::Migration[6.1]
+class CreateAS400ShopOrders < ActiveRecord::Migration[6.1]
   def change
     create_table :as400_shop_orders do |t|
       t.string      :customer_code,     null: false,  limit: 6

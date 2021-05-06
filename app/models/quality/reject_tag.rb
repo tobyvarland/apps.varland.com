@@ -12,7 +12,7 @@ class Quality::RejectTag < ApplicationRecord
   include Attachable
   include Commentable
   belongs_to  :shop_order,
-              class_name: 'As400::ShopOrder'
+              class_name: 'AS400::ShopOrder'
   belongs_to  :user,
               class_name: "::User"
   belongs_to  :source,
@@ -86,7 +86,7 @@ class Quality::RejectTag < ApplicationRecord
 
   # Sets shop order association from shop order number.
   def shop_order_number=(value)
-    self.shop_order = As400::ShopOrder.from_as400(value)
+    self.shop_order = AS400::ShopOrder.from_as400(value)
   end
 
   # Returns user name.
