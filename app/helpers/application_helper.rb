@@ -2,28 +2,70 @@ module ApplicationHelper
 
   include Pagy::Frontend
 
-  def department_name(val)
+  def icon_for_file(file)
+    excel_types = ["application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+                   "application/vnd.ms-excel"]
+    word_types = ["application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+                  "application/msword"]
+    powerpoint_types = ["application/vnd.openxmlformats-officedocument.presentationml.presentation",
+                        "application/vnd.ms-powerpoint"]
+    code_types = ["application/json",
+                  "text/markdown",
+                  "application/xml",
+                  "text/xml",
+                  "text/html"]
+    case file.content_type
+    when *::Attachment.allowable_image_types
+      return fa("file-image")
+    when *::Attachment.allowable_video_types
+      return fa("file-video")
+    when *::Attachment.allowable_audio_types
+      return fa("file-audio")
+    when "application/pdf"
+      return fa("file-pdf")
+    when *excel_types
+      return fa("file-excel")
+    when *powerpoint_types
+      return fa("file-powerpoint")
+    when *word_types
+      return fa("file-word")
+    when "application/zip"
+      return fa("file-archive")
+    when "text/csv"
+      return fa("file-csv")
+    when *code_types
+      return fa("file-code")
+    when "text/plain", "application/rtf"
+      return fa("file-alt")
+    else
+      return fa("file-alt")
+    end
+  end
+
+  def department_name(val, options = {})
+    prefix = options.fetch(:prefix, true)
+    prefix_text = prefix ? "#{val} - " : ""
     case val.to_s
     when "3"
-      return "3 - Department 3"
+      return "#{prefix_text}Department 3"
     when "4"
-      return "4 - BNA"
+      return "#{prefix_text}BNA"
     when "5"
-      return "5 - Department 5"
+      return "#{prefix_text}Department 5"
     when "6"
-      return "6 - Oil Dip"
+      return "#{prefix_text}Oil Dip"
     when "7"
-      return "7 - Bake"
+      return "#{prefix_text}Bake"
     when "8"
-      return "8 - Robot"
+      return "#{prefix_text}Robot"
     when "9"
-      return "9 - Strip"
+      return "#{prefix_text}Strip"
     when "10"
-      return "10 - Miscellaneous"
+      return "#{prefix_text}Miscellaneous"
     when "11"
-      return "11 - Oil Dip"
+      return "#{prefix_text}Oil Dip"
     when "12"
-      return "12 - EN"
+      return "#{prefix_text}EN"
     else
       return "Unknown Department"
     end

@@ -1,0 +1,13 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  reject_tag: one
+  number: 1
+  barrel: 1
+  station: 1
+
+two:
+  reject_tag: two
+  number: 1
+  barrel: 1
+  station: 1

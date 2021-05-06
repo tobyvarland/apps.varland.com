@@ -6,6 +6,7 @@ class Quality::RejectTag < ApplicationRecord
 
   # Associations.
   include Attachable
+  include Commentable
   belongs_to  :shop_order,
               class_name: 'As400::ShopOrder'
   belongs_to  :user,
@@ -13,6 +14,13 @@ class Quality::RejectTag < ApplicationRecord
   belongs_to  :source,
               class_name: "Quality::RejectTag",
               optional: true
+  has_many    :loads,
+              class_name: "Quality::RejectTagLoad",
+              inverse_of: :reject_tag
+
+  # Nested attributes.
+  accepts_nested_attributes_for :attachments, reject_if: :all_blank, allow_destroy: true
+  accepts_nested_attributes_for :loads, reject_if: :all_blank, allow_destroy: true
 
   # Scopes.
   scope :with_shop_order, ->(value) {
@@ -26,8 +34,34 @@ class Quality::RejectTag < ApplicationRecord
 
   # Callbacks.
   before_validation :nullify_source
+  after_create      :update_as400_count
+  after_create      :add_part_history_note
+  after_discard     :update_as400_count
+  after_undiscard   :update_as400_count
 
   # Instance methods.
+
+  # Returns source description.
+  def source_description
+    return self.source.description if self.source.present?
+    return "Original S.O."
+  end
+
+  # Add part history note to System i.
+  def add_part_history_note
+    uri = URI.parse("http://vcmsapi.varland.com/create_part_history_note")
+    response = Net::HTTP.post_form(uri, customer: self.shop_order.customer_code,
+                                        process: self.shop_order.process_code,
+                                        part: self.shop_order.part,
+                                        sub: self.shop_order.sub,
+                                        note: "Reject Tag #{self.description}: http://localhost:3000/quality/reject_tags/#{self.id}")
+    return response.is_a?(Net::HTTPSuccess)
+  end
+
+  # Updates reject tag count on System i.
+  def update_as400_count
+    self.shop_order.set_as400_reject_tag_count
+  end
 
   # Returns description.
   def description

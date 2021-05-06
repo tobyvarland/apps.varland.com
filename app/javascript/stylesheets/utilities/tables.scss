@@ -13,3 +13,17 @@ td {
     @extend .mb-0;
   }
 }
+
+.table-nonfluid {
+  width: auto !important;
+}
+
+.table-striped-vertical {
+  tbody {
+    tr {
+      td:nth-of-type(odd) {
+        background-color: rgba(0, 0, 0, 0.05) !important;
+      }
+    }
+  }
+}

@@ -1,0 +1,125 @@
+ruby:
+  section_header_style = "border: 2px solid #000; border-bottom-width: 0; padding: 0.5rem 1rem; text-align: left; color: #fff; background-color: #222; font-weight: bold; text-transform: uppercase; font-size: 1.5rem;"
+  table_header_style = "padding: 0.5rem; background-color: #900000; color: #fff; font-weight: bold; text-transform: uppercase; border: 2px solid #000; font-size: 1rem;";
+  centered_cell_style = "color: #000; text-align: center; font-weight: bold; padding: 0.5rem; border: 2px solid #000;"
+  left_cell_style = "color: #000; text-align: left; font-weight: bold; padding: 0.5rem; border: 2px solid #000;"
+  zero_height_cell_style = "font-size: 0; height: 0; line-height: 0; padding: 0;"
+  load_info_loads = []
+  load_info_barrels = []
+  load_info_stations = []
+  @reject_tag.loads.each do |l|
+    load_info_loads << l.number
+    load_info_barrels << l.barrel
+    load_info_stations << l.station
+  end
+  while load_info_loads.length < 7
+    load_info_loads << "&nbsp;"
+    load_info_barrels << "&nbsp;"
+    load_info_stations << "&nbsp;"
+  end
+
+table style="width: 100%; border-collapse: collapse; border-spacing: 0; margin-bottom: 1rem;" cell-padding="0" cell-spacing="0"
+  thead
+    tr
+      th colspan="9" style="#{section_header_style}" Section 1 &ndash; Identification &amp; Description
+  tbody style="background-color: #f00000;"
+    tr
+      td style="width: 12.5%; #{zero_height_cell_style}" &nbsp;
+      td style="width: 12.5%; #{zero_height_cell_style}" &nbsp;
+      td style="width: 12.5%; #{zero_height_cell_style}" &nbsp;
+      td style="width: 12.5%; #{zero_height_cell_style}" &nbsp;
+      td style="width: 6.25%; #{zero_height_cell_style}" &nbsp;
+      td style="width: 18.75%; #{zero_height_cell_style}" &nbsp;
+      td style="width: 6.25%; #{zero_height_cell_style}" &nbsp;
+      td style="width: 6.25%; #{zero_height_cell_style}" &nbsp;
+      td style="width: 12.5%; #{zero_height_cell_style}" &nbsp;
+    tr
+      th colspan="2" style="#{table_header_style}" Shop Order
+      th colspan="2" style="#{table_header_style}" Reject Tag #
+      th colspan="2" style="#{table_header_style}" Source
+      th colspan="3" style="#{table_header_style}" Date
+    tr
+      td colspan="2" style="font-size: 2.5rem; #{centered_cell_style}" = @reject_tag.shop_order.number
+      td colspan="2" style="font-size: 2.5rem; #{centered_cell_style}" = @reject_tag.number
+      td colspan="2" style="font-size: 1.5rem; #{centered_cell_style}" = @reject_tag.source_description
+      td colspan="3" style="font-size: 1.5rem; #{centered_cell_style}" = @reject_tag.rejected_on.strftime("%m/%d/%y")
+    tr
+      th colspan="2" style="#{table_header_style}" Customer Code
+      th colspan="1" style="#{table_header_style}" Process
+      th colspan="5" style="#{table_header_style}" Part ID
+      th colspan="1" style="#{table_header_style}" Sub ID
+    tr
+      td colspan="2" style="font-size: 1.2rem; #{centered_cell_style}" = @reject_tag.shop_order.customer_code
+      td colspan="1" style="font-size: 1.2rem; #{centered_cell_style}" = @reject_tag.shop_order.process_code
+      td colspan="5" style="font-size: 1.2rem; #{centered_cell_style}" = @reject_tag.shop_order.part
+      td colspan="3" style="font-size: 1.2rem; #{centered_cell_style}" = @reject_tag.shop_order.sub
+    tr
+      th colspan="4" style="#{table_header_style}" Part Name
+      th colspan="5" style="#{table_header_style}" Process Specification
+    tr
+      td colspan="4" style="font-size: 1rem; #{left_cell_style}" = @reject_tag.shop_order.part_name.join("<br>").html_safe
+      td colspan="5" style="font-size: 1rem; #{left_cell_style}" = @reject_tag.shop_order.process_spec.join("<br>").html_safe
+    tr
+      th colspan="2" style="#{table_header_style}" Load #s
+      th colspan="2" style="#{table_header_style}" Pounds
+      th colspan="2" style="#{table_header_style}" Rejected By
+      th colspan="2" style="#{table_header_style}" Department
+      th colspan="1" style="#{table_header_style}" Defect
+    tr
+      td colspan="2" style="font-size: 1.2rem; #{centered_cell_style}" = @reject_tag.loads_rejected
+      td colspan="2" style="font-size: 1.2rem; #{centered_cell_style}" = number_with_precision @reject_tag.pounds, precision: 2, delimiter: ",", strip_insignificant_zeros: true
+      td colspan="2" style="font-size: 1.2rem; #{centered_cell_style}" = @reject_tag.user.name
+      td colspan="2" style="font-size: 1.2rem; #{centered_cell_style}" = department_name @reject_tag.department, prefix: false
+      td colspan="1" style="font-size: 1.2rem; #{centered_cell_style}" = @reject_tag.defect
+    tr
+      th colspan="9" style="#{table_header_style}" Description
+    tr
+      td colspan="9" style="font-size: 1rem; #{left_cell_style}" = @reject_tag.defect_description
+
+table style="width: 100%; border-collapse: collapse; border-spacing: 0; margin-bottom: 1rem;" cell-padding="0" cell-spacing="0"
+  thead
+    tr
+      th colspan="9" style="#{section_header_style}" Section 2 &ndash; Load Specific Information
+  tbody style="background-color: #f00000;"
+    tr
+      td style="width: 12.5%; #{zero_height_cell_style}" &nbsp;
+      td style="width: 12.5%; #{zero_height_cell_style}" &nbsp;
+      td style="width: 12.5%; #{zero_height_cell_style}" &nbsp;
+      td style="width: 12.5%; #{zero_height_cell_style}" &nbsp;
+      td style="width: 12.5%; #{zero_height_cell_style}" &nbsp;
+      td style="width: 12.5%; #{zero_height_cell_style}" &nbsp;
+      td style="width: 12.5%; #{zero_height_cell_style}" &nbsp;
+      td style="width: 12.5%; #{zero_height_cell_style}" &nbsp;
+      td style="width: 12.5%; #{zero_height_cell_style}" &nbsp;
+    tr
+      th style="#{table_header_style}" Load #
+      - 0.upto(6) do |i|
+        td style="font-size: 1rem; #{centered_cell_style}" = load_info_loads[i].to_s.html_safe
+    tr
+      th style="#{table_header_style}" Barrel #
+      - 0.upto(6) do |i|
+        td style="font-size: 1rem; #{centered_cell_style}" = load_info_barrels[i].to_s.html_safe
+    tr
+      th style="#{table_header_style}" Station #
+      - 0.upto(6) do |i|
+        td style="font-size: 1rem; #{centered_cell_style}" = load_info_stations[i].to_s.html_safe
+
+table style="width: 100%; border-collapse: collapse; border-spacing: 0; margin-bottom: 1rem;" cell-padding="0" cell-spacing="0"
+  thead
+    tr
+      th colspan="3" style="#{section_header_style}" Section 3 &ndash; Cause of Defect/Problem
+  tbody style="background-color: #f00000;"
+    tr
+      td style="width: 18.75%; #{zero_height_cell_style}" &nbsp;
+      td style="width: 6.25%; #{zero_height_cell_style}" &nbsp;
+      td style="width: 75%; #{zero_height_cell_style}" &nbsp;
+    - Quality::RejectTag.cause_options.each_with_index do |cause, index|
+      tr
+        th style="#{table_header_style}" = cause
+        td style="font-size: 1rem; #{centered_cell_style}" = (cause == @reject_tag.cause ? "&times;" : "&nbsp;").html_safe
+        - if index == 0
+          th style="#{table_header_style}" Comments
+        - elsif index == 1
+          td rowspan="#{Quality::RejectTag.cause_options.length - 1}" style="font-size: 1rem; vertical-align: top; #{left_cell_style}" = @reject_tag.cause_description
+
+p style="margin-bottom: 1rem;" = link_to "View in browser", @reject_tag

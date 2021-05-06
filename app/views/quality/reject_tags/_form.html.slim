@@ -55,8 +55,46 @@
     .col-12.col-md-9.mt-3    
       = f.input :cause_description, label: "Cause of Defect/Problem:", input_html: { rows: 5 }, hint: "Use this field to describe the cause of the defect or problem, not to state what the problem is. Investigate the cause of the problem ASAP once it's discovered and use this field to record any/all known information that may have contributed to the problem."
 
+  .row
+    .col-12.col-md-6.mt-3
+      .shadow-sm.border.p-3.rounded
+        .d-flex.flex-col.flex-md-row.align-items-center.justify-content-between
+          .fw-700.small.text-uppercase Load Specific Information
+          .links
+            = link_to_add_association fa("plus"),
+                                      f,
+                                      :loads,
+                                      class: ["btn", "btn-sm", "btn-secondary"],
+                                      'data-association-insertion-node': "#loads",
+                                      'data-association-insertion-method': "append"
+        table.table.table-striped.table-hover.mt-3.mb-0
+          thead.table-dark
+            tr
+              th.text-center Load #
+              th.text-center Barrel
+              th.text-center Station #
+              th.text-center.w-1 Options
+          tbody id="loads"
+            = f.simple_fields_for :loads do |load|
+              = render "quality/reject_tags/load_fields", f: load
+    .col-12.col-md-6.mt-3
+      .shadow-sm.border.p-3.rounded
+        .d-flex.flex-col.flex-md-row.align-items-center.justify-content-between
+          .fw-700.small.text-uppercase Attachments
+          .links
+            = link_to_add_association fa("plus"),
+                                      f,
+                                      :attachments,
+                                      class: ["btn", "btn-sm", "btn-secondary"],
+                                      'data-association-insertion-node': "#attachments",
+                                      'data-association-insertion-method': "append",
+                                      partial: "attachments/attachment_fields"
+        div id="attachments"
+          = f.simple_fields_for :attachments do |attachment|
+            = render "attachments/attachment_fields", f: attachment
+
   .form-actions
-    = link_to "#{fa "times"} Cancel".html_safe, :back, class: ["btn", "btn-light", "btn-sm", "me-3"], tabindex: -1
+    = link_to "#{fa "times"} Cancel".html_safe, quality_reject_tags_url, class: ["btn", "btn-light", "btn-sm", "me-3"], tabindex: -1
     = f.button :button, "#{fa "check"} Save Reject Tag".html_safe, class: ["btn-primary", "btn-sm"]
 
 javascript:

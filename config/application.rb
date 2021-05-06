@@ -17,6 +17,16 @@ module AppsVarlandCom
     
     config.time_zone = 'Eastern Time (US & Canada)'
     config.active_record.default_timezone = :local
+
+    config.active_storage.content_types_allowed_inline << "video/mp4"
+    config.active_storage.content_types_allowed_inline << "text/html"
+    config.active_storage.content_types_allowed_inline << "image/svg+xml"
+    config.active_storage.content_types_allowed_inline << "text/xml"
+    config.active_storage.content_types_allowed_inline << "application/xml"
+    config.active_storage.content_types_allowed_inline << "text/plain"
+    config.active_storage.content_types_allowed_inline << "application/json"
+    config.active_storage.content_types_allowed_inline << "text/markdown"
+    config.active_storage.content_types_to_serve_as_binary -= ["text/html", "image/svg+xml", "text/xml", "application/xml"]
     
   end
 end

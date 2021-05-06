@@ -1,7 +1,7 @@
 class Quality::RejectTagsController < ApplicationController
 
   before_action :set_reject_tag,
-                only: %i[ show edit update destroy add_upload ]
+                only: %i[ show edit update destroy shop_order_partial_tag ]
 
   def index
     authorize Quality::RejectTag
@@ -10,6 +10,33 @@ class Quality::RejectTagsController < ApplicationController
 
   def show
     authorize @reject_tag
+    respond_to do |format|
+      format.html {
+        if current_user
+          @comment = current_user.comments.build
+        end
+      }
+      format.pdf {
+        pdf = Quality::RejectTagPdf.new(@reject_tag)
+        send_data(pdf.render,
+                  filename: "#{@reject_tag.description}.pdf",
+                  type: "application/pdf",
+                  disposition: "inline")
+      }
+    end
+  end
+
+  def shop_order_partial_tag
+    authorize @reject_tag
+    respond_to do |format|
+      format.pdf {
+        pdf = Quality::RejectTagPartialTagPdf.new(@reject_tag.shop_order)
+        send_data(pdf.render,
+                  filename: "#{@reject_tag.description}.pdf",
+                  type: "application/pdf",
+                  disposition: "inline")
+      }
+    end
   end
 
   def new
@@ -27,6 +54,7 @@ class Quality::RejectTagsController < ApplicationController
     @reject_tag = Quality::RejectTag.new(reject_tag_params)
     authorize @reject_tag
     if @reject_tag.save
+      Quality::RejectTagMailer.with(reject_tag: @reject_tag).notification_email.deliver_later
       redirect_to @reject_tag
     else
       render :new, status: :unprocessable_entity
@@ -46,16 +74,6 @@ class Quality::RejectTagsController < ApplicationController
     authorize @reject_tag
     @reject_tag.discard
     redirect_to quality_reject_tags_url
-  end
-
-  def add_upload
-    authorize @reject_tag
-    params[:uploads].each do |upload|
-      attachment = @reject_tag.attachments.new
-      attachment.file.attach(upload)
-      attachment.save
-    end
-    redirect_to(@reject_tag)
   end
 
   def source_options_for_shop_order
@@ -93,7 +111,9 @@ class Quality::RejectTagsController < ApplicationController
                                                  :cause,
                                                  :cause_description,
                                                  :department,
-                                                 :print_partial_tag)
+                                                 :print_partial_tag,
+                                                 attachments_attributes: [:id, :name, :description, :file, :_destroy],
+                                                 loads_attributes: [:id, :number, :barrel, :station, :_destroy])
     end
 
 end

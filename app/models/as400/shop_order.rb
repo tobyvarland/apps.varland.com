@@ -6,13 +6,14 @@ class As400::ShopOrder < ApplicationRecord
   serialize :part_name
   serialize :part_description
   serialize :process_spec
+  serialize :equipment_used
 
   # Associations.
   has_many  :reject_tags,
             class_name: 'Quality::RejectTag'
 
   # Validations.
-  validates :customer_code, :process_code, :part, :number, :customer_name, :part_name, :part_description, :process_spec, :received_on, :written_up_on, :pounds, :pieces,
+  validates :customer_code, :process_code, :part, :number, :customer_name, :part_name, :part_description, :process_spec, :received_on, :written_up_on, :pounds, :pieces, :schedule_code,
             presence: true
   validates :number,
             uniqueness: true
@@ -21,6 +22,14 @@ class As400::ShopOrder < ApplicationRecord
   before_validation :get_from_as400
 
   # Instance methods.
+
+  # Set reject tag count on System i.
+  def set_as400_reject_tag_count
+    return true
+    #uri = URI.parse("http://vcmsapi.varland.com/set_reject_tag_count")
+    #response = Net::HTTP.post_form(uri, shop_order: self.number, reject_tags: self.reject_tags.length)
+    #return response.is_a?(Net::HTTPSuccess)
+  end
 
   # Returns part spec fields.
   def part_spec
@@ -32,13 +41,14 @@ class As400::ShopOrder < ApplicationRecord
   # Retrieces properties from System i.
   def get_from_as400
     return if self.number.blank?
-    return unless self.customer_code.blank?
+    # return unless self.customer_code.blank?
     as400 = As400::ShopOrder.as400_json(self.number)
     return if as400.blank? || !as400[:valid]
     self.customer_code = as400[:customer]
     self.process_code = as400[:process]
     self.part = as400[:part]
     self.sub = as400[:sub]
+    self.schedule_code = as400[:schedule_code]
     self.customer_name = as400[:customer_name]
     self.part_name = as400[:part_name]
     self.part_description = as400[:part_description]
@@ -48,6 +58,10 @@ class As400::ShopOrder < ApplicationRecord
     self.written_up_on = as400[:written_up_on]
     self.pounds = as400[:pounds]
     self.pieces = as400[:pieces]
+    self.container_count = as400[:containers]
+    self.container_type = as400[:container_type]
+    self.equipment_used = as400[:equipment_used]
+    self.received_at = as400[:received_at]
   end
 
   # Class methods.
@@ -61,6 +75,7 @@ class As400::ShopOrder < ApplicationRecord
       process_code: as400[:process],
       part: as400[:part],
       sub: as400[:sub],
+      schedule_code: as400[:schedule_code],
       customer_name: as400[:customer_name],
       part_name: as400[:part_name],
       part_description: as400[:part_description],
@@ -69,7 +84,11 @@ class As400::ShopOrder < ApplicationRecord
       received_on: as400[:received_on],
       written_up_on: as400[:written_up_on],
       pounds: as400[:pounds],
-      pieces: as400[:pieces]
+      pieces: as400[:pieces],
+      container_count: as400[:containers],
+      container_type: as400[:container_type],
+      equipment_used: as400[:equipment_used],
+      received_at: as400[:received_at]
     }
     create_with(attributes).find_or_create_by!(number: number)
   end

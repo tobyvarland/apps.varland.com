@@ -1,0 +1,9 @@
+.nested-fields.mt-3.border.p-3.rounded.shadow-sm
+  .row
+    .col-12.col-md-6
+      = f.input :file, label: "File:", input_html: { class: ["form-control"] }
+    .col-12.col-md-6
+      = f.input :name, label: "Name:", required: false, hint: "Defaults to file name. Use this field to override."
+    .col-12.mt-3
+      = f.input :description, label: "Description:"
+  = link_to_remove_association "#{fa "trash-alt"} Remove".html_safe, f, class: ["btn", "btn-sm", "btn-danger", "mt-3"], tabindex: -1

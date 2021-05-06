@@ -10,7 +10,9 @@ Rails.application.routes.draw do
   end
   namespace :quality do
     resources :reject_tags do
-      post  :add_upload
+      member do
+        get :shop_order_partial_tag
+      end
     end
   end
 
