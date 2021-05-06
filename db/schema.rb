@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_05_05_154723) do
+ActiveRecord::Schema.define(version: 2021_05_06_142131) do
 
   create_table "active_storage_attachments", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "name", null: false
@@ -125,7 +125,9 @@ ActiveRecord::Schema.define(version: 2021_05_05_154723) do
     t.datetime "discarded_at"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.string "slug"
     t.index ["shop_order_id"], name: "index_quality_reject_tags_on_shop_order_id"
+    t.index ["slug"], name: "index_quality_reject_tags_on_slug", unique: true
     t.index ["source_id"], name: "index_quality_reject_tags_on_source_id"
     t.index ["user_id"], name: "index_quality_reject_tags_on_user_id"
   end

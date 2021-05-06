@@ -96,7 +96,7 @@ class Quality::RejectTagsController < ApplicationController
       elsif params[:reject_tag_id].present?
         id = params[:reject_tag_id]
       end
-      @reject_tag = Quality::RejectTag.find(id)
+      @reject_tag = Quality::RejectTag.friendly.find(id)
     end
 
     def reject_tag_params

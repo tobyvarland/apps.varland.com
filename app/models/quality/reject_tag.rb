@@ -1,5 +1,9 @@
 class Quality::RejectTag < ApplicationRecord
 
+  # Use FriendlyID.
+  extend FriendlyId
+  friendly_id :description, use: :slugged
+
   # Soft deletes.
   include Discard::Model
   default_scope -> { kept }
@@ -54,7 +58,7 @@ class Quality::RejectTag < ApplicationRecord
                                         process: self.shop_order.process_code,
                                         part: self.shop_order.part,
                                         sub: self.shop_order.sub,
-                                        note: "Reject Tag #{self.description}: http://apps.varland.com/quality/reject_tags/#{self.id}")
+                                        note: "Reject Tag #{self.description}: http://apps.varland.com/quality/reject_tags/#{self.slug}")
     return response.is_a?(Net::HTTPSuccess)
   end
 
