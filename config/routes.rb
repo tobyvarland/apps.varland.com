@@ -34,6 +34,7 @@ Rails.application.routes.draw do
   namespace :vcms do
     get "shipping/labeling_instructions", to: "shipping#labeling_instructions", as: :shipping_labeling_instructions
     get "shipping/promise_list",          to: "shipping#promise_list",          as: :shipping_promise_list
+    get "production/jobs_on_receipt",     to: "production#jobs_on_receipt",     as: :production_jobs_on_receipt
   end
 
   # Mount Sidekiq.

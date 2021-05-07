@@ -25,7 +25,7 @@ html lang="en"
     = favicon_link_tag asset_path('icon.png')
     = favicon_link_tag asset_path('web-app-icon.png'), rel: 'apple-touch-icon', type: 'image/png'
 
-  body
+  body data-auto-refresh="#{defined?(@auto_refresh) ? @auto_refresh : 0}"
   
     = render 'shared/nav'
 

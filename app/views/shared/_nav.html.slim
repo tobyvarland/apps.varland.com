@@ -8,12 +8,10 @@ nav.navbar.fixed-top.navbar-expand-md.navbar-dark.bg-dark id="primary-nav"
       .me-auto
         ul.navbar-nav
           == yield :nav
-      /!
-        .me-auto
-          ul.navbar-nav
-            li.nav-item.me-3 = primary_nav_link "home", "Home", root_path
       .ms-auto
         ul.navbar-nav
+          li.nav-item.me-3.d-flex.flex-row.align-items-center.justify-content-center.d-none id="auto_refresh"
+            .navbar-text.px-md-2.shadow-sm.bg-black.rounded.font-monospace.fs-5 == "#{fa "sync-alt", spin: true, text_class: "text-white-important"} <span id=\"auto_refresh_remaining\">0:10</span>"
           li.nav-item.me-3.d-none = primary_nav_link "sitemap", "Apps", "#", link_class: ["app-nav-toggler"]
           - if current_user
             li.nav-item = primary_nav_link "id-badge", "Sign Out", destroy_user_session_path
@@ -41,6 +39,10 @@ nav.navbar.fixed-top.navbar-expand-md.navbar-dark.bg-dark id="primary-nav"
             div Reject Tags
     ul.list-unstyled
       li.header System i Queries
+      li
+        = link_to vcms_production_jobs_on_receipt_url do
+          = fa "link"
+          div Jobs on Receipt
       li
         = link_to vcms_shipping_labeling_instructions_url do
           = fa "link"

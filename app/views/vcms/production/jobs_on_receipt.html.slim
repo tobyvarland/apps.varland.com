@@ -1,0 +1,20 @@
+ruby:
+  provide(:title, 'Jobs on Receipt')
+
+- content_for :nav do
+  = render "nav"
+
+.d-flex.flex-row.align-items-center.justify-content-between.mt-3
+  h1.font-varland Jobs on Receipt
+
+.row
+  .col-12.my-3
+    .shadow-sm.rounded
+      .d-none.d-md-flex.flex-row.align-items-center.justify-content-start.bg-dark.text-white.fw-700.rounded-top.border-dark
+        .p-2.w-20 Receipt Info
+        .p-2.w-15 Flags
+        .p-2.w-20 Order Info
+        .p-2.w-20 Order Size
+        .p-2.w-25 Notes
+      .jobs-on-receipt
+        = render partial: "job_on_receipt", collection: @jobs, as: :job

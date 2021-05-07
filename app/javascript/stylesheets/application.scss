@@ -104,7 +104,7 @@ h1 {
     }
     &:hover, &:active {
       i, svg {
-        color: $color-varland-red !important
+        color: $color-varland-red;
       }
       .label {
         text-decoration: underline;
@@ -119,7 +119,7 @@ h1 {
   .navbar-text {
     cursor: default;
     i, svg {
-      color: $color-varland-red !important
+      color: $color-varland-red;
     }
     .label {
       text-decoration: underline;
@@ -288,7 +288,7 @@ h1 {
 
 .promise-date {
   .orders {
-    .order:nth-of-type(even) {
+    .order:nth-of-type(odd) {
       @extend .bg-light;
     }
   }
@@ -296,4 +296,20 @@ h1 {
 
 .bg-005 {
   background: rgba(0, 0, 0, 0.05) !important;
+}
+
+.jobs-on-receipt {
+  .job:last-child {
+    @extend .border-bottom;
+  }
+  .job:nth-of-type(odd) {
+    @extend .bg-light;
+  }
+}
+
+.text-white-important {
+  color: #fff !important;
+}
+.bg-black {
+  background-color: #000 !important;
 }
