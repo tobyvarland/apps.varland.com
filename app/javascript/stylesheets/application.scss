@@ -58,8 +58,11 @@ h1 {
     }
     .header {
       @extend .fs-5;
-      @extend .fw-200;
+      @extend .fw-700;
       @extend .mb-2;
+      text-decoration: underline;
+      text-decoration-color: $color-varland-red;
+      text-decoration-thickness: 0.15em;
     }
     li + .header {
       @extend .mt-2;

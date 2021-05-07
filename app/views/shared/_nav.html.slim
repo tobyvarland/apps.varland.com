@@ -31,6 +31,28 @@ nav.navbar.fixed-top.navbar-expand-md.navbar-dark.bg-dark id="primary-nav"
             = fa "link"
             div Manage Permissions
     ul.list-unstyled
+      li.header External Links
+      li
+        = link_to "https://drive.google.com/drive/u/0/folders/0ADakPLFe9iZlUk9PVA", target: "_blank" do
+          = fa "external-link-alt"
+          div Departmental Information
+      li
+        = link_to "http://www.fastmail.com/calendar", target: "_blank" do
+          = fa "external-link-alt"
+          div Vacation Calendars
+        div.mt-1
+          i.fa.fa-fw.text-dark.me-2
+          small.text-uppercase Username: 
+          code.fw-700 varland@fastmail.com
+        div.mb-1
+          i.fa.fa-fw.text-dark.me-2
+          small.text-uppercase Password: 
+          code.fw-700 plantplant
+      li
+        = link_to "http://mail.varland.com", target: "_blank" do
+          = fa "external-link-alt"
+          div Varland Email
+    ul.list-unstyled
       li.header Quality
       - if policy(Quality::RejectTag).index?
         li
