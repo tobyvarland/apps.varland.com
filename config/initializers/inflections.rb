@@ -17,4 +17,5 @@
 
 ActiveSupport::Inflector.inflections(:en) do |inflect|
   inflect.acronym 'AS400'
+  inflect.acronym 'VCMS'
 end

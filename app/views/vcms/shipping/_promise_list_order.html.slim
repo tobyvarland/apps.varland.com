@@ -1,0 +1,10 @@
+.order.p-2.border-top
+  .details.d-flex.flow-row.align-items-center.justify-content-between
+    .left.d-flex.flex-row.align-items-middle.justify-content-start
+      strong = order[:shop_order]
+      - if order[:inspected]
+        .ms-1.text-success = fa "check-circle"
+    .small = "#{order[:containers]} #{order[:container_type]}"
+  .part-spec.small == [order[:customer], order[:process], order[:part_number], order[:part_sub]].reject(&:blank?).join(" <span class=\"text-uncolor\">/</span> ")
+  - unless order[:status_note].blank?
+    .notes.bg-005.p-1.fw-700.text-secondary.small.shadow-sm.rounded = order[:status_note]

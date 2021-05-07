@@ -1,0 +1,21 @@
+.promise-date.col-12.col-md.mt-3
+  ruby:
+    date_class = case date[:parsed]
+                 when proc { |n| n < Date.today } ; "bg-danger"
+                 when Date.today ; "bg-success"
+                 when Date.tomorrow ; "bg-primary"
+                 else ; "bg-dark"
+                 end
+  .border.rounded.shadow-sm
+    .date-header.d-flex.flex-row.align-items-center.justify-content-between.p-2.rounded-top class=date_class
+      .date.text-white.fw-700.m-0
+        - if date[:parsed] == Date.today
+          | Today
+        - elsif date[:parsed] == Date.tomorrow
+          | Tomorrow
+        - else
+          = date[:parsed].strftime "%m/%d/%y (%a)"
+      .count.m-0.d-flex.flex-col.align-items-center.justify-content-center
+        .badge.bg-warning.text-dark.rounded-pill.fw-700 = date[:orders].size
+    .orders
+      = render partial: "promise_list_order", collection: date[:orders], as: :order

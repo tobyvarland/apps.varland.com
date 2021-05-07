@@ -1,0 +1,28 @@
+ruby:
+  provide(:title, 'Labeling Instructions')
+
+- content_for :nav do
+  = render "nav"
+
+.d-flex.flex-row.align-items-center.justify-content-between.mt-3
+  h1.font-varland Labeling Instructions
+
+.row
+  .col-12.col-md-3.mt-3
+    = form_with url: vcms_shipping_labeling_instructions_path,
+                method: 'get',
+                class: ["vp-gray-form", "pt-3"] do |f|
+      = f.label(:shop_order, "Shop Order:", class: "form-label")
+      = f.text_field(:shop_order, class: ["form-control", "fs-2"], oninput: 'if (this.value.length == 10) { this.form.submit(); }', onchange: 'this.form.submit();', autofocus: true, placeholder: "⏎ to submit", pattern: "[0-9]{6,10}")
+
+  .col-12.mt-3
+    - if defined?(@instructions) && !@instructions.blank?
+      .bg-dark.text-light.shadow-sm.pt-3.px-3.mb-3.rounded.overflow-auto
+        - if !@instructions[:has_instructions]
+          .text-uncolor.fst-italic.mb-3 No instructions found for S.O. ##{@instructions[:shop_order]}.
+        - else
+          .fw-700.text-decoration-underline.fs-2.lh-1 Labeling instructions for <span class="font-monospace">#{@instructions[:customer]}</span> (SO # <span class="font-monospace">#{params[:shop_order]}</span>)
+          .text-uncolor.fw-200.fs-5.lh-sm
+            | Last update: #{@instructions[:updated_by]}, #{Time.zone.strptime(@instructions[:updated_at].to_s, "%Y-%m-%dT%H:%M:%S%z").strftime('%m/%d/%y %l:%M%P')}
+          .mt-3.font-monospace.fs-4
+            = simple_format @instructions[:text]

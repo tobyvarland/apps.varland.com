@@ -31,6 +31,10 @@ Rails.application.routes.draw do
     get "reject_tags/sources_for/:shop_order",    to: "reject_tags#source_options_for_shop_order"
     get "reject_tags/tag_number_for/:shop_order", to: "reject_tags#tag_number_for_shop_order"
   end
+  namespace :vcms do
+    get "shipping/labeling_instructions", to: "shipping#labeling_instructions", as: :shipping_labeling_instructions
+    get "shipping/promise_list",          to: "shipping#promise_list",          as: :shipping_promise_list
+  end
 
   # Mount Sidekiq.
   mount Sidekiq::Web => "/sidekiq"

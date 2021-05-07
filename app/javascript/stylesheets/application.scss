@@ -285,3 +285,15 @@ h1 {
     @extend .pt-2;
   }
 }
+
+.promise-date {
+  .orders {
+    .order:nth-of-type(even) {
+      @extend .bg-light;
+    }
+  }
+}
+
+.bg-005 {
+  background: rgba(0, 0, 0, 0.05) !important;
+}

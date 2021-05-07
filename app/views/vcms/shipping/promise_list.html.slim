@@ -1,0 +1,14 @@
+ruby:
+  provide(:title, 'Promise List')
+
+- content_for :nav do
+  = render "nav"
+
+.d-flex.flex-row.align-items-center.justify-content-between.mt-3
+  h1.font-varland Promise List
+
+- if !defined?(@dates) || @dates.blank?
+  .bg-light.shadow-sm.p-3.my-3.rounded.fst-italic.text-uncolor No promised jobs found.
+- else
+  .row id="promise-list"
+    = render partial: "promise_list_date", collection: @dates, as: :date
