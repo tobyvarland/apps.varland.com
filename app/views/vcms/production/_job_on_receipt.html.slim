@@ -7,11 +7,14 @@
       .small.text-uncolor Receipt Date:
       .fw-700.ms-1 = Date.strptime(job[:receipt_date], "%Y-%m-%d").strftime("%m/%d/%y")
   .p-2.pt-0.pt-md-2.w-md-15.d-flex.flex-row.flex-md-column.align-items-start.justify-content-start.align-self-stretch.order-2.order-md-1
-    - [:bad_price, :bad_procedure].each_with_index do |flag, index|
-      .badge class="bg-#{job[flag] ? "danger" : "success"} #{index > 0 ? "mt-md-1 ms-1 ms-md-0" : ""}"
-        == job[flag] ? "#{fa "times"} Bad " : "#{fa "check"} "
-        = flag.to_s.gsub("bad_", "").humanize
-        = job[flag] ? "" : " OK"
+    - if job[:new_part]
+      .badge.bg-primary == "#{fa "certificate"} New Part"
+    - else
+      - [:bad_price, :bad_procedure].each_with_index do |flag, index|
+        .badge class="bg-#{job[flag] ? "danger" : "success"} #{index > 0 ? "mt-md-1 ms-1 ms-md-0" : ""}"
+          == job[flag] ? "#{fa "times"} Bad " : "#{fa "check"} "
+          = flag.to_s.gsub("bad_", "").humanize
+          = job[flag] ? "" : " OK"
   .p-2.w-md-20.d-flex.flex-column.align-items-start.justify-content-start.align-self-stretch.order-0.order-md-2
     .d-flex.flex-row.align-items-center.justify-content-start
       .small.text-uncolor Receipt #:
