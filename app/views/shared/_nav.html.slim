@@ -33,10 +33,6 @@ nav.navbar.fixed-top.navbar-expand-md.navbar-dark.bg-dark id="primary-nav"
     ul.list-unstyled
       li.header External Links
       li
-        = link_to "https://drive.google.com/drive/u/0/folders/0ADakPLFe9iZlUk9PVA", target: "_blank" do
-          = fa "external-link-alt"
-          div Departmental Information
-      li
         = link_to "http://www.fastmail.com/calendar", target: "_blank" do
           = fa "external-link-alt"
           div Vacation Calendars
@@ -52,6 +48,10 @@ nav.navbar.fixed-top.navbar-expand-md.navbar-dark.bg-dark id="primary-nav"
         = link_to "http://mail.varland.com", target: "_blank" do
           = fa "external-link-alt"
           div Varland Email
+      li
+        = link_to "https://drive.google.com/drive/u/0/folders/0ADakPLFe9iZlUk9PVA", target: "_blank" do
+          = fa "external-link-alt"
+          div Varland Employee Information
     ul.list-unstyled
       li.header Quality
       - if policy(Quality::RejectTag).index?
