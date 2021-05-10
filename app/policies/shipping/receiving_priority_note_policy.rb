@@ -9,7 +9,7 @@ class Shipping::ReceivingPriorityNotePolicy < ApplicationPolicy
   end
 
   def destroy?
-    super || (user && user.id == object.requested_by_user_id )
+    super || (user && user.id == record.requested_by_user_id )
   end
 
   def update?
