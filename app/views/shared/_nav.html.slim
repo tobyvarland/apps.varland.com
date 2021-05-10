@@ -60,6 +60,13 @@ nav.navbar.fixed-top.navbar-expand-md.navbar-dark.bg-dark id="primary-nav"
             = fa "link"
             div Reject Tags
     ul.list-unstyled
+      li.header Shipping
+      - if policy(Shipping::ReceivingPriorityNote).index?
+        li
+          = link_to shipping_receiving_priority_notes_url do
+            = fa "link"
+            div Receiving Priority Notes
+    ul.list-unstyled
       li.header System i Queries
       li
         = link_to vcms_production_jobs_on_receipt_url do

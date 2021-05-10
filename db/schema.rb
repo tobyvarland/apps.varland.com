@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_05_06_142131) do
+ActiveRecord::Schema.define(version: 2021_05_10_153741) do
 
   create_table "active_storage_attachments", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "name", null: false
@@ -143,6 +143,19 @@ ActiveRecord::Schema.define(version: 2021_05_06_142131) do
     t.index ["user_id"], name: "index_reviews_on_user_id"
   end
 
+  create_table "shipping_receiving_priority_notes", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.string "request_type", null: false
+    t.text "request_details", null: false
+    t.bigint "requested_by_user_id", null: false
+    t.bigint "completed_by_user_id"
+    t.datetime "completed_at"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["completed_at"], name: "recnote_comp_user"
+    t.index ["completed_by_user_id"], name: "recnote_req_user"
+    t.index ["requested_by_user_id"], name: "index_shipping_receiving_priority_notes_on_requested_by_user_id"
+  end
+
   create_table "users", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "email", null: false
     t.string "name", null: false
@@ -170,4 +183,6 @@ ActiveRecord::Schema.define(version: 2021_05_06_142131) do
   add_foreign_key "quality_reject_tags", "quality_reject_tags", column: "source_id"
   add_foreign_key "quality_reject_tags", "users"
   add_foreign_key "reviews", "users"
+  add_foreign_key "shipping_receiving_priority_notes", "users", column: "completed_by_user_id", name: "fk_recnotes_comp_user"
+  add_foreign_key "shipping_receiving_priority_notes", "users", column: "requested_by_user_id", name: "fk_recnotes_req_user"
 end

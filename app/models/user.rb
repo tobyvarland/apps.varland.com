@@ -15,6 +15,12 @@ class User < ApplicationRecord
   has_many  :comments
   has_many  :reject_tags,
             class_name: 'Quality::RejectTag'
+  has_many  :authored_receiving_priority_notes,
+            class_name: 'Shipping::ReceivingPriorityNote',
+            foreign_key: "requested_by_user_id"
+  has_many  :completed_receiving_priority_notes,
+            class_name: 'Shipping::ReceivingPriorityNote',
+            foreign_key: "completed_by_user_id"
 
   # Scopes.
   scope :by_number, -> { order(:employee_number) }

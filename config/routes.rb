@@ -17,6 +17,9 @@ Rails.application.routes.draw do
       end
     end
   end
+  namespace :shipping do
+    resources :receiving_priority_notes, except: [:edit, :show]
+  end
 
   # Devise routes for Google authentication.
   devise_for :users, controllers: { omniauth_callbacks: 'users/omniauth_callbacks' }

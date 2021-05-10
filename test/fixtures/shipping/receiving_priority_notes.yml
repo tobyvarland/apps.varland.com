@@ -1,0 +1,15 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  request_type: MyString
+  request_details: MyText
+  requested_by_user_id: one
+  completed_by_user_id: one
+  completed_at: 2021-05-10 11:37:41
+
+two:
+  request_type: MyString
+  request_details: MyText
+  requested_by_user_id: two
+  completed_by_user_id: two
+  completed_at: 2021-05-10 11:37:41

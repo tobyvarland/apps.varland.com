@@ -6,11 +6,16 @@ th, td {
 }
 
 td {
-  .btn + .btn {
+  .btn + .btn,
+  form + .btn,
+  .btn + form {
     @extend .ms-1;
   }
   p:last-child {
     @extend .mb-0;
+  }
+  form {
+    display: inline-block;
   }
 }
 

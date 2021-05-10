@@ -131,4 +131,13 @@ module ApplicationHelper
     return content_tag(:div, link, class: ["col-12", "col-md-3"])
   end
 
+  def row_class_for_receiving_note(type)
+    return case type
+           when "Purchased Item" then "table-success"
+           when "Customer Parts" then "table-danger"
+           when "Chemicals" then "table-primary"
+           else "table-warning"
+           end
+  end
+
 end
