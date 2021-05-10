@@ -62,6 +62,7 @@ class User < ApplicationRecord
     json = User.system_i_json(self.email)
     self.employee_number = json[:number]
     self.title = json[:title]
+    self.username = json[:username]
     self.save
   end
 
@@ -75,7 +76,8 @@ class User < ApplicationRecord
       uid: uid,
       name: name,
       employee_number: system_i[:number],
-      title: system_i[:title]
+      title: system_i[:title],
+      username: system_i[:username]
     }
     create_with(user_attributes).find_or_create_by!(email: email)
   end
