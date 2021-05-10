@@ -27,7 +27,7 @@ class Shipping::ReceivingPriorityNotesController < ApplicationController
   def update
     authorize @shipping_receiving_priority_note
     if @shipping_receiving_priority_note.update(shipping_receiving_priority_note_params)
-      # Shipping::ReceivingPriorityNoteMailer.with(note: @shipping_receiving_priority_note).completion_email.deliver_now
+      Shipping::ReceivingPriorityNoteMailer.with(note: @shipping_receiving_priority_note).completion_email.deliver_now
       redirect_to shipping_receiving_priority_notes_url
     else
       redirect_to shipping_receiving_priority_notes_url, alert: "Error updating note. Please try again or contact IT for help."
