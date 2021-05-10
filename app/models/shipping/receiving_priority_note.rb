@@ -18,8 +18,14 @@ class Shipping::ReceivingPriorityNote < ApplicationRecord
 
   # Callbacks.
   before_update :set_completed_timestamp
+  after_update  :process_notification
 
   # Instance methods.
+
+  # Sends notification email.
+  def process_notification
+    Shipping::ReceivingPriorityNoteMailer.with(note: self).completion_email.deliver_later
+  end
 
   # Sets completed timestamp before update if user present.
   def set_completed_timestamp
