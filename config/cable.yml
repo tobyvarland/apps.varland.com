@@ -8,5 +8,5 @@ test:
 
 production:
   adapter: redis
-  url: redis://apps.varland.com:6379
+  url: redis://localhost:6379
   channel_prefix: varland_apps_production
