@@ -26,7 +26,8 @@ ruby:
       tbody
         - @shipping_receiving_priority_notes.each do |note|
           tr class="#{row_class_for_receiving_note(note.request_type)}"
-            td.align-top = note.request_type
+            td.align-top
+              = receiving_note_type_badge note.request_type
             td.align-top.text-center = note.created_at.strftime("%m/%d/%y")
             td.align-top = note.requested_by_user.name_and_number
             td.align-top.text-wrap = simple_format note.request_details
@@ -36,4 +37,4 @@ ruby:
                   = f.association :completed_by_user, as: :hidden, input_html: { value: current_user.id }
                   = f.button :button, "#{fa "check"} Mark Complete".html_safe, class: ["btn-primary", "btn-sm"], data: { confirm: "Are you sure you want to mark this item complete? This will send an email notification to #{note.requested_by_user.name}." }
               - if policy(note).destroy?
-                = link_to "#{fa 'trash-alt'} Destroy".html_safe, note, method: :delete, data: { confirm: "Are you sure you want to delete this note?" }, class: ["btn", "btn-sm", "btn-danger"]
+                = link_to "#{fa 'trash-alt'} Delete".html_safe, note, method: :delete, data: { confirm: "Are you sure you want to delete this note?" }, class: ["btn", "btn-sm", "btn-danger"]

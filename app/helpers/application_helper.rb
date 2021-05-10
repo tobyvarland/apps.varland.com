@@ -140,4 +140,14 @@ module ApplicationHelper
            end
   end
 
+  def receiving_note_type_badge(type)
+    badge_class = case type
+                  when "Purchased Item" then "bg-success"
+                  when "Customer Parts" then "bg-danger"
+                  when "Chemicals" then "bg-primary"
+                  else "bg-warning"
+                  end
+    return content_tag(:div, type, class: ["badge", badge_class])
+  end
+
 end
