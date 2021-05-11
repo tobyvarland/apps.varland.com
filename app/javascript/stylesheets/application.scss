@@ -306,7 +306,9 @@ h1 {
     @extend .border-bottom;
   }
   .job:nth-of-type(odd) {
-    @extend .bg-light;
+    .job-inner {
+      @extend .bg-005;
+    }
   }
 }
 

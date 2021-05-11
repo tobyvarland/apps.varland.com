@@ -1,34 +1,35 @@
-.job.d-flex.flex-column.flex-md-row.align-items-center.justify-content-start.rounded-bottom.border-start.border-end.border-top
-  .p-2.pt-0.pt-md-2.w-md-20.d-flex.flex-column.align-items-start.justify-content-start.align-self-stretch.order-1.order-md-0
-    .d-flex.flex-row.align-items-center.justify-content-start
-      .small.text-uncolor Age:
-      .fw-700.ms-1 = "#{pluralize(job[:age], "day")} old"
-    .d-flex.flex-row.align-items-center.justify-content-start
-      .small.text-uncolor Receipt Date:
-      .fw-700.ms-1 = Date.strptime(job[:receipt_date], "%Y-%m-%d").strftime("%m/%d/%y")
-  .p-2.pt-0.pt-md-2.w-md-15.d-flex.flex-row.flex-md-column.align-items-start.justify-content-start.align-self-stretch.order-2.order-md-1
-    - if job[:new_part]
-      .badge.bg-primary == "#{fa "certificate"} New Part"
-    - else
-      - [:bad_price, :bad_procedure].each_with_index do |flag, index|
-        .badge class="bg-#{job[flag] ? "danger" : "success"} #{index > 0 ? "mt-md-1 ms-1 ms-md-0" : ""}"
-          == job[flag] ? "#{fa "times"} Bad " : "#{fa "check"} "
-          = flag.to_s.gsub("bad_", "").humanize
-          = job[flag] ? "" : " OK"
-  .p-2.w-md-20.d-flex.flex-column.align-items-start.justify-content-start.align-self-stretch.order-0.order-md-2
-    .d-flex.flex-row.align-items-center.justify-content-start
-      .small.text-uncolor Receipt #:
-      .fw-700.ms-1 = job[:shop_order]
-    .d-flex.flex-row.align-items-center.justify-content-start
-      .fw-700.small == [job[:customer], job[:process], job[:part_number], job[:part_sub]].reject(&:blank?).join(" <span class=\"text-uncolor\">/</span> ")
-  .p-2.w-md-20.d-none.d-md-flex.flex-column.align-items-start.justify-content-start.align-self-stretch.order-md-3
-    .d-flex.flex-row.align-items-center.justify-content-start
-      .small.text-uncolor Pounds:
-      .fw-700.ms-1 = number_with_precision job[:pounds], precision: 2, delimiter: ",", strip_insignificant_zeros: true
-    .d-flex.flex-row.align-items-center.justify-content-start
-      .small.text-uncolor Pieces:
-      .fw-700.ms-1 = number_with_delimiter job[:pieces]
-    .d-flex.flex-row.align-items-center.justify-content-start
-      .small.text-uncolor Containers:
-      .fw-700.ms-1 = pluralize(job[:containers], job[:container_type]).upcase
-  .p-2.w-md-25.d-none.d-md-flex.flex-column.align-items-start.justify-content-start.align-self-stretch.fw-700.small.order-md-4 = job[:status_note]
+.job class="#{job[:age] > 1 ? "bg-warning" : ""}"
+  .d-flex.flex-column.flex-md-row.align-items-center.justify-content-start.rounded-bottom.border-start.border-end.border-top.job-inner
+    .p-2.pt-0.pt-md-2.w-md-20.d-flex.flex-column.align-items-start.justify-content-start.align-self-stretch.order-1.order-md-0
+      .d-flex.flex-row.align-items-center.justify-content-start
+        .small Age:
+        .fw-700.ms-1 = "#{pluralize(job[:age], "day")} old"
+      .d-flex.flex-row.align-items-center.justify-content-start
+        .small Receipt Date:
+        .fw-700.ms-1 = Date.strptime(job[:receipt_date], "%Y-%m-%d").strftime("%m/%d/%y")
+    .p-2.pt-0.pt-md-2.w-md-15.d-flex.flex-row.flex-md-column.align-items-start.justify-content-start.align-self-stretch.order-2.order-md-1
+      - if job[:new_part]
+        .badge.bg-primary == "#{fa "certificate"} New Part"
+      - else
+        - [:bad_price, :bad_procedure].each_with_index do |flag, index|
+          .badge class="bg-#{job[flag] ? "danger" : "success"} #{index > 0 ? "mt-md-1 ms-1 ms-md-0" : ""}"
+            == job[flag] ? "#{fa "times"} Bad " : "#{fa "check"} "
+            = flag.to_s.gsub("bad_", "").humanize
+            = job[flag] ? "" : " OK"
+    .p-2.w-md-20.d-flex.flex-column.align-items-start.justify-content-start.align-self-stretch.order-0.order-md-2
+      .d-flex.flex-row.align-items-center.justify-content-start
+        .small Receipt #:
+        .fw-700.ms-1 = job[:shop_order]
+      .d-flex.flex-row.align-items-center.justify-content-start
+        .fw-700.small == [job[:customer], job[:process], job[:part_number], job[:part_sub]].reject(&:blank?).join(" <span class=\"text-uncolor\">/</span> ")
+    .p-2.w-md-20.d-none.d-md-flex.flex-column.align-items-start.justify-content-start.align-self-stretch.order-md-3
+      .d-flex.flex-row.align-items-center.justify-content-start
+        .small Pounds:
+        .fw-700.ms-1 = number_with_precision job[:pounds], precision: 2, delimiter: ",", strip_insignificant_zeros: true
+      .d-flex.flex-row.align-items-center.justify-content-start
+        .small Pieces:
+        .fw-700.ms-1 = number_with_delimiter job[:pieces]
+      .d-flex.flex-row.align-items-center.justify-content-start
+        .small Containers:
+        .fw-700.ms-1 = pluralize(job[:containers], job[:container_type]).upcase
+    .p-2.w-md-25.d-none.d-md-flex.flex-column.align-items-start.justify-content-start.align-self-stretch.fw-700.small.order-md-4 = job[:status_note]
