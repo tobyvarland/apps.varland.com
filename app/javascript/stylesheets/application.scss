@@ -297,9 +297,8 @@ h1 {
   }
 }
 
-.bg-005 {
-  background: rgba(0, 0, 0, 0.05) !important;
-}
+.bg-005 { background: rgba(0, 0, 0, 0.05) !important; }
+.bg-010 { background: rgba(0, 0, 0, 0.1) !important; }
 
 .jobs-on-receipt {
   .job:last-child {
@@ -307,7 +306,7 @@ h1 {
   }
   .job:nth-of-type(odd) {
     .job-inner {
-      @extend .bg-005;
+      @extend .bg-010;
     }
   }
 }
