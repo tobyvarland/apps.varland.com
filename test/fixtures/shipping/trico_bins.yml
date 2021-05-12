@@ -1,0 +1,19 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  shop_order: one
+  load_at: 2021-05-12 10:36:14
+  load_number: 1
+  scale_weight: 1.5
+  percent_of_total: 1.5
+  proportional_pieces: 1
+  fudge_pieces: 1
+
+two:
+  shop_order: two
+  load_at: 2021-05-12 10:36:14
+  load_number: 1
+  scale_weight: 1.5
+  percent_of_total: 1.5
+  proportional_pieces: 1
+  fudge_pieces: 1

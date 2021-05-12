@@ -19,6 +19,7 @@ Rails.application.routes.draw do
   end
   namespace :shipping do
     resources :receiving_priority_notes, except: [:edit, :show]
+    resources :trico_bins
   end
 
   # Devise routes for Google authentication.
@@ -38,6 +39,9 @@ Rails.application.routes.draw do
     get "shipping/labeling_instructions", to: "shipping#labeling_instructions", as: :shipping_labeling_instructions
     get "shipping/promise_list",          to: "shipping#promise_list",          as: :shipping_promise_list
     get "production/jobs_on_receipt",     to: "production#jobs_on_receipt",     as: :production_jobs_on_receipt
+  end
+  namespace :opto do
+    post "log_trico_load",  to: "opto#log_trico_load"
   end
 
   # Mount Sidekiq.

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_05_10_200840) do
+ActiveRecord::Schema.define(version: 2021_05_12_150846) do
 
   create_table "active_storage_attachments", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "name", null: false
@@ -62,6 +62,8 @@ ActiveRecord::Schema.define(version: 2021_05_10_200840) do
     t.string "container_type", null: false
     t.string "equipment_used"
     t.datetime "received_at"
+    t.float "piece_weight", null: false
+    t.boolean "printed_trico_labels", default: false, null: false
     t.index ["number"], name: "unique_shop_order", unique: true
   end
 
@@ -156,6 +158,19 @@ ActiveRecord::Schema.define(version: 2021_05_10_200840) do
     t.index ["requested_by_user_id"], name: "index_shipping_receiving_priority_notes_on_requested_by_user_id"
   end
 
+  create_table "shipping_trico_bins", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.bigint "shop_order_id", null: false
+    t.datetime "load_at", null: false
+    t.integer "load_number", null: false
+    t.float "scale_weight", null: false
+    t.float "percent_of_total"
+    t.integer "proportional_pieces"
+    t.integer "fudge_pieces"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["shop_order_id"], name: "index_shipping_trico_bins_on_shop_order_id"
+  end
+
   create_table "users", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "email", null: false
     t.string "name", null: false
@@ -186,4 +201,5 @@ ActiveRecord::Schema.define(version: 2021_05_10_200840) do
   add_foreign_key "reviews", "users"
   add_foreign_key "shipping_receiving_priority_notes", "users", column: "completed_by_user_id", name: "fk_recnotes_comp_user"
   add_foreign_key "shipping_receiving_priority_notes", "users", column: "requested_by_user_id", name: "fk_recnotes_req_user"
+  add_foreign_key "shipping_trico_bins", "as400_shop_orders", column: "shop_order_id"
 end

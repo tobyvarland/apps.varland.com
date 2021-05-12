@@ -11,17 +11,52 @@ class AS400::ShopOrder < ApplicationRecord
   # Associations.
   has_many  :reject_tags,
             class_name: 'Quality::RejectTag'
+  has_many  :trico_bins,
+            class_name: 'Shipping::TricoBin'
 
   # Validations.
-  validates :customer_code, :process_code, :part, :number, :customer_name, :part_name, :part_description, :process_spec, :received_on, :written_up_on, :pounds, :pieces, :schedule_code,
+  validates :customer_code, :process_code, :part, :number, :customer_name, :part_name, :part_description, :process_spec, :received_on, :written_up_on, :piece_weight, :pounds, :pieces, :schedule_code,
             presence: true
   validates :number,
             uniqueness: true
+
+  # Scopes.
+  scope :trico_labels_not_printed, -> { where(printed_trico_labels: false) }
 
   # Callbacks.
   before_validation :get_from_as400
 
   # Instance methods.
+
+  # Return total weight of all Trico bins.
+  def trico_bin_total_weight
+    return self.trico_bins.sum(:scale_weight).to_f.round(2)
+  end
+
+  # Perform calculations for Trico bin labeling.
+  def calculate_trico_bin_labels
+
+    return if self.trico_bins.length == 0
+
+    # Calculate % of total weight and proportional pieces for each bin.
+    total_weight = self.trico_bin_total_weight
+    total_pieces_allocated = 0
+    self.trico_bins.each do |bin|
+      bin.percent_of_total = (bin.scale_weight / total_weight)
+      bin.proportional_pieces = (self.pieces * bin.percent_of_total).to_i
+      total_pieces_allocated += bin.proportional_pieces
+    end
+
+    # Add fudge pieces.
+    fudge_pieces = self.pieces - total_pieces_allocated
+    self.trico_bins.each do |bin|
+      if bin.load_number <= fudge_pieces
+        bin.fudge_pieces = 1
+      end
+      bin.save
+    end
+
+  end
 
   # Set reject tag count on System i.
   def set_as400_reject_tag_count
@@ -55,6 +90,7 @@ class AS400::ShopOrder < ApplicationRecord
     self.purchase_order = as400[:purchase_order]
     self.received_on = as400[:received_on]
     self.written_up_on = as400[:written_up_on]
+    self.piece_weight = as400[:piece_weight]
     self.pounds = as400[:pounds]
     self.pieces = as400[:pieces]
     self.container_count = as400[:containers]
@@ -82,6 +118,7 @@ class AS400::ShopOrder < ApplicationRecord
       purchase_order: as400[:purchase_order],
       received_on: as400[:received_on],
       written_up_on: as400[:written_up_on],
+      piece_weight: as400[:piece_weight],
       pounds: as400[:pounds],
       pieces: as400[:pieces],
       container_count: as400[:containers],
