@@ -34,6 +34,10 @@
       button.d-none type="submit"
         = fa "arrow-alt-circle-right"
 
+- if current_user
+  - if lookup_context.exists?(current_user.username.downcase, ["users/user_home_pages"], true)
+    = render partial: "users/user_home_pages/#{current_user.username.downcase}"
+
 javascript:
   $(function() {
     $('input[name="customer"]').on("keyup", function() {

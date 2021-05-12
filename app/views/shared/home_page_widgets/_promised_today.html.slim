@@ -1,0 +1,15 @@
+ruby:
+  orders = load_json "http://vcmsapi.varland.com/promise_list"
+  orders.delete_if {|order| order[:promise_date] != DateTime.current.strftime("%Y-%m-%d") }
+
+- if orders.blank? || orders.length == 0
+  .bg-light.shadow-sm.p-3.rounded.fst-italic.text-uncolor No jobs promised for today found.
+- else
+  .promise-date
+    .border.rounded.shadow-sm
+      .date-header.d-flex.flex-row.align-items-center.justify-content-between.p-2.rounded-top.bg-success
+        .date.text-white.fw-700.m-0 Jobs Promised Today
+        .count.m-0.d-flex.flex-col.align-items-center.justify-content-center
+          .badge.bg-warning.text-dark.rounded-pill.fw-700 = orders.length
+      .orders
+        = render partial: "vcms/shipping/promise_list_order", collection: orders, as: :order

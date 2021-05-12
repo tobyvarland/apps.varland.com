@@ -150,4 +150,14 @@ module ApplicationHelper
     return content_tag(:div, type, class: ["badge", badge_class])
   end
 
+  def load_json(url)
+    # puts "  🔴 Loading JSON: #{url}"
+    uri = URI.parse(url)
+    http = Net::HTTP.new(uri.host, uri.port)
+    request = Net::HTTP::Get.new(uri.request_uri)
+    response = http.request(request)
+    return nil unless response.code.to_s == "200"
+    return JSON.parse(response.body, symbolize_names: true)
+  end
+
 end
