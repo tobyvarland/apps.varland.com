@@ -33,24 +33,24 @@ class AS400::ShopOrder < ApplicationRecord
     return (self.trico_bin_total_weight / self.piece_weight).to_i
   end
 
-  # Prints Trico labels.
-  def print_trico_labels
-    labels = []
-    self.trico_bins.each do |bin|
-      labels << {
-        shop_order: self.number,
-        part_number: self.part,
-        po: self.purchase_order[0],
-        pieces: bin.total_pieces,
-        containers: self.container_count,
-        container_type: self.container_type
-      }
-    end
-    uri = URI.parse("http://vcmsapi.varland.com/print_trico_labels")
-    response = Net::HTTP.post_form(uri, labels: ActiveSupport::JSON.encode(labels))
-    self.printed_trico_labels = true
-    self.save
-  end
+  # # Prints Trico labels.
+  # def print_trico_labels
+  #   labels = []
+  #   self.trico_bins.each do |bin|
+  #     labels << {
+  #       shop_order: self.number,
+  #       part_number: self.part,
+  #       po: self.purchase_order[0],
+  #       pieces: bin.total_pieces,
+  #       containers: self.container_count,
+  #       container_type: self.container_type
+  #     }
+  #   end
+  #   uri = URI.parse("http://vcmsapi.varland.com/print_trico_labels")
+  #   response = Net::HTTP.post_form(uri, labels: ActiveSupport::JSON.encode(labels))
+  #   self.printed_trico_labels = true
+  #   self.save
+  # end
 
   # Refresh Trico label information.
   def refresh_trico_labels

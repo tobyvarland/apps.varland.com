@@ -30,6 +30,14 @@ nav.navbar.fixed-top.navbar-expand-md.navbar-dark.bg-dark id="primary-nav"
           = link_to permissions_url do
             = fa "link"
             div Manage Permissions
+      - if policy(:home).sidekiq?
+        li
+          = link_to reset_sidekiq_url, target: "_blank" do
+            = fa "external-link-alt"
+            div Reset Sidekiq
+          = link_to sidekiq_web_url, target: "_blank" do
+            = fa "external-link-alt"
+            div Sidekiq
     ul.list-unstyled
       li.header External Links
       li

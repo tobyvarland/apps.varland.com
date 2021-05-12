@@ -8,7 +8,9 @@ class AS400::ShopOrdersController < ApplicationController
   end
 
   def print_trico_labels
-    @shop_order.print_trico_labels
+    Shipping::PrintTricoLabelsJob.perform_later @shop_order
+    @shop_order.printed_trico_labels = true
+    @shop_order.save
     redirect_to trico_labels_url
   end
 

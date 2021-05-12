@@ -7,7 +7,7 @@ class PagesController < ApplicationController
 
   def reset_sidekiq_stats
     Sidekiq::Stats.new.reset
-    redirect_back fallback_location: root_url
+    redirect_to sidekiq_web_url
   end
 
 end
