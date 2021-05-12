@@ -1,5 +1,9 @@
 class AS400::ShopOrder < ApplicationRecord
 
+  # Use FriendlyID.
+  extend FriendlyId
+  friendly_id :number, use: :slugged
+
   # Serialization.
   serialize :purchase_order
   serialize :customer_name

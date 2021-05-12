@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_05_12_150846) do
+ActiveRecord::Schema.define(version: 2021_05_12_204927) do
 
   create_table "active_storage_attachments", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "name", null: false
@@ -64,7 +64,9 @@ ActiveRecord::Schema.define(version: 2021_05_12_150846) do
     t.datetime "received_at"
     t.float "piece_weight", null: false
     t.boolean "printed_trico_labels", default: false, null: false
+    t.string "slug"
     t.index ["number"], name: "unique_shop_order", unique: true
+    t.index ["slug"], name: "index_as400_shop_orders_on_slug", unique: true
   end
 
   create_table "attachments", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|

@@ -17,7 +17,7 @@ class AS400::ShopOrdersController < ApplicationController
   private
 
     def set_shop_order
-      @shop_order = AS400::ShopOrder.find(params[:id])
+      @shop_order = AS400::ShopOrder.friendly.find(params[:id])
     end
 
 end
