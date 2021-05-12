@@ -8,7 +8,12 @@ Rails.application.routes.draw do
   resources :attachments
   resources :comments
   namespace :as400 do
-    resources :shop_orders
+    resources :shop_orders do
+      member do
+        post  :refresh_trico_labels
+        post  :print_trico_labels
+      end
+    end
   end
   namespace :quality do
     resources :reject_tags do
@@ -19,7 +24,6 @@ Rails.application.routes.draw do
   end
   namespace :shipping do
     resources :receiving_priority_notes, except: [:edit, :show]
-    resources :trico_bins
   end
 
   # Devise routes for Google authentication.
@@ -43,6 +47,7 @@ Rails.application.routes.draw do
   namespace :opto do
     post "log_trico_load",  to: "opto#log_trico_load"
   end
+  get "shipping/trico_labels",  to: "shipping#trico_labels",  as: :trico_labels
 
   # Mount Sidekiq.
   mount Sidekiq::Web => "/sidekiq"

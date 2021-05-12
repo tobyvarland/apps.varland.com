@@ -28,9 +28,66 @@ class AS400::ShopOrder < ApplicationRecord
 
   # Instance methods.
 
+  # Calculated pieces based on Trico bin weight.
+  def trico_calculated_pieces
+    return (self.trico_bin_total_weight / self.piece_weight).to_i
+  end
+
+  # Prints Trico labels.
+  def print_trico_labels
+    labels = []
+    self.trico_bins.each do |bin|
+      labels << {
+        shop_order: self.number,
+        part_number: self.part,
+        po: self.purchase_order[0],
+        pieces: bin.total_pieces,
+        containers: self.container_count,
+        container_type: self.container_type
+      }
+    end
+    uri = URI.parse("http://vcmsapi.varland.com/print_trico_labels")
+    response = Net::HTTP.post_form(uri, labels: ActiveSupport::JSON.encode(labels))
+    self.printed_trico_labels = true
+    self.save
+  end
+
+  # Refresh Trico label information.
+  def refresh_trico_labels
+    self.get_from_as400
+    self.save
+    self.calculate_trico_bin_labels
+  end
+
+  # Returns if all Trico checks valid.
+  def all_trico_checks_valid?
+    self.is_valid_trico_order? && self.all_bin_weights_entered? && self.bin_weights_within_deviation_limit?
+  end
+  
+  # Returns if all bin weights are within deviation limit.
+  def bin_weights_within_deviation_limit?
+    return self.trico_bin_total_weight_deviation.abs < 5
+  end
+  
+  # Returns if all bin weights recorded and valid.
+  def all_bin_weights_entered?
+    return (self.trico_bins.length == self.container_count && self.trico_bins.where(scale_weight: 0).length == 0)
+  end
+
+  # Returns if valid Trico order.
+  def is_valid_trico_order?
+    return (self.customer_code == "TRIBRO")
+  end
+
   # Return total weight of all Trico bins.
   def trico_bin_total_weight
     return self.trico_bins.sum(:scale_weight).to_f.round(2)
+  end
+  def trico_bin_total_pieces
+    return self.trico_bins.sum("proportional_pieces + ifnull(fudge_pieces, 0)")
+  end
+  def trico_bin_total_weight_deviation
+    return 100 * ((self.trico_bin_total_weight - self.pounds) / self.pounds)
   end
 
   # Perform calculations for Trico bin labeling.
@@ -52,6 +109,8 @@ class AS400::ShopOrder < ApplicationRecord
     self.trico_bins.each do |bin|
       if bin.load_number <= fudge_pieces
         bin.fudge_pieces = 1
+      else
+        bin.fudge_pieces = 0
       end
       bin.save
     end

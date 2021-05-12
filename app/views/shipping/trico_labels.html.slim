@@ -1,0 +1,68 @@
+ruby:
+  provide(:title, 'Trico Labels')
+
+.d-flex.flex-row.align-items-center.justify-content-between.mt-3
+  h1.font-varland Trico Labels
+
+- if @orders.length == 0
+
+  p.my-3.fst-italic.text-uncolor No orders with labels ready to be printed.
+
+- else
+
+  .table-responsive.my-3
+    table.table.table-striped.table-hover
+      thead.table-dark
+        tr
+          th.w-1 Shop Order
+          th.text-center.w-1 Bins
+          th.text-center.w-1 S.O. Pounds
+          th.text-center.w-1 S.O. Pieces
+          th.text-center.w-1 Opto Pounds
+          th.w-1 Checks
+          th Bin Details from Opto
+          th.text-center.w-1 Options
+      tbody
+        - @orders.each do |order|
+          tr
+            td.align-top
+              .fw-700 = order.number
+              .small == order.part_spec.join(" <small class=\"text-uncolor\">/</small> ")
+            td.align-top.text-center = pluralize(order.container_count, order.container_type).downcase
+            td.align-top.text-center = number_with_precision order.pounds, precision: 2, delimiter: ",", strip_insignificant_zeros: true
+            td.align-top.text-center = number_with_delimiter order.pieces
+            td.align-top.text-center
+              div = number_with_precision order.trico_bin_total_weight, precision: 2, delimiter: ",", strip_insignificant_zeros: true
+              .small.badge class="bg-#{order.trico_bin_total_weight_deviation.abs < 5 ? "dark" : "danger"}" = "#{number_with_precision order.trico_bin_total_weight_deviation.abs, precision: 2}% #{order.trico_bin_total_weight_deviation > 0 ? "Heavy" : "Light"}"
+              - if order.trico_bin_total_weight_deviation.abs >= 5
+                .small.text-danger.fw-700 = "#{number_with_delimiter order.trico_calculated_pieces} pcs"
+            td.align-top
+              div
+                .badge class="bg-#{order.is_valid_trico_order? ? "success" : "danger"}" == "#{fa order.is_valid_trico_order? ? "check" : "times"} Valid Trico Shop Order"
+              .mt-1
+                .badge class="bg-#{order.all_bin_weights_entered? ? "success" : "danger"}" == "#{fa order.all_bin_weights_entered? ? "check" : "times"} All Bin Weights Entered"
+              .mt-1
+                .badge class="bg-#{order.bin_weights_within_deviation_limit? ? "success" : "danger"}" == "#{fa order.bin_weights_within_deviation_limit? ? "check" : "times"} Opto Weight Within 5% of Shop Order Weight"
+            td
+              table.table.table-striped.table-hover.table-sm.table-bordered.mb-0
+                thead
+                  tr
+                    th.text-center.col-4 Bin #
+                    th.text-center.col-4 Pounds 
+                    th.text-center.col-4 Pieces
+                tbody
+                  - order.trico_bins.each do |bin|
+                    tr
+                      td.text-center = bin.load_number
+                      td.text-center = number_with_precision bin.scale_weight, precision: 2, delimiter: ",", strip_insignificant_zeros: true
+                      td.text-center = number_with_delimiter bin.total_pieces
+                tfoot
+                  tr
+                    th &nbsp;
+                    th.text-center = number_with_precision order.trico_bin_total_weight, precision: 2, delimiter: ",", strip_insignificant_zeros: true
+                    th.text-center = number_with_delimiter order.trico_bin_total_pieces
+            td.align-top.text-center
+              - if order.all_trico_checks_valid?
+                = link_to "Print Labels", print_trico_labels_as400_shop_order_path(order), method: :post, class: ["btn", "btn-sm", "btn-primary"]
+              - else
+                = link_to "Refresh Order", refresh_trico_labels_as400_shop_order_path(order), method: :post, class: ["btn", "btn-sm", "btn-primary"]

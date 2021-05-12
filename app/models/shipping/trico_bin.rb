@@ -19,7 +19,7 @@ class Shipping::TricoBin < ApplicationRecord
 
   # Returns total pieces for bin.
   def total_pieces
-    return self.proportional_pieces + self.fudge_pieces
+    return (self.proportional_pieces || 0) + (self.fudge_pieces || 0)
   end
 
   # Sets shop order association from shop order number.
