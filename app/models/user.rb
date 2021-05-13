@@ -36,7 +36,7 @@ class User < ApplicationRecord
             numericality: { only_integer: true, greater_than: 0 }
 
   # Callbacks.
-  after_create  :create_permissions_if_not_exist
+  after_create_commit :create_permissions_if_not_exist
 
   # Instance methods.
 

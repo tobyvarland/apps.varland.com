@@ -13,7 +13,7 @@ class Shipping::TricoBin < ApplicationRecord
             numericality: { greater_than: 0 }
 
   # Callbacks.
-  after_create  :trigger_order_calculations
+  after_create_commit :trigger_order_calculations
 
   # Instance methods.
 

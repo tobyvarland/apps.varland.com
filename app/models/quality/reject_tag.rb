@@ -37,11 +37,11 @@ class Quality::RejectTag < ApplicationRecord
             presence: true
 
   # Callbacks.
-  before_validation :nullify_source
-  after_create      :update_as400_count
-  after_create      :add_part_history_note
-  after_discard     :update_as400_count
-  after_undiscard   :update_as400_count
+  before_validation   :nullify_source
+  after_create_commit :update_as400_count
+  after_create_commit :add_part_history_note
+  after_discard       :update_as400_count
+  after_undiscard     :update_as400_count
 
   # Instance methods.
 
