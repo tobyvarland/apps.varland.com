@@ -4,7 +4,7 @@ class PermissionsController < ApplicationController
 
   def index
     authorize Permission
-    @permissions = Permission.includes(:user).by_employee
+    @permissions = Permission.includes(:user).for_active_employees.by_employee
   end
 
   def update
