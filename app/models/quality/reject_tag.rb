@@ -1,5 +1,8 @@
 class Quality::RejectTag < ApplicationRecord
 
+  # Concerns.
+  include ShopOrderAssignable
+
   # Use FriendlyID.
   extend FriendlyId
   friendly_id :description, use: :slugged
@@ -84,10 +87,10 @@ class Quality::RejectTag < ApplicationRecord
     return self.shop_order.number
   end
 
-  # Sets shop order association from shop order number.
-  def shop_order_number=(value)
-    self.shop_order = AS400::ShopOrder.from_as400(value)
-  end
+  # # Sets shop order association from shop order number.
+  # def shop_order_number=(value)
+  #   self.shop_order = AS400::ShopOrder.from_as400(value)
+  # end
 
   # Returns user name.
   def user_name

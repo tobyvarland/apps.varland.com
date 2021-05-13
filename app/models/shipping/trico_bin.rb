@@ -1,5 +1,8 @@
 class Shipping::TricoBin < ApplicationRecord
 
+  # Concerns.
+  include ShopOrderAssignable
+
   # Associations.
   belongs_to  :shop_order,
               class_name: 'AS400::ShopOrder'
@@ -22,10 +25,10 @@ class Shipping::TricoBin < ApplicationRecord
     return (self.proportional_pieces || 0) + (self.fudge_pieces || 0)
   end
 
-  # Sets shop order association from shop order number.
-  def shop_order_number=(value)
-    self.shop_order = AS400::ShopOrder.from_as400(value)
-  end
+  # # Sets shop order association from shop order number.
+  # def shop_order_number=(value)
+  #   self.shop_order = AS400::ShopOrder.from_as400(value)
+  # end
 
   # Calls method in parent shop order to perform calculations.
   def trigger_order_calculations
