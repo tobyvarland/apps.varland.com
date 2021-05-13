@@ -25,6 +25,10 @@ document.addEventListener("DOMContentLoaded", function(event) {
       $('.table-responsive').css( "overflow", "auto" );
   });
 
+});
+
+$(function() {
+  
   // Auto refresh if necessary.
   var $body = $("body");
   var autoRefresh = $body.data("auto-refresh");
