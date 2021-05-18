@@ -43,6 +43,7 @@ Rails.application.routes.draw do
     get "shipping/labeling_instructions", to: "shipping#labeling_instructions", as: :shipping_labeling_instructions
     get "shipping/promise_list",          to: "shipping#promise_list",          as: :shipping_promise_list
     get "production/jobs_on_receipt",     to: "production#jobs_on_receipt",     as: :production_jobs_on_receipt
+    get "sales/recent_customers",         to: "sales#recent_customers",         as: :sales_recent_customers
   end
   namespace :opto do
     post "log_trico_load",  to: "opto#log_trico_load"

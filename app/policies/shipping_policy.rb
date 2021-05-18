@@ -1,4 +1,4 @@
-class ShippingPolicy < Struct.new(:user, :home)
+class ShippingPolicy < Struct.new(:user, :shipping)
 
   def trico_labels?
     return true
