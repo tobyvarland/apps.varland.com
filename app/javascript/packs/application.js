@@ -31,7 +31,8 @@ document.addEventListener("DOMContentLoaded", function(event) {
 
 });
 
-document.addEventListener("DOMContentLoaded", function(event) {
+// document.addEventListener("DOMContentLoaded", function(event) {
+$(document).on('turbolinks:load', function() {
   
   // Auto refresh if necessary.
   var $body = $("body");
