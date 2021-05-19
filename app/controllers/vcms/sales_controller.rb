@@ -1,5 +1,7 @@
 class VCMS::SalesController < ApplicationController
 
+  before_action :prevent_cache
+
   def recent_customers
     authorize :vcms, :recent_customers?
     @customers = load_json "http://vcmsapi.varland.com/recent_customers"

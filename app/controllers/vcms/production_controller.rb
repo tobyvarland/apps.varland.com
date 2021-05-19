@@ -1,6 +1,7 @@
 class VCMS::ProductionController < ApplicationController
 
   skip_before_action  :authenticate_user!
+  before_action       :prevent_cache
 
   def jobs_on_receipt
     @auto_refresh = 599

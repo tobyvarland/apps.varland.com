@@ -9,6 +9,12 @@ class ApplicationController < ActionController::Base
 
   private
 
+    def prevent_cache
+      response.headers["Cache-Control"] = "no-cache, no-store"
+      response.headers["Pragma"] = "no-cache"
+      response.headers["Expires"] = "Mon, 01 Jan 1990 00:00:00 GMT"
+    end
+
     def user_not_authorized
       flash[:alert] = "You're not authorized for that function. Please try again or contact IT."
       redirect_to root_path

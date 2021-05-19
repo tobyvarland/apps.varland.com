@@ -1,6 +1,7 @@
 class VCMS::ShippingController < ApplicationController
 
   skip_before_action  :authenticate_user!
+  before_action       :prevent_cache
 
   def promise_list
     @auto_refresh = 599
