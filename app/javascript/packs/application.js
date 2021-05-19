@@ -18,12 +18,15 @@ document.addEventListener("DOMContentLoaded", function(event) {
   tooltipTriggerList.map(function (tooltipTriggerEl) {
     return new bootstrap.Tooltip(tooltipTriggerEl)
   });
+
+  /*
   $('.table-responsive').on('show.bs.dropdown', function () {
     $('.table-responsive').css( "overflow", "inherit" );
   });
   $('.table-responsive').on('hide.bs.dropdown', function () {
       $('.table-responsive').css( "overflow", "auto" );
   });
+  */
 
 });
 
@@ -38,7 +41,45 @@ $(function() {
     setTimeout(updateRemaining, 1000);
   }
 
+  // Set up clipboard links if necessary.
+  $("[data-clipboard]").on("click", function(event) {
+    event.preventDefault();
+    var $element = $(this);
+    var clipboardText = $element.data('clipboard');
+    copyTextToClipboard(clipboardText);
+  });
+
 });
+
+function fallbackCopyTextToClipboard(text) {
+  var textArea = document.createElement("textarea");
+  textArea.value = text;
+  textArea.style.top = "0";
+  textArea.style.left = "0";
+  textArea.style.position = "fixed";
+  document.body.appendChild(textArea);
+  textArea.focus();
+  textArea.select();
+  try {
+    var successful = document.execCommand('copy');
+    if (!successful) alert("Failed to copy text to clipboard. Please contact IT.");
+  } catch (err) {
+    alert("Failed to copy text to clipboard. Please contact IT.");
+  }
+  document.body.removeChild(textArea);
+}
+
+function copyTextToClipboard(text) {
+  if (!navigator.clipboard) {
+    fallbackCopyTextToClipboard(text);
+    return;
+  }
+  navigator.clipboard.writeText(text).then(function() {
+    // Don't do anything.
+  }, function(err) {
+    alert("Failed to copy text to clipboard. Please contact IT.");
+  });
+}
 
 function secondsToHumanReadable(seconds) {
   var minutes = Math.floor(seconds / 60);
