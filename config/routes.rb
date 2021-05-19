@@ -50,7 +50,8 @@ Rails.application.routes.draw do
   namespace :opto do
     post "log_trico_load",  to: "opto#log_trico_load"
   end
-  get "shipping/trico_labels",  to: "shipping#trico_labels",  as: :trico_labels
+  get "shipping/trico_labels",    to: "shipping#trico_labels",  as: :trico_labels
+  get "vcms/link_part_spec",      to: "vcms#link_part_spec",    as: :link_part_spec
 
   # Mount Sidekiq.
   mount Sidekiq::Web => "/sidekiq"
