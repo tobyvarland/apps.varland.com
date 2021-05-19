@@ -320,3 +320,14 @@ a[data-clipboard] {
   color: inherit !important;
 }
 */
+
+.highlight-fade-3s {
+  animation: bg-highlight 3s normal;
+  animation-iteration-count: 1;
+}
+
+@keyframes bg-highlight {
+  0% { @extend .bg-warning; }
+  25% { @extend .bg-warning; }
+  0% { background: none; }
+}

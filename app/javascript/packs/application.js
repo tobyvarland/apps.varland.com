@@ -46,7 +46,11 @@ $(function() {
     event.preventDefault();
     var $element = $(this);
     var clipboardText = $element.data('clipboard');
-    copyTextToClipboard(clipboardText);
+    var result = copyTextToClipboard(clipboardText);
+    console.log(result);
+    if (result) {
+      $element.addClass("highlight-fade-3s");
+    }
   });
 
 });
@@ -62,14 +66,21 @@ function fallbackCopyTextToClipboard(text) {
   textArea.select();
   try {
     var successful = document.execCommand('copy');
-    if (!successful) alert("Failed to copy text to clipboard. Please contact IT.");
+    if (!successful) {
+      alert("Failed to copy text to clipboard. Please contact IT.");
+      return false;
+    }
   } catch (err) {
     alert("Failed to copy text to clipboard. Please contact IT.");
+    return false;
   }
   document.body.removeChild(textArea);
+  return true;
 }
 
 function copyTextToClipboard(text) {
+  return fallbackCopyTextToClipboard(text);
+  /*
   if (!navigator.clipboard) {
     fallbackCopyTextToClipboard(text);
     return;
@@ -79,6 +90,7 @@ function copyTextToClipboard(text) {
   }, function(err) {
     alert("Failed to copy text to clipboard. Please contact IT.");
   });
+  */
 }
 
 function secondsToHumanReadable(seconds) {
