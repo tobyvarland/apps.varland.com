@@ -44,6 +44,9 @@ $(function() {
   // Configure auto submitting forms.
   disableFormFieldsWaitingForSubmit();
 
+  // Handle part spec links.
+  handlePartSpecLinks();
+
 });
 
 function secondsToHumanReadable(seconds) {
@@ -72,4 +75,28 @@ function disableFormFieldsWaitingForSubmit() {
     $fields.addClass("d-none");
     $form.trigger("submit");
   });
+}
+
+function handlePartSpecLinks() {
+
+  $(".link-part-spec").on("click", function(event) {
+    event.preventDefault();
+    var $link = $(this);
+    $.ajax($link.prop("href")).done(function(data) {
+      $link.removeClass("text-muted").fadeOut(100, function() {
+        $link.fadeIn(100, function() {
+          $link.fadeOut(100, function() {
+            $link.fadeIn(100, function() {
+              $link.fadeOut(100, function() {
+                $link.fadeIn(100, function() {
+                  $link.addClass("text-muted");
+                });
+              });
+            });
+          });
+        });
+      });
+    });
+  })
+
 }

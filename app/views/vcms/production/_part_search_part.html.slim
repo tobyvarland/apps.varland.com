@@ -3,7 +3,7 @@
     .p-2.w-md-20.d-flex.flex-column.align-items-start.justify-content-start.align-self-stretch
       .d-flex.flex-row.align-items-center.justify-content-start
         .fw-700 == [part[:customer_code], part[:process_code], part[:part], part[:sub]].reject(&:blank?).join(" <span class=\"text-uncolor\">/</span> ")
-        .ms-1.small = link_to fa("server"), link_part_spec_path(customer: part[:customer_code], process: part[:process_code], part: part[:part], sub: part[:sub]), class: ["text-muted"]
+        .ms-1.small = link_to fa("server"), link_part_spec_path(customer: part[:customer_code], process: part[:process_code], part: part[:part], sub: part[:sub]), class: ["text-muted", "link-part-spec"]
       table.table.table-bordered.table-striped.mt-1.small.mb-0
         tbody
           - unless part[:last_used_on].blank?
