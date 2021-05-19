@@ -40,7 +40,7 @@ ruby:
 
 - if @data[:quotes].present?
 
-  .fw-700 == "Found #{pluralize(@data[:quotes].length, "quote")}:"
+  .fw-700 == "Found #{number_with_delimiter @data[:quotes].length} #{"quote".pluralize(@data[:quotes].length)}:"
 
   .row
     .col-12.my-3

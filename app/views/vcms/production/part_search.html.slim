@@ -51,7 +51,7 @@ ruby:
 
 - if @data[:parts].present?
 
-  .fw-700 == "Found #{pluralize(@data[:parts].length, "part")}:"
+  .fw-700 == "Found #{number_with_delimiter @data[:parts].length} #{"part".pluralize(@data[:parts].length)}:"
 
   .row
     .col-12.my-3
