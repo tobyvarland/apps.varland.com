@@ -41,57 +41,7 @@ $(function() {
     setTimeout(updateRemaining, 1000);
   }
 
-  // Set up clipboard links if necessary.
-  $("[data-clipboard]").on("click", function(event) {
-    event.preventDefault();
-    var $element = $(this);
-    var clipboardText = $element.data('clipboard');
-    var result = copyTextToClipboard(clipboardText);
-    console.log(result);
-    if (result) {
-      $element.addClass("highlight-fade-3s");
-    }
-  });
-
 });
-
-function fallbackCopyTextToClipboard(text) {
-  var textArea = document.createElement("textarea");
-  textArea.value = text;
-  textArea.style.top = "0";
-  textArea.style.left = "0";
-  textArea.style.position = "fixed";
-  document.body.appendChild(textArea);
-  textArea.focus();
-  textArea.select();
-  try {
-    var successful = document.execCommand('copy');
-    if (!successful) {
-      alert("Failed to copy text to clipboard. Please contact IT.");
-      return false;
-    }
-  } catch (err) {
-    alert("Failed to copy text to clipboard. Please contact IT.");
-    return false;
-  }
-  document.body.removeChild(textArea);
-  return true;
-}
-
-function copyTextToClipboard(text) {
-  return fallbackCopyTextToClipboard(text);
-  /*
-  if (!navigator.clipboard) {
-    fallbackCopyTextToClipboard(text);
-    return;
-  }
-  navigator.clipboard.writeText(text).then(function() {
-    // Don't do anything.
-  }, function(err) {
-    alert("Failed to copy text to clipboard. Please contact IT.");
-  });
-  */
-}
 
 function secondsToHumanReadable(seconds) {
   var minutes = Math.floor(seconds / 60);
