@@ -26,7 +26,8 @@
         .fw-700.ms-1 = job[:shop_order]
       .d-flex.flex-row.align-items-center.justify-content-start
         .fw-700.small == [job[:customer], job[:process], job[:part_number], job[:part_sub]].reject(&:blank?).join(" <span class=\"text-uncolor\">/</span> ")
-        .ms-1.small = link_to fa("server"), link_part_spec_path(customer: job[:customer], process: job[:process], part: job[:part_number], sub: job[:part_sub]), class: ["text-muted", "link-part-spec"]
+        - if current_user
+          .ms-1.small = link_to fa("server"), link_part_spec_path(customer: job[:customer], process: job[:process], part: job[:part_number], sub: job[:part_sub]), class: ["text-muted", "link-part-spec"]
     .p-2.w-md-20.d-none.d-md-flex.flex-column.align-items-start.justify-content-start.align-self-stretch.order-md-3
       .d-flex.flex-row.align-items-center.justify-content-start
         .small Pounds:
