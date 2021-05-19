@@ -40,7 +40,7 @@ ruby:
       = f.input :developmental, collection: ["Developmental Only", "Exclude Developmental"], selected: params[:filters].blank? ? "" : params[:filters][:developmental], required: false, label: "Developmental Parts:", include_blank: true, input_html: { class: "form-select", onchange: 'this.form.submit();' }
   .row
     .col-12.col-md.mt-3
-      = f.input :search, required: false, label: "Search:", input_html: { onchange: 'this.form.submit();', value: params[:filters].blank? ? "" : params[:filters][:search] }
+      = f.input :search, required: false, label: "Search:", hint: "Searches part ID, part name, part description, process specification, and part application.", input_html: { onchange: 'this.form.submit();', value: params[:filters].blank? ? "" : params[:filters][:search] }
 
 
 - if @data[:parts].present?

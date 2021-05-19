@@ -1,0 +1,38 @@
+.quote
+  .d-flex.flex-column.flex-md-row.align-items-center.justify-content-start.rounded-bottom.border-start.border-end.border-top.quote-inner
+    .p-2.w-md-20.d-flex.flex-column.align-items-start.justify-content-start.align-self-stretch
+      .d-flex.flex-row.align-items-center.justify-content-start
+        .fw-700 == [quote[:customer_code], quote[:process_code], quote[:part], quote[:sub]].reject(&:blank?).join(" <span class=\"text-uncolor\">/</span> ")
+      table.table.table-bordered.table-striped.mt-1.small.mb-0
+        tbody
+          - unless quote[:quoted_on].blank?
+            tr
+              td.fw-300.small.w-1 Quote Date: 
+              td.fw-500.small = Date.strptime(quote[:quoted_on], "%Y-%m-%d").strftime("%m/%d/%y")
+          tr
+            td.fw-300.small.w-1 Quoted By: 
+            td.fw-500.small = quote[:quoted_by]
+          tr
+            td.fw-300.small.w-1 Quote Status: 
+            td.fw-500.small = quote[:is_current] ? "Current" : "Historical"
+          tr
+            td.fw-300.small.w-1 Pricing:
+            td.fw-500.small == [quote[:total_price], quote[:total_setup], quote[:total_minimum], quote[:price_per]].reject(&:blank?).join(" <span class=\"text-uncolor\">/</span> ")
+    .p-2.pt-0.pt-md-2.w-md-20.d-flex.flex-column.align-items-start.justify-content-start.align-self-stretch
+      - unless quote[:name].length == 0
+        .small.fw-300.text-uncolor Part Name:
+        .fw-500 == quote[:name].join("<br>")
+      - unless quote[:description].length == 0
+        .small.fw-300.text-uncolor class="#{quote[:name].length > 0 ? "mt-3" : ""}" Part Description:
+        .fw-500 == quote[:description].join("<br>")
+    .p-2.pt-0.pt-md-2.w-md-20.d-flex.flex-column.align-items-start.justify-content-start.align-self-stretch
+      - unless quote[:process_spec].length == 0
+        .small.fw-300.text-uncolor.d-md-none Process Spec:
+        .fw-500 == quote[:process_spec].join("<br>")
+    .p-2.pt-0.pt-md-2.w-md-40.d-flex.flex-column.align-items-start.justify-content-start.align-self-stretch
+      - unless quote[:remarks].length == 0
+        .small.fw-300.text-uncolor Remarks:
+        .fw-500 == quote[:remarks].join("<br>")
+      - unless quote[:application].length == 0
+        .small.fw-300.text-uncolor class="#{quote[:remarks].length > 0 ? "mt-3" : ""}" Application:
+        .fw-500 == quote[:application].join("<br>")
