@@ -7,40 +7,44 @@ ruby:
 .d-flex.flex-row.align-items-center.justify-content-between.mt-3
   h1.font-varland Part Search
 
-= simple_form_for(:filters, url: vcms_production_part_search_url, method: "GET", html: {class: ["vp-gray-form", "my-3"]}) do |f|
+= simple_form_for(:filters, url: vcms_production_part_search_url, method: "GET", html: {class: ["vp-gray-form", "my-3", "all-auto-submit"]}) do |f|
 
-  .row
-    .col-12.col-md-3.mt-3
-      = f.input :customer, collection: @data[:filters][:customer_code], selected: params[:filters].blank? ? "" : params[:filters][:customer], required: false, label: "Customer Code:", include_blank: true, input_html: { class: "form-select", onchange: 'this.form.submit();' }
-    .col-12.col-md-3.mt-3
-      = f.input :process, collection: @data[:filters][:process_code], selected: params[:filters].blank? ? "" : params[:filters][:process], required: false, label: "Process Code:", include_blank: true, input_html: { class: "form-select", onchange: 'this.form.submit();' }
-    .col-12.col-md-5.mt-3
-      = f.input :part, collection: @data[:filters][:part], selected: params[:filters].blank? ? "" : params[:filters][:part], required: false, label: "Part ID:", include_blank: true, input_html: { class: "form-select", onchange: 'this.form.submit();' }
-    .col-12.col-md-1.mt-3
-      = f.input :sub, collection: @data[:filters][:sub], selected: params[:filters].blank? ? "" : params[:filters][:sub], required: false, label: "Sub ID:", include_blank: true, input_html: { class: "form-select", onchange: 'this.form.submit();' }
-  .row
-    .col-12.col-md.mt-3
-      = f.input :base_metal, collection: @data[:filters][:base_metal], selected: params[:filters].blank? ? "" : params[:filters][:base_metal], required: false, label: "Base Metal:", include_blank: true, input_html: { class: "form-select", onchange: 'this.form.submit();' }
-    .col-12.col-md.mt-3
-      = f.input :industry, collection: @data[:filters][:industry], selected: params[:filters].blank? ? "" : params[:filters][:industry], required: false, label: "Industry:", include_blank: true, input_html: { class: "form-select", onchange: 'this.form.submit();' }
-    .col-12.col-md.mt-3
-      = f.input :sub_industry, collection: @data[:filters][:sub_industry], selected: params[:filters].blank? ? "" : params[:filters][:sub_industry], required: false, label: "Sub-Industry:", include_blank: true, input_html: { class: "form-select", onchange: 'this.form.submit();' }
-    .col-12.col-md.mt-3
-      = f.input :on_or_after, required: false, label: "Last Used On or After:", as: :date, html5: true, input_html: { style: "margin: 0 !important;", onchange: 'this.form.submit();', value: params[:filters].blank? ? "" : params[:filters][:on_or_after] }
-    .col-12.col-md.mt-3
-      = f.input :on_or_before, required: false, label: "Last Used On or Before:", as: :date, html5: true, input_html: { style: "margin: 0 !important;", onchange: 'this.form.submit();', value: params[:filters].blank? ? "" : params[:filters][:on_or_before] }
-  .row
-    .col-12.col-md-3.mt-3
-      = f.input :valid_price, collection: ["Valid Only", "Invalid Only"], selected: params[:filters].blank? ? "" : params[:filters][:valid_price], required: false, label: "Valid Price:", include_blank: true, input_html: { class: "form-select", onchange: 'this.form.submit();' }
-    .col-12.col-md-3.mt-3
-      = f.input :valid_procedure, collection: ["Valid Only", "Invalid Only"], selected: params[:filters].blank? ? "" : params[:filters][:valid_procedure], required: false, label: "Valid Procedure:", include_blank: true, input_html: { class: "form-select", onchange: 'this.form.submit();' }
-    .col-12.col-md-3.mt-3
-      = f.input :active, collection: ["Active Only", "Inactive Only"], selected: params[:filters].blank? ? "" : params[:filters][:active], required: false, label: "Active/Inactive Parts:", include_blank: true, input_html: { class: "form-select", onchange: 'this.form.submit();' }
-    .col-12.col-md-3.mt-3
-      = f.input :developmental, collection: ["Developmental Only", "Exclude Developmental"], selected: params[:filters].blank? ? "" : params[:filters][:developmental], required: false, label: "Developmental Parts:", include_blank: true, input_html: { class: "form-select", onchange: 'this.form.submit();' }
-  .row
-    .col-12.col-md.mt-3
-      = f.input :search, required: false, label: "Search:", hint: "Searches part ID, part name, part description, process specification, and part application.", input_html: { onchange: 'this.form.submit();', value: params[:filters].blank? ? "" : params[:filters][:search] }
+  .row.loading-icon.d-none
+    .col-12.text-center.mt-3.fs-1 == fa "spinner", spin: true
+
+  .form-fields
+    .row
+      .col-12.col-md-3.mt-3
+        = f.input :customer, collection: @data[:filters][:customer_code], selected: params[:filters].blank? ? "" : params[:filters][:customer], required: false, label: "Customer Code:", include_blank: true, input_html: { class: "form-select" }
+      .col-12.col-md-3.mt-3
+        = f.input :process, collection: @data[:filters][:process_code], selected: params[:filters].blank? ? "" : params[:filters][:process], required: false, label: "Process Code:", include_blank: true, input_html: { class: "form-select" }
+      .col-12.col-md-5.mt-3
+        = f.input :part, collection: @data[:filters][:part], selected: params[:filters].blank? ? "" : params[:filters][:part], required: false, label: "Part ID:", include_blank: true, input_html: { class: "form-select" }
+      .col-12.col-md-1.mt-3
+        = f.input :sub, collection: @data[:filters][:sub], selected: params[:filters].blank? ? "" : params[:filters][:sub], required: false, label: "Sub ID:", include_blank: true, input_html: { class: "form-select" }
+    .row
+      .col-12.col-md.mt-3
+        = f.input :base_metal, collection: @data[:filters][:base_metal], selected: params[:filters].blank? ? "" : params[:filters][:base_metal], required: false, label: "Base Metal:", include_blank: true, input_html: { class: "form-select" }
+      .col-12.col-md.mt-3
+        = f.input :industry, collection: @data[:filters][:industry], selected: params[:filters].blank? ? "" : params[:filters][:industry], required: false, label: "Industry:", include_blank: true, input_html: { class: "form-select" }
+      .col-12.col-md.mt-3
+        = f.input :sub_industry, collection: @data[:filters][:sub_industry], selected: params[:filters].blank? ? "" : params[:filters][:sub_industry], required: false, label: "Sub-Industry:", include_blank: true, input_html: { class: "form-select" }
+      .col-12.col-md.mt-3
+        = f.input :on_or_after, required: false, label: "Last Used On or After:", as: :date, html5: true, input_html: { style: "margin: 0 !important;", value: params[:filters].blank? ? "" : params[:filters][:on_or_after] }
+      .col-12.col-md.mt-3
+        = f.input :on_or_before, required: false, label: "Last Used On or Before:", as: :date, html5: true, input_html: { style: "margin: 0 !important;", value: params[:filters].blank? ? "" : params[:filters][:on_or_before] }
+    .row
+      .col-12.col-md-3.mt-3
+        = f.input :valid_price, collection: ["Valid Only", "Invalid Only"], selected: params[:filters].blank? ? "" : params[:filters][:valid_price], required: false, label: "Valid Price:", include_blank: true, input_html: { class: "form-select" }
+      .col-12.col-md-3.mt-3
+        = f.input :valid_procedure, collection: ["Valid Only", "Invalid Only"], selected: params[:filters].blank? ? "" : params[:filters][:valid_procedure], required: false, label: "Valid Procedure:", include_blank: true, input_html: { class: "form-select" }
+      .col-12.col-md-3.mt-3
+        = f.input :active, collection: ["Active Only", "Inactive Only"], selected: params[:filters].blank? ? "" : params[:filters][:active], required: false, label: "Active/Inactive Parts:", include_blank: true, input_html: { class: "form-select" }
+      .col-12.col-md-3.mt-3
+        = f.input :developmental, collection: ["Developmental Only", "Exclude Developmental"], selected: params[:filters].blank? ? "" : params[:filters][:developmental], required: false, label: "Developmental Parts:", include_blank: true, input_html: { class: "form-select" }
+    .row
+      .col-12.col-md.mt-3
+        = f.input :search, required: false, label: "Search:", hint: "Searches part ID, part name, part description, process specification, and part application.", input_html: { value: params[:filters].blank? ? "" : params[:filters][:search] }
 
 
 - if @data[:parts].present?

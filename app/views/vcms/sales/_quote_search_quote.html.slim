@@ -2,6 +2,8 @@
   .d-flex.flex-column.flex-md-row.align-items-center.justify-content-start.rounded-bottom.border-start.border-end.border-top.quote-inner
     .p-2.w-md-20.d-flex.flex-column.align-items-start.justify-content-start.align-self-stretch
       .d-flex.flex-row.align-items-center.justify-content-start
+        .fw-700 == "Quote ##{quote[:quote_number]}"
+      .d-flex.flex-row.align-items-center.justify-content-start
         .fw-700 == [quote[:customer_code], quote[:process_code], quote[:part], quote[:sub]].reject(&:blank?).join(" <span class=\"text-uncolor\">/</span> ")
       table.table.table-bordered.table-striped.mt-1.small.mb-0
         tbody

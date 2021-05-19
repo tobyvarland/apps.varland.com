@@ -41,6 +41,9 @@ $(function() {
     setTimeout(updateRemaining, 1000);
   }
 
+  // Configure auto submitting forms.
+  disableFormFieldsWaitingForSubmit();
+
 });
 
 function secondsToHumanReadable(seconds) {
@@ -58,4 +61,15 @@ function updateRemaining() {
     $container.data("remaining", remaining).text(secondsToHumanReadable(remaining));
     setTimeout(updateRemaining, 1000);
   }
+}
+
+function disableFormFieldsWaitingForSubmit() {
+  $(".all-auto-submit :input").on("change", function() {
+    var $form = $(this).closest('form');
+    var $icon = $form.find('.loading-icon');
+    $icon.removeClass("d-none");
+    var $fields = $form.find('.form-fields');
+    $fields.addClass("d-none");
+    $form.trigger("submit");
+  });
 }

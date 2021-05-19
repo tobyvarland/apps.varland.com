@@ -8,7 +8,7 @@ class VCMS::SalesController < ApplicationController
   def quote_search
     query_fields = {}
     if params[:filters].present?
-      [:customer, :process, :part, :sub, :on_or_after, :on_or_before, :search].each do |sym|
+      [:customer, :process, :part, :sub, :on_or_after, :on_or_before, :search, :quote].each do |sym|
         if params[:filters][sym].present?
           query_fields[sym] = CGI.escape(params[:filters][sym])
         end
