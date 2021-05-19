@@ -9,10 +9,10 @@ append :linked_dirs, 'storage', 'log', 'tmp/pids', 'tmp/cache', 'tmp/sockets', '
 append :linked_files, 'config/master.key'
 set :keep_releases, 5
 
-after :"passenger:restart", :restart_sidekiq
+# after :"passenger:restart", :restart_sidekiq
 
-task :restart_sidekiq do
-  on roles(:app) do
-    execute "systemctl restart sidekiq-apps"
-  end
-end
+# task :restart_sidekiq do
+#   on roles(:app) do
+#     execute "systemctl restart sidekiq-apps"
+#   end
+# end
