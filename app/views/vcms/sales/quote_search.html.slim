@@ -6,6 +6,8 @@ ruby:
 
 .d-flex.flex-row.align-items-center.justify-content-between.mt-3
   h1.font-varland Quote Search
+  - if policy(:vcms).part_search? && params[:filters].present?
+    = link_to "#{fa "share"} Search Parts w/ Same Filters".html_safe, vcms_production_part_search_path(filters: { customer: params[:filters][:customer], process: params[:filters][:process], part: params[:filters][:part], sub: params[:filters][:sub], on_or_after: params[:filters][:on_or_after], on_or_before: params[:filters][:on_or_before], search: params[:filters][:search] }), class: ["btn", "btn-primary", "btn-sm"], target: "_blank"
 
 = simple_form_for(:filters, url: vcms_sales_quote_search_url, method: "GET", html: {class: ["vp-gray-form", "my-3", "all-auto-submit"]}) do |f|
 
