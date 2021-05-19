@@ -89,6 +89,11 @@ nav.navbar.fixed-top.navbar-expand-md.navbar-dark.bg-dark id="primary-nav"
         = link_to vcms_shipping_labeling_instructions_url do
           = fa "link"
           div Labeling Instructions
+      - if policy(:vcms).part_search?
+        li
+          = link_to vcms_production_part_search_url do
+            = fa "link"
+            div Part Search
       li
         = link_to vcms_shipping_promise_list_url do
           = fa "link"

@@ -1,10 +1,3 @@
-ruby:
-  clipboard_contents = []
-  clipboard_contents << job[:customer].ljust(6, " ")
-  clipboard_contents << job[:process].ljust(3, " ")
-  clipboard_contents << job[:part_number].ljust(17, " ")
-  clipboard_contents << job[:part_sub].ljust(1, " ")
-  clipboard = clipboard_contents.join(9.chr)
 .job class="#{job[:age] > 1 ? "bg-warning" : ""}"
   .d-flex.flex-column.flex-md-row.align-items-center.justify-content-start.rounded-bottom.border-start.border-end.border-top.job-inner
     .p-2.pt-0.pt-md-2.w-md-20.d-flex.flex-column.align-items-start.justify-content-start.align-self-stretch.order-1.order-md-0

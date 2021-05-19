@@ -1,0 +1,60 @@
+ruby:
+  provide(:title, 'Part Search')
+
+- content_for :nav do
+  = render "nav"
+
+.d-flex.flex-row.align-items-center.justify-content-between.mt-3
+  h1.font-varland Part Search
+
+= simple_form_for(:filters, url: vcms_production_part_search_url, method: "GET", html: {class: ["vp-gray-form", "my-3"]}) do |f|
+
+  .row
+    .col-12.col-md-3.mt-3
+      = f.input :customer, collection: @data[:filters][:customer_code], selected: params[:filters].blank? ? "" : params[:filters][:customer], required: false, label: "Customer Code:", include_blank: true, input_html: { class: "form-select", onchange: 'this.form.submit();' }
+    .col-12.col-md-3.mt-3
+      = f.input :process, collection: @data[:filters][:process_code], selected: params[:filters].blank? ? "" : params[:filters][:process], required: false, label: "Process Code:", include_blank: true, input_html: { class: "form-select", onchange: 'this.form.submit();' }
+    .col-12.col-md-5.mt-3
+      = f.input :part, collection: @data[:filters][:part], selected: params[:filters].blank? ? "" : params[:filters][:part], required: false, label: "Part ID:", include_blank: true, input_html: { class: "form-select", onchange: 'this.form.submit();' }
+    .col-12.col-md-1.mt-3
+      = f.input :sub, collection: @data[:filters][:sub], selected: params[:filters].blank? ? "" : params[:filters][:sub], required: false, label: "Sub ID:", include_blank: true, input_html: { class: "form-select", onchange: 'this.form.submit();' }
+  .row
+    .col-12.col-md.mt-3
+      = f.input :base_metal, collection: @data[:filters][:base_metal], selected: params[:filters].blank? ? "" : params[:filters][:base_metal], required: false, label: "Base Metal:", include_blank: true, input_html: { class: "form-select", onchange: 'this.form.submit();' }
+    .col-12.col-md.mt-3
+      = f.input :industry, collection: @data[:filters][:industry], selected: params[:filters].blank? ? "" : params[:filters][:industry], required: false, label: "Industry:", include_blank: true, input_html: { class: "form-select", onchange: 'this.form.submit();' }
+    .col-12.col-md.mt-3
+      = f.input :sub_industry, collection: @data[:filters][:sub_industry], selected: params[:filters].blank? ? "" : params[:filters][:sub_industry], required: false, label: "Sub-Industry:", include_blank: true, input_html: { class: "form-select", onchange: 'this.form.submit();' }
+    .col-12.col-md.mt-3
+      = f.input :on_or_after, required: false, label: "Last Used On or After:", as: :date, html5: true, input_html: { style: "margin: 0 !important;", onchange: 'this.form.submit();', value: params[:filters].blank? ? "" : params[:filters][:on_or_after] }
+    .col-12.col-md.mt-3
+      = f.input :on_or_before, required: false, label: "Last Used On or Before:", as: :date, html5: true, input_html: { style: "margin: 0 !important;", onchange: 'this.form.submit();', value: params[:filters].blank? ? "" : params[:filters][:on_or_before] }
+  .row
+    .col-12.col-md-3.mt-3
+      = f.input :valid_price, collection: ["Valid Only", "Invalid Only"], selected: params[:filters].blank? ? "" : params[:filters][:valid_price], required: false, label: "Valid Price:", include_blank: true, input_html: { class: "form-select", onchange: 'this.form.submit();' }
+    .col-12.col-md-3.mt-3
+      = f.input :valid_procedure, collection: ["Valid Only", "Invalid Only"], selected: params[:filters].blank? ? "" : params[:filters][:valid_procedure], required: false, label: "Valid Procedure:", include_blank: true, input_html: { class: "form-select", onchange: 'this.form.submit();' }
+    .col-12.col-md-3.mt-3
+      = f.input :active, collection: ["Active Only", "Inactive Only"], selected: params[:filters].blank? ? "" : params[:filters][:active], required: false, label: "Active/Inactive Parts:", include_blank: true, input_html: { class: "form-select", onchange: 'this.form.submit();' }
+    .col-12.col-md-3.mt-3
+      = f.input :developmental, collection: ["Developmental Only", "Exclude Developmental"], selected: params[:filters].blank? ? "" : params[:filters][:developmental], required: false, label: "Developmental Parts:", include_blank: true, input_html: { class: "form-select", onchange: 'this.form.submit();' }
+  .row
+    .col-12.col-md.mt-3
+      = f.input :search, required: false, label: "Search:", input_html: { onchange: 'this.form.submit();', value: params[:filters].blank? ? "" : params[:filters][:search] }
+
+
+- if @data[:parts].present?
+
+  .fw-700 == "Found #{pluralize(@data[:parts].length, "part")}:"
+
+  .row
+    .col-12.my-3
+      .shadow-sm.rounded
+        .d-none.d-md-flex.flex-row.align-items-center.justify-content-start.bg-dark.text-white.fw-700.rounded-top.border-dark
+          .p-2.w-20 Part Spec
+          .p-2.w-10 Flags
+          .p-2.w-20 Name / Description
+          .p-2.w-20 Process
+          .p-2.w-30 Application
+        .part-search-parts
+          = render partial: "part_search_part", collection: @data[:parts], as: :part

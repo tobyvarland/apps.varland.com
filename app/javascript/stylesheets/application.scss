@@ -308,6 +308,17 @@ h1 {
   }
 }
 
+.part-search-parts {
+  .part:last-child {
+    @extend .border-bottom;
+  }
+  .part:nth-of-type(odd) {
+    .part-inner {
+      @extend .bg-010;
+    }
+  }
+}
+
 .text-white-important {
   color: #fff !important;
 }
