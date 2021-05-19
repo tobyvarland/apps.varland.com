@@ -13,6 +13,6 @@ after :"passenger:restart", :restart_sidekiq
 
 task :restart_sidekiq do
   on roles(:app) do
-    execute "sudo -S systemctl sidekiq-apps restart"
+    execute "systemctl restart sidekiq-apps"
   end
 end
