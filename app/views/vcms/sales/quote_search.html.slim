@@ -38,9 +38,10 @@ ruby:
         = f.input :search, required: false, label: "Search:", hint: "Searches part ID, part name, part description, process specification, quote remarks, and part application.", input_html: { value: params[:filters].blank? ? "" : params[:filters][:search] }
 
 
-- if @data[:quotes].present?
+- if @quotes.present?
 
-  .fw-700 == "Found #{number_with_delimiter @data[:quotes].length} #{"quote".pluralize(@data[:quotes].length)}:"
+  .d-flex.flex-row.align-items-center.justify-content-center
+    = render partial: "shared/pagination", locals: { label: "Quotes" }
 
   .row
     .col-12.my-3
@@ -51,4 +52,7 @@ ruby:
           .p-2.w-20 Process
           .p-2.w-40 Remarks / Application
         .quote-search-quotes
-          = render partial: "quote_search_quote", collection: @data[:quotes], as: :quote
+          = render partial: "quote_search_quote", collection: @quotes, as: :quote
+
+  .d-flex.flex-row.align-items-center.justify-content-center
+    = render partial: "shared/pagination", locals: { label: "Quotes" }

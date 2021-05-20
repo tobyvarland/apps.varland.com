@@ -49,9 +49,10 @@ ruby:
         = f.input :search, required: false, label: "Search:", hint: "Searches part ID, part name, part description, process specification, and part application.", input_html: { value: params[:filters].blank? ? "" : params[:filters][:search] }
 
 
-- if @data[:parts].present?
+- if @parts.present?
 
-  .fw-700 == "Found #{number_with_delimiter @data[:parts].length} #{"part".pluralize(@data[:parts].length)}:"
+  .d-flex.flex-row.align-items-center.justify-content-center
+    = render partial: "shared/pagination", locals: { label: "Parts" }
 
   .row
     .col-12.my-3
@@ -63,4 +64,7 @@ ruby:
           .p-2.w-20 Process
           .p-2.w-30 Application
         .part-search-parts
-          = render partial: "part_search_part", collection: @data[:parts], as: :part
+          = render partial: "part_search_part", collection: @parts, as: :part
+
+  .d-flex.flex-row.align-items-center.justify-content-center
+    = render partial: "shared/pagination", locals: { label: "Parts" }

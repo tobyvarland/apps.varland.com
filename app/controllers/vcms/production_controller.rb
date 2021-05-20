@@ -39,6 +39,9 @@ class VCMS::ProductionController < ApplicationController
     end
     # puts "🔴 #{url}"
     @data = load_json url
+    if query_fields.size > 0
+      @pagy, @parts = pagy_array(@data[:parts], items: 50)
+    end
   end
 
 end

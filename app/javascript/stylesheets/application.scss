@@ -8,7 +8,8 @@
         "utilities/size.scss",
         "utilities/typography.scss",
         "utilities/tables.scss",
-        "utilities/forms.scss";
+        "utilities/forms.scss",
+        "utilities/pagination.scss";
 
 /* Base style overrides. */
 html { overflow: auto; height: 100%; }
@@ -314,6 +315,17 @@ h1 {
   }
   .part:nth-of-type(odd) {
     .part-inner {
+      @extend .bg-010;
+    }
+  }
+}
+
+.quote-search-quotes {
+  .quote:last-child {
+    @extend .border-bottom;
+  }
+  .quote:nth-of-type(odd) {
+    .quote-inner {
       @extend .bg-010;
     }
   }

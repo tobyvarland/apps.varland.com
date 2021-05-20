@@ -1,0 +1,27 @@
+.pagy-form {
+  span {
+    @extend .small;
+    font-weight: 700;
+    text-transform: uppercase;
+  }
+  form {
+    box-shadow: none !important;
+    background: inherit !important;
+    margin-top: 0 !important;
+    padding: 0.25rem !important;
+    input {
+      @extend .small;
+      border: none;
+      text-align: center;
+    }
+  }
+}
+
+.pagy-description {
+  @extend .small;
+  font-weight: 700;
+  line-height: 1;
+  margin-top: 0.1rem;
+  text-align: center;
+  text-transform: uppercase;
+}

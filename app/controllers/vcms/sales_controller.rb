@@ -30,6 +30,9 @@ class VCMS::SalesController < ApplicationController
     end
     # puts "🔴 #{url}"
     @data = load_json url
+    if query_fields.size > 0
+      @pagy, @quotes = pagy_array(@data[:quotes], items: 50)
+    end
   end
 
 end
