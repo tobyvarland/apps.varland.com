@@ -20,26 +20,26 @@ ruby:
         - if @count_filters == 0 || (@parts.length == 0)
           = f.input :customer, required: false, label: "Customer Code:", input_html: { value: params[:filters].blank? ? "" : params[:filters][:customer] }
         - else
-          = f.input :customer, collection: @data[:filters][:customer_code], selected: params[:filters].blank? ? "" : params[:filters][:customer].upcase, required: false, label: "Customer Code:", include_blank: true, input_html: { class: "form-select" }
+          = f.input :customer, collection: @data[:filters][:customer_code], selected: params[:filters].blank? ? "" : params[:filters][:customer].to_s.upcase, required: false, label: "Customer Code:", include_blank: true, input_html: { class: "form-select" }
       .col-12.col-md-3.mt-3
-        = f.input :process, collection: @data[:filters][:process_code], selected: params[:filters].blank? ? "" : params[:filters][:process].upcase, required: false, label: "Process Code:", include_blank: true, input_html: { class: "form-select" }
+        = f.input :process, collection: @data[:filters][:process_code], selected: params[:filters].blank? ? "" : params[:filters][:process].to_s.upcase, required: false, label: "Process Code:", include_blank: true, input_html: { class: "form-select" }
       .col-12.col-md-5.mt-3
         - if @count_filters == 0 || (@parts.length == 0)
           = f.input :part, required: false, label: "Part ID:", input_html: { value: params[:filters].blank? ? "" : params[:filters][:part] }
         - else
-          = f.input :part, collection: @data[:filters][:part], selected: params[:filters].blank? ? "" : params[:filters][:part].upcase, required: false, label: "Part ID:", include_blank: true, input_html: { class: "form-select" }
+          = f.input :part, collection: @data[:filters][:part], selected: params[:filters].blank? ? "" : params[:filters][:part].to_s.upcase, required: false, label: "Part ID:", include_blank: true, input_html: { class: "form-select" }
       .col-12.col-md-1.mt-3
         - if @count_filters == 0 || (@parts.length == 0)
           = f.input :sub, required: false, label: "Sub ID:", input_html: { value: params[:filters].blank? ? "" : params[:filters][:sub] }
         - else
-          = f.input :sub, collection: @data[:filters][:sub], selected: params[:filters].blank? ? "" : params[:filters][:sub].upcase, required: false, label: "Sub ID:", include_blank: true, input_html: { class: "form-select" }
+          = f.input :sub, collection: @data[:filters][:sub], selected: params[:filters].blank? ? "" : params[:filters][:sub].to_s.upcase, required: false, label: "Sub ID:", include_blank: true, input_html: { class: "form-select" }
     .row
       .col-12.col-md.mt-3
-        = f.input :base_metal, collection: @data[:filters][:base_metal], selected: params[:filters].blank? ? "" : params[:filters][:base_metal].upcase, required: false, label: "Base Metal:", include_blank: true, input_html: { class: "form-select" }
+        = f.input :base_metal, collection: @data[:filters][:base_metal], selected: params[:filters].blank? ? "" : params[:filters][:base_metal].to_s.upcase, required: false, label: "Base Metal:", include_blank: true, input_html: { class: "form-select" }
       .col-12.col-md.mt-3
-        = f.input :industry, collection: @data[:filters][:industry], selected: params[:filters].blank? ? "" : params[:filters][:industry].upcase, required: false, label: "Industry:", include_blank: true, input_html: { class: "form-select" }
+        = f.input :industry, collection: @data[:filters][:industry], selected: params[:filters].blank? ? "" : params[:filters][:industry].to_s.upcase, required: false, label: "Industry:", include_blank: true, input_html: { class: "form-select" }
       .col-12.col-md.mt-3
-        = f.input :sub_industry, collection: @data[:filters][:sub_industry], selected: params[:filters].blank? ? "" : params[:filters][:sub_industry].upcase, required: false, label: "Sub-Industry:", include_blank: true, input_html: { class: "form-select" }
+        = f.input :sub_industry, collection: @data[:filters][:sub_industry], selected: params[:filters].blank? ? "" : params[:filters][:sub_industry].to_s.upcase, required: false, label: "Sub-Industry:", include_blank: true, input_html: { class: "form-select" }
       .col-12.col-md.mt-3
         = f.input :on_or_after, required: false, label: "Last Used On or After:", as: :date, html5: true, input_html: { style: "margin: 0 !important;", value: params[:filters].blank? ? "" : params[:filters][:on_or_after] }
       .col-12.col-md.mt-3
