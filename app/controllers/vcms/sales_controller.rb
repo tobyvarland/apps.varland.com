@@ -20,6 +20,7 @@ class VCMS::SalesController < ApplicationController
       end
     end
     url = nil
+    @count_filters = query_fields.size
     if query_fields.size == 0
       url = "http://vcmsapi.varland.com/default_quote_search_filters"
     else

@@ -29,6 +29,7 @@ class VCMS::ProductionController < ApplicationController
       end
     end
     url = nil
+    @count_filters = query_fields.size
     if query_fields.size == 0
       url = "http://vcmsapi.varland.com/default_part_search_filters"
     else

@@ -6,7 +6,7 @@ ruby:
 
 .d-flex.flex-row.align-items-center.justify-content-between.mt-3
   h1.font-varland Quote Search
-  - if policy(:vcms).part_search? && params[:filters].present?
+  - if policy(:vcms).part_search? && @count_filters > 0
     = link_to "#{fa "share"} Search Parts w/ Same Filters".html_safe, vcms_production_part_search_path(filters: { customer: params[:filters][:customer], process: params[:filters][:process], part: params[:filters][:part], sub: params[:filters][:sub], on_or_after: params[:filters][:on_or_after], on_or_before: params[:filters][:on_or_before], search: params[:filters][:search] }), class: ["btn", "btn-primary", "btn-sm"], target: "_blank"
 
 = simple_form_for(:filters, url: vcms_sales_quote_search_url, method: "GET", html: {class: ["vp-gray-form", "my-3", "all-auto-submit"]}) do |f|
@@ -17,16 +17,25 @@ ruby:
   .form-fields
     .row
       .col-12.col-md-3.mt-3
-        = f.input :customer, collection: @data[:filters][:customer_code], selected: params[:filters].blank? ? "" : params[:filters][:customer], required: false, label: "Customer Code:", include_blank: true, input_html: { class: "form-select" }
+        - if @count_filters == 0 || (@quotes.length == 0)
+          = f.input :customer, required: false, label: "Customer Code:", input_html: { value: params[:filters].blank? ? "" : params[:filters][:customer] }
+        - else
+          = f.input :customer, collection: @data[:filters][:customer_code], selected: params[:filters].blank? ? "" : params[:filters][:customer].upcase, required: false, label: "Customer Code:", include_blank: true, input_html: { class: "form-select" }
       .col-12.col-md-3.mt-3
-        = f.input :process, collection: @data[:filters][:process_code], selected: params[:filters].blank? ? "" : params[:filters][:process], required: false, label: "Process Code:", include_blank: true, input_html: { class: "form-select" }
+        = f.input :process, collection: @data[:filters][:process_code], selected: params[:filters].blank? ? "" : params[:filters][:process].upcase, required: false, label: "Process Code:", include_blank: true, input_html: { class: "form-select" }
       .col-12.col-md-5.mt-3
-        = f.input :part, collection: @data[:filters][:part], selected: params[:filters].blank? ? "" : params[:filters][:part], required: false, label: "Part ID:", include_blank: true, input_html: { class: "form-select" }
+        - if @count_filters == 0 || (@quotes.length == 0)
+          = f.input :part, required: false, label: "Part ID:", input_html: { value: params[:filters].blank? ? "" : params[:filters][:part] }
+        - else
+          = f.input :part, collection: @data[:filters][:part], selected: params[:filters].blank? ? "" : params[:filters][:part].upcase, required: false, label: "Part ID:", include_blank: true, input_html: { class: "form-select" }
       .col-12.col-md-1.mt-3
-        = f.input :sub, collection: @data[:filters][:sub], selected: params[:filters].blank? ? "" : params[:filters][:sub], required: false, label: "Sub ID:", include_blank: true, input_html: { class: "form-select" }
+        - if @count_filters == 0 || (@quotes.length == 0)
+          = f.input :sub, required: false, label: "Sub ID:", input_html: { value: params[:filters].blank? ? "" : params[:filters][:sub] }
+        - else
+          = f.input :sub, collection: @data[:filters][:sub], selected: params[:filters].blank? ? "" : params[:filters][:sub], required: false, label: "Sub ID:", include_blank: true, input_html: { class: "form-select" }
     .row
       .col-12.col-md-3.mt-3
-        = f.input :quote, collection: @data[:filters][:quote], selected: params[:filters].blank? ? "" : params[:filters][:quote], required: false, label: "Quote #:", include_blank: true, input_html: { class: "form-select" }
+        = f.input :quote, collection: @data[:filters][:quote], selected: params[:filters].blank? ? "" : params[:filters][:quote].upcase, required: false, label: "Quote #:", include_blank: true, input_html: { class: "form-select" }
       .col-12.col-md-3.mt-3
         = f.input :on_or_after, required: false, label: "Quoted On or After:", as: :date, html5: true, input_html: { style: "margin: 0 !important;", value: params[:filters].blank? ? "" : params[:filters][:on_or_after] }
       .col-12.col-md-3.mt-3
