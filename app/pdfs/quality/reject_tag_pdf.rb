@@ -20,10 +20,10 @@ class Quality::RejectTagPdf < ::VarlandPdf
     data_options_left = { size: 10, h_align: :left, v_align: :top, h_pad: 0.1, v_pad: 0.1 }
 
     # Draw section header boxes.
-    self.txtb("SECTION 1 – IDENTIFICATION & DESCRIPTION", 0.25, 10.75, 8, 0.35, fill_color: "000000", color: "ffffff", size: 10, style: :bold, h_align: :left, h_pad: 0.1)
-    self.txtb("SECTION 2 – LOAD SPECIFIC INFORMATION", 0.25, 6.85, 8, 0.35, fill_color: "000000", color: "ffffff", size: 10, style: :bold, h_align: :left, h_pad: 0.1)
-    self.txtb("SECTION 3 – CAUSE OF DEFECT/PROBLEM", 0.25, 5.5, 8, 0.35, fill_color: "000000", color: "ffffff", size: 10, style: :bold, h_align: :left, h_pad: 0.1)
-    self.txtb("SECTION 4 – APPROVAL WITHOUT REWORK", 0.25, 1.65, 8, 0.35, fill_color: "000000", color: "ffffff", size: 10, style: :bold, h_align: :left, h_pad: 0.1)
+    self.txtb("SECTION 1 — IDENTIFICATION & DESCRIPTION", 0.25, 10.75, 8, 0.35, fill_color: "000000", color: "ffffff", size: 10, style: :bold, h_align: :left, h_pad: 0.1)
+    self.txtb("SECTION 2 — LOAD SPECIFIC INFORMATION", 0.25, 6.85, 8, 0.35, fill_color: "000000", color: "ffffff", size: 10, style: :bold, h_align: :left, h_pad: 0.1)
+    self.txtb("SECTION 3 — CAUSE OF DEFECT/PROBLEM", 0.25, 5.5, 8, 0.35, fill_color: "000000", color: "ffffff", size: 10, style: :bold, h_align: :left, h_pad: 0.1)
+    self.txtb("SECTION 4 — APPROVAL WITHOUT REWORK", 0.25, 1.65, 8, 0.35, fill_color: "000000", color: "ffffff", size: 10, style: :bold, h_align: :left, h_pad: 0.1)
 
     # Draw data header boxes.
     self.txtb("SHOP ORDER", 0.25, 10.4, 2, 0.25, header_options_center)

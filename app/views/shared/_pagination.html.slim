@@ -23,4 +23,4 @@ ruby:
         - else
           button.btn.btn-warning.btn-sm disabled="disabled" = fa("angle-right")
           button.btn.btn-warning.btn-sm disabled="disabled" = fa("angle-double-right")
-  .pagy-description = "#{label} #{number_with_delimiter @pagy.from} &ndash; #{number_with_delimiter @pagy.to} of #{number_with_delimiter @pagy.count}".html_safe
+  .pagy-description = "#{label} #{number_with_delimiter @pagy.from}&ndash;#{number_with_delimiter @pagy.to} of #{number_with_delimiter @pagy.count}".html_safe
