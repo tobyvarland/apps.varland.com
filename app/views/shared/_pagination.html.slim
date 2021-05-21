@@ -13,9 +13,9 @@ ruby:
           button.btn.btn-warning.btn-sm disabled="disabled" = fa("angle-left")
       div.d-flex.flex-row.justify-content-center.align-items-center.pagy-form
         span.me-1 Page
-        form.me-1
+        form.me-1.d-none
           input type="number" id="page" name="page" value=@pagy.page min="1" max=@pagy.pages step="1" onchange="this.form.submit()"
-        span = "of #{number_with_delimiter @pagy.pages}"
+        span = "#{number_with_delimiter @pagy.page} of #{number_with_delimiter @pagy.pages}"
       div
         - if @pagy.next
           = link.call(@pagy.next, fa("angle-right")).html_safe
