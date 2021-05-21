@@ -49,6 +49,9 @@ $(document).on('turbolinks:load', function() {
   // Handle part spec links.
   handlePartSpecLinks();
 
+  // Set up part search photos.
+  showPartSearchPhotos();
+
 });
 
 function secondsToHumanReadable(seconds) {
@@ -100,5 +103,40 @@ function handlePartSpecLinks() {
       });
     });
   })
+
+}
+
+function showPartSearchPhotos() {
+
+  // Define possible extensions in order of likeliness.
+  var extensions = ["jpg", "png"];
+  var countExtensions = extensions.length;
+
+  // Process each control number.
+  $(".control-number-container").each(function() {
+    var $controlNumberContainer = $(this);
+    var controlNumber = parseInt($controlNumberContainer.text());
+    if (controlNumber && controlNumber > 0) {
+      var $partContainer = $controlNumberContainer.closest(".part-search-part");
+      var $imageContainer = $partContainer.find(".part-search-image-container");
+      for (var i = 0; i < countExtensions; i++) {
+        var imageUrl = "http://so.varland.com/so_photos/" + controlNumber + "." + extensions[i];
+        $.ajax(imageUrl)
+          .done(function(data, textStatus, jqXHR) {
+            if (jqXHR.status != 200) return;
+            var $link = $("<a>");
+            $link.attr("href", imageUrl).attr("target", "_blank");
+            $link.addClass("part-search-image");
+            var $image = $("<img>");
+            $image.attr("src", imageUrl);
+            $image.appendTo($link);
+            $($image).on("error", function() {
+              $link.addClass("d-none");
+            });
+            $link.appendTo($imageContainer);
+          });
+      }
+    }
+  });
 
 }

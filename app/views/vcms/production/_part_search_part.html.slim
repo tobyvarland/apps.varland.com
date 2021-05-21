@@ -1,4 +1,4 @@
-tr
+tr.part-search-part
   td.align-top
     .d-flex.flex-row.align-items-center.justify-content-start
       .fw-700 == [part[:customer_code], part[:process_code], highlight_search_term(search_term, part[:part]), part[:sub]].reject(&:blank?).join(" <span class=\"text-uncolor\">/</span> ")
@@ -21,13 +21,14 @@ tr
           td.fw-500.small = part[:base_metal]
         tr
           td.fw-300.small.w-1 Control #: 
-          td.fw-500.small = part[:control_number]
+          td.fw-500.small.control-number-container = part[:control_number]
         tr
           td.fw-300.small.w-1 Industry: 
           td.fw-500.small = part[:industry]
         tr
           td.fw-300.small.w-1 Sub-Industry: 
           td.fw-500.small = part[:sub_industry]
+  td.align-top.part-search-image-container
   td.align-top
     .d-flex.flex-column.align-items-start.justify-content-start
       - [:has_valid_procedure, :has_valid_price].each_with_index do |flag, index|

@@ -320,3 +320,15 @@ mark.search-term {
 .bg-black {
   background-color: #000 !important;
 }
+
+.part-search-image {
+  @extend .border;
+  @extend .d-block;
+  @extend .p-1;
+  @extend .rounded;
+  @extend .shadow-sm;
+  img {
+    display: block;
+    max-width: 100px;
+  }
+}
