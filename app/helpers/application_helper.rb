@@ -162,9 +162,16 @@ module ApplicationHelper
 
   def highlight_search_term(term, string)
     return string if term.blank?
-    return string.gsub(/#{term}/i) do |match|
-      "<mark class=\"search-term\">#{match}</mark>"
+    re = /'.*?'|".*?"|\S+/
+    term.scan(re) do |individual_term|
+      unquoted_term = individual_term
+      unquoted_term = individual_term.delete_prefix("'").delete_suffix("'") if individual_term[0] == "'" && individual_term[-1] == "'"
+      unquoted_term = individual_term.delete_prefix("\"").delete_suffix("\"") if individual_term[0] == "\"" && individual_term[-1] == "\""
+      string.gsub!(/#{unquoted_term}/i) do |match|
+        "<mark class=\"search-term\">#{match}</mark>"
+      end
     end
+    return string
   end
 
 end
