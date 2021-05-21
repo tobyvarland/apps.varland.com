@@ -5,6 +5,7 @@ tr
     .d-flex.flex-row.align-items-center.justify-content-start
       .fw-700 == [quote[:customer_code], quote[:process_code], highlight_search_term(search_term, quote[:part]), quote[:sub]].reject(&:blank?).join(" <span class=\"text-uncolor\">/</span> ")
       .ms-1.small = link_to fa("server"), link_part_spec_path(customer: quote[:customer_code], process: quote[:process_code], part: quote[:part], sub: quote[:sub]), class: ["text-muted", "link-part-spec"]
+      .ms-1.small = link_to fa("comment-alt"), vcms_production_part_history_search_url(filters: { customer: quote[:customer_code], process: quote[:process_code], part: quote[:part], sub: quote[:sub] }), class: ["text-muted"], target: "_blank"
     table.table.table-bordered.table-striped.mt-1.small.mb-0
       tbody
         - unless quote[:quoted_on].blank?

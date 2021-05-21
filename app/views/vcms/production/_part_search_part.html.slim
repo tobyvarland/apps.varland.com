@@ -3,6 +3,7 @@ tr
     .d-flex.flex-row.align-items-center.justify-content-start
       .fw-700 == [part[:customer_code], part[:process_code], highlight_search_term(search_term, part[:part]), part[:sub]].reject(&:blank?).join(" <span class=\"text-uncolor\">/</span> ")
       .ms-1.small = link_to fa("server"), link_part_spec_path(customer: part[:customer_code], process: part[:process_code], part: part[:part], sub: part[:sub]), class: ["text-muted", "link-part-spec"]
+      .ms-1.small = link_to fa("comment-alt"), vcms_production_part_history_search_url(filters: { customer: part[:customer_code], process: part[:process_code], part: part[:part], sub: part[:sub] }), class: ["text-muted"], target: "_blank"
     table.table.table-bordered.table-striped.mt-1.small.mb-0
       tbody
         - unless part[:last_used_on].blank?
