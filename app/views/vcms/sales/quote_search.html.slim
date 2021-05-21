@@ -52,16 +52,16 @@ ruby:
   .d-flex.flex-row.align-items-center.justify-content-center
     = render partial: "shared/pagination", locals: { label: "Quotes" }
 
-  .row
-    .col-12.my-3
-      .shadow-sm.rounded
-        .d-none.d-md-flex.flex-row.align-items-center.justify-content-start.bg-dark.text-white.fw-700.rounded-top.border-dark
-          .p-2.w-20 Part Spec
-          .p-2.w-20 Name / Description
-          .p-2.w-20 Process
-          .p-2.w-40 Remarks / Application
-        .quote-search-quotes
-          = render partial: "quote_search_quote", collection: @quotes, as: :quote
+  .table-responsive.mt-3
+    table.table.table-bordered.table-striped.table-hover
+      thead.table-dark
+        tr
+          th.w-1 Part Spec
+          th.w-1 Name / Description
+          th.w-1 Process
+          th Remarks / Application
+      tbody
+        = render partial: "quote_search_quote", collection: @quotes, as: :quote, locals: { search_term: params[:filters].blank? ? nil : params[:filters][:search] }
 
   .d-flex.flex-row.align-items-center.justify-content-center
     = render partial: "shared/pagination", locals: { label: "Quotes" }

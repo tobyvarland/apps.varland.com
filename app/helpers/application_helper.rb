@@ -160,4 +160,11 @@ module ApplicationHelper
     return JSON.parse(response.body, symbolize_names: true)
   end
 
+  def highlight_search_term(term, string)
+    return string if term.blank?
+    return string.gsub(/#{term}/i) do |match|
+      "<mark class=\"search-term\">#{match}</mark>"
+    end
+  end
+
 end

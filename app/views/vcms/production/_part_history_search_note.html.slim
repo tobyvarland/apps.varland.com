@@ -1,0 +1,9 @@
+tr
+  td.align-top
+    .d-flex.flex-row.align-items-center.justify-content-start
+      .fw-700 == [note[:customer_code], note[:process_code], note[:part], note[:sub]].reject(&:blank?).join(" <span class=\"text-uncolor\">/</span> ")
+      .ms-1.small = link_to fa("server"), link_part_spec_path(customer: note[:customer_code], process: note[:process_code], part: note[:part], sub: note[:sub]), class: ["text-muted", "link-part-spec"]
+  td.align-top.text-center = Date.strptime(note[:date], "%Y-%m-%d").strftime("%m/%d/%y")
+  td.align-top.text-center = note[:page]
+  td.align-top
+    .fw-500 == highlight_search_term search_term, note[:note].join("<br>")

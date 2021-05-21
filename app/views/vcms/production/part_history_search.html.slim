@@ -1,0 +1,61 @@
+ruby:
+  provide(:title, 'Part History Search')
+
+- content_for :nav do
+  = render "nav"
+
+.d-flex.flex-row.align-items-center.justify-content-between.mt-3
+  h1.font-varland Part History Search
+
+= simple_form_for(:filters, url: vcms_production_part_history_search_url, method: "GET", html: {class: ["vp-gray-form", "my-3", "all-auto-submit"]}) do |f|
+
+  .row.loading-icon.d-none
+    .col-12.text-center.mt-3.fs-1 == fa "spinner", spin: true
+
+  .form-fields
+    .row
+      .col-12.col-md-3.mt-3
+        - if @count_filters == 0 || (@notes.length == 0)
+          = f.input :customer, required: false, label: "Customer Code:", input_html: { value: params[:filters].blank? ? "" : params[:filters][:customer] }
+        - else
+          = f.input :customer, collection: @data[:filters][:customer_code], selected: params[:filters].blank? ? "" : params[:filters][:customer].to_s.upcase, required: false, label: "Customer Code:", include_blank: true, input_html: { class: "form-select" }
+      .col-12.col-md-3.mt-3
+        = f.input :process, collection: @data[:filters][:process_code], selected: params[:filters].blank? ? "" : params[:filters][:process].to_s.upcase, required: false, label: "Process Code:", include_blank: true, input_html: { class: "form-select" }
+      .col-12.col-md-5.mt-3
+        - if @count_filters == 0 || (@notes.length == 0)
+          = f.input :part, required: false, label: "Part ID:", input_html: { value: params[:filters].blank? ? "" : params[:filters][:part] }
+        - else
+          = f.input :part, collection: @data[:filters][:part], selected: params[:filters].blank? ? "" : params[:filters][:part].to_s.upcase, required: false, label: "Part ID:", include_blank: true, input_html: { class: "form-select" }
+      .col-12.col-md-1.mt-3
+        - if @count_filters == 0 || (@notes.length == 0)
+          = f.input :sub, required: false, label: "Sub ID:", input_html: { value: params[:filters].blank? ? "" : params[:filters][:sub] }
+        - else
+          = f.input :sub, collection: @data[:filters][:sub], selected: params[:filters].blank? ? "" : params[:filters][:sub].to_s.upcase, required: false, label: "Sub ID:", include_blank: true, input_html: { class: "form-select" }
+    .row
+      .col-12.col-md-3.mt-3
+        = f.input :on_or_after, required: false, label: "Note On or After:", as: :date, html5: true, input_html: { style: "margin: 0 !important;", value: params[:filters].blank? ? "" : params[:filters][:on_or_after] }
+      .col-12.col-md-3.mt-3
+        = f.input :on_or_before, required: false, label: "Note On or Before:", as: :date, html5: true, input_html: { style: "margin: 0 !important;", value: params[:filters].blank? ? "" : params[:filters][:on_or_before] }
+    .row
+      .col-12.col-md.mt-3
+        = f.input :search, required: false, label: "Search:", hint: "Searches part ID, part name, part description, process specification, and part application.", input_html: { value: params[:filters].blank? ? "" : params[:filters][:search] }
+
+
+- if @notes.present?
+
+  .d-flex.flex-row.align-items-center.justify-content-center
+    = render partial: "shared/pagination", locals: { label: "History Notes" }
+
+  .table-responsive.mt-3
+    table.table.table-bordered.table-striped.table-hover
+      thead.table-dark
+        tr
+          th.w-1 Part Spec
+          th.w-1.text-center Date
+          th.w-1.text-center Page
+          th Note
+      tbody
+        = render partial: "part_history_search_note", collection: @notes, as: :note, locals: { search_term: params[:filters].blank? ? nil : params[:filters][:search] }
+
+  .d-flex.flex-row.align-items-center.justify-content-center
+    = render partial: "shared/pagination", locals: { label: "History Notes" }

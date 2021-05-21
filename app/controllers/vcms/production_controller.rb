@@ -45,4 +45,30 @@ class VCMS::ProductionController < ApplicationController
     end
   end
 
+  def part_history_search
+    query_fields = {}
+    if params[:filters].present?
+      [:customer, :process, :part, :sub, :on_or_after, :on_or_before, :search].each do |sym|
+        if params[:filters][sym].present?
+          query_fields[sym] = CGI.escape(params[:filters][sym])
+        end
+      end
+    end
+    url = nil
+    @count_filters = query_fields.size
+    if query_fields.size == 0
+      url = "http://vcmsapi.varland.com/default_part_history_search_filters"
+    else
+      url = "http://vcmsapi.varland.com/part_history_search?"
+      query_fields.each {|key, value|
+        url << (url[-1] == "?" ? "" : "&") << "#{key}=#{value}"
+      }
+    end
+    puts "🔴 #{url}"
+    @data = load_json url
+    if query_fields.size > 0
+      @pagy, @notes = pagy_array(@data[:notes], items: 50)
+    end
+  end
+
 end

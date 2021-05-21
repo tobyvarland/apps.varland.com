@@ -94,6 +94,11 @@ nav.navbar.fixed-top.navbar-expand-md.navbar-dark.bg-dark id="primary-nav"
           = link_to vcms_production_part_search_url do
             = fa "link"
             div Part Search
+      - if policy(:vcms).part_history_search?
+        li
+          = link_to vcms_production_part_history_search_url do
+            = fa "link"
+            div Part History Search
       li
         = link_to vcms_shipping_promise_list_url do
           = fa "link"

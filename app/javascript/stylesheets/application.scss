@@ -309,26 +309,9 @@ h1 {
   }
 }
 
-.part-search-parts {
-  .part:last-child {
-    @extend .border-bottom;
-  }
-  .part:nth-of-type(odd) {
-    .part-inner {
-      @extend .bg-010;
-    }
-  }
-}
-
-.quote-search-quotes {
-  .quote:last-child {
-    @extend .border-bottom;
-  }
-  .quote:nth-of-type(odd) {
-    .quote-inner {
-      @extend .bg-010;
-    }
-  }
+mark.search-term {
+  @extend .fw-700;
+  @extend .text-danger;
 }
 
 .text-white-important {

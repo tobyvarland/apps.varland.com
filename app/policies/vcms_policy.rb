@@ -4,6 +4,10 @@ class VCMSPolicy < Struct.new(:user, :vcms)
     return !user.blank?
   end
 
+  def part_history_search?
+    return part_search?
+  end
+
   def quote_search?
     return user && (user.permission.super_admin || user.employee_number >= 700)
   end

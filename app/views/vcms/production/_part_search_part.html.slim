@@ -1,52 +1,52 @@
-.part
-  .d-flex.flex-column.flex-md-row.align-items-center.justify-content-start.rounded-bottom.border-start.border-end.border-top.part-inner
-    .p-2.w-md-20.d-flex.flex-column.align-items-start.justify-content-start.align-self-stretch
-      .d-flex.flex-row.align-items-center.justify-content-start
-        .fw-700 == [part[:customer_code], part[:process_code], part[:part], part[:sub]].reject(&:blank?).join(" <span class=\"text-uncolor\">/</span> ")
-        .ms-1.small = link_to fa("server"), link_part_spec_path(customer: part[:customer_code], process: part[:process_code], part: part[:part], sub: part[:sub]), class: ["text-muted", "link-part-spec"]
-      table.table.table-bordered.table-striped.mt-1.small.mb-0
-        tbody
-          - unless part[:last_used_on].blank?
-            tr
-              td.fw-300.small.w-1 Last Used: 
-              td.fw-500.small = Date.strptime(part[:last_used_on], "%Y-%m-%d").strftime("%m/%d/%y")
+tr
+  td.align-top
+    .d-flex.flex-row.align-items-center.justify-content-start
+      .fw-700 == [part[:customer_code], part[:process_code], highlight_search_term(search_term, part[:part]), part[:sub]].reject(&:blank?).join(" <span class=\"text-uncolor\">/</span> ")
+      .ms-1.small = link_to fa("server"), link_part_spec_path(customer: part[:customer_code], process: part[:process_code], part: part[:part], sub: part[:sub]), class: ["text-muted", "link-part-spec"]
+    table.table.table-bordered.table-striped.mt-1.small.mb-0
+      tbody
+        - unless part[:last_used_on].blank?
           tr
-            td.fw-300.small.w-1 Per Piece: 
-            td.fw-500.small == ["#{number_with_precision part[:weight], precision: 4, strip_insignificant_zeros: true} lbs", "#{number_with_precision part[:area], precision: 4, strip_insignificant_zeros: true} ft<sup>2</sup>"].join(" <span class=\"text-uncolor\">/</span> ")
-          tr
-            td.fw-300.small.w-1 Per Pound: 
-            td.fw-500.small == ["#{number_with_precision part[:pieces_per_pound], precision: 4, strip_insignificant_zeros: true} pcs", "#{number_with_precision part[:area_per_pound], precision: 4, strip_insignificant_zeros: true} ft<sup>2</sup>"].join(" <span class=\"text-uncolor\">/</span> ")
-          tr
-            td.fw-300.small.w-1 Base Metal: 
-            td.fw-500.small = part[:base_metal]
-          tr
-            td.fw-300.small.w-1 Control #: 
-            td.fw-500.small = part[:control_number]
-          tr
-            td.fw-300.small.w-1 Industry: 
-            td.fw-500.small = part[:industry]
-          tr
-            td.fw-300.small.w-1 Sub-Industry: 
-            td.fw-500.small = part[:sub_industry]
-    .p-2.pt-0.pt-md-2.w-md-10.d-flex.flex-row.flex-md-column.align-items-start.justify-content-start.align-self-stretch
+            td.fw-300.small.w-1 Last Used: 
+            td.fw-500.small = Date.strptime(part[:last_used_on], "%Y-%m-%d").strftime("%m/%d/%y")
+        tr
+          td.fw-300.small.w-1 Per Piece: 
+          td.fw-500.small == ["#{number_with_precision part[:weight], precision: 4, strip_insignificant_zeros: true} lbs", "#{number_with_precision part[:area], precision: 4, strip_insignificant_zeros: true} ft<sup>2</sup>"].join(" <span class=\"text-uncolor\">/</span> ")
+        tr
+          td.fw-300.small.w-1 Per Pound: 
+          td.fw-500.small == ["#{number_with_precision part[:pieces_per_pound], precision: 4, strip_insignificant_zeros: true} pcs", "#{number_with_precision part[:area_per_pound], precision: 4, strip_insignificant_zeros: true} ft<sup>2</sup>"].join(" <span class=\"text-uncolor\">/</span> ")
+        tr
+          td.fw-300.small.w-1 Base Metal: 
+          td.fw-500.small = part[:base_metal]
+        tr
+          td.fw-300.small.w-1 Control #: 
+          td.fw-500.small = part[:control_number]
+        tr
+          td.fw-300.small.w-1 Industry: 
+          td.fw-500.small = part[:industry]
+        tr
+          td.fw-300.small.w-1 Sub-Industry: 
+          td.fw-500.small = part[:sub_industry]
+  td.align-top
+    .d-flex.flex-column.align-items-start.justify-content-start
       - [:has_valid_procedure, :has_valid_price].each_with_index do |flag, index|
-        .badge class="bg-#{part[flag] ? "success" : "danger"} #{index > 0 ? "mt-md-1 ms-1 ms-md-0" : ""}"
+        .badge class="bg-#{part[flag] ? "success" : "danger"} #{index > 0 ? "mt-1" : ""}"
           == part[flag] ? "#{fa "check"} " : "#{fa "times"} Bad "
           = flag.to_s.gsub("has_valid_", "").humanize
           = part[flag] ? " OK" : ""
-      .badge class="bg-#{part[:is_active] ? "primary" : "warning text-dark"} mt-md-1 ms-1 ms-md-0"
+      .badge class="bg-#{part[:is_active] ? "primary" : "warning text-dark"} mt-1"
         == part[:is_active] ? "#{fa "check"} Active Part" : "#{fa "times"} Inactive Part"
       - if part[:is_developmental]
-        .badge class="bg-dark mt-md-1 ms-1 ms-md-0"
+        .badge class="bg-dark mt-1"
           == "#{fa "certificate"} Developmental"
-    .p-2.pt-0.pt-md-2.w-md-20.d-flex.flex-column.align-items-start.justify-content-start.align-self-stretch
-      .small.fw-300.text-uncolor Part Name:
-      .fw-500 == part[:name].join("<br>")
-      .small.fw-300.text-uncolor.mt-3 Part Description:
-      .fw-500 == part[:description].join("<br>")
-    .p-2.pt-0.pt-md-2.w-md-20.d-flex.flex-column.align-items-start.justify-content-start.align-self-stretch
-      .small.fw-300.text-uncolor.d-md-none Process Spec:
-      .fw-500 == part[:process_spec].join("<br>")
-    .p-2.pt-0.pt-md-2.w-md-30.d-flex.flex-column.align-items-start.justify-content-start.align-self-stretch
-      .small.fw-300.text-uncolor.d-md-none Application:
-      .fw-500 == part[:application].join("<br>")
+  td.align-top
+    .small.fw-300.text-uncolor Part Name:
+    .fw-500 == highlight_search_term search_term, part[:name].join("<br>")
+    .small.fw-300.text-uncolor.mt-3 Part Description:
+    .fw-500 == highlight_search_term search_term, part[:description].join("<br>")
+  td.align-top
+    .small.fw-300.text-uncolor.d-md-none Process Spec:
+    .fw-500 == highlight_search_term search_term, part[:process_spec].join("<br>")
+  td.align-top
+    .small.fw-300.text-uncolor.d-md-none Application:
+    .fw-500 == highlight_search_term search_term, part[:application].join("<br>")
