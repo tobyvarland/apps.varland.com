@@ -14,6 +14,7 @@ Rails.application.routes.draw do
         post  :print_trico_labels
       end
     end
+    post  :print_smalog_labels
   end
   namespace :quality do
     resources :reject_tags do
@@ -52,6 +53,7 @@ Rails.application.routes.draw do
     post "log_trico_load",  to: "opto#log_trico_load"
   end
   get "shipping/trico_labels",    to: "shipping#trico_labels",  as: :trico_labels
+  get "shipping/smalog_labels",   to: "shipping#smalog_labels", as: :smalog_labels
   get "vcms/link_part_spec",      to: "vcms#link_part_spec",    as: :link_part_spec
 
   # Mount Sidekiq.

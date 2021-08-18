@@ -4,4 +4,8 @@ class ShippingPolicy < Struct.new(:user, :shipping)
     return true
   end
 
+  def smalog_labels?
+    return true
+  end
+
 end

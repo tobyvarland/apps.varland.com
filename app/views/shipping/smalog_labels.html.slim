@@ -1,0 +1,63 @@
+ruby:
+  provide(:title, 'Small Parts Labels')
+
+.d-flex.flex-row.align-items-center.justify-content-between.mt-3
+  h1.font-varland Small Parts Labels
+
+- if @orders.length == 0
+
+  p.my-3.fst-italic.text-uncolor No orders with labels ready to be printed.
+
+- else
+
+  .table-responsive.my-3
+    table.table.table-striped.table-hover
+      thead.table-dark
+        tr
+          th Shop Order
+          th.text-center Containers
+          th Labeling
+          th.text-center Options
+      tbody
+        - @orders.each do |order|
+          tr
+            td.align-top
+              .fw-700 = order[:shop_order]
+              ruby:
+                part_spec = [order[:customer], order[:process], order[:part_number]]
+                part_spec << order[:part_sub] unless order[:part_sub].blank?
+              .small == part_spec.join(" <small class=\"text-uncolor\">/</small> ")
+            td.align-top.text-center
+              = "#{order[:containers]} #{order[:container_type]}"
+            td.align-top
+              - order[:labels].each do |l|
+                ruby:
+                  text_parts = []
+                - if l[:from] == l[:to]
+                  ruby:
+                    text_parts << "Put load #{l[:from]}"
+                - elsif l[:from] == l[:to] - 1
+                  ruby:
+                    text_parts << "Put loads #{l[:from]} &amp; #{l[:to]}"
+                - else
+                  ruby:
+                    text_parts << "Put loads #{l[:from]} &ndash; #{l[:to]}"
+                ruby:
+                  text_parts << "into"
+                - if l[:containers] != 0
+                  ruby: 
+                    text_parts << pluralize(l[:containers], "tote")
+                - if l[:containers] != 0 && l[:boxes] != 0
+                  ruby: 
+                    text_parts << "&amp;"
+                - if l[:boxes] != 0
+                  ruby: 
+                    text_parts << pluralize(l[:boxes], "Varland box")
+                - if l[:from] != l[:to]
+                  ruby: 
+                    text_parts << "per load"
+                ruby:
+                  text_parts << "@ #{l[:weight]} #/container"
+                div == text_parts.join(" ")
+            td.align-top.text-center
+              = link_to "Print Labels", as400_print_smalog_labels_path(shop_order: order[:shop_order]), method: :post, class: ["btn", "btn-sm", "btn-primary"]
