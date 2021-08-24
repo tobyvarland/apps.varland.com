@@ -3,6 +3,8 @@ ruby:
 
 .d-flex.flex-row.align-items-center.justify-content-between.mt-3
   h1.font-varland Small Parts Labels
+  - unless @orders.length == 0
+    p.my-0.fw-lighter.fs-3 = "#{@orders.first[:max_weight_per_container]} #/container max"
 
 - if @orders.length == 0
 
