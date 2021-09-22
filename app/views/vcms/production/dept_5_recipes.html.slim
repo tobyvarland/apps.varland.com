@@ -22,18 +22,14 @@ ruby:
   .row
     .col-12
 
-    - if @recipes.length == 0
+      - if @recipes.length == 0
 
-      .text-danger.fw-700 No recipes found.
+        .text-danger.fw-700 No recipes found.
 
-    - else
+      - else
 
-      .row
+        .row
 
-        - @recipes.each do |recipe|
+          - @recipes.each do |recipe|
 
-          = render partial: "recipe_#{recipe[:type]}", locals: { recipe: recipe }
-
-- else
-
-  p @recipes not present.
+            = render partial: "recipe_#{recipe[:type]}", locals: { recipe: recipe }
