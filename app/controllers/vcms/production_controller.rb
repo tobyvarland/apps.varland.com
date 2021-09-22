@@ -3,6 +3,14 @@ class VCMS::ProductionController < ApplicationController
   skip_before_action  :authenticate_user!
   before_action       :prevent_cache
 
+  def dept_5_recipes
+    if params[:data].present? && params[:data][:shop_order].present?
+      @recipes = load_json "http://vcmsapi.varland.com/dept_5_recipe?so=#{params[:data][:shop_order]}"
+      # puts "🔴 #{@recipes.length}"
+    end
+    # puts "🔴 #{@recipes.present?}"
+  end
+
   def jobs_on_receipt
     @auto_refresh = 599
     @jobs = load_json "http://vcmsapi.varland.com/jobs_on_receipt"

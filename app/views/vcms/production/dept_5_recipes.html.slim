@@ -1,0 +1,39 @@
+ruby:
+  provide(:title, 'Dept. 5 Recipe Viewer')
+
+- content_for :nav do
+  = render "nav"
+
+.d-flex.flex-row.align-items-center.justify-content-between.mt-3
+  h1.font-varland Dept. 5 Recipe Viewer
+
+= simple_form_for(:data, url: vcms_production_dept_5_recipes_url, method: "GET", html: {class: ["vp-gray-form", "my-3", "all-auto-submit"]}) do |f|
+
+  .row.loading-icon.d-none
+    .col-12.text-center.mt-3.fs-1 == fa "spinner", spin: true
+
+  .form-fields
+    .row
+      .col-12.col-md-3.mt-3
+        = f.input :shop_order, required: true, label: "Shop Order:", html5: true, input_html: { style: "margin: 0 !important;", value: params[:data].blank? ? "" : params[:data][:shop_order] }
+
+- if defined?(@recipes)
+
+  .row
+    .col-12
+
+    - if @recipes.length == 0
+
+      .text-danger.fw-700 No recipes found.
+
+    - else
+
+      .row
+
+        - @recipes.each do |recipe|
+
+          = render partial: "recipe_#{recipe[:type]}", locals: { recipe: recipe }
+
+- else
+
+  p @recipes not present.

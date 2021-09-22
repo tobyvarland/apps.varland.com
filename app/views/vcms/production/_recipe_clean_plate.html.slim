@@ -1,0 +1,111 @@
+.col-12
+  .card
+    .card-header.fw-700 Clean &amp; Plate
+    .card-body
+      .row
+        .col-12.col-md-2
+          .mb-3.fw-700 Order Information
+          table.table.table-striped.mb-0.table-sm
+            tbody
+              tr
+                td.small.w-1 Customer
+                td.fw-700 = recipe[:customer_code]
+              tr
+                td.small.w-1 Part ID
+                td.fw-700 = recipe[:part_id]
+              tr
+                td.small.w-1 ft<sup>2</sup>/lb
+                td.fw-700 = number_with_delimiter recipe[:square_feet_per_pound]
+              tr
+                td.small.w-1 # Loads
+                td.fw-700 = recipe[:loads]
+              tr
+                td.small.w-1 Total Pounds
+                td.fw-700 = number_with_delimiter recipe[:pounds]
+              tr
+                td.small.w-1 Pounds Per Load
+                td.fw-700 = number_with_delimiter recipe[:pounds_per_load]
+              tr
+                td.small.w-1 Zinc Amps
+                td.fw-700 = number_with_delimiter recipe[:zinc_amps]
+              tr
+                td.small.w-1 Zinc Volt Limit
+                td.fw-700 = number_with_delimiter recipe[:zinc_volt_limit]
+              tr
+                td.small.w-1 Zinc Minutes
+                td.fw-700 = number_with_delimiter recipe[:zinc_minutes]
+              tr
+                td.small.w-1 Zinc RPM
+                td.fw-700 = number_with_delimiter recipe[:zinc_rpm]
+              tr
+                td.small.w-1 Reverse Rotation
+                td.fw-700 = recipe[:reverse_rotation] ? "✔" : "✘"
+              tr
+                td.small.w-1 Reverse Current
+                td.fw-700 = recipe[:reverse_current] ? "✔" : "✘"
+              tr
+                td.small.w-1 Bake Within
+                td.fw-700 = recipe[:bake_within] == 0 ? "none" : recipe[:bake_within]
+              tr
+                td.small.w-1 Up Bbl Rotation<br><small>Lane 1</small>
+                td.fw-700 = recipe[:lane_1_up_barrel_rotation_03_21] ? "✔" : "✘"
+              tr
+                td.small.w-1 Up Bbl Rotation<br><small>Lane 2 (3 – 11)</small>
+                td.fw-700 = recipe[:lane_2_up_barrel_rotation_03_11] ? "✔" : "✘"
+              tr
+                td.small.w-1 Up Bbl Rotation<br><small>Lane 2 (12 – 21)</small>
+                td.fw-700 = recipe[:lane_2_up_barrel_rotation_12_21] ? "✔" : "✘"
+        .col-12.col-md-5
+          .mb-3.fw-700 Lane 1 Station Information
+          table.table.table-striped.mb-0.table-sm
+            thead.table-dark
+              tr
+                th.text-center Station #
+                th.text-center Used?
+                th.text-center RPM
+                th.text-center Amps
+                th.text-center Volt Limit
+                th.text-center Seconds
+            tbody
+              - recipe[:lane_1].each do |station|
+                tr
+                  td.text-center = station[:number]
+                  td.text-center = station[:used] ? "✔" : "✘"
+                  - if station[:used]
+                    - [:rpm, :amps, :volts, :time].each do |field|
+                      - if station[field] == 0
+                        td
+                      - else
+                        td.text-center = station[field]
+                  - else
+                    td
+                    td
+                    td
+                    td
+        .col-12.col-md-5
+          .mb-3.fw-700 Lane 2 Station Information
+          table.table.table-striped.mb-0.table-sm
+            thead.table-dark
+              tr
+                th.text-center Station #
+                th.text-center Used?
+                th.text-center RPM
+                th.text-center Amps
+                th.text-center Volt Limit
+                th.text-center Seconds
+            tbody
+              - recipe[:lane_2].each do |station|
+                tr
+                  td.text-center = station[:number]
+                  td.text-center = station[:used] ? "✔" : "✘"
+                  - if station[:used]
+                    - [:rpm, :amps, :volts, :time].each do |field|
+                      - if station[field] == 0
+                        td
+                      - else
+                        td.text-center = station[field]
+                  - else
+                    td
+                    td
+                    td
+                    td

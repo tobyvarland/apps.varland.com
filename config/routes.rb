@@ -48,6 +48,7 @@ Rails.application.routes.draw do
     get "production/part_history_search", to: "production#part_history_search", as: :production_part_history_search
     get "sales/quote_search",             to: "sales#quote_search",             as: :sales_quote_search
     get "sales/recent_customers",         to: "sales#recent_customers",         as: :sales_recent_customers
+    get "production/dept_5_recipes",      to: "production#dept_5_recipes",      as: :production_dept_5_recipes
   end
   namespace :opto do
     post "log_trico_load",  to: "opto#log_trico_load"
