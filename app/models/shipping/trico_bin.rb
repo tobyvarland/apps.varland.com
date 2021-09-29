@@ -18,6 +18,9 @@ class Shipping::TricoBin < ApplicationRecord
   # Callbacks.
   after_create_commit :trigger_order_calculations
 
+  # Scopes.
+  default_scope { order(load_number: :desc) }
+
   # Instance methods.
 
   # Returns total pieces for bin.
