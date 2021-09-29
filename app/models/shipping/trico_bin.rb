@@ -19,7 +19,7 @@ class Shipping::TricoBin < ApplicationRecord
   after_create_commit :trigger_order_calculations
 
   # Scopes.
-  default_scope { order(load_number: :desc) }
+  default_scope { order(:load_number) }
 
   # Instance methods.
 
