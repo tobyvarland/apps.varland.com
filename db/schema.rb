@@ -94,6 +94,7 @@ ActiveRecord::Schema.define(version: 2021_10_06_195159) do
     t.bigint "oven_id"
     t.bigint "stand_id", null: false
     t.bigint "user_id"
+    t.bigint "procedure_id"
     t.string "container_type", null: false
     t.datetime "cycle_started_at"
     t.datetime "purge_ended_at"
@@ -105,6 +106,7 @@ ActiveRecord::Schema.define(version: 2021_10_06_195159) do
     t.datetime "updated_at", precision: 6, null: false
     t.index ["oven_id"], name: "index_baking_cycles_on_oven_id"
     t.index ["oven_type_id"], name: "index_baking_cycles_on_oven_type_id"
+    t.index ["procedure_id"], name: "index_baking_cycles_on_procedure_id"
     t.index ["stand_id"], name: "index_baking_cycles_on_stand_id"
     t.index ["user_id"], name: "index_baking_cycles_on_user_id"
   end
@@ -153,15 +155,6 @@ ActiveRecord::Schema.define(version: 2021_10_06_195159) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["oven_type_id"], name: "index_baking_ovens_on_oven_type_id"
-  end
-
-  create_table "baking_procedure_assignments", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
-    t.bigint "procedure_id", null: false
-    t.bigint "cycle_id", null: false
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.index ["cycle_id"], name: "index_baking_procedure_assignments_on_cycle_id"
-    t.index ["procedure_id"], name: "index_baking_procedure_assignments_on_procedure_id"
   end
 
   create_table "baking_procedures", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
@@ -334,14 +327,13 @@ ActiveRecord::Schema.define(version: 2021_10_06_195159) do
   add_foreign_key "baking_containers", "baking_loads", column: "load_id"
   add_foreign_key "baking_cycles", "baking_oven_types", column: "oven_type_id"
   add_foreign_key "baking_cycles", "baking_ovens", column: "oven_id"
+  add_foreign_key "baking_cycles", "baking_procedures", column: "procedure_id"
   add_foreign_key "baking_cycles", "baking_stands", column: "stand_id"
   add_foreign_key "baking_cycles", "users"
   add_foreign_key "baking_loads", "baking_orders", column: "order_id"
   add_foreign_key "baking_orders", "baking_cycles", column: "cycle_id"
   add_foreign_key "baking_orders", "baking_process_codes", column: "process_code_id"
   add_foreign_key "baking_ovens", "baking_oven_types", column: "oven_type_id"
-  add_foreign_key "baking_procedure_assignments", "baking_cycles", column: "cycle_id"
-  add_foreign_key "baking_procedure_assignments", "baking_procedures", column: "procedure_id"
   add_foreign_key "baking_status_readings", "baking_cycles", column: "cycle_id"
   add_foreign_key "baking_status_readings", "baking_ovens", column: "oven_id"
   add_foreign_key "baking_type_assignments", "baking_oven_types", column: "oven_type_id"

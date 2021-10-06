@@ -5,6 +5,7 @@ class CreateBakingCycles < ActiveRecord::Migration[6.1]
       t.references  :oven,                null: true,   default: nil,   index: true,    foreign_key: { to_table: :baking_ovens }
       t.references  :stand,               null: false,                  index: true,    foreign_key: { to_table: :baking_stands }
       t.references  :user,                null: true,   default: nil,   index: true,    foreign_key: { to_table: :users }
+      t.references  :procedure,           null: true,   default: nil,   index: true,    foreign_key: { to_table: :baking_procedures }
       t.string      :container_type,      null: false
       t.datetime    :cycle_started_at,    null: true,   default: nil
       t.datetime    :purge_ended_at,      null: true,   default: nil
