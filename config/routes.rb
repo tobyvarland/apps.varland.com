@@ -26,6 +26,20 @@ Rails.application.routes.draw do
   namespace :shipping do
     resources :receiving_priority_notes, except: [:edit, :show]
   end
+  namespace :baking do
+    resources :oven_types
+    resources :procedure_assignments
+    resources :procedures
+    resources :type_assignments
+    resources :process_codes
+    resources :containers
+    resources :loads
+    resources :orders
+    resources :cycles
+    resources :stands
+    resources :status_readings
+    resources :ovens
+  end
 
   # Devise routes for Google authentication.
   devise_for :users, controllers: { omniauth_callbacks: 'users/omniauth_callbacks' }
