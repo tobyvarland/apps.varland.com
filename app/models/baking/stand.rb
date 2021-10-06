@@ -11,7 +11,7 @@ class Baking::Stand < ApplicationRecord
   # Associations.
   has_many    :cycles,
               class_name: "Baking::Cycle",
-              inverse_of: :stand
+              inverse_of: :stand,
               dependent: :restrict_with_error
 
   # Instance methods.
