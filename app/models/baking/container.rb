@@ -7,4 +7,7 @@ class Baking::Container < ApplicationRecord
   belongs_to  :cycle,
               class_name: "Baking::Cycle"
 
+  # Scopes.
+  default_scope { order(:position) }
+
 end

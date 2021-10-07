@@ -7,6 +7,9 @@ class Baking::StatusReading < ApplicationRecord
               class_name: "Baking::Cycle",
               optional: true
 
+  # Scopes.
+  default_scope { order(:status_at) }
+
   # Callbacks.
   before_create :find_cycle
 
