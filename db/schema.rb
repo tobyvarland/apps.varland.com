@@ -97,6 +97,7 @@ ActiveRecord::Schema.define(version: 2021_10_07_145112) do
     t.bigint "procedure_id"
     t.string "container_type", null: false
     t.datetime "cycle_started_at"
+    t.datetime "finished_loading_at"
     t.datetime "purge_ended_at"
     t.datetime "soak_started_at"
     t.datetime "soak_ended_at"
@@ -115,6 +116,8 @@ ActiveRecord::Schema.define(version: 2021_10_07_145112) do
     t.bigint "order_id", null: false
     t.integer "number", null: false
     t.boolean "is_rework", default: false, null: false
+    t.boolean "is_on_bakestand", default: false, null: false
+    t.datetime "in_oven_at"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["order_id"], name: "index_baking_loads_on_order_id"
