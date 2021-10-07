@@ -56,4 +56,45 @@ class Baking::Cycle < ApplicationRecord
     self.containers.create(containers)
   end
 
+  # Return if cycle has finished baking.
+  def has_finished_baking?
+    return !self.finished_at.blank?
+  end
+
+  # Determine if cycle is able to be edited because not yet started.
+  def has_started_baking?
+    return !self.cycle_started_at.blank?
+  end
+
+  # Return description of current step.
+  def step_description
+    return "Queued" if self.cycle_started_at.blank?
+    case self.oven_type.is_iao
+    when true
+      return "Purging" if self.purge_ended_at.blank?
+      return "Warming Up" if self.soak_started_at.blank?
+      return "Soaking" if self.soak_ended_at.blank?
+      return "Cooling (w/ Gas)" if self.gas_off_at.blank?
+      return "Cooling (w/o Gas)" if self.finished_at.blank?
+    when false
+      return "Warming Up" if self.soak_started_at.blank?
+      return "Soaking" if self.soak_ended_at.blank?
+    end
+    return "Finished"
+  end
+
+  # Returns whether or not cycle is ready for baking.
+  def ready_for_baking?
+    return "Bake cycle has already started baking" if self.has_started_baking?
+    return "No shop orders added to bake cycle" unless self.orders.count > 0
+    self.orders.each do |order|
+      next if order.new_record?
+      return "SO ##{order.number} does not have any loads" unless order.loads.count > 0
+      order.loads.each do |load|
+        return "SO ##{order.number} Load ##{load.description} is not placed in the oven" unless load.containers.count > 0
+      end
+    end
+    return true
+  end
+
 end

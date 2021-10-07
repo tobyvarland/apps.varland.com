@@ -8,4 +8,14 @@ class Baking::Load < ApplicationRecord
               inverse_of: :load,
               dependent: :nullify
 
+  # Scopes.
+  scope :by_number, -> { order(:number, :is_rework) }
+
+  # Instance methods.
+
+  # Returns load description.
+  def description
+    return "#{self.number}#{self.is_rework ? "*" : ""}"
+  end
+
 end
