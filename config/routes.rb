@@ -39,6 +39,7 @@ Rails.application.routes.draw do
     resources :stands
     resources :status_readings
     resources :ovens
+    resources :stand_assignments
   end
 
   # Devise routes for Google authentication.

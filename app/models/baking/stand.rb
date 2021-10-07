@@ -13,6 +13,10 @@ class Baking::Stand < ApplicationRecord
               class_name: "Baking::Cycle",
               inverse_of: :stand,
               dependent: :restrict_with_error
+  has_many    :stand_assignments,
+              class_name: "Baking::StandAssignment",
+              inverse_of: :stand,
+              dependent: :destroy
 
   # Instance methods.
 

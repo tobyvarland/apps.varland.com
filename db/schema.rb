@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_10_06_214440) do
+ActiveRecord::Schema.define(version: 2021_10_07_140036) do
 
   create_table "active_storage_attachments", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "name", null: false
@@ -158,6 +158,7 @@ ActiveRecord::Schema.define(version: 2021_10_06_214440) do
   end
 
   create_table "baking_procedures", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.string "description", null: false
     t.integer "minimum", null: false
     t.integer "maximum", null: false
     t.integer "setpoint", null: false
@@ -172,6 +173,15 @@ ActiveRecord::Schema.define(version: 2021_10_06_214440) do
     t.boolean "is_allowed_on_left_side"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "baking_stand_assignments", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.bigint "oven_type_id", null: false
+    t.bigint "stand_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["oven_type_id"], name: "index_baking_stand_assignments_on_oven_type_id"
+    t.index ["stand_id"], name: "index_baking_stand_assignments_on_stand_id"
   end
 
   create_table "baking_stands", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
@@ -334,6 +344,8 @@ ActiveRecord::Schema.define(version: 2021_10_06_214440) do
   add_foreign_key "baking_orders", "baking_cycles", column: "cycle_id"
   add_foreign_key "baking_orders", "baking_process_codes", column: "process_code_id"
   add_foreign_key "baking_ovens", "baking_oven_types", column: "oven_type_id"
+  add_foreign_key "baking_stand_assignments", "baking_oven_types", column: "oven_type_id"
+  add_foreign_key "baking_stand_assignments", "baking_stands", column: "stand_id"
   add_foreign_key "baking_status_readings", "baking_cycles", column: "cycle_id"
   add_foreign_key "baking_status_readings", "baking_ovens", column: "oven_id"
   add_foreign_key "baking_type_assignments", "baking_oven_types", column: "oven_type_id"

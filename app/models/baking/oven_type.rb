@@ -13,5 +13,9 @@ class Baking::OvenType < ApplicationRecord
               class_name: "Baking::TypeAssignment",
               inverse_of: :oven_type,
               dependent: :destroy
+  has_many    :stand_assignments,
+              class_name: "Baking::StandAssignment",
+              inverse_of: :oven_type,
+              dependent: :destroy
 
 end
