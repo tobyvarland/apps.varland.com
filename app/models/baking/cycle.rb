@@ -4,7 +4,7 @@ class Baking::Cycle < ApplicationRecord
   enum container_type: {
     trays: "trays",
     rods: "rods"
-  }, _default: "trays"
+  }
 
   # Associations.
   belongs_to  :oven_type,
@@ -33,11 +33,57 @@ class Baking::Cycle < ApplicationRecord
               inverse_of: :cycle,
               dependent: :destroy
 
+  # Scopes.
+  scope :not_finished, -> { where(finished_at: nil) }
+  
+  # Validations.
+  validates :container_type,
+            presence: true
+  validate :bakestand_allowed_in_oven_type, on: :create
+  validate :check_standard_procedure_type, on: :create
+  validate :ensure_stand_available, on: :create
+
   # Callbacks.
-  after_create  :create_containers
-  after_save    :get_pre_cycle_statuses
+  before_validation :set_container_type_from_stand,
+                    on: :create
+  after_create      :create_containers
+  after_save        :get_pre_cycle_statuses
 
   # Instance methods.
+
+  # Sets container type for cycle based on bakestand.
+  def set_container_type_from_stand
+    return if self.stand_id.blank?
+    if self.stand.stand_type == "rods" || self.stand.stand_type == :rods
+      self.container_type = :rods
+    else
+      self.container_type = :trays
+    end
+  end
+
+  # Ensures stand not currently in use.
+  def ensure_stand_available
+    return if self.stand.blank?
+    if Baking::Cycle.not_finished.pluck(:stand_id).include?(self.stand_id)
+      errors.add(:stand_id, "is currently in use")
+    end
+  end
+
+  # Ensures standard procedure valid for selected oven type.
+  def check_standard_procedure_type
+    return if self.oven_type.blank? || self.procedure.blank?
+    if self.oven_type.is_iao != self.procedure.is_for_iao?
+      errors.add(:procedure_id, "is not valid for the selected oven type")
+    end
+  end
+
+  # Ensures bakestand allowed in selected oven type.
+  def bakestand_allowed_in_oven_type
+    return if self.oven_type.blank? || self.stand.blank?
+    unless self.stand.stand_assignments.pluck(:oven_type_id).include?(self.oven_type_id)
+      errors.add(:stand_id, "is not allowed in the selected oven type")
+    end
+  end
 
   # Associates status readings with cycle from a few minutes before cycle begins.
   def get_pre_cycle_statuses
@@ -87,6 +133,7 @@ class Baking::Cycle < ApplicationRecord
   def ready_for_baking?
     return "Bake cycle has already started baking" if self.has_started_baking?
     return "No shop orders added to bake cycle" unless self.orders.count > 0
+    return true if self.orders.count == 0 && !self.procedure_id.blank?
     self.orders.each do |order|
       next if order.new_record?
       return "SO ##{order.number} does not have any loads" unless order.loads.count > 0

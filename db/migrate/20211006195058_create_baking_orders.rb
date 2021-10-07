@@ -3,6 +3,7 @@ class CreateBakingOrders < ActiveRecord::Migration[6.1]
     create_table :baking_orders do |t|
       t.references  :cycle,               null: false,                  index: true,    foreign_key: { to_table: :baking_cycles }
       t.references  :process_code,        null: true,   default: nil,   index: true,    foreign_key: { to_table: :baking_process_codes }
+      t.integer     :number,              null: false
       t.string      :customer,            null: false
       t.string      :process,             null: false
       t.string      :part,                null: false

@@ -6,4 +6,10 @@ class Baking::Procedure < ApplicationRecord
               inverse_of: :procedure,
               dependent: :restrict_with_error
 
+  # Instance methods.
+
+  def is_for_iao?
+    return !self.profile_name.blank?
+  end
+
 end
