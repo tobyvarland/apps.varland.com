@@ -23,11 +23,32 @@ class Baking::Order < ApplicationRecord
             allow_blank: true
   validate  :require_baking_params_unless_standard_procedure
   validate  :require_profile_name_if_iao_oven
+  validate  :baking_params_fit_cycle
+  validate  :require_cycle_not_baking
 
   # Callbacks.
   before_validation :nullify_blanks
 
   # Instance methods.
+
+  # Don't allow order creation once cycle starts baking.
+  def require_cycle_not_baking
+    errors.add(:base, "Bake cycle already started, can't add order") if self.cycle.has_started_baking?
+  end
+
+  # Validates that baking params for this order work with the other orders on the cycle.
+  def baking_params_fit_cycle
+    return if !self.cycle.procedure_id.blank? || self.cycle.orders.length == 0
+    case self.cycle.oven_type.is_iao
+    when true
+      errors.add(:profile_name, "does not match other orders on this cycle") if self.profile_name != self.cycle.profile_name
+    when false
+      return if self.minimum.blank? || self.maximum.blank?
+      new_minimum = [self.cycle.minimum, self.minimum].max
+      new_maximum = [self.cycle.maximum, self.maximum].min
+      errors.add(:base, "Baking parameters not valid on this cycle") if (new_maximum - new_minimum < 10)
+    end
+  end
 
   # Nullifies fields with empty strings.
   def nullify_blanks

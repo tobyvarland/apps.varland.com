@@ -32,6 +32,8 @@ class Baking::Cycle < ApplicationRecord
               class_name: "Baking::Container",
               inverse_of: :cycle,
               dependent: :destroy
+  has_many    :loads,
+              through: :orders
 
   # Scopes.
   scope :not_finished, -> { where(finished_at: nil) }
@@ -109,7 +111,7 @@ class Baking::Cycle < ApplicationRecord
 
   # Determine if cycle is able to be edited because not yet started.
   def has_started_baking?
-    return !self.cycle_started_at.blank?
+    return !self.finished_loading_at.blank?
   end
 
   # Return description of current step.
@@ -123,6 +125,7 @@ class Baking::Cycle < ApplicationRecord
       return "Cooling (w/ Gas)" if self.gas_off_at.blank?
       return "Cooling (w/o Gas)" if self.finished_at.blank?
     when false
+      return "Loading" if self.finished_loading_at.blank?
       return "Warming Up" if self.soak_started_at.blank?
       return "Soaking" if self.soak_ended_at.blank?
     end
@@ -141,7 +144,71 @@ class Baking::Cycle < ApplicationRecord
         return "SO ##{order.number} Load ##{load.description} is not placed in the oven" unless load.containers.count > 0
       end
     end
-    return true
+    self.loads.each do |load|
+      return true if load.is_on_bakestand
+    end
+    return "No loads marked physically on the bakestand"
+  end
+
+  # Returns baking minimum for cycle.
+  def minimum
+    return self.procedure.minimum unless self.procedure.blank?
+    case self.orders.length
+    when 0
+      return nil
+    when 1
+      return self.orders.first.minimum
+    else
+      return self.orders.maximum(:minimum)
+    end
+  end
+
+  # Returns baking maximum for cycle.
+  def maximum
+    return self.procedure.maximum unless self.procedure.blank?
+    case self.orders.length
+    when 0
+      return nil
+    when 1
+      return self.orders.first.maximum
+    else
+      return self.orders.minimum(:maximum)
+    end
+  end
+
+  # Returns baking setpoint for cycle.
+  def setpoint
+    return self.procedure.setpoint unless self.procedure.blank?
+    case self.orders.length
+    when 0
+      return nil
+    when 1
+      return self.orders.first.setpoint
+    else
+      min = self.minimum
+      max = self.maximum
+      return min + ((max - min) / 2)
+    end
+  end
+
+  # Returns baking soak length for cycle.
+  def soak_length
+    return self.procedure.soak_length unless self.procedure.blank?
+    case self.orders.length
+    when 0
+      return nil
+    when 1
+      return self.orders.first.soak_length
+    else
+      return self.orders.maximum(:soak_length)
+    end
+  end
+
+  # Returns baking soak length for cycle.
+  def profile_name
+    return self.procedure.profile_name unless self.procedure.blank?
+    return nil if self.orders.length == 0
+    return self.orders.first.profile_name
   end
 
 end
