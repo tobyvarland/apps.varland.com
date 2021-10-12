@@ -63,5 +63,6 @@ ruby:
                     th.text-center = number_with_delimiter order.trico_bin_total_pieces
             td.align-top.text-center
               - if order.all_trico_checks_valid?
-                = link_to "Print Labels", print_trico_labels_as400_shop_order_path(order), method: :post, class: ["btn", "btn-sm", "btn-primary"]
+                = link_to "Print Labels", print_trico_labels_as400_shop_order_path(order), method: :post, class: ["btn", "btn-sm", "btn-warning"]
+                br
               = link_to "Refresh Order", refresh_trico_labels_as400_shop_order_path(order), method: :post, class: ["btn", "btn-sm", "btn-primary"]
