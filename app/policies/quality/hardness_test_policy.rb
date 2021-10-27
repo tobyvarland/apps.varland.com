@@ -15,5 +15,13 @@ class Quality::HardnessTestPolicy < ApplicationPolicy
   def destroy?
     super || (user && user.permission && user.permission.hardness_tests == 3)
   end
+
+  def deleted?
+    destroy?
+  end
+
+  def restore?
+    destroy?
+  end
   
 end

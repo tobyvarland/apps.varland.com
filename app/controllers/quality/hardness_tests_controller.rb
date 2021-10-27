@@ -3,11 +3,19 @@ class Quality::HardnessTestsController < ApplicationController
 
   # GET /quality/hardness_tests or /quality/hardness_tests.json
   def index
+    authorize Quality::HardnessTest
     @hardness_tests = Quality::HardnessTest.includes(:user, :shop_order).all
+  end
+
+  # GET /quality/hardness_tests or /quality/hardness_tests.json
+  def deleted
+    authorize Quality::HardnessTest
+    @hardness_tests = Quality::HardnessTest.unscoped.discarded.includes(:user, :shop_order).all
   end
 
   # GET /quality/hardness_tests/new
   def new
+    authorize Quality::HardnessTest
     @hardness_test = Quality::HardnessTest.new(user_id: current_user.id)
   end
 
@@ -22,6 +30,13 @@ class Quality::HardnessTestsController < ApplicationController
     end
   end
 
+  def restore
+    @hardness_test = Quality::HardnessTest.unscoped.find(params[:id])
+    authorize @hardness_test
+    @hardness_test.undiscard
+    redirect_to quality_hardness_tests_url, notice: "Hardness test was successfully restored."
+  end
+
   # DELETE /quality/hardness_tests/1 or /quality/hardness_tests/1.json
   def destroy
     authorize @hardness_test
@@ -30,6 +45,7 @@ class Quality::HardnessTestsController < ApplicationController
   end
 
   private
+
     # Use callbacks to share common setup or constraints between actions.
     def set_hardness_test
       @hardness_test = Quality::HardnessTest.find(params[:id])
