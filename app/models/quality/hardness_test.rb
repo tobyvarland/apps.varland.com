@@ -35,6 +35,16 @@ class Quality::HardnessTest < ApplicationRecord
 
   after_initialize  :set_field_defaults
   before_create  :link_raw_test
+  after_create    :fix_tests_missing_raw
+
+  def fix_tests_missing_raw
+    return unless self.test_type == "Raw"
+    missing_raw = Quality::HardnessTest.where(shop_order_id: self.shop_order_id).where(raw_test_id: nil).where.not(test_type: "Raw")
+    missing_raw.each do |test|
+      test.raw_test_id = self.id
+      test.save
+    end
+  end
 
   def link_raw_test
     return if self.test_type == "Raw"
