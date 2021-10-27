@@ -81,11 +81,11 @@ class Quality::RejectTag < ApplicationRecord
     self.source_id = nil
   end
 
-  # Returns shop order number.
-  def shop_order_number
-    return nil unless self.shop_order.present?
-    return self.shop_order.number
-  end
+  # # Returns shop order number.
+  # def shop_order_number
+  #   return nil unless self.shop_order.present?
+  #   return self.shop_order.number
+  # end
 
   # # Sets shop order association from shop order number.
   # def shop_order_number=(value)

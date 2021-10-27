@@ -2,6 +2,9 @@ require 'sidekiq/web'
 
 Rails.application.routes.draw do
 
+  namespace :quality do
+    resources :hardness_tests
+  end
   # Resource routing.
   resources :permissions, only: [:index, :update]
   resources :reviews

@@ -1,0 +1,49 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>User:</strong>
+  <%= @quality_hardness_test.user_id %>
+</p>
+
+<p>
+  <strong>Shop order:</strong>
+  <%= @quality_hardness_test.shop_order_id %>
+</p>
+
+<p>
+  <strong>Raw test:</strong>
+  <%= @quality_hardness_test.raw_test_id %>
+</p>
+
+<p>
+  <strong>Tested on:</strong>
+  <%= @quality_hardness_test.tested_on %>
+</p>
+
+<p>
+  <strong>Load:</strong>
+  <%= @quality_hardness_test.load %>
+</p>
+
+<p>
+  <strong>Is rework:</strong>
+  <%= @quality_hardness_test.is_rework %>
+</p>
+
+<p>
+  <strong>Test type:</strong>
+  <%= @quality_hardness_test.test_type %>
+</p>
+
+<p>
+  <strong>Piece 1:</strong>
+  <%= @quality_hardness_test.piece_1 %>
+</p>
+
+<p>
+  <strong>Piece 2:</strong>
+  <%= @quality_hardness_test.piece_2 %>
+</p>
+
+<%= link_to 'Edit', edit_quality_hardness_test_path(@quality_hardness_test) %> |
+<%= link_to 'Back', quality_hardness_tests_path %>
