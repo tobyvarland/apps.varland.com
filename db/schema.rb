@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_10_27_192828) do
+ActiveRecord::Schema.define(version: 2021_10_28_140355) do
 
   create_table "active_storage_attachments", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "name", null: false
@@ -272,8 +272,8 @@ ActiveRecord::Schema.define(version: 2021_10_27_192828) do
     t.bigint "shop_order_id", null: false
     t.bigint "raw_test_id"
     t.date "tested_on", null: false
-    t.integer "load", null: false
-    t.boolean "is_rework", default: false, null: false
+    t.integer "load"
+    t.boolean "is_rework"
     t.string "test_type", null: false
     t.float "piece_1", null: false
     t.float "piece_2", null: false

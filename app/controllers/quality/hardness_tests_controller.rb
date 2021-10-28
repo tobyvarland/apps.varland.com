@@ -16,7 +16,7 @@ class Quality::HardnessTestsController < ApplicationController
   # GET /quality/hardness_tests/new
   def new
     authorize Quality::HardnessTest
-    @hardness_test = Quality::HardnessTest.new(user_id: current_user.id)
+    @hardness_test = Quality::HardnessTest.new(user_id: current_user.id, is_rework: false, tested_on: Date.current)
   end
 
   # POST /quality/hardness_tests or /quality/hardness_tests.json

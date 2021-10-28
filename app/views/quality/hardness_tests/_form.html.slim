@@ -10,13 +10,13 @@
    .col-12.col-md.mt-3
       = f.input :tested_on, required: true, label: "Date:", autofocus: true , as: :date, html5: true, input_html: { style: "margin: 0 !important;" }
    .col-12.col-md.mt-3
+      = f.input :test_type, required: true, collection: Quality::HardnessTest.type_options, label: "Type:", input_html: { class: "form-select" }
+   .col-12.col-md.mt-3   
       = f.input :shop_order_number, required: true, label: "Shop Order:"
    .col-12.col-md.mt-3
-      = f.input :load, required: true, label: "Load:"   
+      = f.input :load, required: true, label: "Load:", disabled: true, wrapper_html: { class: "d-none" }    
    .col-12.col-md.mt-3
-      = f.input :is_rework, label: "Rework", collection: [["Yes", true], ["No", false]], input_html: { class: "form-select" }, include_blank: false
-   .col-12.col-md.mt-3
-      = f.input :test_type, required: true, collection: Quality::HardnessTest.type_options, label: "Type:", input_html: { class: "form-select" }
+      = f.input :is_rework, label: "Rework:", disabled: true, collection: [["Yes", true], ["No", false]], input_html: { class: "form-select" }, include_blank: false, wrapper_html: { class: "d-none" }
   .row    
    .col-12.col-md.mt-3
       = f.input :piece_1, required: true, label: "Piece #1:"    
@@ -32,3 +32,34 @@
   .form-actions
     = link_to "#{fa "times"} Cancel".html_safe, quality_hardness_tests_url, class: ["btn", "btn-light", "btn-sm", "me-3"], tabindex: -1
     = f.button :button, "#{fa "check"} Save Hardness Test".html_safe, class: ["btn-primary", "btn-sm"]
+
+javascript: 
+
+   $(function() {
+      
+      // Reference Form Objects.
+      var $testTypeInput = $("#quality_hardness_test_test_type");
+      var $loadInput = $("#quality_hardness_test_load"); 
+      var $reworkInput = $("#quality_hardness_test_is_rework"); 
+      var $loadWrapper = $loadInput.parent();
+      var $reworkWrapper = $reworkInput.parent(); 
+
+      // Handle Type Change. 
+      $testTypeInput.on("change", function() {
+         var type = $testTypeInput.val(); 
+         if (type == "Raw" || type == "") {
+            $loadInput.prop('disabled', true); 
+            $reworkInput.prop('disabled', true); 
+            $loadWrapper.addClass("d-none"); 
+            $reworkWrapper.addClass("d-none"); 
+
+         } else {
+            $loadInput.prop('disabled', false); 
+            $reworkInput.prop('disabled', false); 
+            $loadWrapper.removeClass("d-none"); 
+            $reworkWrapper.removeClass("d-none");
+         }
+         
+      }); 
+
+   });
