@@ -51,8 +51,8 @@ class Quality::HardnessTest < ApplicationRecord
     where(load: value)
   }
   scope :with_is_rework, ->(value) {
-    return if value.blank?
-    if value == true  
+    return if value.nil?
+    if value == true || value == "true"
       where(is_rework: value)
     else
       where("is_rework IS FALSE OR is_rework IS NULL")
@@ -77,16 +77,16 @@ class Quality::HardnessTest < ApplicationRecord
   # Validations.
   validates :tested_on, :test_type, :piece_1, :piece_2, :piece_3, :piece_4, :piece_5,
             presence: true
-  validates :load, 
-            presence: true, 
+  validates :load,
+            presence: true,
             unless: Proc.new { |t| t.test_type == "Raw" }
-  validates :load, 
-            numericality: { only_integer: true, greater_than: 0 }, 
+  validates :load,
+            numericality: { only_integer: true, greater_than: 0 },
             allow_blank: true
   validates :piece_1, :piece_2, :piece_3, :piece_4, :piece_5,
             numericality: { greater_than: 0 }
-  validates :test_type, 
-            inclusion: { in: ["High Temp Bake", "Hydrogen Embrittlement Bake", "No Bake", "Raw", "Strip"] } 
+  validates :test_type,
+            inclusion: { in: ["High Temp Bake", "Hydrogen Embrittlement Bake", "No Bake", "Raw", "Strip"] }
 
   before_create  :link_raw_test
   after_save    :fix_tests_missing_raw
