@@ -5,6 +5,7 @@ class Quality::HardnessTestsController < ApplicationController
 
   has_scope :with_shop_order, only: [:index, :deleted]
   has_scope :with_part, only: [:index, :deleted]
+  has_scope :with_process_code, only: [:index, :deleted]
 
   # GET /quality/hardness_tests or /quality/hardness_tests.json
   def index

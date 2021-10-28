@@ -9,3 +9,5 @@
         = f.input :with_shop_order, collection: AS400::ShopOrder.where(id: @all_hardness_tests.pluck(:shop_order_id)).pluck(:number).sort, selected: params[:filters].blank? ? "" : params[:filters][:with_shop_order], required: false, label: "Shop Order:", include_blank: true, input_html: { class: "form-select" }
       .col-12.col-md-3.mt-3
         = f.input :with_part, collection: AS400::ShopOrder.where(id: @all_hardness_tests.pluck(:shop_order_id)).pluck(:part).uniq.sort, selected: params[:filters].blank? ? "" : params[:filters][:with_part], required: false, label: "Part ID:", include_blank: true, input_html: { class: "form-select" }
+      .col-12.col-md-3.mt-3
+        = f.input :with_process_code, collection: AS400::ShopOrder.where(id: @all_hardness_tests.pluck(:shop_order_id)).pluck(:process_code).uniq.sort, selected: params[:filters].blank? ? "" : params[:filters][:with_process_code], required: false, label: "Process Code:", include_blank: true, input_html: { class: "form-select" }
