@@ -26,6 +26,7 @@ class Quality::HardnessTestsController < ApplicationController
     rescue
       @pagy, @hardness_tests = pagy(apply_scopes(Quality::HardnessTest.unscoped.discarded.includes(:user, :shop_order).all), items: 100, page: 1)
     end
+    @all_hardness_tests = apply_scopes(Quality::HardnessTest.unscoped.discarded.includes(:user, :shop_order).all)
   end
 
   # GET /quality/hardness_tests/new
@@ -38,9 +39,9 @@ class Quality::HardnessTestsController < ApplicationController
   def create
     @hardness_test = Quality::HardnessTest.new(hardness_test_params)
     authorize @hardness_test
-    if @hardness_test.save 
+    if @hardness_test.save
       redirect_to quality_hardness_tests_url, notice: "Hardness Test was successfully created."
-    else 
+    else
       render :new, status: :unprocessable_entity
     end
   end
