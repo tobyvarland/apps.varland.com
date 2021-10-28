@@ -62,6 +62,11 @@ nav.navbar.fixed-top.navbar-expand-md.navbar-dark.bg-dark id="primary-nav"
           div Varland Employee Information
     ul.list-unstyled
       li.header Quality
+      - if policy(Quality::HardnessTest).index?
+        li
+          = link_to quality_hardness_tests_url do
+            = fa "link"
+            div Hardness Tests
       - if policy(Quality::RejectTag).index?
         li
           = link_to quality_reject_tags_url do
