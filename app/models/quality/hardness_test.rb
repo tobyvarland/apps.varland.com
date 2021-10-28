@@ -22,6 +22,10 @@ class Quality::HardnessTest < ApplicationRecord
     return if value.blank?
     joins(:shop_order).where("`as400_shop_orders`.`number` = ?", value)
   }
+  scope :with_part, ->(value) {
+    return if value.blank?
+    joins(:shop_order).where("`as400_shop_orders`.`part` = ?", value)
+  }
 
   # Validations.
   validates :tested_on, :test_type, :piece_1, :piece_2, :piece_3, :piece_4, :piece_5,

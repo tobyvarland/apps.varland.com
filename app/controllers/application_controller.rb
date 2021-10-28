@@ -9,6 +9,12 @@ class ApplicationController < ActionController::Base
 
   private
 
+    def parse_filter_params
+      if params[:filters]
+        params[:filters].each_key {|key| params[key] = params[:filters][key] }
+      end
+    end
+
     def prevent_cache
       response.headers["Cache-Control"] = "no-cache, no-store"
       response.headers["Pragma"] = "no-cache"

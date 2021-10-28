@@ -1,22 +1,30 @@
 class Quality::HardnessTestsController < ApplicationController
+
   before_action :set_hardness_test, only: %i[ show edit update destroy ]
+  before_action :parse_filter_params, only: %i[ index deleted ]
 
   has_scope :with_shop_order, only: [:index, :deleted]
+  has_scope :with_part, only: [:index, :deleted]
 
   # GET /quality/hardness_tests or /quality/hardness_tests.json
   def index
     authorize Quality::HardnessTest
     begin
-      @pagy, @hardness_tests = pagy(apply_scopes(Quality::HardnessTest.includes(:user, :shop_order).all), items: 100)
+      @pagy, @hardness_tests = pagy(apply_scopes(Quality::HardnessTest.includes(:user, :shop_order).all), items: 2)
     rescue
-      @pagy, @hardness_tests = pagy(apply_scopes(Quality::HardnessTest.includes(:user, :shop_order).all), items: 100, page: 1)
+      @pagy, @hardness_tests = pagy(apply_scopes(Quality::HardnessTest.includes(:user, :shop_order).all), items: 2, page: 1)
     end
+    @all_hardness_tests = apply_scopes(Quality::HardnessTest.includes(:user, :shop_order).all)
   end
 
   # GET /quality/hardness_tests or /quality/hardness_tests.json
   def deleted
     authorize Quality::HardnessTest
-    @hardness_tests = Quality::HardnessTest.unscoped.discarded.includes(:user, :shop_order).all
+    begin
+      @pagy, @hardness_tests = pagy(apply_scopes(Quality::HardnessTest.unscoped.discarded.includes(:user, :shop_order).all), items: 100)
+    rescue
+      @pagy, @hardness_tests = pagy(apply_scopes(Quality::HardnessTest.unscoped.discarded.includes(:user, :shop_order).all), items: 100, page: 1)
+    end
   end
 
   # GET /quality/hardness_tests/new

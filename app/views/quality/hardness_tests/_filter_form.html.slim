@@ -1,0 +1,11 @@
+= simple_form_for(:filters, method: "GET", html: {class: ["vp-gray-form", "my-3", "all-auto-submit"]}) do |f|
+
+  .row.loading-icon.d-none
+    .col-12.text-center.mt-3.fs-1 == fa "spinner", spin: true
+
+  .form-fields
+    .row
+      .col-12.col-md-3.mt-3
+        = f.input :with_shop_order, collection: AS400::ShopOrder.where(id: @all_hardness_tests.pluck(:shop_order_id)).pluck(:number).sort, selected: params[:filters].blank? ? "" : params[:filters][:with_shop_order], required: false, label: "Shop Order:", include_blank: true, input_html: { class: "form-select" }
+      .col-12.col-md-3.mt-3
+        = f.input :with_part, collection: AS400::ShopOrder.where(id: @all_hardness_tests.pluck(:shop_order_id)).pluck(:part).uniq.sort, selected: params[:filters].blank? ? "" : params[:filters][:with_part], required: false, label: "Part ID:", include_blank: true, input_html: { class: "form-select" }
