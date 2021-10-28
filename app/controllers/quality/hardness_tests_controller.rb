@@ -11,9 +11,9 @@ class Quality::HardnessTestsController < ApplicationController
   def index
     authorize Quality::HardnessTest
     begin
-      @pagy, @hardness_tests = pagy(apply_scopes(Quality::HardnessTest.includes(:user, :shop_order).all), items: 2)
+      @pagy, @hardness_tests = pagy(apply_scopes(Quality::HardnessTest.includes(:user, :shop_order).all), items: 100)
     rescue
-      @pagy, @hardness_tests = pagy(apply_scopes(Quality::HardnessTest.includes(:user, :shop_order).all), items: 2, page: 1)
+      @pagy, @hardness_tests = pagy(apply_scopes(Quality::HardnessTest.includes(:user, :shop_order).all), items: 100, page: 1)
     end
     @all_hardness_tests = apply_scopes(Quality::HardnessTest.includes(:user, :shop_order).all)
   end
