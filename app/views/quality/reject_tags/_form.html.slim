@@ -12,28 +12,7 @@
       = f.input :source_id, required: true, label: "Source:", collection: Quality::RejectTag.source_options_for_tag(@reject_tag), input_html: { class: "form-select" }
     .col-12.col-md-3.mt-3
       = f.input :rejected_on, required: true, label: "Date:", as: :date, html5: true, input_html: { style: "margin: 0 !important;" }
-    .col-12.mt-3.d-none id="as400_info"
-      .shadow-sm.border.p-3.rounded
-        .fw-700.text-uncolor Order Info Pulled from System i
-        .d-flex.flex-col.flex-md-row.align-items-top.justify-content-between
-          .mt-3
-            .small Customer Code:
-            .fw-700 id="as400_customer_code"
-          .mt-3
-            .small Process Code:
-            .fw-700 id="as400_process_code"
-          .mt-3
-            .small Part ID:
-            .fw-700 id="as400_part_id"
-          .mt-3
-            .small Sub ID:
-            .fw-700 id="as400_sub_id"
-          .mt-3
-            .small Part Name:
-            .fw-700 id="as400_part_name"
-          .mt-3
-            .small Part Description:
-            .fw-700 id="as400_part_description"
+    = render "shared/form_shop_order_info"
     .col-12.col-md-3.mt-3
       = f.association :user, as: :hidden
       = f.input :user_name, required: true, label: "Rejected By:", disabled: true, input_html: { tabindex: -1 }
@@ -52,7 +31,7 @@
       = f.input :defect_description, required: true, label: "Description of Defect/Problem:", input_html: { rows: 5 }, hint: "Be as descriptive as possible about the problem. Use this field to describe the problem, not to address the cause of the problem."
     .col-12.col-md-3.mt-3
       = f.input :cause, required: true, collection: Quality::RejectTag.cause_options, label: "Cause:", input_html: { class: "form-select" }
-    .col-12.col-md-9.mt-3    
+    .col-12.col-md-9.mt-3
       = f.input :cause_description, label: "Cause of Defect/Problem:", input_html: { rows: 5 }, hint: "Use this field to describe the cause of the defect or problem, not to state what the problem is. Investigate the cause of the problem ASAP once it's discovered and use this field to record any/all known information that may have contributed to the problem."
 
   .row
@@ -122,22 +101,10 @@ javascript:
 
       // Read shop order number.
       var shopOrder = $shopOrderInput.val();
+      displayShopOrder(shopOrder);
 
       // Handle valid shop order number entry.
       if (shopOrder.match(/^\d{6}$/) !== null) {
-        
-        // Load shop order details from System i.
-        var url = "http://vcmsapi.varland.com/shop_order?shop_order=" + shopOrder;
-        $.ajax(url).done(function(data) {
-          $("#as400_customer_code").text(data.customer);
-          $("#as400_process_code").text(data.process);
-          $("#as400_part_id").text(data.part);
-          $("#as400_sub_id").text(data.sub);
-          $("#as400_part_name").html(data.part_name.join("<br>"));
-          $("#as400_part_description").html(data.part_description.join("<br>"));
-          $("#as400_info").removeClass("d-none");
-          $("#quality_reject_tag_pounds").attr({"max": data.pounds});
-        });
 
         // Load reject tag number.
         var url = "/quality/reject_tags/tag_number_for/" + shopOrder;
@@ -157,9 +124,6 @@ javascript:
 
       } else {
 
-        // Hide System i info.
-        $("#as400_info").addClass("d-none");
-
         // Clear reject tag number field.
         $("#quality_reject_tag_number").val(null);
 
@@ -167,7 +131,7 @@ javascript:
         $("#quality_reject_tag_source_id").html(null);
 
       }
-      
+
     });
 
   });

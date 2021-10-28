@@ -12,24 +12,15 @@
     .col-12.col-md.mt-3 = f.input :load, required: true, label: "Load:", disabled: true, wrapper_html: { class: "d-none" }
     .col-12.col-md.mt-3 = f.input :is_rework, label: "Rework:", disabled: true, collection: [["Yes", true], ["No", false]], input_html: { class: "form-select" }, include_blank: false, wrapper_html: { class: "d-none" }
   .row
+    = render "shared/form_shop_order_info"
+  .row
     .col-12.col-md.mt-3 = f.input :piece_1, required: true, label: "Piece #1:"
     .col-12.col-md.mt-3 = f.input :piece_2, required: true, label: "Piece #2:"
     .col-12.col-md.mt-3 = f.input :piece_3, required: true, label: "Piece #3:"
     .col-12.col-md.mt-3 = f.input :piece_4, required: true, label: "Piece #4:"
     .col-12.col-md.mt-3 = f.input :piece_5, required: true, label: "Piece #5:"
 
-  .form-actions.form-actions-between
-    div
-      .d-none.flew-row.align-items-center.justify-content-start id="shop-order-info"
-        small.text-uncolor Customer:
-        .fw-700.ms-1 id="shop-order-customer"
-        small.text-uncolor.ms-3 Process Code:
-        .fw-700.ms-1 id="shop-order-process"
-        small.text-uncolor.ms-3 Part ID:
-        .fw-700.ms-1 id="shop-order-part"
-        .d-flex.flex-row.align-items-center.justify-content-start id="shop-order-sub-wrapper"
-          small.text-uncolor.ms-3 Sub ID:
-          .fw-700.ms-1 id="shop-order-sub"
+  .form-actions
     div
       = link_to "#{fa "times"} Cancel".html_safe, quality_hardness_tests_url, class: ["btn", "btn-light", "btn-sm", "me-3"], tabindex: -1
       = f.button :button, "#{fa "check"} Save Hardness Test".html_safe, class: ["btn-primary", "btn-sm"]
@@ -45,44 +36,12 @@ javascript:
       var $reworkInput = $("#quality_hardness_test_is_rework");
       var $loadWrapper = $loadInput.parent();
       var $reworkWrapper = $reworkInput.parent();
-      var $shopOrderInfoContainer = $("#shop-order-info");
-      var $shopOrderCustomer = $("#shop-order-customer");
-      var $shopOrderProcess = $("#shop-order-process");
-      var $shopOrderPart = $("#shop-order-part");
-      var $shopOrderSub = $("#shop-order-sub");
-      var $shopOrderSubWrapper = $("#shop-order-sub-wrapper");
       var $shopOrderInput = $("#quality_hardness_test_shop_order_number");
 
       // Handle shop order change.
       $shopOrderInput.on("change", function() {
 
-        // Read shop order number.
-        var shopOrder = $shopOrderInput.val();
-
-        // Handle valid shop order number entry.
-        if (shopOrder.match(/^\d{6}$/) !== null) {
-
-          // Load shop order details from System i.
-          var url = "http://vcmsapi.varland.com/shop_order?shop_order=" + shopOrder;
-          $.ajax(url).done(function(data) {
-            if (data.valid) {
-              $shopOrderInfoContainer.removeClass("d-none").addClass("d-flex");
-              $shopOrderCustomer.text(data.customer);
-              $shopOrderProcess.text(data.process);
-              $shopOrderPart.text(data.part);
-              if (data.sub != "") {
-                $shopOrderSubWrapper.removeClass("d-none").addClass("d-flex");
-                $shopOrderSub.text(data.sub);
-              } else {
-                $shopOrderSubWrapper.removeClass("d-flex").addClass("d-none");
-              }
-            } else {
-              $shopOrderInfoContainer.removeClass("d-flex").addClass("d-none");
-            }
-          });
-        } else {
-          $shopOrderInfoContainer.removeClass("d-flex").addClass("d-none");
-        }
+        displayShopOrder($shopOrderInput.val());
 
       });
 

@@ -1,0 +1,50 @@
+.col-12.mt-3.d-none id="as400_info"
+  .shadow-sm.border.p-3.rounded
+    .fw-700.text-uncolor Order Info Pulled from System i
+    .d-flex.flex-col.flex-md-row.align-items-top.justify-content-between
+      .mt-3
+        .small Customer Code:
+        .fw-700 id="as400_customer_code"
+      .mt-3
+        .small Process Code:
+        .fw-700 id="as400_process_code"
+      .mt-3
+        .small Part ID:
+        .fw-700 id="as400_part_id"
+      .mt-3
+        .small Sub ID:
+        .fw-700 id="as400_sub_id"
+      .mt-3
+        .small Part Name:
+        .fw-700 id="as400_part_name"
+      .mt-3
+        .small Part Description:
+        .fw-700 id="as400_part_description"
+
+javascript:
+
+  function displayShopOrder(shopOrder) {
+
+    // Handle valid shop order number entry.
+    if (shopOrder.match(/^\d{6}$/) !== null) {
+
+      // Load shop order details from System i.
+      var url = "http://vcmsapi.varland.com/shop_order?shop_order=" + shopOrder;
+      $.ajax(url).done(function(data) {
+        if (data.valid) {
+          $("#as400_customer_code").text(data.customer);
+          $("#as400_process_code").text(data.process);
+          $("#as400_part_id").text(data.part);
+          $("#as400_sub_id").text(data.sub);
+          $("#as400_part_name").html(data.part_name.join("<br>"));
+          $("#as400_part_description").html(data.part_description.join("<br>"));
+          $("#as400_info").removeClass("d-none");
+        } else {
+          $("#as400_info").addClass("d-none");
+        }
+      });
+    } else {
+      $("#as400_info").addClass("d-none");
+    }
+
+  }
