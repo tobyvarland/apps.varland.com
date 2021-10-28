@@ -42,6 +42,9 @@
     @extend .flex-row;
     @extend .justify-content-end;
     @extend .mt-3;
+    &.form-actions-between {
+      @extend .justify-content-between;
+    }
   }
 }
 
