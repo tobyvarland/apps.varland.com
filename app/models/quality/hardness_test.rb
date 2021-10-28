@@ -30,6 +30,49 @@ class Quality::HardnessTest < ApplicationRecord
     return if value.blank?
     joins(:shop_order).where("`as400_shop_orders`.`process_code` = ?", value)
   }
+  scope :with_customer, ->(value) {
+    return if value.blank?
+    joins(:shop_order).where("`as400_shop_orders`.`customer_code` = ?", value)
+  }
+  scope :on_or_after, ->(value) {
+    return if value.blank?
+    where("tested_on >= ?", value)
+  }
+  scope :on_or_before,  ->(value) {
+    return if value.blank?
+    where("tested_on <= ?", value)
+  }
+  scope :with_test_type, ->(value) {
+    return if value.blank?
+    where(test_type: value)
+  }
+  scope :with_load, ->(value) {
+    return if value.blank?
+    where(load: value)
+  }
+  scope :with_is_rework, ->(value) {
+    return if value.blank?
+    if value == true  
+      where(is_rework: value)
+    else
+      where("is_rework IS FALSE OR is_rework IS NULL")
+    end
+  }
+  scope :sorted_by, ->(value) {
+    return if value.blank?
+    case value
+    when "newest"
+      joins(:shop_order).order("`quality_hardness_tests`.`tested_on` DESC, `as400_shop_orders`.`customer_code` ASC, `as400_shop_orders`.`process_code` ASC, `as400_shop_orders`.`part` ASC, `as400_shop_orders`.`sub` ASC, `as400_shop_orders`.`number` ASC")
+    when "oldest"
+      joins(:shop_order).order("`quality_hardness_tests`.`tested_on`, `as400_shop_orders`.`customer_code`, `as400_shop_orders`.`process_code`, `as400_shop_orders`.`part`, `as400_shop_orders`.`sub`, `as400_shop_orders`.`number`")
+    #when "highest_days" order(days: :desc, customer: :asc, process: :asc, part: :asc, sub: :asc, shop_order: :asc)
+    #when "lowest_days"  order(:days, :customer, :process, :part, :sub, :shop_order)
+    when "part_spec"
+      joins(:shop_order).order("`as400_shop_orders`.`customer_code`, `as400_shop_orders`.`process_code`, `as400_shop_orders`.`part`, `as400_shop_orders`.`sub`, `as400_shop_orders`.`number`")
+    when "shop_order"
+      joins(:shop_order).order("`as400_shop_orders`.`number`")
+    end
+  }
 
   # Validations.
   validates :tested_on, :test_type, :piece_1, :piece_2, :piece_3, :piece_4, :piece_5,

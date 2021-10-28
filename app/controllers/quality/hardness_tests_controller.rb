@@ -6,6 +6,13 @@ class Quality::HardnessTestsController < ApplicationController
   has_scope :with_shop_order, only: [:index, :deleted]
   has_scope :with_part, only: [:index, :deleted]
   has_scope :with_process_code, only: [:index, :deleted]
+  has_scope :with_customer, only: [:index, :deleted]
+  has_scope :on_or_after, only: [:index, :deleted]
+  has_scope :on_or_before, only: [:index, :deleted]
+  has_scope :with_test_type, only: [:index, :deleted]
+  has_scope :with_load, only: [:index, :deleted]
+  has_scope :with_is_rework, only: [:index, :deleted]
+  has_scope :sorted_by, only: [:index, :deleted]
 
   # GET /quality/hardness_tests or /quality/hardness_tests.json
   def index
