@@ -13,6 +13,8 @@ class Quality::HardnessTestsController < ApplicationController
   has_scope :with_load, only: [:index, :deleted]
   has_scope :with_is_rework, only: [:index, :deleted]
   has_scope :sorted_by, only: [:index, :deleted]
+  has_scope :with_average_gte, only: [:index, :deleted]
+  has_scope :with_average_lte, only: [:index, :deleted]
 
   # GET /quality/hardness_tests or /quality/hardness_tests.json
   def index

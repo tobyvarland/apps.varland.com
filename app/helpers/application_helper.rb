@@ -160,6 +160,17 @@ module ApplicationHelper
     return JSON.parse(response.body, symbolize_names: true)
   end
 
+  def shop_order_link(shop_order)
+    json = load_json("http://vcmsapi.varland.com/shop_order?shop_order=#{shop_order}")
+    return unless json[:valid]
+    if json[:current]
+      url = "http://pdfapi.varland.com/so?shop_order=#{shop_order}"
+    else
+      url = "http://so.varland.com/so/#{shop_order}"
+    end
+    link_to fa("file-pdf", text_class: "text-vp-red"), url, class: ["ms-1", "small"], target: "_blank"
+  end
+
   def highlight_search_term(term, string)
     return string if term.blank?
     re = /'.*?'|".*?"|\S+/

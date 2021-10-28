@@ -12,13 +12,13 @@
   .table-responsive.my-3
     table.table.table-striped.table-hover
       thead.table-dark
-        th.text-center.w-1 Date 
+        th.text-center.w-1 Date
         th Shop Order
         th.text-center.w-1 Load #
         th Tested By
         th Test Type
         th.text-center.w-1 Average
-        th.text-center.w-1 Δ from Raw 
+        th.text-center.w-1 Δ from Raw
         th.text-center.w-1 Piece #1
         th.text-center.w-1 Piece #2
         th.text-center.w-1 Piece #3
@@ -30,18 +30,26 @@
         - @hardness_tests.each do |hardness_test|
           tr
             td.text-center = hardness_test.tested_on.strftime("%m/%d/%Y")
-            td
-              = hardness_test.shop_order.number
+            td.lh-sm
+              = link_to hardness_test.shop_order.number, request.params.merge({"filters[with_shop_order]": hardness_test.shop_order.number}), class: "text-decoration-none fw-700"
+              span.ms-1.shop_order_pdf_link*{'data-shop-order'=>hardness_test.shop_order.number}
               br
-              small.text-uncolor = hardness_test.shop_order.part_spec.join " / "
+              small
+                = link_to hardness_test.shop_order.customer_code, request.params.merge({"filters[with_customer]": hardness_test.shop_order.customer_code}), class: "text-decoration-none"
+                span.text-uncolor = " / "
+                = link_to hardness_test.shop_order.process_code, request.params.merge({"filters[with_process_code]": hardness_test.shop_order.process_code}), class: "text-decoration-none"
+                span.text-uncolor = " / "
+                = link_to hardness_test.shop_order.part, request.params.merge({"filters[with_part]": hardness_test.shop_order.part}), class: "text-decoration-none"
+                - unless hardness_test.shop_order.sub.blank?
+                  span.text-uncolor = " / #{hardness_test.shop_order.sub}"
             td.text-center = hardness_test.load_with_rework
-            td = hardness_test.user.name_and_number  
-            td = hardness_test.test_type 
+            td = hardness_test.user.name_and_number
+            td = link_to hardness_test.test_type, request.params.merge({"filters[with_test_type]": hardness_test.test_type}), class: "text-decoration-none"
             td.text-center
-              = number_with_precision hardness_test.average, precision: 2  
+              = number_with_precision hardness_test.average, precision: 2
               - if hardness_test.raw_test.present?
                 br
-                small.text-uncolor = number_with_precision hardness_test.raw_test.average, precision: 2  
+                small.text-uncolor = number_with_precision hardness_test.raw_test.average, precision: 2
             td.text-center = number_with_precision hardness_test.change_from_raw, precision: 2
             td.text-center
               = number_with_precision hardness_test.piece_1, precision: 2

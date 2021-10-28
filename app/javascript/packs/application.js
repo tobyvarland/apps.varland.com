@@ -33,7 +33,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
 
 // document.addEventListener("DOMContentLoaded", function(event) {
 $(document).on('turbolinks:load', function() {
-  
+
   // Auto refresh if necessary.
   var $body = $("body");
   var autoRefresh = $body.data("auto-refresh");
@@ -52,7 +52,31 @@ $(document).on('turbolinks:load', function() {
   // Set up part search photos.
   showPartSearchPhotos();
 
+  // Set up shop order links.
+  setupShopOrderLinks();
+
 });
+
+function setupShopOrderLinks() {
+  $(".shop_order_pdf_link").each(function() {
+    var $link = $(this);
+    var shopOrder = $link.data("shop-order");
+    var url = "http://vcmsapi.varland.com/shop_order?shop_order=" + shopOrder;
+    $.ajax(url).done(function(data) {
+      if (data.valid) {
+        var linkUrl = null;
+        if (data.current) {
+          linkUrl = "http://pdfapi.varland.com/so?shop_order=" + shopOrder;
+        } else {
+          linkUrl = "http://so.varland.com/so/" + shopOrder;
+        }
+        var $pdfLink = $("<a>");
+        $pdfLink.attr("href", linkUrl).attr("target", "_blank").html("<i class=\"fas fa-file-pdf\"></i>").addClass("text-vp-red").addClass("small");
+        $link.append($pdfLink);
+      }
+    });
+  });
+}
 
 function secondsToHumanReadable(seconds) {
   var minutes = Math.floor(seconds / 60);

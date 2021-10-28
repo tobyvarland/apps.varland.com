@@ -18,6 +18,14 @@ class Quality::HardnessTest < ApplicationRecord
               optional: true
 
   # Scopes.
+  scope :with_average_gte, ->(value) {
+    return if value.blank?
+    where("((`piece_1` + `piece_2` + `piece_3` + `piece_4` + `piece_5`) / 5.0) >= ?", value)
+  }
+  scope :with_average_lte, ->(value) {
+    return if value.blank?
+    where("((`piece_1` + `piece_2` + `piece_3` + `piece_4` + `piece_5`) / 5.0) <= ?", value)
+  }
   scope :with_shop_order, ->(value) {
     return if value.blank?
     joins(:shop_order).where("`as400_shop_orders`.`number` = ?", value)
