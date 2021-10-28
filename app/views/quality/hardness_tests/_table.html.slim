@@ -4,6 +4,9 @@
 
 - else
 
+  .d-flex.flex-row.align-items-center.justify-content-center
+    = render partial: "shared/pagination", locals: { label: "Hardness Tests" }
+
   .table-responsive.my-3
     table.table.table-striped.table-hover
       thead.table-dark

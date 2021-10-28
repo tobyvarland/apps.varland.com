@@ -1,10 +1,16 @@
 class Quality::HardnessTestsController < ApplicationController
   before_action :set_hardness_test, only: %i[ show edit update destroy ]
 
+  has_scope :with_shop_order, only: [:index, :deleted]
+
   # GET /quality/hardness_tests or /quality/hardness_tests.json
   def index
     authorize Quality::HardnessTest
-    @hardness_tests = Quality::HardnessTest.includes(:user, :shop_order).all
+    begin
+      @pagy, @hardness_tests = pagy(apply_scopes(Quality::HardnessTest.includes(:user, :shop_order).all), items: 100)
+    rescue
+      @pagy, @hardness_tests = pagy(apply_scopes(Quality::HardnessTest.includes(:user, :shop_order).all), items: 100, page: 1)
+    end
   end
 
   # GET /quality/hardness_tests or /quality/hardness_tests.json
