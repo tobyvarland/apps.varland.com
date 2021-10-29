@@ -4,6 +4,11 @@ import * as ActiveStorage from "@rails/activestorage"
 import "channels"
 import "jquery"
 import "cocoon"
+import "chartkick/chart.js"
+import Chart from 'chart.js/auto';
+import moment from 'moment'
+window.moment = moment
+window.Chart = Chart
 
 Rails.start()
 Turbolinks.start()

@@ -6,6 +6,9 @@
 
   = render "filter_form"
 
+  .my-3
+    canvas.m-0.p-0.d-block#hardness-chart
+
   .d-flex.flex-row.align-items-center.justify-content-center
     = render partial: "shared/pagination", locals: { label: "Hardness Tests" }
 
@@ -31,7 +34,7 @@
           tr
             td.text-center = hardness_test.tested_on.strftime("%m/%d/%Y")
             td.lh-sm
-              = link_to hardness_test.shop_order.number, request.params.merge({"filters[with_shop_order]": hardness_test.shop_order.number}), class: "text-decoration-none fw-700"
+              = link_to hardness_test.shop_order.number, request.params.merge({"filters[with_shop_order]": hardness_test.shop_order.number}), class: "text-decoration-none fw-700 font-monospace fs-5"
               span.ms-1.shop_order_pdf_link*{'data-shop-order'=>hardness_test.shop_order.number}
               br
               small
@@ -81,3 +84,118 @@
                 td.text-center = link_to "#{fa 'trash-alt'} Delete".html_safe, hardness_test, method: :delete, data: { confirm: "Are you sure you want to delete this hardness test?\n\nIT can restore it later if necessary." }, class: ["btn", "btn-sm", "btn-danger"]
               - else
                 td.text-center = link_to "#{fa 'trash-restore-alt'} Restore".html_safe, restore_quality_hardness_test_path(hardness_test), method: :post, data: { confirm: "Are you sure you want to restore this hardness test?" }, class: ["btn", "btn-sm", "btn-warning"]
+
+  ruby:
+
+    chart_data_raw = []
+    chart_data_high_temp = []
+    chart_data_hydrogen = []
+    chart_data_no_bake = []
+    chart_data_strip = []
+    @all_hardness_tests.each do |t|
+      obj = [t.tested_on.strftime("%F"), t.average.round(2), t.shop_order_number]
+      case t.test_type
+      when "Raw"
+        chart_data_raw << obj
+      when "High Temp Bake"
+        chart_data_high_temp << obj
+      when "Hydrogen Embrittlement Bake"
+        chart_data_hydrogen << obj
+      when "No Bake"
+        chart_data_no_bake << obj
+      when "Strip"
+        chart_data_strip << obj
+      end
+    end
+
+  javascript:
+
+    let ruby_data_raw = #{chart_data_raw.to_json.html_safe};
+    let ruby_data_high_temp = #{chart_data_high_temp.to_json.html_safe};
+    let ruby_data_hydrogen = #{chart_data_hydrogen.to_json.html_safe};
+    let ruby_data_no_bake = #{chart_data_no_bake.to_json.html_safe};
+    let ruby_data_strip = #{chart_data_strip.to_json.html_safe};
+    let data_raw = [];
+    let data_high_temp = [];
+    let data_hydrogen = [];
+    let data_no_bake = [];
+    let data_strip = [];
+    for (var i = 0, c = ruby_data_raw.length; i < c; i++) {
+      data_raw.push({date: moment(ruby_data_raw[i][0]), average: ruby_data_raw[i][1], shopOrder: ruby_data_raw[i][2]});
+    }
+    for (var i = 0, c = ruby_data_high_temp.length; i < c; i++) {
+      data_high_temp.push({date: moment(ruby_data_high_temp[i][0]), average: ruby_data_high_temp[i][1], shopOrder: ruby_data_high_temp[i][2]});
+    }
+    for (var i = 0, c = ruby_data_hydrogen.length; i < c; i++) {
+      data_hydrogen.push({date: moment(ruby_data_hydrogen[i][0]), average: ruby_data_hydrogen[i][1], shopOrder: ruby_data_hydrogen[i][2]});
+    }
+    for (var i = 0, c = ruby_data_no_bake.length; i < c; i++) {
+      data_no_bake.push({date: moment(ruby_data_no_bake[i][0]), average: ruby_data_no_bake[i][1], shopOrder: ruby_data_no_bake[i][2]});
+    }
+    for (var i = 0, c = ruby_data_strip.length; i < c; i++) {
+      data_strip.push({date: moment(ruby_data_strip[i][0]), average: ruby_data_strip[i][1], shopOrder: ruby_data_strip[i][2]});
+    }
+    const ctx = $('#hardness-chart');
+    const parent = ctx.parent();
+    ctx.attr('width', parent.width() + 'px').attr('height', '500px');
+    const chartData = {
+      datasets: [{
+        label: 'Raw',
+        data: data_raw,
+        backgroundColor: 'rgb(17, 181, 225)'
+      }, {
+        label: 'High Temp Bake',
+        data: data_high_temp,
+        backgroundColor: 'rgb(219, 84, 97)'
+      }, {
+        label: 'Hydrogen Embrittlement Bake',
+        data: data_hydrogen,
+        backgroundColor: 'rgb(20, 153, 17)'
+      }, {
+        label: 'No Bake',
+        data: data_no_bake,
+        backgroundColor: 'rgb(18, 69, 89)'
+      }, {
+        label: 'Strip',
+        data: data_strip,
+        backgroundColor: 'rgb(239, 200, 139)'
+      }],
+    };
+    const config = {
+      type: 'scatter',
+      data: chartData,
+      options: {
+        parsing: {
+          xAxisKey: 'date',
+          yAxisKey: 'average'
+        },
+        responsive: true,
+        plugins: {
+          tooltip: {
+            callbacks: {
+              label: function(context) {
+                const record = context.dataset.data[context.dataIndex];
+                let label = "S.O #" + record.shopOrder + ", " + context.dataset.label + ", ";
+                const date = new Date(context.parsed.x);
+                label += date.toLocaleDateString('en-us');
+                label += ", " + context.parsed.y;
+                return label;
+              }
+            }
+          }
+        },
+        scales: {
+          x: {
+            type: 'linear',
+            position: 'bottom',
+            ticks: {
+              callback: function(value, index, ticks) {
+                let date = new Date(value);
+                return date.toLocaleDateString('en-us');
+              }
+            }
+          }
+        }
+      }
+    };
+    const myChart = new Chart(ctx, config);

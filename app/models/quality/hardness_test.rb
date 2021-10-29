@@ -20,11 +20,11 @@ class Quality::HardnessTest < ApplicationRecord
   # Scopes.
   scope :with_average_gte, ->(value) {
     return if value.blank?
-    where("((`piece_1` + `piece_2` + `piece_3` + `piece_4` + `piece_5`) / 5.0) >= ?", value)
+    where("average >= ?", value)
   }
   scope :with_average_lte, ->(value) {
     return if value.blank?
-    where("((`piece_1` + `piece_2` + `piece_3` + `piece_4` + `piece_5`) / 5.0) <= ?", value)
+    where("average <= ?", value)
   }
   scope :with_shop_order, ->(value) {
     return if value.blank?
@@ -73,8 +73,10 @@ class Quality::HardnessTest < ApplicationRecord
       joins(:shop_order).order("`quality_hardness_tests`.`tested_on` DESC, `as400_shop_orders`.`customer_code` ASC, `as400_shop_orders`.`process_code` ASC, `as400_shop_orders`.`part` ASC, `as400_shop_orders`.`sub` ASC, `as400_shop_orders`.`number` ASC")
     when "oldest"
       joins(:shop_order).order("`quality_hardness_tests`.`tested_on`, `as400_shop_orders`.`customer_code`, `as400_shop_orders`.`process_code`, `as400_shop_orders`.`part`, `as400_shop_orders`.`sub`, `as400_shop_orders`.`number`")
-    #when "highest_days" order(days: :desc, customer: :asc, process: :asc, part: :asc, sub: :asc, shop_order: :asc)
-    #when "lowest_days"  order(:days, :customer, :process, :part, :sub, :shop_order)
+    when "highest_average"
+      joins(:shop_order).order("`quality_hardness_tests`.`average` DESC, `as400_shop_orders`.`customer_code` ASC, `as400_shop_orders`.`process_code` ASC, `as400_shop_orders`.`part` ASC, `as400_shop_orders`.`sub` ASC, `as400_shop_orders`.`number` ASC")
+    when "lowest_average"
+      joins(:shop_order).order("`quality_hardness_tests`.`average`, `as400_shop_orders`.`customer_code`, `as400_shop_orders`.`process_code`, `as400_shop_orders`.`part`, `as400_shop_orders`.`sub`, `as400_shop_orders`.`number`")
     when "part_spec"
       joins(:shop_order).order("`as400_shop_orders`.`customer_code`, `as400_shop_orders`.`process_code`, `as400_shop_orders`.`part`, `as400_shop_orders`.`sub`, `as400_shop_orders`.`number`")
     when "shop_order"
@@ -96,10 +98,15 @@ class Quality::HardnessTest < ApplicationRecord
   validates :test_type,
             inclusion: { in: ["High Temp Bake", "Hydrogen Embrittlement Bake", "No Bake", "Raw", "Strip"] }
 
-  before_create  :link_raw_test
-  after_save    :fix_tests_missing_raw
+  before_create   :link_raw_test
+  after_save      :fix_tests_missing_raw
   before_discard  :nullify_raw_test_on_associated
-  before_save   :nullify_load_for_raw_test
+  before_save     :nullify_load_for_raw_test
+  before_save     :calculate_average
+
+  def calculate_average
+    self.average = (self.piece_1 + self.piece_2 + self.piece_3 + self.piece_4 + self.piece_5) / 5
+  end
 
   def nullify_load_for_raw_test
     if self.test_type == "Raw"
@@ -122,9 +129,6 @@ class Quality::HardnessTest < ApplicationRecord
     self.raw_test = Quality::HardnessTest.where(test_type: "Raw").where(shop_order_id: self.shop_order_id).first
   end
 
-  def average
-    return (self.piece_1 + self.piece_2 + self.piece_3 + self.piece_4 + self.piece_5) / 5
-  end
   def change_from_raw
     return nil unless self.raw_test.present?
     return self.average  - self.raw_test.average
