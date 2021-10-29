@@ -1,6 +1,6 @@
 ruby:
 
-  filter_data = AS400::ShopOrder.where(id: @all_hardness_tests.pluck(:shop_order_id)).pluck(:number, :customer_code, :process_code, :part)
+  filter_data = AS400::ShopOrder.where(id: @all_hardness_tests.pluck(:shop_order_id).uniq).pluck(:number, :customer_code, :process_code, :part)
   filter_shop_orders = []
   filter_customers = []
   filter_processes = []

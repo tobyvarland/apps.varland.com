@@ -19,6 +19,7 @@ class Quality::HardnessTestsController < ApplicationController
   # GET /quality/hardness_tests or /quality/hardness_tests.json
   def index
     authorize Quality::HardnessTest
+    filters_to_cookies all_filters
     if params[:sorted_by].blank?
       params[:sorted_by] = "newest"
       if params[:filters].blank?
@@ -79,6 +80,22 @@ class Quality::HardnessTestsController < ApplicationController
   end
 
   private
+
+    def all_filters
+      return [:with_shop_order,
+              :with_load,
+              :with_is_rework,
+              :with_customer,
+              :with_process_code,
+              :with_part,
+              :with_test_type,
+              :with_average_gte,
+              :with_average_lte,
+              :on_or_after,
+              :on_or_before,
+              :sorted_by,
+              :draw_chart]
+    end
 
     # Use callbacks to share common setup or constraints between actions.
     def set_hardness_test

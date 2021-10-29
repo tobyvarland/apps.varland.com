@@ -110,13 +110,7 @@
 
   javascript:
 
-    var params = new URLSearchParams(window.location.search);
-    var drawChart = false;
-    for (var param of params) {
-      if (param[0] == "filters[draw_chart]" && param[1] == "1") {
-        drawChart = true;
-      }
-    }
+    var drawChart = $("#filters_draw_chart").is(':checked');
 
     if (drawChart) {
       var ruby_data_raw = #{chart_data_raw.to_json.html_safe};

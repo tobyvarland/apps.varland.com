@@ -36,4 +36,32 @@ class ApplicationController < ActionController::Base
       return JSON.parse(response.body, symbolize_names: true)
     end
 
+    def filters_to_cookies(filters, options = {})
+      reset = options.fetch :reset, false
+      minutes = options.fetch :minutes, 60
+      new_filters = nil
+      filters.each do |f|
+        cookie_name = "#{params[:controller]}_#{params[:action]}_#{f}".gsub("/", "__")
+        if params[:reset] || reset
+          cookies[cookie_name] = ""
+          puts "🔴 ===> Resetting cookie: #{cookie_name}"
+        else
+          if params[:filters]
+            if params[:filters][f]
+              cookies[cookie_name] = { value: params[:filters][f], expires: minutes.minutes.from_now }
+              puts "🔴 ===> Setting cookie: #{cookie_name} = #{params[:filters][f]}"
+            end
+          else
+            if cookies[cookie_name] && !cookies[cookie_name].blank?
+              new_filters = {} if new_filters.blank?
+              new_filters[f] = cookies[cookie_name]
+              puts "🔴 ===> Loading value from cookie: #{cookie_name} = #{cookies[cookie_name]}"
+            end
+          end
+        end
+      end
+      params[:filters] = new_filters unless new_filters.blank?
+      parse_filter_params
+    end
+
 end
