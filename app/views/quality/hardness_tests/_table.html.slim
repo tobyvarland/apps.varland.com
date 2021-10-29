@@ -138,6 +138,16 @@
     const ctx = $('#hardness-chart');
     const parent = ctx.parent();
     ctx.attr('width', parent.width() + 'px').attr('height', '500px');
+    const dataSets = [];
+    if (data_raw.length > 0) { dataSets.push({label: 'Raw', data: data_raw, backgroundColor: 'rgb(17, 181, 225)'}); }
+    if (data_high_temp.length > 0) { dataSets.push({label: 'High Temp Bake', data: data_high_temp, backgroundColor: 'rgb(219, 84, 97)'}); }
+    if (data_hydrogen.length > 0) { dataSets.push({label: 'Hydrogen Embrittlement Bake', data: data_hydrogen, backgroundColor: 'rgb(20, 153, 17)'}); }
+    if (data_no_bake.length > 0) { dataSets.push({label: 'No Bake', data: data_no_bake, backgroundColor: 'rgb(18, 69, 89)'}); }
+    if (data_strip.length > 0) { dataSets.push({label: 'Strip', data: data_strip, backgroundColor: 'rgb(239, 200, 139)'}); }
+    const chartData = {
+      datasets: dataSets
+    };
+    /*
     const chartData = {
       datasets: [{
         label: 'Raw',
@@ -161,6 +171,7 @@
         backgroundColor: 'rgb(239, 200, 139)'
       }],
     };
+    */
     const config = {
       type: 'scatter',
       data: chartData,

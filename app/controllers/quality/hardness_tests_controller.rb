@@ -21,7 +21,11 @@ class Quality::HardnessTestsController < ApplicationController
     authorize Quality::HardnessTest
     if params[:sorted_by].blank?
       params[:sorted_by] = "newest"
-      params[:filters][:sorted_by] = "newest"
+      if params[:filters].blank?
+        params[:filters] = { sorted_by: "newest" }
+      else
+        params[:filters][:sorted_by] = "newest"
+      end
     end
     begin
       @pagy, @hardness_tests = pagy(apply_scopes(Quality::HardnessTest.includes(:user, :shop_order).all), items: 100)
