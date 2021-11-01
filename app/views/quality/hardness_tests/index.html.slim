@@ -9,6 +9,10 @@ ruby:
   div
     - if policy(Quality::RejectTag).create?
       = link_to "#{fa 'plus'} Hardness Test".html_safe, new_quality_hardness_test_path, class: ["btn", "btn-sm", "btn-primary"]
+    - if params[:filters] && params[:filters][:show_filters].to_s == "1"
+      = link_to "#{fa 'filter'} Filters".html_safe, request.params.merge({filters: {show_filters: 0}}), class: ['btn', 'btn-sm', 'btn-primary', 'ms-2']
+    - else
+      = link_to "#{fa 'filter'} Filters".html_safe, request.params.merge({filters: {show_filters: 1}}), class: ['btn', 'btn-sm', 'btn-primary', 'ms-2']
     = link_to "#{fa 'file-excel'} Download".html_safe, request.params.merge({format: :xlsx}), class: ['btn', 'btn-sm', 'btn-success', 'ms-2']
 
 =render "table"
