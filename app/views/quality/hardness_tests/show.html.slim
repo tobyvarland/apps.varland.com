@@ -49,7 +49,7 @@ ruby:
                    {label: "Δ from Raw", value: number_with_precision(@hardness_test.change_from_raw, precision: 2)},
                    {label: "Individual Pieces", value: @hardness_test.individual_pieces.join(" <small class=\"text-uncolor\">/</small> ")},
                    {label: "Raw Check Pieces", value: @hardness_test.raw_test.individual_pieces.join(" <small class=\"text-uncolor\">/</small> ")}]
-    = card_list "S.O. ##{@hardness_test.shop_order.number}",
+    = card_list "S.O. ##{@hardness_test.shop_order.number} <span class=\"shop_order_pdf_link\" data-shop-order=\"#{@hardness_test.shop_order.number}\"></span>".html_safe,
                 [{label: "Part Spec", value: @hardness_test.shop_order.part_spec.join(" <small class=\"text-uncolor\">/</small> ")},
                  {label: "Customer Name", value: @hardness_test.shop_order.customer_name.join("<br>")},
                  {label: "Part Name", value: @hardness_test.shop_order.part_name.join("<br>")},
