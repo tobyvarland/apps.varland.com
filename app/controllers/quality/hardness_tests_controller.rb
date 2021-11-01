@@ -19,7 +19,7 @@ class Quality::HardnessTestsController < ApplicationController
   # GET /quality/hardness_tests or /quality/hardness_tests.json
   def index
     authorize Quality::HardnessTest
-    filters_to_cookies :draw_chart
+    filters_to_cookies [:draw_chart, :show_filters]
     if params[:sorted_by].blank?
       params[:sorted_by] = "newest"
       if params[:filters].blank?

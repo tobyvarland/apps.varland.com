@@ -4,7 +4,8 @@
 
 - else
 
-  = render "filter_form"
+  - if params[:filters] && params[:filters][:show_filters].to_s == "1"
+    = render "filter_form"
 
   - if params[:filters] && params[:filters][:draw_chart].to_s == "1"
     = render "hardness_chart"
