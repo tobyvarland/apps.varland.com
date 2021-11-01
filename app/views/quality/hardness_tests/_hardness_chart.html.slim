@@ -1,0 +1,110 @@
+.my-3.d-none
+  canvas.m-0.p-0.d-block#hardness-chart
+
+ruby:
+
+  chart_data_raw = []
+  chart_data_high_temp = []
+  chart_data_hydrogen = []
+  chart_data_no_bake = []
+  chart_data_strip = []
+  if params[:filters] && params[:filters][:draw_chart].to_s == "1"
+    @all_hardness_tests.each do |t|
+      obj = [t.tested_on.strftime("%F"), t.average.round(2), t.shop_order_number]
+      case t.test_type
+      when "Raw"
+        chart_data_raw << obj
+      when "High Temp Bake"
+        chart_data_high_temp << obj
+      when "Hydrogen Embrittlement Bake"
+        chart_data_hydrogen << obj
+      when "No Bake"
+        chart_data_no_bake << obj
+      when "Strip"
+        chart_data_strip << obj
+      end
+    end
+  end
+
+javascript:
+
+  var drawChart = $("#filters_draw_chart").is(':checked');
+
+  if (drawChart) {
+    var ruby_data_raw = #{chart_data_raw.to_json.html_safe};
+    var ruby_data_high_temp = #{chart_data_high_temp.to_json.html_safe};
+    var ruby_data_hydrogen = #{chart_data_hydrogen.to_json.html_safe};
+    var ruby_data_no_bake = #{chart_data_no_bake.to_json.html_safe};
+    var ruby_data_strip = #{chart_data_strip.to_json.html_safe};
+    var data_raw = [];
+    var data_high_temp = [];
+    var data_hydrogen = [];
+    var data_no_bake = [];
+    var data_strip = [];
+    for (var i = 0, c = ruby_data_raw.length; i < c; i++) {
+      data_raw.push({date: moment(ruby_data_raw[i][0]), average: ruby_data_raw[i][1], shopOrder: ruby_data_raw[i][2]});
+    }
+    for (var i = 0, c = ruby_data_high_temp.length; i < c; i++) {
+      data_high_temp.push({date: moment(ruby_data_high_temp[i][0]), average: ruby_data_high_temp[i][1], shopOrder: ruby_data_high_temp[i][2]});
+    }
+    for (var i = 0, c = ruby_data_hydrogen.length; i < c; i++) {
+      data_hydrogen.push({date: moment(ruby_data_hydrogen[i][0]), average: ruby_data_hydrogen[i][1], shopOrder: ruby_data_hydrogen[i][2]});
+    }
+    for (var i = 0, c = ruby_data_no_bake.length; i < c; i++) {
+      data_no_bake.push({date: moment(ruby_data_no_bake[i][0]), average: ruby_data_no_bake[i][1], shopOrder: ruby_data_no_bake[i][2]});
+    }
+    for (var i = 0, c = ruby_data_strip.length; i < c; i++) {
+      data_strip.push({date: moment(ruby_data_strip[i][0]), average: ruby_data_strip[i][1], shopOrder: ruby_data_strip[i][2]});
+    }
+    var ctx = $('#hardness-chart');
+    ctx.parent().removeClass("d-none");
+    var parent = ctx.parent();
+    ctx.attr('width', parent.width() + 'px').attr('height', '500px');
+    var dataSets = [];
+    if (data_raw.length > 0) { dataSets.push({label: 'Raw', data: data_raw, backgroundColor: 'rgb(17, 181, 225)'}); }
+    if (data_high_temp.length > 0) { dataSets.push({label: 'High Temp Bake', data: data_high_temp, backgroundColor: 'rgb(219, 84, 97)'}); }
+    if (data_hydrogen.length > 0) { dataSets.push({label: 'Hydrogen Embrittlement Bake', data: data_hydrogen, backgroundColor: 'rgb(20, 153, 17)'}); }
+    if (data_no_bake.length > 0) { dataSets.push({label: 'No Bake', data: data_no_bake, backgroundColor: 'rgb(18, 69, 89)'}); }
+    if (data_strip.length > 0) { dataSets.push({label: 'Strip', data: data_strip, backgroundColor: 'rgb(239, 200, 139)'}); }
+    var chartData = {
+      datasets: dataSets
+    };
+    var config = {
+      type: 'scatter',
+      data: chartData,
+      options: {
+        parsing: {
+          xAxisKey: 'date',
+          yAxisKey: 'average'
+        },
+        responsive: true,
+        plugins: {
+          tooltip: {
+            callbacks: {
+              label: function(context) {
+                var record = context.dataset.data[context.dataIndex];
+                let label = "S.O #" + record.shopOrder + ", " + context.dataset.label + ", ";
+                var date = new Date(context.parsed.x);
+                label += date.toLocaleDateString('en-us');
+                label += ", " + context.parsed.y;
+                return label;
+              }
+            }
+          }
+        },
+        scales: {
+          x: {
+            type: 'linear',
+            position: 'bottom',
+            ticks: {
+              callback: function(value, index, ticks) {
+                let date = new Date(value);
+                return date.toLocaleDateString('en-us');
+              }
+            }
+          }
+        }
+      }
+    };
+    var myChart = new Chart(ctx, config);
+  }
