@@ -29,11 +29,11 @@ class Quality::HardnessTestPolicy < ApplicationPolicy
   end
 
   def add_comment?
-    user && user.permission && (user.permission.hardness_tests >= 2)
+    is_super_admin? || (user && user.permission && (user.permission.hardness_tests >= 2))
   end
 
   def delete_comment?
-    user && user.permission && (user.permission.super_admin || user.permission.hardness_tests == 3)
+    is_super_admin? || (user && user.permission && (user.permission.super_admin || user.permission.hardness_tests == 3))
   end
 
 end

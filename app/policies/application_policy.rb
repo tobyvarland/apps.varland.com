@@ -1,5 +1,5 @@
 class ApplicationPolicy
-  
+
   attr_reader :user, :record
 
   def initialize(user, record)
@@ -7,16 +7,20 @@ class ApplicationPolicy
     @record = record
   end
 
-  def index?
+  def is_super_admin?
     user && user.permission.super_admin
+  end
+
+  def index?
+    is_super_admin?
   end
 
   def show?
-    user && user.permission.super_admin
+    is_super_admin?
   end
 
   def create?
-    user && user.permission.super_admin
+    is_super_admin?
   end
 
   def new?
@@ -24,7 +28,7 @@ class ApplicationPolicy
   end
 
   def update?
-    user && user.permission.super_admin
+    is_super_admin?
   end
 
   def edit?
@@ -32,7 +36,7 @@ class ApplicationPolicy
   end
 
   def destroy?
-    user && user.permission.super_admin
+    is_super_admin?
   end
 
   class Scope
