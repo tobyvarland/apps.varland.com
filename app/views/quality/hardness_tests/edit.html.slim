@@ -1,6 +1,10 @@
-<h1>Editing Quality Hardness Test</h1>
+ruby:
+  provide(:title, 'Edit Hardness Test')
 
-<%= render 'form', quality_hardness_test: @quality_hardness_test %>
+- content_for :nav do
+  = render "nav"
 
-<%= link_to 'Show', @quality_hardness_test %> |
-<%= link_to 'Back', quality_hardness_tests_path %>
+.d-flex.flex-row.align-items-center.justify-content-between.mt-3
+  h1.font-varland Edit Hardness Test
+
+= render 'form'

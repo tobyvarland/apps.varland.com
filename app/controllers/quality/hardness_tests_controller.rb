@@ -109,6 +109,19 @@ class Quality::HardnessTestsController < ApplicationController
     end
   end
 
+  def edit
+    authorize @hardness_test
+  end
+
+  def update
+    authorize @hardness_test
+    if @hardness_test.update(hardness_test_params)
+      redirect_to @hardness_test, notice: "Hardness Test was successfully updated."
+    else
+      render :edit, status: :unprocessable_entity
+    end
+  end
+
   private
 
     # Use callbacks to share common setup or constraints between actions.

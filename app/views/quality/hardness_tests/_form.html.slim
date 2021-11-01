@@ -22,7 +22,7 @@
 
   .form-actions
     div
-      = link_to "#{fa "times"} Cancel".html_safe, quality_hardness_tests_url, class: ["btn", "btn-light", "btn-sm", "me-3"], tabindex: -1
+      = link_to "#{fa "times"} Cancel".html_safe, :back, class: ["btn", "btn-light", "btn-sm", "me-3"], tabindex: -1
       = f.button :button, "#{fa "check"} Save Hardness Test".html_safe, class: ["btn-primary", "btn-sm"]
 
 javascript:
