@@ -39,7 +39,14 @@ class Quality::HardnessTestsController < ApplicationController
   # GET /quality/hardness_tests or /quality/hardness_tests.json
   def deleted
     authorize Quality::HardnessTest
-    params[:sorted_by] = "newest" if params[:sorted_by].blank?
+    if params[:sorted_by].blank?
+      params[:sorted_by] = "newest"
+      if params[:filters].blank?
+        params[:filters] = { sorted_by: "newest" }
+      else
+        params[:filters][:sorted_by] = "newest"
+      end
+    end
     begin
       @pagy, @hardness_tests = pagy(apply_scopes(Quality::HardnessTest.unscoped.discarded.includes(:user, :shop_order).all), items: 100)
     rescue
