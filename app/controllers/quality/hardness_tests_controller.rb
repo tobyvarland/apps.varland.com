@@ -1,5 +1,8 @@
 class Quality::HardnessTestsController < ApplicationController
 
+  skip_before_action :verify_authenticity_token
+  skip_before_action :authenticate_user!
+
   before_action :set_hardness_test, only: %i[ edit update destroy ]
   before_action :parse_filter_params, only: %i[ index deleted ]
 

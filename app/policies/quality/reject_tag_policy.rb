@@ -9,7 +9,7 @@ class Quality::RejectTagPolicy < ApplicationPolicy
   end
 
   def update?
-    super || (user && user.permission && (user.permission.reject_tags > 2 || user.id == object.user_id))
+    super || (user && user.permission && (user.permission.reject_tags > 2 || user.id == record.user_id))
   end
 
   def destroy?
@@ -27,5 +27,5 @@ class Quality::RejectTagPolicy < ApplicationPolicy
   def shop_order_partial_tag?
     show?
   end
-  
+
 end

@@ -15,5 +15,5 @@ class Shipping::ReceivingPriorityNotePolicy < ApplicationPolicy
   def update?
     return true if user.present?
   end
-  
+
 end

@@ -5,15 +5,15 @@ class Quality::HardnessTestPolicy < ApplicationPolicy
   end
 
   def create?
-    super || (user && user.permission && user.permission.hardness_tests >= 2)
+    true #super || (user && user.permission && user.permission.hardness_tests >= 2)
   end
 
   def update?
-    super || (user && user.permission && (user.permission.hardness_tests > 2 || user.id == object.user_id))
+    super || (user && user.permission && (user.permission.hardness_tests > 2 || user.id == record.user_id))
   end
 
   def destroy?
-    super || (user && user.permission && (user.permission.hardness_tests > 2 || user.id == object.user_id))
+    super || (user && user.permission && (user.permission.hardness_tests > 2 || user.id == record.user_id))
   end
 
   def show?
@@ -21,7 +21,7 @@ class Quality::HardnessTestPolicy < ApplicationPolicy
   end
 
   def deleted?
-    destroy?
+    index?
   end
 
   def restore?
