@@ -1,6 +1,32 @@
+# Create workbook.
 wb = xlsx_package.workbook
+
+# Add sheet for individual tests.
 wb.add_worksheet(name: "Tests") do |sheet|
+  sheet.add_row ["Shop Order"]
   @all_hardness_tests.each do |test|
     sheet.add_row [test.shop_order.number]
+  end
+end
+
+# Add sheet for filter summary.
+applied_scopes = current_scopes
+filters = []
+applied_scopes.keys.each do |key|
+  filters << { field: key,
+               value: applied_scopes[key] }
+end
+wb.add_worksheet(name: "Summary") do |sheet|
+  sheet.add_row ["Export Summary"]
+  sheet.add_row [""]
+  sheet.add_row ["# Tests:", @all_hardness_tests.size]
+  sheet.add_row [""]
+  sheet.add_row ["Filters Applied to Results"]
+  sheet.add_row [""]
+  sheet.add_row ["Filter", "Value"]
+  unless filters.size == 0
+    filters.each do |filter|
+      sheet.add_row [filter[:field], filter[:value]]
+    end
   end
 end
