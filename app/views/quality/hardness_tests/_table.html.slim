@@ -51,7 +51,7 @@
               - if (hardness_test.test_type == "Raw" && hardness_test.average < 68) || hardness_test.average < 63
                 .bg-danger.text-white.fw-700.rounded = number_with_precision hardness_test.average, precision: 2
               - else
-                .bg-light = number_with_precision hardness_test.average, precision: 2
+                div = number_with_precision hardness_test.average, precision: 2
               - if hardness_test.raw_test.present?
                 .small.text-uncolor = number_with_precision hardness_test.raw_test.average, precision: 2
             td.text-center = number_with_precision hardness_test.change_from_raw, precision: 2
