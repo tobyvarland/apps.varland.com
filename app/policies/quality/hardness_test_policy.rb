@@ -13,7 +13,7 @@ class Quality::HardnessTestPolicy < ApplicationPolicy
   end
 
   def destroy?
-    super || (user && user.permission && user.permission.hardness_tests == 3)
+    super || (user && user.permission && (user.permission.hardness_tests > 2 || user.id == object.user_id))
   end
 
   def show?
