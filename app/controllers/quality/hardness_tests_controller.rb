@@ -1,6 +1,6 @@
 class Quality::HardnessTestsController < ApplicationController
 
-  before_action :set_hardness_test, only: %i[ show edit update destroy ]
+  before_action :set_hardness_test, only: %i[ edit update destroy ]
   before_action :parse_filter_params, only: %i[ index deleted ]
 
   has_scope :with_shop_order, only: [:index, :deleted]
@@ -91,6 +91,7 @@ class Quality::HardnessTestsController < ApplicationController
   end
 
   def show
+    @hardness_test = Quality::HardnessTest.unscoped.find(params[:id])
     authorize @hardness_test
     respond_to do |format|
       format.html {

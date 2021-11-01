@@ -1,49 +1,43 @@
-<p id="notice"><%= notice %></p>
+ruby:
+  provide(:title, "Hardness Test Detail: #{@hardness_test.description}")
 
-<p>
-  <strong>User:</strong>
-  <%= @quality_hardness_test.user_id %>
-</p>
+- content_for :nav do
+  = render "nav"
 
-<p>
-  <strong>Shop order:</strong>
-  <%= @quality_hardness_test.shop_order_id %>
-</p>
+.d-flex.flex-col.flex-md-row.align-items-center.justify-content-between.mt-3
+  h1.font-varland = "Hardness Test: #{@hardness_test.description}"
+  .mt-2.mt-md-0
+    - if @hardness_test.kept?
+      = link_to "#{fa "list-alt"} All Hardness Tests".html_safe, quality_hardness_tests_url, class: ["btn", "btn-sm", "btn-primary"]
+    - else
+      = link_to "#{fa "list-alt"} Deleted Hardness Tests".html_safe, deleted_quality_hardness_tests_url, class: ["btn", "btn-sm", "btn-primary"]
+    - if policy(@hardness_test).destroy?
+      - if @hardness_test.kept?
+        = link_to "#{fa 'trash-alt'} Delete".html_safe, @hardness_test, method: :delete, data: { confirm: "Are you sure you want to delete this hardness test?\n\nIT can restore it later if necessary." }, class: ["btn", "btn-sm", "btn-danger", "ms-1"]
+      - else
+        = link_to "#{fa 'trash-restore-alt'} Restore".html_safe, restore_quality_hardness_test_path(@hardness_test), method: :post, data: { confirm: "Are you sure you want to restore this hardness test?" }, class: ["btn", "btn-sm", "btn-warning", "ms-1"]
 
-<p>
-  <strong>Raw test:</strong>
-  <%= @quality_hardness_test.raw_test_id %>
-</p>
-
-<p>
-  <strong>Tested on:</strong>
-  <%= @quality_hardness_test.tested_on %>
-</p>
-
-<p>
-  <strong>Load:</strong>
-  <%= @quality_hardness_test.load %>
-</p>
-
-<p>
-  <strong>Is rework:</strong>
-  <%= @quality_hardness_test.is_rework %>
-</p>
-
-<p>
-  <strong>Test type:</strong>
-  <%= @quality_hardness_test.test_type %>
-</p>
-
-<p>
-  <strong>Piece 1:</strong>
-  <%= @quality_hardness_test.piece_1 %>
-</p>
-
-<p>
-  <strong>Piece 2:</strong>
-  <%= @quality_hardness_test.piece_2 %>
-</p>
-
-<%= link_to 'Edit', edit_quality_hardness_test_path(@quality_hardness_test) %> |
-<%= link_to 'Back', quality_hardness_tests_path %>
+.row.mb-3
+  .col-12.col-md-3.order-1
+    - if @hardness_test.test_type == "Raw"
+      = card_list "Hardness Test Details",
+                  [{label: "Entered By", value: @hardness_test.user.name_and_number},
+                   {label: "Date", value: @hardness_test.tested_on.strftime("%m/%d/%Y")},
+                   {label: "Type", value: @hardness_test.test_type},
+                   {label: "Average", value: number_with_precision(@hardness_test.average, precision: 2)},
+                   {label: "Individual Pieces", value: @hardness_test.individual_pieces.join(" <small class=\"text-uncolor\">/</small> ")}]
+    - else
+      = card_list "Hardness Test Details",
+                  [{label: "Entered By", value: @hardness_test.user.name_and_number},
+                   {label: "Date", value: @hardness_test.tested_on.strftime("%m/%d/%Y")},
+                   {label: "Type", value: @hardness_test.test_type},
+                   {label: "Average", value: number_with_precision(@hardness_test.average, precision: 2)},
+                   {label: "Raw Average", value: number_with_precision(@hardness_test.raw_test.average, precision: 2)},
+                   {label: "Δ from Raw", value: number_with_precision(@hardness_test.change_from_raw, precision: 2)},
+                   {label: "Individual Pieces", value: @hardness_test.individual_pieces.join(" <small class=\"text-uncolor\">/</small> ")},
+                   {label: "Raw Check Pieces", value: @hardness_test.raw_test.individual_pieces.join(" <small class=\"text-uncolor\">/</small> ")}]
+    = card_list "S.O. ##{@hardness_test.shop_order.number}",
+                [{label: "Part Spec", value: @hardness_test.shop_order.part_spec.join(" <small class=\"text-uncolor\">/</small> ")},
+                 {label: "Customer Name", value: @hardness_test.shop_order.customer_name.join("<br>")},
+                 {label: "Part Name", value: @hardness_test.shop_order.part_name.join("<br>")},
+                 {label: "Part Description", value: @hardness_test.shop_order.part_description.join("<br>")}]
