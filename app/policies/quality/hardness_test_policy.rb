@@ -16,6 +16,10 @@ class Quality::HardnessTestPolicy < ApplicationPolicy
     super || (user && user.permission && user.permission.hardness_tests == 3)
   end
 
+  def show?
+    index?
+  end
+
   def deleted?
     destroy?
   end
@@ -31,5 +35,5 @@ class Quality::HardnessTestPolicy < ApplicationPolicy
   def delete_comment?
     user && user.permission && (user.permission.super_admin || user.permission.hardness_tests == 3)
   end
-  
+
 end
