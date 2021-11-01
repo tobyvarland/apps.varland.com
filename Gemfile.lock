@@ -219,6 +219,9 @@ GEM
       omniauth (>= 1.9, < 3)
     orm_adapter (0.5.0)
     pagy (3.13.0)
+    paper_trail (12.1.0)
+      activerecord (>= 5.2)
+      request_store (~> 1.1)
     pdf-core (0.9.0)
     prawn (2.4.0)
       pdf-core (~> 0.9.0)
@@ -269,6 +272,8 @@ GEM
       ffi (~> 1.0)
     redis (4.2.5)
     regexp_parser (2.1.1)
+    request_store (1.5.0)
+      rack (>= 1.4)
     responders (3.0.1)
       actionpack (>= 5.0)
       railties (>= 5.0)
@@ -385,6 +390,7 @@ DEPENDENCIES
   omniauth (~> 1.9)
   omniauth-google-oauth2
   pagy
+  paper_trail
   prawn
   puma (~> 5.0)
   pundit

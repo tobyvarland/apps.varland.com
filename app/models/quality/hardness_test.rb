@@ -3,6 +3,8 @@ class Quality::HardnessTest < ApplicationRecord
   # Concerns.
   include ShopOrderAssignable
 
+  # Track changes.
+  has_paper_trail
 
   # Soft deletes.
   include Discard::Model
