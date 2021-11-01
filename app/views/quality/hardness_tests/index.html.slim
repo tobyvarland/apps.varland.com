@@ -1,12 +1,14 @@
-ruby: 
+ruby:
   provide(:title, 'Hardness Tests')
 
 - content_for :nav do
-  = render "nav"  
+  = render "nav"
 
 .d-flex.flex-row.align-items-center.justify-content-between.mt-3
   h1.font-varland Hardness Tests
-  - if policy(Quality::RejectTag).create?
-    = link_to "#{fa 'plus'} Hardness Test".html_safe, new_quality_hardness_test_path, class: ["btn", "btn-sm", "btn-primary"]
+  div
+    - if policy(Quality::RejectTag).create?
+      = link_to "#{fa 'plus'} Hardness Test".html_safe, new_quality_hardness_test_path, class: ["btn", "btn-sm", "btn-primary"]
+    = link_to "#{fa 'file-excel'} Download".html_safe, request.params.merge({format: :xlsx}), class: ['btn', 'btn-sm', 'btn-success', 'ms-2']
 
 =render "table"

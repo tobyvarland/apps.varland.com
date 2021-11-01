@@ -34,6 +34,10 @@ class Quality::HardnessTestsController < ApplicationController
       @pagy, @hardness_tests = pagy(apply_scopes(Quality::HardnessTest.includes(:user, :shop_order).all), items: 100, page: 1)
     end
     @all_hardness_tests = apply_scopes(Quality::HardnessTest.includes(:user, :shop_order).all)
+    respond_to do |format|
+      format.html
+      format.xlsx
+    end
   end
 
   # GET /quality/hardness_tests or /quality/hardness_tests.json

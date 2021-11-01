@@ -1,0 +1,6 @@
+wb = xlsx_package.workbook
+wb.add_worksheet(name: "Tests") do |sheet|
+  @all_hardness_tests.each do |test|
+    sheet.add_row [test.shop_order.number]
+  end
+end
