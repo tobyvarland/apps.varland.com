@@ -3,9 +3,41 @@ wb = xlsx_package.workbook
 
 # Add sheet for individual tests.
 wb.add_worksheet(name: "Tests") do |sheet|
-  sheet.add_row ["Shop Order"]
+  sheet.add_row ["Date", 
+                 "Shop Order",
+                 "Customer",
+                 "Process",
+                 "Part ID",
+                 "Sub ID",
+                 "Load",
+                 "Rework?",
+                 "Tested By",
+                 "Test Type",
+                 "Average", 
+                 "Change from Raw", 
+                 "Piece #1",
+                 "Piece #2",
+                 "Piece #3",
+                 "Piece #4",
+                 "Piece #5"]
   @all_hardness_tests.each do |test|
-    sheet.add_row [test.shop_order.number]
+    sheet.add_row [test.tested_on,
+                   test.shop_order.number,
+                   test.shop_order.customer_code,
+                   test.shop_order.process_code,
+                   test.shop_order.part,
+                   test.shop_order.sub,
+                   test.load,
+                   test.is_rework,
+                   test.user.name,
+                   test.test_type,
+                   test.average,
+                   test.change_from_raw,
+                   test.piece_1,
+                   test.piece_2,
+                   test.piece_3,
+                   test.piece_4,
+                   test.piece_5]
   end
 end
 
