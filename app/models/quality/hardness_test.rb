@@ -26,22 +26,6 @@ class Quality::HardnessTest < ApplicationRecord
     return if value.blank?
     where("average <= ?", value)
   }
-  scope :with_shop_order, ->(value) {
-    return if value.blank?
-    joins(:shop_order).where("`as400_shop_orders`.`number` = ?", value)
-  }
-  scope :with_part, ->(value) {
-    return if value.blank?
-    joins(:shop_order).where("`as400_shop_orders`.`part` = ?", value)
-  }
-  scope :with_process_code, ->(value) {
-    return if value.blank?
-    joins(:shop_order).where("`as400_shop_orders`.`process_code` = ?", value)
-  }
-  scope :with_customer, ->(value) {
-    return if value.blank?
-    joins(:shop_order).where("`as400_shop_orders`.`customer_code` = ?", value)
-  }
   scope :on_or_after, ->(value) {
     return if value.blank?
     where("tested_on >= ?", value)
@@ -78,9 +62,9 @@ class Quality::HardnessTest < ApplicationRecord
     when "lowest_average"
       joins(:shop_order).order("`quality_hardness_tests`.`average`, `as400_shop_orders`.`customer_code`, `as400_shop_orders`.`process_code`, `as400_shop_orders`.`part`, `as400_shop_orders`.`sub`, `as400_shop_orders`.`number`")
     when "part_spec"
-      joins(:shop_order).order("`as400_shop_orders`.`customer_code`, `as400_shop_orders`.`process_code`, `as400_shop_orders`.`part`, `as400_shop_orders`.`sub`, `as400_shop_orders`.`number`")
+      by_part_spec
     when "shop_order"
-      joins(:shop_order).order("`as400_shop_orders`.`number`")
+      by_shop_order
     end
   }
 

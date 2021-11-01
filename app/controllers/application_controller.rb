@@ -36,11 +36,12 @@ class ApplicationController < ActionController::Base
       return JSON.parse(response.body, symbolize_names: true)
     end
 
-    def filters_to_cookies(filters, options = {})
+    def filters_to_cookies(filters = [], options = {})
       reset = options.fetch :reset, false
       minutes = options.fetch :minutes, 60
+      all_filters = Array(filters) + scopes_configuration.keys
       new_filters = nil
-      filters.each do |f|
+      all_filters.each do |f|
         cookie_name = "#{params[:controller]}_#{params[:action]}_#{f}".gsub("/", "__")
         if params[:reset] || reset
           cookies[cookie_name] = ""
