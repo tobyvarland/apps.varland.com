@@ -90,6 +90,17 @@ class Quality::HardnessTestsController < ApplicationController
     redirect_to quality_hardness_tests_url, notice: "Hardness test was successfully deleted."
   end
 
+  def show
+    authorize @hardness_test
+    respond_to do |format|
+      format.html {
+        if current_user
+          @comment = current_user.comments.build
+        end
+      }
+    end
+  end
+
   private
 
     # Use callbacks to share common setup or constraints between actions.
