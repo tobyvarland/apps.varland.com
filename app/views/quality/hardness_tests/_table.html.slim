@@ -34,20 +34,19 @@
           tr
             td.text-center = hardness_test.tested_on.strftime("%m/%d/%Y")
             td.lh-sm
-              = link_to hardness_test.shop_order.number, request.params.merge({"filters[with_shop_order]": hardness_test.shop_order.number}), class: "text-decoration-none fw-700 font-monospace fs-5"
+              span.fw-700.font-monospace.fs-5 = hardness_test.shop_order.number
               span.ms-1.shop_order_pdf_link*{'data-shop-order'=>hardness_test.shop_order.number}
               br
-              small
-                = link_to hardness_test.shop_order.customer_code, request.params.merge({"filters[with_customer]": hardness_test.shop_order.customer_code}), class: "text-decoration-none"
-                span.text-uncolor = " / "
-                = link_to hardness_test.shop_order.process_code, request.params.merge({"filters[with_process_code]": hardness_test.shop_order.process_code}), class: "text-decoration-none"
-                span.text-uncolor = " / "
-                = link_to hardness_test.shop_order.part, request.params.merge({"filters[with_part]": hardness_test.shop_order.part}), class: "text-decoration-none"
-                - unless hardness_test.shop_order.sub.blank?
-                  span.text-uncolor = " / #{hardness_test.shop_order.sub}"
+              small == hardness_test.shop_order.part_spec.join(" <small class=\"text-uncolor\">/</small> ")
             td.text-center = hardness_test.load_with_rework
             td = hardness_test.user.name_and_number
-            td = link_to hardness_test.test_type, request.params.merge({"filters[with_test_type]": hardness_test.test_type}), class: "text-decoration-none"
+            td
+              = hardness_test.test_type
+              - if hardness_test.comments.length > 0
+                .small.text-muted
+                  = "#{fa "comments"} #{pluralize hardness_test.comments.length, "comment"}".html_safe
+                  - if hardness_test.comment_attachments.length > 0
+                    span.ms-1 = "#{fa "paperclip"} #{pluralize hardness_test.comment_attachments.length, "attachment"}".html_safe
             td.text-center
               = number_with_precision hardness_test.average, precision: 2
               - if hardness_test.raw_test.present?
