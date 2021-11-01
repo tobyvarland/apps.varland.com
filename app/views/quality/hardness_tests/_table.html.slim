@@ -6,7 +6,8 @@
 
   = render "filter_form"
 
-  = render "hardness_chart"
+  - if params[:filters] && params[:filters][:draw_chart].to_s == "1"
+    = render "hardness_chart"
 
   .d-flex.flex-row.align-items-center.justify-content-center
     = render partial: "shared/pagination", locals: { label: "Hardness Tests" }
