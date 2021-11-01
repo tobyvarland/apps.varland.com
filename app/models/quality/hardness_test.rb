@@ -86,12 +86,18 @@ class Quality::HardnessTest < ApplicationRecord
             numericality: { greater_than: 0 }
   validates :test_type,
             inclusion: { in: ["High Temp Bake", "Hydrogen Embrittlement Bake", "No Bake", "Raw", "Strip"] }
+  validate  :require_smalog
 
   before_create   :link_raw_test
   after_save      :fix_tests_missing_raw
   before_discard  :nullify_raw_test_on_associated
   before_save     :nullify_load_for_raw_test
   before_save     :calculate_average
+
+  def require_smalog
+    return if self.shop_order.blank?
+    errors.add(:base, "Shop order is from a customer other than SMALOG") unless self.shop_order.customer_code == "SMALOG"
+  end
 
   def individual_pieces
     [self.piece_1, self.piece_2, self.piece_3, self.piece_4, self.piece_5]

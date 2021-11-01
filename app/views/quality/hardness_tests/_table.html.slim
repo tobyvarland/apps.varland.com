@@ -48,10 +48,12 @@
                   - if hardness_test.comment_attachments.length > 0
                     span.ms-1 = "#{fa "paperclip"} #{pluralize hardness_test.comment_attachments.length, "attachment"}".html_safe
             td.text-center
-              = number_with_precision hardness_test.average, precision: 2
+              - if (hardness_test.test_type == "Raw" && hardness_test.average < 68) || hardness_test.average < 63
+                .bg-danger.text-white.fw-700.rounded = number_with_precision hardness_test.average, precision: 2
+              - else
+                .bg-light = number_with_precision hardness_test.average, precision: 2
               - if hardness_test.raw_test.present?
-                br
-                small.text-uncolor = number_with_precision hardness_test.raw_test.average, precision: 2
+                .small.text-uncolor = number_with_precision hardness_test.raw_test.average, precision: 2
             td.text-center = number_with_precision hardness_test.change_from_raw, precision: 2
             td.text-center
               = number_with_precision hardness_test.piece_1, precision: 2
