@@ -18,6 +18,17 @@ ruby:
         = link_to "#{fa 'trash-restore-alt'} Restore".html_safe, restore_quality_hardness_test_path(@hardness_test), method: :post, data: { confirm: "Are you sure you want to restore this hardness test?" }, class: ["btn", "btn-sm", "btn-warning", "ms-1"]
 
 .row.mb-3
+  .col-12.col-md.order-2
+    .card.bg-light.mt-3
+      h6.card-header = "Comments"
+      - if policy(@hardness_test).add_comment?
+        .card-body
+          = render partial: "comments/form", locals: { comment: @comment, commentable: @hardness_test, allow_manual_time: false, allow_attachments: true }
+      .card-body.bg-white
+        - if @hardness_test.comments.length == 0
+          .text-muted.fst-italic No comments.
+        - else
+          = render partial: "comments/comment", collection: @hardness_test.comments, locals: { allow_delete: policy(@hardness_test).delete_comment? }
   .col-12.col-md-3.order-1
     - if @hardness_test.test_type == "Raw"
       = card_list "Hardness Test Details",

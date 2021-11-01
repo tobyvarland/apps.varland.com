@@ -23,5 +23,13 @@ class Quality::HardnessTestPolicy < ApplicationPolicy
   def restore?
     destroy?
   end
+
+  def add_comment?
+    user && user.permission && (user.permission.hardness_tests >= 2)
+  end
+
+  def delete_comment?
+    user && user.permission && (user.permission.super_admin || user.permission.hardness_tests == 3)
+  end
   
 end

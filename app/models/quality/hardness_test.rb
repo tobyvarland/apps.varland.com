@@ -9,6 +9,7 @@ class Quality::HardnessTest < ApplicationRecord
   default_scope -> { kept }
 
   # Associations.
+  include Commentable
   belongs_to  :shop_order,
               class_name: 'AS400::ShopOrder'
   belongs_to  :user,
@@ -16,6 +17,8 @@ class Quality::HardnessTest < ApplicationRecord
   belongs_to  :raw_test,
               class_name: "Quality::HardnessTest",
               optional: true
+
+
 
   # Scopes.
   scope :with_average_gte, ->(value) {
