@@ -88,6 +88,14 @@ class Quality::HardnessTest < ApplicationRecord
   before_save     :nullify_load_for_raw_test
   before_save     :calculate_average
 
+  def description
+    if self.test_type == "Raw"
+      "S.O. ##{self.shop_order_number}, #{self.test_type}"
+    else
+      "S.O. ##{self.shop_order_number}, Load ##{self.load_with_rework}, #{self.test_type}"
+    end
+  end
+
   def calculate_average
     self.average = (self.piece_1 + self.piece_2 + self.piece_3 + self.piece_4 + self.piece_5) / 5
   end
