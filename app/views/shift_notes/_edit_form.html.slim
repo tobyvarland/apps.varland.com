@@ -1,0 +1,31 @@
+= simple_form_for(@shift_note, html: {class: ["vp-gray-form", "my-3"]}) do |f|
+
+  = f.error_notification
+  = f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present?
+
+  .row
+    .col-12.col-md
+      .row
+        .col-12.col-md.mt-3
+          = f.input :note_on, required: true, label: "Date:", as: :date, html5: true, input_html: { style: "margin: 0 !important;" }
+        .col-12.col-md.mt-3
+          = f.input :shift, required: true, label: "Shift:", collection: [1, 2], input_html: { class: "form-select" }
+        .col-12.col-md.mt-3
+          = f.association :user, as: :hidden
+          = f.input :user_name, required: true, label: "Entered By:", disabled: true, input_html: { tabindex: -1 }
+        .col-12.col-md.mt-3
+          = f.input :department, required: false, label: "Department:", collection: ShiftNote.department_options, input_html: { class: "form-select" }
+      .row.mt-3
+        .col-12.mb-1.label Type(s):
+        .col-6 = f.input :is_for_it, label: "IT"
+        .col-6 = f.input :is_for_lab, label: "Lab"
+        .col-6 = f.input :is_for_maintenance, label: "Maintenance"
+        .col-6 = f.input :is_for_plating, label: "Plating"
+        .col-6 = f.input :is_for_qc, label: "QC"
+        .col-6 = f.input :is_for_shipping, label: "Shipping"
+    .col-12.col-md.mt-3
+      = f.input :notes, label: "Notes:", input_html: { rows: 5 }
+
+  .form-actions
+    = link_to "#{fa "times"} Cancel".html_safe, @shift_note, class: ["btn", "btn-light", "btn-sm", "me-3"], tabindex: -1
+    = f.button :button, "#{fa "check"} Save Shift Note".html_safe, class: ["btn-primary", "btn-sm"]

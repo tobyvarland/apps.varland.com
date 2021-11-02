@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_11_02_134733) do
+ActiveRecord::Schema.define(version: 2021_11_02_161645) do
 
   create_table "active_storage_attachments", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "name", null: false
@@ -336,6 +336,25 @@ ActiveRecord::Schema.define(version: 2021_11_02_134733) do
     t.index ["user_id"], name: "index_reviews_on_user_id"
   end
 
+  create_table "shift_notes", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.date "note_on", null: false
+    t.integer "shift", null: false
+    t.integer "department"
+    t.text "notes", null: false
+    t.boolean "is_for_it", default: false, null: false
+    t.boolean "is_for_lab", default: false, null: false
+    t.boolean "is_for_maintenance", default: false, null: false
+    t.boolean "is_for_plating", default: false, null: false
+    t.boolean "is_for_qc", default: false, null: false
+    t.boolean "is_for_shipping", default: false, null: false
+    t.datetime "discarded_at"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["discarded_at"], name: "index_shift_notes_on_discarded_at"
+    t.index ["user_id"], name: "index_shift_notes_on_user_id"
+  end
+
   create_table "shipping_receiving_priority_notes", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "request_type", null: false
     t.text "request_details", null: false
@@ -421,6 +440,7 @@ ActiveRecord::Schema.define(version: 2021_11_02_134733) do
   add_foreign_key "quality_reject_tags", "quality_reject_tags", column: "source_id"
   add_foreign_key "quality_reject_tags", "users"
   add_foreign_key "reviews", "users"
+  add_foreign_key "shift_notes", "users"
   add_foreign_key "shipping_receiving_priority_notes", "users", column: "completed_by_user_id", name: "fk_recnotes_comp_user"
   add_foreign_key "shipping_receiving_priority_notes", "users", column: "requested_by_user_id", name: "fk_recnotes_req_user"
   add_foreign_key "shipping_trico_bins", "as400_shop_orders", column: "shop_order_id"

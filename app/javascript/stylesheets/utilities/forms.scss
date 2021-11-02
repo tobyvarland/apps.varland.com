@@ -28,7 +28,7 @@
   @extend .rounded;
   @extend .shadow-sm;
   overflow: auto;
-  label {
+  label, .label {
     @extend .fw-700;
     font-size: 0.85rem;
     text-transform: uppercase;

@@ -332,3 +332,9 @@ mark.search-term {
     max-width: 100px;
   }
 }
+
+.table-cell-attachment {
+  & + .table-cell-attachment {
+    margin-top: 0.5rem;
+  }
+}

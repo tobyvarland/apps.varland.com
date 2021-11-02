@@ -1,0 +1,29 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  user: one
+  note_on: 2021-11-02
+  shift: 1
+  department: 1
+  notes: MyText
+  is_for_it: false
+  is_for_lab: false
+  is_for_maintenance: false
+  is_for_plating: false
+  is_for_qc: false
+  is_for_shipping: false
+  discarded_at: 2021-11-02 12:16:45
+
+two:
+  user: two
+  note_on: 2021-11-02
+  shift: 1
+  department: 1
+  notes: MyText
+  is_for_it: false
+  is_for_lab: false
+  is_for_maintenance: false
+  is_for_plating: false
+  is_for_qc: false
+  is_for_shipping: false
+  discarded_at: 2021-11-02 12:16:45

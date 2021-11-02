@@ -1,0 +1,9 @@
+.table-cell-attachment
+  - if attachment.file.variable?
+    = link_to(image_tag(attachment.file.variant(resize: "1000x1000", auto_orient: true), class: ["img-fluid"]), rails_blob_path(attachment.file, disposition: :inline), target: "_blank")
+  - elsif attachment.file.previewable?
+    = link_to(image_tag(attachment.file.preview(resize: "1000x1000"), class: ["img-fluid"]), rails_blob_path(attachment.file, disposition: :inline), target: "_blank")
+  - elsif attachment.file.image?
+    = link_to(image_tag(attachment.file, class: ["img-fluid"]), attachment.file, target: "_blank")
+  - else
+    = link_to(attachment.file.filename, rails_blob_path(attachment.file, disposition: :inline), target: "_blank", class: ["d-block", "fw-bold"])

@@ -2,6 +2,11 @@ require 'sidekiq/web'
 
 Rails.application.routes.draw do
 
+  resources :shift_notes do
+    member do
+      post  :add_attachment
+    end
+  end
   namespace :quality do
     resources :hardness_tests do
       collection do

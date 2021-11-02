@@ -1,0 +1,61 @@
+ruby:
+  provide(:title, 'Shift Notes')
+
+- content_for :nav do
+  = render "nav"
+
+.d-flex.flex-row.align-items-center.justify-content-between.mt-3
+  h1.font-varland Shift Notes
+  - if policy(ShiftNote).create?
+    = link_to "#{fa 'plus'} Shift Note".html_safe, new_shift_note_path, class: ["btn", "btn-sm", "btn-primary"]
+
+.d-flex.flex-row.align-items-center.justify-content-center
+  = render partial: "shared/pagination", locals: { label: "Shift Notes" }
+
+.table-responsive.my-3
+  table.table.table-striped.table-hover
+    thead.table-dark
+      tr
+        th.text-center.w-1 Date
+        th.text-center.w-1 Shift
+        th.w-1 Entered By
+        th.w-1 Department
+        th.text-center.w-1 Type
+        th Notes
+        th.col-2 Attachments
+        th.text-center.w-1 Options
+    tbody
+      - @shift_notes.each do |note|
+        tr
+          td.text-center.align-top = note.note_on.strftime("%m/%d/%Y")
+          td.text-center.align-top = note.shift
+          td.align-top = note.user.name_and_number
+          td.align-top = note.department_name
+          td.text-center.align-top
+            .d-flex.flex-column.align-items-top.justify-content-center
+              - if note.is_for_it
+                .badge.bg-primary.mb-1 IT
+              - if note.is_for_lab
+                .badge.bg-success.mb-1 Lab
+              - if note.is_for_maintenance
+                .badge.bg-secondary.mb-1 Maintenance
+              - if note.is_for_plating
+                .badge.bg-warning.text-dark.mb-1 Plating
+              - if note.is_for_qc
+                .badge.bg-danger.mb-1 QC
+              - if note.is_for_shipping
+                .badge.bg-dark.mb-1 Shipping
+          td.text-wrap.align-top
+            = simple_format(note.notes)
+            - if note.comments.length > 0
+              .small.text-muted
+                = "#{fa "comments"} #{pluralize note.comments.length, "comment"}".html_safe
+                - if note.comment_attachments.length > 0
+                  span.ms-1 = "#{fa "paperclip"} #{pluralize note.comment_attachments.length, "comment attachment"}".html_safe
+          td
+            - note.attachments.each do |attachment|
+              = render  partial: "attachments/table_cell_attachment",
+                        locals: { attachment: attachment }
+          td.text-center.align-top
+            - if policy(note).show?
+              = link_to "#{fa 'eye'} Details".html_safe, note, class: ["btn", "btn-sm", "btn-primary"]
