@@ -32,7 +32,7 @@ ruby:
         - else
           = render partial: "comments/comment", collection: @hardness_test.comments, locals: { allow_delete: policy(@hardness_test).delete_comment? }
   .col-12.col-md-3.order-1
-    - if @hardness_test.test_type == "Raw"
+    - if @hardness_test.test_type == "Raw" || !@hardness_test.raw_test.present?
       = card_list "Hardness Test Details",
                   [{label: "Entered By", value: @hardness_test.user.name_and_number},
                    {label: "Date", value: @hardness_test.tested_on.strftime("%m/%d/%Y")},
