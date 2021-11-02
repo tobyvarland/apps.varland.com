@@ -153,6 +153,11 @@ class Quality::HardnessTest < ApplicationRecord
     return ["High Temp Bake", "Hydrogen Embrittlement Bake", "No Bake", "Raw", "Strip"].sort
   end
 
+  # Returns options for reject tag permission.
+  def self.permission_options
+    return [["No Access", 0], ["View Only", 1], ["Create New", 2], ["Full Access", 3]]
+  end
+
 end
 
 

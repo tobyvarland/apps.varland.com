@@ -9,6 +9,7 @@ h1.font-varland.mt-3 Permission Management
       th Employee
       th.text-center Super Admin?
       th.text-center Reject Tags
+      th.text-center Hardness Tests
     tbody
       - @permissions.each do |permission|
         tr
@@ -19,3 +20,6 @@ h1.font-varland.mt-3 Permission Management
           td.text-center
             = simple_form_for(permission) do |f|
               = f.input :reject_tags, collection: Quality::RejectTag.permission_options, include_blank: false, label: false, input_html: { class: ["form-select", "form-select-sm"], onchange: "this.form.submit();" }
+          td.text-center
+            = simple_form_for(permission) do |f|
+              = f.input :hardness_tests, collection: Quality::HardnessTest.permission_options, include_blank: false, label: false, input_html: { class: ["form-select", "form-select-sm"], onchange: "this.form.submit();" }
