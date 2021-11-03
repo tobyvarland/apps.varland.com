@@ -1,0 +1,45 @@
+- content_for :nav do
+  = render "nav"
+
+.d-flex.flex-col.flex-md-row.align-items-center.justify-content-between.mt-3
+  h1.font-varland = "Employee Note Detail"
+  .mt-2.mt-md-0
+    = link_to "#{fa "list-alt"} All Employee Notes".html_safe, employee_notes_url, class: ["btn", "btn-sm", "btn-primary"]
+    - if policy(@employee_note).edit?
+        = link_to "#{fa 'edit'} Edit".html_safe, edit_employee_note_path(@employee_note), class: ["btn", "btn-sm", "btn-primary", "ms-1"]
+    - if policy(@employee_note).destroy?
+      = link_to "#{fa 'trash-alt'} Delete".html_safe, @employee_note, method: :delete, data: { confirm: "Are you sure you want to delete this employee note?\n\nIT can restore it later if necessary." }, class: ["btn", "btn-sm", "btn-danger", "ms-1"]
+
+.row.mb-3
+  .col-12.col-md-2.order-3
+    .card.bg-light.mt-3
+      h6.card-header Attachments
+      - if policy(@employee_note).add_attachment?
+        .card-body.p-0
+          = render  partial: "attachments/add_attachment_form",
+                    locals: { url: add_attachment_employee_note_url(@employee_note) }
+      - if @employee_note.attachments.length > 0
+        .card-body.bg-white.pt-0
+          .row
+            - @employee_note.attachments.each do |attachment|
+              = render  partial: "attachments/attachment",
+                        object: attachment,
+                        locals: { allow_editing: policy(@employee_note).add_attachment? }
+  .col-12.col-md.order-2
+    .card.bg-light.mt-3
+      h6.card-header = "Notes"
+      .card-body.bg-white = simple_format(@employee_note.notes)
+    .card.bg-light.mt-3
+      h6.card-header = "Comments"
+      - if policy(@employee_note).add_comment?
+        .card-body
+          = render partial: "comments/form", locals: { comment: @comment, commentable: @employee_note, allow_manual_time: false, allow_attachments: true }
+      .card-body.bg-white
+        - if @employee_note.comments.length == 0
+          .text-muted.fst-italic No comments.
+        - else
+          = render partial: "comments/comment", collection: @employee_note.comments, locals: { allow_delete: policy(@employee_note).delete_comment? }
+  .col-12.col-md-3.order-1
+    = card_list "Employee Note Details",
+                [{label: "Entered By", value: @employee_note.user.name_and_number},
+                 {label: "Date", value: @employee_note.note_on.strftime("%m/%d/%Y")}]

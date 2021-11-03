@@ -1,0 +1,10 @@
+ruby:
+  provide(:title, 'Edit Employee Note')
+
+- content_for :nav do
+  = render "nav"
+
+.d-flex.flex-row.align-items-center.justify-content-between.mt-3
+  h1.font-varland Edit Employee Note
+
+= render 'edit_form'

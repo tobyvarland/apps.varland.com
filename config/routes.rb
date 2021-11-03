@@ -2,6 +2,11 @@ require 'sidekiq/web'
 
 Rails.application.routes.draw do
 
+  resources :employee_notes do
+    member do
+      post  :add_attachment
+    end
+  end
   resources :shift_notes do
     member do
       post  :add_attachment

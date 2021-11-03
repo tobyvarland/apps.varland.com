@@ -1,0 +1,53 @@
+ruby:
+  provide(:title, 'Employee Notes')
+
+- content_for :nav do
+  = render "nav"
+
+.d-flex.flex-row.align-items-center.justify-content-between.mt-3
+  h1.font-varland Employee Notes
+  div
+    - if policy(EmployeeNote).create?
+      = link_to "#{fa 'plus'} Employee Note".html_safe, new_employee_note_path, class: ["btn", "btn-sm", "btn-primary"]
+    - if params[:filters] && params[:filters][:show_filters].to_s == "1"
+      = link_to "#{fa 'filter'} Filters".html_safe, request.params.merge({filters: {show_filters: 0}}), class: ['btn', 'btn-sm', 'btn-primary', 'ms-2']
+    - else
+      = link_to "#{fa 'filter'} Filters".html_safe, request.params.merge({filters: {show_filters: 1}}), class: ['btn', 'btn-sm', 'btn-primary', 'ms-2']
+
+- if params[:filters] && params[:filters][:show_filters].to_s == "1"
+  = render "filter_form"
+
+.d-flex.flex-row.align-items-center.justify-content-center
+  = render partial: "shared/pagination", locals: { label: "Employee Notes" }
+
+.table-responsive.my-3
+  table.table.table-striped.table-hover
+    thead.table-dark
+      tr
+        th.text-center.w-1 Date
+        th.w-1 Entered By
+        th Notes
+        th.col-2 Attachments
+        th.text-center.w-1 Options
+    tbody
+      - @employee_notes.each do |note|
+        tr
+          td.text-center.align-top = note.note_on.strftime("%m/%d/%Y")
+          td.align-top = note.user.name_and_number
+          td.text-wrap.align-top
+            - if params[:filters] && !params[:filters][:with_search_term].blank?
+              == highlight_search_term(params[:filters][:with_search_term], simple_format(note.notes))
+            - else
+              = simple_format(note.notes)
+            - if note.comments.length > 0
+              .small.text-muted
+                = "#{fa "comments"} #{pluralize note.comments.length, "comment"}".html_safe
+                - if note.comment_attachments.length > 0
+                  span.ms-1 = "#{fa "paperclip"} #{pluralize note.comment_attachments.length, "comment attachment"}".html_safe
+          td
+            - note.attachments.each do |attachment|
+              = render  partial: "attachments/table_cell_attachment",
+                        locals: { attachment: attachment }
+          td.text-center.align-top
+            - if policy(note).show?
+              = link_to "#{fa 'eye'} Details".html_safe, note, class: ["btn", "btn-sm", "btn-primary"]
