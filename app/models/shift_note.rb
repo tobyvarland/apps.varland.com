@@ -4,6 +4,9 @@ class ShiftNote < ApplicationRecord
   include Discard::Model
   default_scope -> { kept }
 
+  # Track changes.
+  has_paper_trail
+
   # Associations.
   include Attachable
   include Commentable
