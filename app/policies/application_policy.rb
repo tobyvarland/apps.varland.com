@@ -11,6 +11,15 @@ class ApplicationPolicy
     user && user.permission.super_admin
   end
 
+  def require_permission_gte(permission, value, options = {})
+    allow_owner = options.fetch :allow_owner, false
+    if allow_owner
+      is_super_admin? || permission >= value || user.id == record.user_id
+    else 
+      is_super_admin? || permission >= value
+    end
+  end
+
   def index?
     is_super_admin?
   end
