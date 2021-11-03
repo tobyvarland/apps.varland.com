@@ -10,12 +10,13 @@
       .col-12.col-md.mt-3 = f.input :on_or_after, as: :date, html5: true, required: false, label: "Start Date:", input_html: { value: params[:filters].blank? ? nil : params[:filters][:on_or_after] }
       .col-12.col-md.mt-3 = f.input :on_or_before, as: :date, html5: true, required: false, label: "End Date:", input_html: { value: params[:filters].blank? ? nil : params[:filters][:on_or_before] }
       .col-12.col-md.mt-3 = f.input :entered_by, collection: User.find(@all_employee_notes.pluck(:user_id).uniq).collect {|u| [u.name_and_number, u.id]}.sort, selected: params[:filters].blank? ? "" : params[:filters][:entered_by], required: false, label: "Entered By:", include_blank: true, input_html: { class: "form-select" }
+      .col-12.col-md.mt-3 = f.input :with_subject, collection: User.by_number.collect {|u| [u.name_and_number, u.id]}.sort, selected: params[:filters].blank? ? "" : params[:filters][:with_subject], required: false, label: "Subject:", include_blank: true, input_html: { class: "form-select" }
+      .col-12.col-md.mt-3 = f.input :with_note_type, collection: ["Positive", "Negative", "Neutral"], selected: params[:filters].blank? ? "" : params[:filters][:with_note_type], required: false, label: "Type:", include_blank: true, input_html: { class: "form-select" }
     .row
       .col-12.mt-3 = f.input :with_search_term, required: false, label: "Search:", input_html: { value: params[:filters].blank? ? nil : params[:filters][:with_search_term] }
     .row
       .col-12.col-md.mt-3 = f.input :has_comments, collection: [["Yes", true], ["No", false]], selected: params[:filters].blank? ? "" : params[:filters][:has_comments], required: false, label: "Has Comments:", include_blank: true, input_html: { class: "form-select" }
       .col-12.col-md.mt-3 = f.input :has_any_attachments, collection: [["Yes", true], ["No", false]], selected: params[:filters].blank? ? "" : params[:filters][:has_any_attachments], required: false, label: "Has Attachments:", include_blank: true, input_html: { class: "form-select" }
-      .col-12.col-md.mt-3 &nbsp;
       .col-12.col-md.mt-3 &nbsp;
       .col-12.col-md.mt-3 &nbsp;
       .col-12.col-md.mt-3 = f.input :sorted_by, collection: [["Newest First", "newest"], ["Oldest First", "oldest"]].sort, selected: params[:filters].blank? ? "" : params[:filters][:sorted_by], required: false, label: "Sort By:", include_blank: true, input_html: { class: "form-select" }

@@ -52,6 +52,17 @@ class EmployeeNote < ApplicationRecord
     comment_ids = EmployeeNote.with_text_containing("`comments`.`body`", value, join_table: :comments).pluck(:id)
     where(id: [note_ids + comment_ids].uniq)
   }
+  scope :with_subject, ->(value) {
+    where_assoc_exists(:employee_note_subjects, user_id: value) unless value.blank?
+  }
+  scope :with_note_type, ->(value) {
+    where_assoc_exists(:employee_note_subjects, note_type: value) unless value.blank?
+  }
+  scope :with_subject_and_type, ->(values) {
+    subject = values[0]
+    type = values[1]
+    where_assoc_exists(:employee_note_subjects, user_id: subject, note_type: type) unless subject.blank? || type.blank?
+  }
 
   # Validations.
   validates :note_on, :notes,

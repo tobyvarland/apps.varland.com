@@ -63,7 +63,7 @@ ruby:
                 = "#{fa "comments"} #{pluralize note.comments.length, "comment"}".html_safe
                 - if note.comment_attachments.length > 0
                   span.ms-1 = "#{fa "paperclip"} #{pluralize note.comment_attachments.length, "comment attachment"}".html_safe
-          td
+          td.align-top
             - note.attachments.each do |attachment|
               = render  partial: "attachments/table_cell_attachment",
                         locals: { attachment: attachment }

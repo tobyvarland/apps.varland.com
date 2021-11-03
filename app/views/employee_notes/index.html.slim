@@ -26,6 +26,7 @@ ruby:
       tr
         th.text-center.w-1 Date
         th.w-1 Entered By
+        th.w-1 Employee(s)
         th Notes
         th.col-2 Attachments
         th.text-center.w-1 Options
@@ -34,6 +35,9 @@ ruby:
         tr
           td.text-center.align-top = note.note_on.strftime("%m/%d/%Y")
           td.align-top = note.user.name_and_number
+          td.align-top
+            - note.employee_note_subjects.each do |subject|
+              .mb-1 == "#{fa employee_note_icon(subject.note_type)} #{subject.user.name_and_number}"
           td.text-wrap.align-top
             - if params[:filters] && !params[:filters][:with_search_term].blank?
               == highlight_search_term(params[:filters][:with_search_term], simple_format(note.notes))

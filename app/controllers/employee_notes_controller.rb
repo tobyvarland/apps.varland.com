@@ -6,6 +6,9 @@ class EmployeeNotesController < ApplicationController
   has_scope :on_or_after
   has_scope :on_or_before
   has_scope :entered_by
+  has_scope :with_subject
+  has_scope :with_note_type
+  has_scope :with_subject_and_type, type: :array
   has_scope :with_search_term
   has_scope :has_comments
   has_scope :has_any_attachments
@@ -13,6 +16,10 @@ class EmployeeNotesController < ApplicationController
 
   def index
     authorize(EmployeeNote)
+    if params[:filters] && params[:filters][:with_subject] && params[:filters][:with_note_type]
+      params[:filters][:with_subject_and_type] = [params[:filters][:with_subject], params[:filters][:with_note_type]]
+      params[:with_subject_and_type] = [params[:filters][:with_subject], params[:filters][:with_note_type]]
+    end
     filters_to_cookies :show_filters
     begin
       @pagy, @employee_notes = pagy(apply_scopes(policy_scope(EmployeeNote).includes(:user).all), items: 100)

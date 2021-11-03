@@ -1,3 +1,10 @@
+ruby:
+  provide(:title, "Employee Note Detail")
+  employees = []
+  @employee_note.employee_note_subjects.each do |subject|
+    employees << "<div class=\"mt-2\">#{fa employee_note_icon(subject.note_type)} #{subject.user.name_and_number}</div>"
+  end
+
 - content_for :nav do
   = render "nav"
 
@@ -31,15 +38,16 @@
       .card-body.bg-white = simple_format(@employee_note.notes)
     .card.bg-light.mt-3
       h6.card-header = "Comments"
-      - if policy(@employee_note).add_comment?
-        .card-body
-          = render partial: "comments/form", locals: { comment: @comment, commentable: @employee_note, allow_manual_time: false, allow_attachments: true }
       .card-body.bg-white
         - if @employee_note.comments.length == 0
           .text-muted.fst-italic No comments.
         - else
           = render partial: "comments/comment", collection: @employee_note.comments, locals: { allow_delete: policy(@employee_note).delete_comment? }
+      - if policy(@employee_note).add_comment?
+        .card-body
+          = render partial: "comments/small_form", locals: { comment: @comment, commentable: @employee_note }
   .col-12.col-md-3.order-1
     = card_list "Employee Note Details",
                 [{label: "Entered By", value: @employee_note.user.name_and_number},
-                 {label: "Date", value: @employee_note.note_on.strftime("%m/%d/%Y")}]
+                 {label: "Date", value: @employee_note.note_on.strftime("%m/%d/%Y")},
+                 {label: "Employees", value: employees.join, unless: employees.empty?}]
