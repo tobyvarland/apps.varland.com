@@ -5,7 +5,8 @@ class Attachment < ApplicationRecord
 
   # Associations.
   belongs_to  :attachable,
-              polymorphic: true
+              polymorphic: true,
+              touch: true
 
   # Validations.
   validates :name,

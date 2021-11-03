@@ -14,6 +14,7 @@ class ShiftNote < ApplicationRecord
   accepts_nested_attributes_for :attachments, reject_if: :all_blank, allow_destroy: true
 
   # Scopes.
+  include TextSearchable
   scope :with_shift, ->(value) { where(shift: value) unless value.blank? }
   scope :with_department, ->(value) { where(department: value) unless value.blank? }
   scope :for_department, ->(symbol, value) {
@@ -30,7 +31,6 @@ class ShiftNote < ApplicationRecord
   scope :for_plating, ->(value) { for_department(:is_for_plating, value) }
   scope :for_qc, ->(value) { for_department(:is_for_qc, value) }
   scope :for_shipping, ->(value) { for_department(:is_for_shipping, value) }
-  scope :with_notes_containing, ->(value) { where("notes LIKE (?)", "%#{value}%") unless value.blank? }
   scope :entered_by, ->(value) { where(user_id: value) unless value.blank? }
   scope :on_or_after, ->(value) { where("note_on >= ?", value) unless value.blank? }
   scope :on_or_before,  ->(value) { where("note_on <= ?", value) unless value.blank? }
@@ -53,8 +53,8 @@ class ShiftNote < ApplicationRecord
   }
   scope :with_search_term, ->(value) {
     return if value.blank?
-    note_ids = ShiftNote.with_notes_containing(value).pluck(:id)
-    comment_ids = ShiftNote.with_comment_containing(value).pluck(:id)
+    note_ids = ShiftNote.with_text_containing(:notes, value).pluck(:id)
+    comment_ids = ShiftNote.with_text_containing("`comments`.`body`", value, join_table: :comments).pluck(:id)
     where(id: [note_ids + comment_ids].uniq)
   }
 
@@ -68,22 +68,26 @@ class ShiftNote < ApplicationRecord
             allow_blank: true
 
   # Callbacks.
-  after_save  :handle_notifications
-  after_touch :handle_notifications
+  after_create  :send_email_notification
 
   # Instance methods.
 
   # Handles notifications.
-  def handle_notifications
-    puts "🔴 Running handle_notifications for shift note after save."
+  def send_email_notification
+    # ShiftNoteMailer.with(shift_note: self).notification_email.deliver_later
   end
 
   # Returns department name for number.
-  def department_name
+  def department_name(options = {})
+    without_number = options.fetch :without_number, false
+    name = nil
     ShiftNote.department_options.each do |opt|
-      return opt[0] if self.department == opt[1]
+      name = opt[0] if self.department == opt[1]
     end
-    return nil
+    if !name.blank? && without_number
+      name = name.split(" - ")[1]
+    end
+    return name
   end
 
   # Returns user name.

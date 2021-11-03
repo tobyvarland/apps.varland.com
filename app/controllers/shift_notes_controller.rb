@@ -37,17 +37,7 @@ class ShiftNotesController < ApplicationController
 
   def new
     authorize(ShiftNote)
-    shift_note_date = Date.current
-    case Time.current.hour
-    when 0..6
-      shift_note_shift = 2
-      shift_note_date -= 1.day
-    when 7..18
-      shift_note_shift = 1
-    when 19..23
-      shift_note_shift = 2
-    end
-    @shift_note = ShiftNote.new(user_id: current_user.id, note_on: shift_note_date, shift: shift_note_shift)
+    @shift_note = ShiftNote.new(user_id: current_user.id, note_on: VarlandPlating.current_production_date, shift: VarlandPlating.current_shift)
   end
 
   def edit

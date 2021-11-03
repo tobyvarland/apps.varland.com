@@ -54,7 +54,10 @@ ruby:
               - if note.is_for_shipping
                 .badge.bg-dark.mb-1 Shipping
           td.text-wrap.align-top
-            = simple_format(note.notes)
+            - if params[:filters] && !params[:filters][:with_search_term].blank?
+              == highlight_search_term(params[:filters][:with_search_term], simple_format(note.notes))
+            - else
+              = simple_format(note.notes)
             - if note.comments.length > 0
               .small.text-muted
                 = "#{fa "comments"} #{pluralize note.comments.length, "comment"}".html_safe

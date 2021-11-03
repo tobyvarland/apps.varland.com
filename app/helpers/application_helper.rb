@@ -66,6 +66,8 @@ module ApplicationHelper
       return "#{prefix_text}Oil Dip"
     when "12"
       return "#{prefix_text}EN"
+    when "30"
+      return "#{prefix_text}Waste Water"
     else
       return "Unknown Department"
     end
@@ -74,6 +76,9 @@ module ApplicationHelper
   def card_list(title, items)
     list_items = []
     items.each do |item|
+      unless_condition = item.fetch :unless, false
+      if_condition = item.fetch :if, true
+      next if unless_condition || !if_condition
       label = content_tag(:div, "#{item[:label]}:", class: ["text-uncolor", "small", "text-nowrap", "lh-1"])
       value = content_tag(:div, item[:value].to_s.html_safe, class: ["lh-sm", "my-0"])
       list_items << content_tag(:li, label + value, class: ["list-group-item", "d-flex", "flex-column", "align-items-top", "justify-content-start", "bg-light"])

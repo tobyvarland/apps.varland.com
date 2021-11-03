@@ -1,0 +1,17 @@
+ruby:
+  types = []
+  types << '<span style="background-color: #0d6efd; color: #ffffff; padding: 0.25rem 0.5rem; border-radius: 0.25rem; font-weight: 700;">IT</span>' if @shift_note.is_for_it
+  types << '<span style="background-color: #198754; color: #ffffff; padding: 0.25rem 0.5rem; border-radius: 0.25rem; font-weight: 700;">Lab</span>' if @shift_note.is_for_lab
+  types << '<span style="background-color: #6c757d; color: #ffffff; padding: 0.25rem 0.5rem; border-radius: 0.25rem; font-weight: 700;">Maintenance</span>' if @shift_note.is_for_maintenance
+  types << '<span style="background-color: #ffc107; color: #000000; padding: 0.25rem 0.5rem; border-radius: 0.25rem; font-weight: 700;">Plating</span>' if @shift_note.is_for_plating
+  types << '<span style="background-color: #dc3545; color: #ffffff; padding: 0.25rem 0.5rem; border-radius: 0.25rem; font-weight: 700;">QC</span>' if @shift_note.is_for_qc
+  types << '<span style="background-color: #212529; color: #ffffff; padding: 0.25rem 0.5rem; border-radius: 0.25rem; font-weight: 700;">Shipping</span>' if @shift_note.is_for_shipping
+
+div style="font-size: 150%; margin-top: 0.1rem; overflow: auto; margin-bottom: 0.25rem;"
+  div style="margin: 0;" == "A new shift note was entered by #{@shift_note.user.name} for #{@shift_note.shift}<sup>#{@shift_note.shift.ordinal}</sup> shift on #{@shift_note.note_on.strftime("%m/%d/%Y")}:"
+  div style="border: 1px solid rgba(0, 0, 0, 0.2); border-radius: 0.25rem; padding: 1rem 1rem 0; margin-top: 0.5rem; background-color: rgba(0, 0, 0, 0.05); font-weight: 500;" == simple_format(@shift_note.notes, style: "margin: 0 0 1rem; padding: 0;")
+div style="font-size: 125%; padding: 0.25rem 0; overflow: auto;"
+  div style="float: left; margin-top: 0.25rem;" == types.join("&nbsp;")
+  - unless @shift_note.department.blank?
+    div style="float: right; font-weight: 700; margin-top: 0.25rem;" == @shift_note.department_name without_number: true
+  div style="font-size: 0; height: 0; clear: both;" == "&nbsp;"

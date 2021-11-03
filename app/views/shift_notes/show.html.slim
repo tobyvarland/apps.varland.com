@@ -54,5 +54,5 @@ ruby:
                 [{label: "Entered By", value: @shift_note.user.name_and_number},
                  {label: "Date", value: @shift_note.note_on.strftime("%m/%d/%Y")},
                  {label: "Shift", value: @shift_note.shift},
-                 {label: "Department", value: department_name(@shift_note.department)},
+                 {label: "Department", value: department_name(@shift_note.department, prefix: false), unless: @shift_note.department.blank?},
                  {label: "Type", value: badges.join(' <small class="text-uncolor">/</small> ')}]
