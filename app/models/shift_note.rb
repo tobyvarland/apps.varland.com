@@ -39,7 +39,7 @@ class ShiftNote < ApplicationRecord
     case value
     when "newest"
       order(note_on: :desc, shift: :desc)
-    when "oldset"
+    when "oldest"
       order(:note_on, :shift)
     end
   }
