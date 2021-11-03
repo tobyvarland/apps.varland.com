@@ -15,23 +15,7 @@
         .col-12.col-md-12.mt-3
           = f.input :notes, label: "Notes:", input_html: { rows: 5, autofocus: true }
     .col-12.col-md
-      .shadow-sm.border.p-3.rounded.mt-3
-        table.table.table-bordered.table-striped.table-hover.mb-0
-          thead.table-secondary
-            tr
-              th.col-6.label Employee
-              th.col-5.label Type
-              th.col-1.text-center
-                = link_to_add_association fa("plus"),
-                                          f,
-                                          :employee_note_subjects,
-                                          class: ["btn", "btn-sm", "btn-secondary"],
-                                          'data-association-insertion-node': "#employees",
-                                          'data-association-insertion-method': "prepend",
-                                          partial: "employee_note_subjects/employee_fields"
-          tbody id="employees"
-            = f.simple_fields_for :employee_note_subjects do |subject|
-              = render "employee_note_subjects/employee_fields", f: subject
+      = render partial: "nested_employees", locals: { f: f }
       .shadow-sm.border.p-3.rounded.mt-3
         .d-flex.flex-col.flex-md-row.align-items-center.justify-content-between
           .label Attachments

@@ -12,12 +12,12 @@ class EmployeeNote < ApplicationRecord
   include Commentable
   belongs_to  :user,
               class_name: "::User"
-  has_many    :employee_note_subjects, 
-              class_name: "::EmployeeNoteSubject", 
+  has_many    :employee_note_subjects,
+              class_name: "::EmployeeNoteSubject",
               dependent: :delete_all
-  has_many    :subjects, 
-              class_name: "::User", 
-              through: :employee_note_subjects, 
+  has_many    :subjects,
+              class_name: "::User",
+              through: :employee_note_subjects,
               source: :users
 
   # Nested attributes.
@@ -56,8 +56,14 @@ class EmployeeNote < ApplicationRecord
   # Validations.
   validates :note_on, :notes,
             presence: true
+  validate  :must_include_subject
 
   # Instance methods.
+
+  # Require subject when creating note.
+  def must_include_subject
+    errors.add(:base, "You must include at least one employee in this note.") if self.employee_note_subjects.length == 0
+  end
 
   # Returns user name.
   def user_name
