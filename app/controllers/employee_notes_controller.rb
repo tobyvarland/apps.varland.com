@@ -30,6 +30,7 @@ class EmployeeNotesController < ApplicationController
   def new
     authorize(EmployeeNote)
     @employee_note = EmployeeNote.new(user_id: current_user.id, note_on: Date.current)
+    @employee_note.employee_note_subjects.build
   end
 
   def edit
@@ -82,7 +83,7 @@ class EmployeeNotesController < ApplicationController
                                             :note_on,
                                             :notes,
                                             :discarded_at,
-                                            attachments_attributes: [:id, :name, :description, :file, :_destroy], 
+                                            attachments_attributes: [:id, :name, :description, :file, :_destroy],
                                             employee_note_subjects_attributes: [:id, :user_id, :note_type, :_destroy])
     end
 
