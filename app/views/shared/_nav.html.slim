@@ -62,6 +62,11 @@ nav.navbar.fixed-top.navbar-expand-md.navbar-dark.bg-dark id="primary-nav"
           div Varland Employee Information
     ul.list-unstyled
       li.header Miscellaneous
+      - if policy(EmployeeNote).index?
+        li
+          = link_to employee_notes_url do
+            = fa "link"
+            div Employee Notes
       - if policy(ShiftNote).index?
         li
           = link_to shift_notes_url do
