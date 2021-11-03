@@ -12,6 +12,13 @@ class EmployeeNote < ApplicationRecord
   include Commentable
   belongs_to  :user,
               class_name: "::User"
+  has_many    :employee_note_subjects, 
+              class_name: "::EmployeeNoteSubject", 
+              dependent: :delete_all
+  has_many    :subjects, 
+              class_name: "::User", 
+              through: :employee_note_subjects, 
+              source: :users
 
   # Nested attributes.
   accepts_nested_attributes_for :attachments, reject_if: :all_blank, allow_destroy: true
