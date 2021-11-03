@@ -1,0 +1,7 @@
+.nested-fields.mt-3.border.p-3.rounded.shadow-sm
+  .row
+    .col-12.col-md-6
+      = f.association :user, label_method: :name_and_number, required: true, label: "Employee:", input_html: { class: "form-select" }
+    .col-12.col-md-6
+      = f.input :note_type, required: true, label: "Type:", collection: ["Positive", "Negative", "Neutral"], input_html: { class: "form-select" }
+  = link_to_remove_association "#{fa "trash-alt"} Remove".html_safe, f, class: ["btn", "btn-sm", "btn-danger", "mt-3"], tabindex: -1

@@ -17,6 +17,20 @@
     .col-12.col-md
       .shadow-sm.border.p-3.rounded.mt-3
         .d-flex.flex-col.flex-md-row.align-items-center.justify-content-between
+          .label Employees
+          .links
+            = link_to_add_association fa("plus"),
+                                      f,
+                                      :employee_note_subjects,
+                                      class: ["btn", "btn-sm", "btn-secondary"],
+                                      'data-association-insertion-node': "#employees",
+                                      'data-association-insertion-method': "append",
+                                      partial: "employee_note_subjects/employee_fields"
+        div id="employees"
+          = f.simple_fields_for :employee_note_subjects do |subject| 
+            = render "employee_note_subjects/employee_fields", f: subject
+      .shadow-sm.border.p-3.rounded.mt-3
+        .d-flex.flex-col.flex-md-row.align-items-center.justify-content-between
           .label Attachments
           .links
             = link_to_add_association fa("plus"),
@@ -27,7 +41,7 @@
                                       'data-association-insertion-method': "append",
                                       partial: "attachments/attachment_fields"
         div id="attachments"
-          = f.simple_fields_for :attachments do |attachment|
+          = f.simple_fields_for :attachments do |attachment| 
             = render "attachments/attachment_fields", f: attachment
 
   .form-actions
