@@ -20,6 +20,7 @@ module Commentable
         where_assoc_not_exists([:comments, :attachments])
       end
     }
+    scope :with_comment_containing, ->(value) { left_outer_joins(:comments).where("`comments`.`body` LIKE (?)", "%#{value}%") unless value.blank? }
 
     has_many  :comments,
               as: :commentable,

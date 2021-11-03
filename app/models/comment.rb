@@ -8,7 +8,8 @@ class Comment < ApplicationRecord
   include Attachable
   belongs_to  :user
   belongs_to  :commentable,
-              polymorphic: true
+              polymorphic: true,
+              touch: true
 
   # Validations.
   validates :body, :comment_at,

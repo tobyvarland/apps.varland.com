@@ -3,24 +3,31 @@ class ShiftNotesController < ApplicationController
   before_action :set_shift_note, only: %i[ show edit update destroy add_attachment ]
   before_action :parse_filter_params, only: %i[ index ]
 
-  has_scope :sorted_by, only: [:index], default: "newest"
+  has_scope :on_or_after
+  has_scope :on_or_before
+  has_scope :with_shift
+  has_scope :with_department
+  has_scope :entered_by
+  has_scope :with_search_term
+  has_scope :for_it
+  has_scope :for_lab
+  has_scope :for_maintenance
+  has_scope :for_plating
+  has_scope :for_qc
+  has_scope :for_shipping
+  has_scope :has_comments
+  has_scope :has_any_attachments
+  has_scope :sorted_by, default: "newest", allow_blank: true
 
   def index
     authorize(ShiftNote)
-    filters_to_cookies
-    if params[:sorted_by].blank?
-      params[:sorted_by] = "newest"
-      if params[:filters].blank?
-        params[:filters] = { sorted_by: "newest" }
-      else
-        params[:filters][:sorted_by] = "newest"
-      end
-    end
+    filters_to_cookies :show_filters
     begin
       @pagy, @shift_notes = pagy(apply_scopes(ShiftNote.includes(:user).all), items: 100)
     rescue
       @pagy, @shift_notes = pagy(apply_scopes(ShiftNote.includes(:user).all), items: 100, page: 1)
     end
+    @all_shift_notes = apply_scopes(ShiftNote.includes(:user).all)
   end
 
   def show
@@ -30,7 +37,17 @@ class ShiftNotesController < ApplicationController
 
   def new
     authorize(ShiftNote)
-    @shift_note = ShiftNote.new(user_id: current_user.id, note_on: Date.current)
+    shift_note_date = Date.current
+    case Time.current.hour
+    when 0..6
+      shift_note_shift = 2
+      shift_note_date -= 1.day
+    when 7..18
+      shift_note_shift = 1
+    when 19..23
+      shift_note_shift = 2
+    end
+    @shift_note = ShiftNote.new(user_id: current_user.id, note_on: shift_note_date, shift: shift_note_shift)
   end
 
   def edit

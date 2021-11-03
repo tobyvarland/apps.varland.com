@@ -16,12 +16,12 @@ class ShiftNote < ApplicationRecord
   # Scopes.
   scope :with_shift, ->(value) { where(shift: value) unless value.blank? }
   scope :with_department, ->(value) { where(department: value) unless value.blank? }
-  scope :for_department, ->(department, value) {
+  scope :for_department, ->(symbol, value) {
     case value
     when true, "true", 1, "1"
-      where(department: true)
+      where("#{symbol} IS TRUE")
     when false, "false", 0, "0"
-      where.not(department: true)
+      where.not("#{symbol} IS TRUE")
     end
   }
   scope :for_it, ->(value) { for_department(:is_for_it, value) }
@@ -35,12 +35,27 @@ class ShiftNote < ApplicationRecord
   scope :on_or_after, ->(value) { where("note_on >= ?", value) unless value.blank? }
   scope :on_or_before,  ->(value) { where("note_on <= ?", value) unless value.blank? }
   scope :sorted_by, ->(value) {
+    value = "newest" if value.blank?
     case value
     when "newest"
       order(note_on: :desc, shift: :desc)
     when "oldset"
       order(:note_on, :shift)
     end
+  }
+  scope :has_any_attachments, ->(value) {
+    case value
+    when true, "true", 1, "1"
+      has_attachments(true).or(has_comment_attachments(true))
+    when false, "false", 0, "0"
+      has_attachments(false).has_comment_attachments(false)
+    end
+  }
+  scope :with_search_term, ->(value) {
+    return if value.blank?
+    note_ids = ShiftNote.with_notes_containing(value).pluck(:id)
+    comment_ids = ShiftNote.with_comment_containing(value).pluck(:id)
+    where(id: [note_ids + comment_ids].uniq)
   }
 
   # Validations.
@@ -53,8 +68,15 @@ class ShiftNote < ApplicationRecord
             allow_blank: true
 
   # Callbacks.
+  after_save  :handle_notifications
+  after_touch :handle_notifications
 
   # Instance methods.
+
+  # Handles notifications.
+  def handle_notifications
+    puts "🔴 Running handle_notifications for shift note after save."
+  end
 
   # Returns department name for number.
   def department_name
@@ -70,26 +92,27 @@ class ShiftNote < ApplicationRecord
     return self.user.name
   end
 
-  # Returns description.
-  def description
-    return "???"
-  end
-
   # Class methods.
 
   # Returns options for department.
-  def self.department_options
-    return [["3 - Department 3", 3],
-            ["4 - BNA", 4],
-            ["5 - Dept. 5", 5],
-            ["6 - Bead Blast", 6],
-            ["7 - Bake", 7],
-            ["8 - Robot", 8],
-            ["9 - Strip", 9],
-            ["10 - Miscellaneous", 10],
-            ["11 - Oil Dip", 11],
-            ["12 - EN", 12],
-            ["30 - Waste Water", 12]]
+  def self.department_options(options = {})
+    limit = options.fetch :limit, false
+    names = [["3 - Department 3", 3],
+             ["4 - BNA", 4],
+             ["5 - Dept. 5", 5],
+             ["6 - Bead Blast", 6],
+             ["7 - Bake", 7],
+             ["8 - Robot", 8],
+             ["9 - Strip", 9],
+             ["10 - Miscellaneous", 10],
+             ["11 - Oil Dip", 11],
+             ["12 - EN", 12],
+             ["30 - Waste Water", 30]]
+    if limit
+      return names.reject {|n| !limit.include?(n[1])}
+    else
+      return names
+    end
   end
 
 end

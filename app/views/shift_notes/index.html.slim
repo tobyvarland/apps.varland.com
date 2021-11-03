@@ -6,8 +6,16 @@ ruby:
 
 .d-flex.flex-row.align-items-center.justify-content-between.mt-3
   h1.font-varland Shift Notes
-  - if policy(ShiftNote).create?
-    = link_to "#{fa 'plus'} Shift Note".html_safe, new_shift_note_path, class: ["btn", "btn-sm", "btn-primary"]
+  div
+    - if policy(ShiftNote).create?
+      = link_to "#{fa 'plus'} Shift Note".html_safe, new_shift_note_path, class: ["btn", "btn-sm", "btn-primary"]
+    - if params[:filters] && params[:filters][:show_filters].to_s == "1"
+      = link_to "#{fa 'filter'} Filters".html_safe, request.params.merge({filters: {show_filters: 0}}), class: ['btn', 'btn-sm', 'btn-primary', 'ms-2']
+    - else
+      = link_to "#{fa 'filter'} Filters".html_safe, request.params.merge({filters: {show_filters: 1}}), class: ['btn', 'btn-sm', 'btn-primary', 'ms-2']
+
+- if params[:filters] && params[:filters][:show_filters].to_s == "1"
+  = render "filter_form"
 
 .d-flex.flex-row.align-items-center.justify-content-center
   = render partial: "shared/pagination", locals: { label: "Shift Notes" }

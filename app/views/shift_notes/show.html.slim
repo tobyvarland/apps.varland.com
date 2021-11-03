@@ -1,5 +1,5 @@
 ruby:
-  provide(:title, "Shift Note #{@shift_note.description}")
+  provide(:title, "Shift Note Detail")
   badges = []
   badges << '<span class="badge bg-primary">IT</span>' if @shift_note.is_for_it
   badges << '<span class="badge bg-success">Lab</span>' if @shift_note.is_for_lab
@@ -12,9 +12,11 @@ ruby:
   = render "nav"
 
 .d-flex.flex-col.flex-md-row.align-items-center.justify-content-between.mt-3
-  h1.font-varland = "Shift Note #{@shift_note.description}"
+  h1.font-varland = "Shift Note Detail"
   .mt-2.mt-md-0
     = link_to "#{fa "list-alt"} All Shift Notes".html_safe, shift_notes_url, class: ["btn", "btn-sm", "btn-primary"]
+    - if policy(@shift_note).edit?
+        = link_to "#{fa 'edit'} Edit".html_safe, edit_shift_note_path(@shift_note), class: ["btn", "btn-sm", "btn-primary", "ms-1"]
     - if policy(@shift_note).destroy?
       = link_to "#{fa 'trash-alt'} Delete".html_safe, @shift_note, method: :delete, data: { confirm: "Are you sure you want to delete this shift note?\n\nIT can restore it later if necessary." }, class: ["btn", "btn-sm", "btn-danger", "ms-1"]
 
