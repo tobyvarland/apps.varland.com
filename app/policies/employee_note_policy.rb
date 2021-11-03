@@ -2,10 +2,10 @@ class EmployeeNotePolicy < ApplicationPolicy
 
   class Scope < Scope
     def resolve
-      if user.permission.is_super_admin || user.permission.employee_notes == 3
+      if user.permission.super_admin || user.permission.employee_notes == 3
         scope.all
-      else 
-        scope.where(user_id: user.id)
+      else
+        scope.entered_by(user.id)
       end
     end
   end
@@ -24,6 +24,10 @@ class EmployeeNotePolicy < ApplicationPolicy
 
   def destroy?
     require_permission_gte(user.permission.employee_notes, 3)
+  end
+
+  def show?
+    update?
   end
 
   def add_attachment?

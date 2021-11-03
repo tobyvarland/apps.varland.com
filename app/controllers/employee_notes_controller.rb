@@ -15,11 +15,11 @@ class EmployeeNotesController < ApplicationController
     authorize(EmployeeNote)
     filters_to_cookies :show_filters
     begin
-      @pagy, @employee_notes = pagy(apply_scopes(EmployeeNote.includes(:user).all), items: 100)
+      @pagy, @employee_notes = pagy(apply_scopes(policy_scope(EmployeeNote).includes(:user).all), items: 100)
     rescue
-      @pagy, @employee_notes = pagy(apply_scopes(EmployeeNote.includes(:user).all), items: 100, page: 1)
+      @pagy, @employee_notes = pagy(apply_scopes(policy_scope(EmployeeNote).includes(:user).all), items: 100, page: 1)
     end
-    @all_employee_notes = apply_scopes(EmployeeNote.includes(:user).all)
+    @all_employee_notes = apply_scopes(policy_scope(EmployeeNote).includes(:user).all)
   end
 
   def show
@@ -49,9 +49,9 @@ class EmployeeNotesController < ApplicationController
   def update
     authorize(@employee_note)
     if @employee_note.update(employee_note_params)
-      redirect_to @employee_note, notice: "Employee note was successfully updated." 
+      redirect_to @employee_note, notice: "Employee note was successfully updated."
     else
-      render :edit, status: :unprocessable_entity 
+      render :edit, status: :unprocessable_entity
     end
   end
 
@@ -72,17 +72,17 @@ class EmployeeNotesController < ApplicationController
   end
 
   private
-  
+
     def set_employee_note
-      @employee_note = EmployeeNote.find(params[:id])
+      @employee_note = policy_scope(EmployeeNote).find(params[:id])
     end
-    
+
     def employee_note_params
       params.require(:employee_note).permit(:user_id,
                                             :note_on,
                                             :notes,
                                             :discarded_at,
-                                            attachments_attributes: [:id, :name, :description, :file, :_destroy])                                     
+                                            attachments_attributes: [:id, :name, :description, :file, :_destroy])
     end
 
 end
