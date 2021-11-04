@@ -1,5 +1,8 @@
 class ShiftNotesController < ApplicationController
 
+  skip_before_action :verify_authenticity_token, only: :import
+  skip_before_action :authenticate_user!, only: :import
+
   before_action :set_shift_note, only: %i[ show edit update destroy add_attachment ]
   before_action :parse_filter_params, only: %i[ index ]
 
@@ -44,13 +47,22 @@ class ShiftNotesController < ApplicationController
     authorize(@shift_note)
   end
 
+  def import
+    @shift_note = ShiftNote.new(shift_note_params)
+    if @shift_note.save
+      head :ok
+    else
+      head :unprocessable_entity, errors: @shift_note.errors.full_messages
+    end
+  end
+
   def create
     @shift_note = ShiftNote.new(shift_note_params)
     authorize(@shift_note)
     if @shift_note.save
       redirect_to @shift_note, notice: "Shift note was successfully created."
     else
-      render :new, status: :unprocessable_entityßß
+      render :new, status: :unprocessable_entity
     end
   end
 

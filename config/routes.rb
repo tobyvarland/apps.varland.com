@@ -12,6 +12,9 @@ Rails.application.routes.draw do
     member do
       post  :add_attachment
     end
+    collection do
+      post  :import
+    end
   end
   namespace :quality do
     resources :hardness_tests do

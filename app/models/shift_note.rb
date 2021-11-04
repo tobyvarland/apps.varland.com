@@ -62,7 +62,7 @@ class ShiftNote < ApplicationRecord
   validates :note_on, :shift, :notes,
             presence: true
   validates :shift,
-            numericality: { only_integer: true, greater_than_or_equal_to: 1, less_than_or_equal_to: 2 }
+            numericality: { only_integer: true, greater_than_or_equal_to: 1, less_than_or_equal_to: 3 }
   validates :department,
             numericality: { only_integer: true },
             allow_blank: true
