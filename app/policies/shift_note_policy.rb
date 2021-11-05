@@ -1,19 +1,19 @@
 class ShiftNotePolicy < ApplicationPolicy
 
   def index?
-    is_super_admin? || user.permission.shift_notes > 0
+    require_permission_gte(user.permission.shift_notes, 1)
   end
 
   def create?
-    is_super_admin? || user.permission.shift_notes > 1
+    require_permission_gte(user.permission.shift_notes, 2)
   end
 
   def update?
-    is_super_admin? || user.permission.shift_notes > 2 || user.id == record.user_id
+    require_permission_gte(user.permission.employee_notes, 3, allow_owner: true)
   end
 
   def destroy?
-    is_super_admin? || user.permission.shift_notes > 2
+    require_permission_gte(user.permission.employee_notes, 3)
   end
 
   def add_attachment?
