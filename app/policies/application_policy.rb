@@ -8,17 +8,18 @@ class ApplicationPolicy
   end
 
   def is_super_admin?
-    return false unless user
+    return false unless user && user.permission
     user && user.permission.super_admin
   end
 
   def require_permission_gte(permission, value, options = {})
-    return false unless user
+    return false unless user && user.permission
+    permission_value = user.permission.send(permission)
     allow_owner = options.fetch :allow_owner, false
     if allow_owner
-      is_super_admin? || permission >= value || user.id == record.user_id
+      is_super_admin? || permission_value >= value || user.id == record.user_id
     else
-      is_super_admin? || permission >= value
+      is_super_admin? || permission_value >= value
     end
   end
 
