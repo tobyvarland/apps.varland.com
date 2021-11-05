@@ -11,18 +11,22 @@ class EmployeeNotePolicy < ApplicationPolicy
   end
 
   def index?
+    return false unless user
     require_permission_gte(user.permission.employee_notes, 1)
   end
 
   def create?
+    return false unless user
     require_permission_gte(user.permission.employee_notes, 2)
   end
 
   def update?
+    return false unless user
     require_permission_gte(user.permission.employee_notes, 3, allow_owner: true)
   end
 
   def destroy?
+    return false unless user
     require_permission_gte(user.permission.employee_notes, 3)
   end
 
