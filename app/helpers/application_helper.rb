@@ -127,12 +127,13 @@ module ApplicationHelper
 
   def home_page_link(icon, text, url, options = {})
     tooltip = options.fetch(:tooltip, nil)
+    target = options.fetch(:target, "_blank")
     link_text = content_tag(:div, text.html_safe, class: "text")
     icon = content_tag(:div, fa(icon), class: "icon")
     if tooltip.blank?
-      link = link_to(icon + link_text, url, class: "home-page-link", target: "_blank")
+      link = link_to(icon + link_text, url, class: "home-page-link", target: target)
     else
-      link = link_to(icon + link_text, url, class: "home-page-link", target: "_blank", title: tooltip, data: {"bs-toggle": "tooltip", "bs-placement": "top", "bs-html": "true"})
+      link = link_to(icon + link_text, url, class: "home-page-link", target: target, title: tooltip, data: {"bs-toggle": "tooltip", "bs-placement": "top", "bs-html": "true"})
     end
     return content_tag(:div, link, class: ["col-12", "col-md-3"])
   end
