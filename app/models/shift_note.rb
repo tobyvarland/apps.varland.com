@@ -15,6 +15,7 @@ class ShiftNote < ApplicationRecord
 
   # Nested attributes.
   accepts_nested_attributes_for :attachments, reject_if: :all_blank, allow_destroy: true
+  accepts_nested_attributes_for :comments, reject_if: :all_blank, allow_destroy: true
 
   # Scopes.
   include TextSearchable
@@ -65,7 +66,7 @@ class ShiftNote < ApplicationRecord
   validates :note_on, :shift, :notes,
             presence: true
   validates :shift,
-            numericality: { only_integer: true, greater_than_or_equal_to: 1, less_than_or_equal_to: 2 }
+            numericality: { only_integer: true, greater_than_or_equal_to: 1, less_than_or_equal_to: 3 }
   validates :department,
             numericality: { only_integer: true },
             allow_blank: true

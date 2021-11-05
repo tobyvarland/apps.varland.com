@@ -23,7 +23,8 @@ module Commentable
 
     has_many  :comments,
               as: :commentable,
-              class_name: "::Comment"
+              class_name: "::Comment",
+              dependent: :destroy
     has_many  :comment_attachments,
               through: :comments,
               class_name: "::Attachment",

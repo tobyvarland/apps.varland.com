@@ -107,11 +107,12 @@ module ApplicationHelper
     badge_class = options.fetch(:badge_class, "bg-primary")
     badge_text_class = options.fetch(:badge_text_class, "text-white")
     link_class = options.fetch(:link_class, [])
+    target = options.fetch(:target, "_self")
     icon = fa(icon, type: type, text_class: text_class)
     text = content_tag(:span, text, class: ["label", text_class])
     badge = badge.nil? ? "" : content_tag(:div, badge, class: ["badge", "rounded-pill", badge_class, badge_text_class])
     html = content_tag(:div, icon + text + badge, class: ["d-flex", "flex-row", "align-items-center", "justify-content-start"])
-    link_to_unless_current(html, url, class: ["nav-link"] + link_class) do content_tag(:div, html, class: "navbar-text px-md-2") end
+    link_to_unless_current(html, url, target: target, class: ["nav-link"] + link_class) do content_tag(:div, html, class: "navbar-text px-md-2") end
   end
 
   def flash_message(msg, type)
@@ -126,12 +127,13 @@ module ApplicationHelper
 
   def home_page_link(icon, text, url, options = {})
     tooltip = options.fetch(:tooltip, nil)
+    target = options.fetch(:target, "_blank")
     link_text = content_tag(:div, text.html_safe, class: "text")
     icon = content_tag(:div, fa(icon), class: "icon")
     if tooltip.blank?
-      link = link_to(icon + link_text, url, class: "home-page-link", target: "_blank")
+      link = link_to(icon + link_text, url, class: "home-page-link", target: target)
     else
-      link = link_to(icon + link_text, url, class: "home-page-link", target: "_blank", title: tooltip, data: {"bs-toggle": "tooltip", "bs-placement": "top", "bs-html": "true"})
+      link = link_to(icon + link_text, url, class: "home-page-link", target: target, title: tooltip, data: {"bs-toggle": "tooltip", "bs-placement": "top", "bs-html": "true"})
     end
     return content_tag(:div, link, class: ["col-12", "col-md-3"])
   end
@@ -188,6 +190,17 @@ module ApplicationHelper
       end
     end
     return string
+  end
+
+  def employee_note_icon(type)
+    case type
+    when "Positive"
+      return "plus-circle text-success"
+    when "Negative"
+      return "minus-circle text-danger"
+    when "Neutral"
+      return "dot-circle text-secondary"
+    end
   end
 
 end

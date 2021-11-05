@@ -1,14 +1,14 @@
 ruby:
-  provide(:title, 'Shift Notes')
+  provide(:title, 'Employee Notes')
 
 - content_for :nav do
   = render "nav"
 
 .d-flex.flex-row.align-items-center.justify-content-between.mt-3
-  h1.font-varland Shift Notes
+  h1.font-varland Employee Notes
   div
-    - if policy(ShiftNote).create?
-      = link_to "#{fa 'plus'} Shift Note".html_safe, new_shift_note_path, class: ["btn", "btn-sm", "btn-primary"]
+    - if policy(EmployeeNote).create?
+      = link_to "#{fa 'plus'} Employee Note".html_safe, new_employee_note_path, class: ["btn", "btn-sm", "btn-primary"]
     - if params[:filters] && params[:filters][:show_filters].to_s == "1"
       = link_to "#{fa 'filter'} Filters".html_safe, request.params.merge({filters: {show_filters: 0}}), class: ['btn', 'btn-sm', 'btn-primary', 'ms-2']
     - else
@@ -18,41 +18,26 @@ ruby:
   = render "filter_form"
 
 .d-flex.flex-row.align-items-center.justify-content-center
-  = render partial: "shared/pagination", locals: { label: "Shift Notes" }
+  = render partial: "shared/pagination", locals: { label: "Employee Notes" }
 
 .table-responsive.my-3
   table.table.table-striped.table-hover
     thead.table-dark
       tr
         th.text-center.w-1 Date
-        th.text-center.w-1 Shift
         th.w-1 Entered By
-        th.w-1 Department
-        th.text-center.w-1 Type
+        th.w-1 Employee(s)
         th Notes
         th.col-2 Attachments
         th.text-center.w-1 Options
     tbody
-      - @shift_notes.each do |note|
+      - @employee_notes.each do |note|
         tr
           td.text-center.align-top = note.note_on.strftime("%m/%d/%Y")
-          td.text-center.align-top = note.shift
           td.align-top = note.user.name_and_number
-          td.align-top = note.department_name
-          td.text-center.align-top
-            .d-flex.flex-column.align-items-top.justify-content-center
-              - if note.is_for_it
-                .badge.bg-primary.mb-1 IT
-              - if note.is_for_lab
-                .badge.bg-success.mb-1 Lab
-              - if note.is_for_maintenance
-                .badge.bg-secondary.mb-1 Maintenance
-              - if note.is_for_plating
-                .badge.bg-warning.text-dark.mb-1 Plating
-              - if note.is_for_qc
-                .badge.bg-danger.mb-1 QC
-              - if note.is_for_shipping
-                .badge.bg-dark.mb-1 Shipping
+          td.align-top
+            - note.employee_note_subjects.each do |subject|
+              .mb-1 == "#{fa employee_note_icon(subject.note_type)} #{subject.user.name_and_number}"
           td.text-wrap.align-top
             - if params[:filters] && !params[:filters][:with_search_term].blank?
               == highlight_search_term(params[:filters][:with_search_term], simple_format(note.notes))
@@ -63,7 +48,7 @@ ruby:
                 = "#{fa "comments"} #{pluralize note.comments.length, "comment"}".html_safe
                 - if note.comment_attachments.length > 0
                   span.ms-1 = "#{fa "paperclip"} #{pluralize note.comment_attachments.length, "comment attachment"}".html_safe
-          td.align-top
+          td
             - note.attachments.each do |attachment|
               = render  partial: "attachments/table_cell_attachment",
                         locals: { attachment: attachment }

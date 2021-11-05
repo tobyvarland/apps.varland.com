@@ -1,0 +1,19 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>User:</strong>
+  <%= @employee_note_subject.user_id %>
+</p>
+
+<p>
+  <strong>Employee note:</strong>
+  <%= @employee_note_subject.employee_note_id %>
+</p>
+
+<p>
+  <strong>Note type:</strong>
+  <%= @employee_note_subject.note_type %>
+</p>
+
+<%= link_to 'Edit', edit_employee_note_subject_path(@employee_note_subject) %> |
+<%= link_to 'Back', employee_note_subjects_path %>

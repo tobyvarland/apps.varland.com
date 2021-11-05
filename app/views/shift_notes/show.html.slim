@@ -41,14 +41,14 @@ ruby:
       .card-body.bg-white = simple_format(@shift_note.notes)
     .card.bg-light.mt-3
       h6.card-header = "Comments"
-      - if policy(@shift_note).add_comment?
-        .card-body
-          = render partial: "comments/form", locals: { comment: @comment, commentable: @shift_note, allow_manual_time: false, allow_attachments: true }
       .card-body.bg-white
         - if @shift_note.comments.length == 0
           .text-muted.fst-italic No comments.
         - else
           = render partial: "comments/comment", collection: @shift_note.comments, locals: { allow_delete: policy(@shift_note).delete_comment? }
+      - if policy(@shift_note).add_comment?
+        .card-body
+          = render partial: "comments/form", locals: { comment: @comment, commentable: @shift_note, allow_manual_time: false, allow_attachments: false }
   .col-12.col-md-3.order-1
     = card_list "Shift Note Details",
                 [{label: "Entered By", value: @shift_note.user.name_and_number},

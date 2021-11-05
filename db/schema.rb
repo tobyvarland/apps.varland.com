@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_11_02_161645) do
+ActiveRecord::Schema.define(version: 2021_11_03_173911) do
 
   create_table "active_storage_attachments", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "name", null: false
@@ -234,6 +234,27 @@ ActiveRecord::Schema.define(version: 2021_11_02_161645) do
     t.index ["user_id"], name: "index_comments_on_user_id"
   end
 
+  create_table "employee_note_subjects", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.bigint "employee_note_id", null: false
+    t.string "note_type", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["employee_note_id"], name: "index_employee_note_subjects_on_employee_note_id"
+    t.index ["user_id"], name: "index_employee_note_subjects_on_user_id"
+  end
+
+  create_table "employee_notes", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.date "note_on", null: false
+    t.text "notes", null: false
+    t.datetime "discarded_at"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["discarded_at"], name: "index_employee_notes_on_discarded_at"
+    t.index ["user_id"], name: "index_employee_notes_on_user_id"
+  end
+
   create_table "opto_logs", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "type", null: false
     t.string "controller_name", null: false
@@ -264,6 +285,7 @@ ActiveRecord::Schema.define(version: 2021_11_02_161645) do
     t.integer "reject_tags", default: 1, null: false
     t.integer "hardness_tests", default: 1, null: false
     t.integer "shift_notes", default: 0, null: false
+    t.integer "employee_notes", default: 0, null: false
     t.index ["user_id"], name: "index_permissions_on_user_id"
     t.index ["user_id"], name: "unique_permissions_user", unique: true
   end
@@ -431,6 +453,9 @@ ActiveRecord::Schema.define(version: 2021_11_02_161645) do
   add_foreign_key "baking_type_assignments", "baking_oven_types", column: "oven_type_id"
   add_foreign_key "baking_type_assignments", "baking_process_codes", column: "process_code_id"
   add_foreign_key "comments", "users"
+  add_foreign_key "employee_note_subjects", "employee_notes"
+  add_foreign_key "employee_note_subjects", "users"
+  add_foreign_key "employee_notes", "users"
   add_foreign_key "permissions", "users"
   add_foreign_key "quality_hardness_tests", "as400_shop_orders", column: "shop_order_id"
   add_foreign_key "quality_hardness_tests", "quality_hardness_tests", column: "raw_test_id"

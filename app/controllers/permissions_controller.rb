@@ -27,7 +27,7 @@ class PermissionsController < ApplicationController
     end
 
     def permission_params
-      params.require(:permission).permit(:user_id, :super_admin, :reject_tags, :hardness_tests, :shift_notes)
+      params.require(:permission).permit(:user_id, :super_admin, :reject_tags, :hardness_tests, :shift_notes, :employee_notes)
     end
 
 end
