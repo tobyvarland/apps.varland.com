@@ -1,5 +1,8 @@
 class EmployeeNotesController < ApplicationController
 
+  skip_before_action :verify_authenticity_token, only: :import
+  skip_before_action :authenticate_user!, only: :import
+
   before_action :set_employee_note, only: %i[ show edit update destroy add_attachment ]
   before_action :parse_filter_params, only: %i[ index ]
 
@@ -42,6 +45,15 @@ class EmployeeNotesController < ApplicationController
 
   def edit
     authorize(@employee_note)
+  end
+
+  def import
+    @employee_note = EmployeeNote.new(employee_note_params)
+    if @employee_note.save
+      head :ok
+    else
+      head :unprocessable_entity, errors: @employee_note.errors.full_messages
+    end
   end
 
   def create
@@ -91,6 +103,7 @@ class EmployeeNotesController < ApplicationController
                                             :notes,
                                             :discarded_at,
                                             attachments_attributes: [:id, :name, :description, :file, :_destroy],
+                                            comments_attributes: [:id, :user_id, :body, :comment_at, :file, :_destroy],
                                             employee_note_subjects_attributes: [:id, :user_id, :note_type, :_destroy])
     end
 

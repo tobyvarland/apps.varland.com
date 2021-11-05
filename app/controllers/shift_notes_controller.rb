@@ -110,7 +110,8 @@ class ShiftNotesController < ApplicationController
                                          :is_for_qc,
                                          :is_for_shipping,
                                          :discarded_at,
-                                         attachments_attributes: [:id, :name, :description, :file, :_destroy])
+                                         attachments_attributes: [:id, :name, :description, :file, :_destroy],
+                                         comments_attributes: [:id, :user_id, :body, :comment_at, :file, :_destroy])
     end
 
 end

@@ -7,6 +7,9 @@ Rails.application.routes.draw do
     member do
       post  :add_attachment
     end
+    collection do
+      post  :import
+    end
   end
   resources :shift_notes do
     member do
