@@ -2,6 +2,11 @@ require 'sidekiq/web'
 
 Rails.application.routes.draw do
 
+  namespace :quality do
+    namespace :salt_spray do
+      resources :opto_post_dips
+    end
+  end
   resources :employee_note_subjects
   resources :employee_notes do
     member do

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_11_03_173911) do
+ActiveRecord::Schema.define(version: 2021_11_05_194218) do
 
   create_table "active_storage_attachments", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "name", null: false
@@ -347,6 +347,18 @@ ActiveRecord::Schema.define(version: 2021_11_03_173911) do
     t.index ["user_id"], name: "index_quality_reject_tags_on_user_id"
   end
 
+  create_table "quality_salt_spray_opto_post_dips", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.bigint "shop_order_id", null: false
+    t.datetime "post_dip_at", null: false
+    t.string "vat", null: false
+    t.string "description"
+    t.integer "load", null: false
+    t.float "dip_seconds", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["shop_order_id"], name: "index_quality_salt_spray_opto_post_dips_on_shop_order_id"
+  end
+
   create_table "reviews", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.bigint "user_id", null: false
     t.string "reviewable_type", null: false
@@ -464,6 +476,7 @@ ActiveRecord::Schema.define(version: 2021_11_03_173911) do
   add_foreign_key "quality_reject_tags", "as400_shop_orders", column: "shop_order_id"
   add_foreign_key "quality_reject_tags", "quality_reject_tags", column: "source_id"
   add_foreign_key "quality_reject_tags", "users"
+  add_foreign_key "quality_salt_spray_opto_post_dips", "as400_shop_orders", column: "shop_order_id"
   add_foreign_key "reviews", "users"
   add_foreign_key "shift_notes", "users"
   add_foreign_key "shipping_receiving_priority_notes", "users", column: "completed_by_user_id", name: "fk_recnotes_comp_user"

@@ -1,0 +1,17 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  post_dip_at: 2021-11-05 15:42:18
+  vat: MyString
+  description: MyString
+  shop_order: one
+  load: 1
+  dip_seconds: 1.5
+
+two:
+  post_dip_at: 2021-11-05 15:42:18
+  vat: MyString
+  description: MyString
+  shop_order: two
+  load: 1
+  dip_seconds: 1.5
