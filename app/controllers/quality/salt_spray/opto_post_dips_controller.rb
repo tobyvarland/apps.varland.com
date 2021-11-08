@@ -5,8 +5,14 @@ class Quality::SaltSpray::OptoPostDipsController < ApplicationController
 
   before_action :set_opto_post_dip, only: %i[ show edit update destroy ]
 
+  has_scope :sorted_by, default: "newest", allow_blank: true
+
   def index
-    @opto_post_dips = Quality::SaltSpray::OptoPostDip.all
+    begin
+      @pagy, @opto_post_dips = pagy(apply_scopes(Quality::SaltSpray::OptoPostDip.includes(:shop_order).all), items: 100)
+    rescue
+      @pagy, @opto_post_dips = pagy(apply_scopes(Quality::SaltSpray::OptoPostDip.includes(:shop_order).all), items: 100, page: 1)
+    end
   end
 
   def create

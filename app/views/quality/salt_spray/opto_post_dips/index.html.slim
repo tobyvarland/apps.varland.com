@@ -1,0 +1,34 @@
+ruby:
+  provide(:title, 'Post Dips')
+
+- content_for :nav do
+  = render "nav"
+
+.d-flex.flex-row.align-items-center.justify-content-between.mt-3
+  h1.font-varland Post Dips
+  div
+
+.d-flex.flex-row.align-items-center.justify-content-center
+  = render partial: "shared/pagination", locals: { label: "Post Dips" }
+
+.table-responsive.my-3
+  table.table.table-striped.table-hover
+    thead.table-dark
+      tr
+        th.text-center.w-1 Timestamp
+        th Shop Order
+        th.text-center.w-1 Load #
+        th Vat
+        th.text-center.w-1 Dip Time
+        th.text-center.w-1.d-none Options
+    tbody
+      - @opto_post_dips.each do |post_dip|
+        tr
+          td.text-center == post_dip.post_dip_at.strftime("%m/%d/%Y<br>%l:%M:%S %P")
+          td.lh-sm
+            .font-monospace.fw-700.fs-5 = post_dip.shop_order.number
+            .fw-300.small == post_dip.shop_order.part_spec.join(' <small class="text-uncolor">/</small> ')
+          td.text-center = post_dip.load
+          td == "<span class=\"font-monospace fw-700\">#{post_dip.vat}</span> &ndash; #{post_dip.description}"
+          td.text-center.lh-sm == "#{pluralize post_dip.dip_seconds.to_i, "second"}<br><small class=\"text-uncolor\">#{post_dip.dip_time}</small>"
+          td.text-center.d-none = link_to "#{fa 'trash-alt'} Delete".html_safe, post_dip, method: :delete, data: { confirm: "Are you sure you want to delete this post dip?" }, class: ["btn", "btn-sm", "btn-danger"]
