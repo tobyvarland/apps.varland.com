@@ -26,7 +26,9 @@ ruby:
         tr
           td.text-center == post_dip.post_dip_at.strftime("%m/%d/%Y<br>%l:%M:%S %P")
           td.lh-sm
-            .font-monospace.fw-700.fs-5 = post_dip.shop_order.number
+            .font-monospace.fw-700.fs-5
+              span = post_dip.shop_order.number
+              span.ms-1.shop_order_pdf_link*{'data-shop-order'=>post_dip.shop_order.number}
             .fw-300.small == post_dip.shop_order.part_spec.join(' <small class="text-uncolor">/</small> ')
           td.text-center = post_dip.load
           td == "<span class=\"font-monospace fw-700\">#{post_dip.vat}</span> &ndash; #{post_dip.description}"
