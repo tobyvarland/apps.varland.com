@@ -16,6 +16,10 @@ class ShiftNotePolicy < ApplicationPolicy
     require_permission_gte(:shift_notes, 3)
   end
 
+  def show?
+    update?
+  end
+
   def add_attachment?
     update?
   end
