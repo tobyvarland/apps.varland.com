@@ -1,0 +1,29 @@
+ruby:
+  recording_allowed = true
+  recording_allowed = false if job[:count_opto_codes] > 0
+  recording_allowed = false if job[:needs_thickness_info] && !job[:has_thickness_info]
+tr data-so="#{job[:shop_order]}"
+  td.text-center.d-md-none
+    - if recording_allowed && policy(:home).record_final_inspection?
+      = link_to "#{fa("check-circle")} Record".html_safe, record_final_inspect_path(shop_order: job[:shop_order]), data: { confirm: "Are you sure you want to record final inspection for S.O. ##{job[:shop_order]}?" }, class: ["btn", "btn-sm", "btn-success"]
+  td.text-center = job[:shop_order]
+  td == [job[:customer], job[:process], job[:part_number], job[:part_sub]].reject(&:blank?).join(" <span class=\"text-uncolor\">/</span> ")
+  td.text-center.small
+    - if job[:count_opto_codes] == 0
+      span.text-uncolor = job[:count_opto_codes]
+    - else
+      span.fw-700.bg-danger.text-white.py-1.px-2.rounded = job[:count_opto_codes]
+  td.text-center.small
+    - if job[:reject_tags] == 0
+      span.text-uncolor = job[:reject_tags]
+    - else
+      span.fw-700.bg-danger.text-white.py-1.px-2.rounded = job[:reject_tags]
+  td.text-center.text-uppercase.small
+    - if job[:needs_thickness_info]
+      - if job[:has_thickness_info]
+        span.fw-700.bg-primary.text-white.py-1.px-2.rounded == "#{fa("check")} Complete"
+      - else
+        span.fw-700.bg-danger.text-white.py-1.px-2.rounded Required
+  td.text-center.d-md-table-cell
+    - if recording_allowed && policy(:home).record_final_inspection?
+      = link_to "#{fa("check-circle")} Record".html_safe, record_final_inspect_path(shop_order: job[:shop_order]), data: { confirm: "Are you sure you want to record final inspection for S.O. ##{job[:shop_order]}?" }, class: ["btn", "btn-sm", "btn-success"]

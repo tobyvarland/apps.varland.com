@@ -76,13 +76,15 @@ Rails.application.routes.draw do
     get "sales/quote_search",             to: "sales#quote_search",             as: :sales_quote_search
     get "sales/recent_customers",         to: "sales#recent_customers",         as: :sales_recent_customers
     get "production/dept_5_recipes",      to: "production#dept_5_recipes",      as: :production_dept_5_recipes
+    get "quality/final_inspect",          to: "quality#final_inspect",          as: :quality_final_inspect
   end
   namespace :opto do
     post "log_trico_load",  to: "opto#log_trico_load"
   end
-  get "shipping/trico_labels",    to: "shipping#trico_labels",  as: :trico_labels
-  get "shipping/smalog_labels",   to: "shipping#smalog_labels", as: :smalog_labels
-  get "vcms/link_part_spec",      to: "vcms#link_part_spec",    as: :link_part_spec
+  get "shipping/trico_labels",      to: "shipping#trico_labels",        as: :trico_labels
+  get "shipping/smalog_labels",     to: "shipping#smalog_labels",       as: :smalog_labels
+  get "vcms/link_part_spec",        to: "vcms#link_part_spec",          as: :link_part_spec
+  get "vcms/record_final_inspect",  to: "vcms#record_final_inspect",    as: :record_final_inspect
 
   # Mount Sidekiq.
   mount Sidekiq::Web => "/sidekiq"

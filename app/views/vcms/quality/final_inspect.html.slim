@@ -1,0 +1,41 @@
+ruby:
+  provide(:title, 'Final Inspection Entry')
+
+- content_for :nav do
+  = render "nav"
+
+.d-flex.flex-row.align-items-center.justify-content-between.mt-3
+  h1.font-varland Final Inspection Entry
+
+.row
+  .col-12.col-md-3
+    input.form-control.mt-3#filter-so type="text" placeholder="S.O. #"
+
+.table-responsive.mt-3
+  table.table.table-bordered.table-striped.table-hover
+    thead.table-dark
+      tr
+        th.w-1.text-center.d-md-none Options
+        th.text-center Shop Order
+        th Part Spec
+        th.text-center Opto Codes
+        th.text-center Reject Tags
+        th.text-center Thickness Data
+        th.w-1.text-center.d-none.d-md-table-cell Options
+    tbody#final-inspect-orders
+      = render partial: "final_inspect_job", collection: @jobs, as: :job
+
+javascript:
+
+  $("#filter-so").on("keyup", function() {
+    var filter = $(this).val();
+    $("#final-inspect-orders tr").each(function() {
+      var row = $(this);
+      var so = row.data("so").toString();
+      if (so.includes(filter)) {
+        row.removeClass("d-none");
+      } else {
+        row.addClass("d-none");
+      }
+    })
+  });
