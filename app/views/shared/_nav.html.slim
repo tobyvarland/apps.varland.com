@@ -74,6 +74,11 @@ nav.navbar.fixed-top.navbar-expand-md.navbar-dark.bg-dark id="primary-nav"
             div Shift Notes
     ul.list-unstyled
       li.header Quality
+      - if policy(:home).view_final_inspection?
+        li
+          = link_to vcms_quality_final_inspect_url do
+            = fa "link"
+            div Final Inspection
       - if policy(Quality::HardnessTest).index?
         li
           = link_to quality_hardness_tests_url do
