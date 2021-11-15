@@ -18,6 +18,7 @@ html lang="en"
     meta name="apple-mobile-web-app-capable" content="yes"
     meta name="apple-mobile-web-app-status-bar-style" content="black"
     meta name="apple-mobile-web-app-title" content="Varland Plating"
+    meta name="format-detection" content="telephone=no"
 
     = stylesheet_pack_tag('application', media: 'all', 'data-turbolinks-track': 'reload')
     = javascript_pack_tag('application', 'data-turbolinks-track': 'reload')
@@ -26,7 +27,7 @@ html lang="en"
     = favicon_link_tag asset_path('web-app-icon.png'), rel: 'apple-touch-icon', type: 'image/png'
 
   body data-auto-refresh="#{defined?(@auto_refresh) ? @auto_refresh : 0}"
-  
+
     = render 'shared/nav'
 
     .container-fluid
