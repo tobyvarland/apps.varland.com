@@ -1,3 +1,7 @@
+- if current_user
+  - if lookup_context.exists?(current_user.username.downcase, ["users/user_home_pages"], true)
+    = render partial: "users/user_home_pages/#{current_user.username.downcase}"
+
 .row
   .col-12
     .mt-3.p-3.bg-dark.text-light.rounded.fw-100.fs-4.lh-sm
@@ -34,10 +38,6 @@
       input type="text" name="customer" maxlength="6" pattern="[A-Z]{1,6}" placeholder="Customer Code ⏎"
       button.d-none type="submit"
         = fa "arrow-alt-circle-right"
-
-- if current_user
-  - if lookup_context.exists?(current_user.username.downcase, ["users/user_home_pages"], true)
-    = render partial: "users/user_home_pages/#{current_user.username.downcase}"
 
 javascript:
   $(function() {
