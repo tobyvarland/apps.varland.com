@@ -9,8 +9,8 @@
     .col-12.col-md.mt-3 = f.input :tested_on, required: true, label: "Date:", autofocus: true , as: :date, html5: true, input_html: { style: "margin: 0 !important;" }
     .col-12.col-md.mt-3 = f.input :test_type, required: true, collection: Quality::HardnessTest.type_options, label: "Type:", input_html: { class: "form-select" }
     .col-12.col-md.mt-3 = f.input :shop_order_number, required: true, label: "Shop Order:"
-    .col-12.col-md.mt-3 = f.input :load, required: true, label: "Load:", disabled: true, wrapper_html: { class: "d-none" }
-    .col-12.col-md.mt-3 = f.input :is_rework, label: "Rework:", disabled: true, collection: [["Yes", true], ["No", false]], input_html: { class: "form-select" }, include_blank: false, wrapper_html: { class: "d-none" }
+    .col-12.col-md = f.input :load, required: true, label: "Load:", disabled: true, wrapper_html: { class: "d-none" }
+    .col-12.col-md = f.input :is_rework, label: "Rework:", disabled: true, collection: [["Yes", true], ["No", false]], input_html: { class: "form-select" }, include_blank: false, wrapper_html: { class: "d-none" }
   .row
     = render "shared/form_shop_order_info"
   .row
@@ -55,13 +55,13 @@ javascript:
         if (type == "Raw" || type == "") {
             $loadInput.prop('disabled', true);
             $reworkInput.prop('disabled', true);
-            $loadWrapper.addClass("d-none");
-            $reworkWrapper.addClass("d-none");
+            $loadWrapper.addClass("d-none").removeClass("mt-3");
+            $reworkWrapper.addClass("d-none").removeClass("mt-3");
          } else {
             $loadInput.prop('disabled', false);
             $reworkInput.prop('disabled', false);
-            $loadWrapper.removeClass("d-none");
-            $reworkWrapper.removeClass("d-none");
+            $loadWrapper.removeClass("d-none").addClass("mt-3");
+            $reworkWrapper.removeClass("d-none").addClass("mt-3");
          }
 
       });
