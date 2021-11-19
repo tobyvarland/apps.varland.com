@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_11_18_212838) do
+ActiveRecord::Schema.define(version: 2021_11_19_150119) do
 
   create_table "active_storage_attachments", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "name", null: false
@@ -289,6 +289,22 @@ ActiveRecord::Schema.define(version: 2021_11_18_212838) do
     t.integer "final_inspection", default: 0, null: false
     t.index ["user_id"], name: "index_permissions_on_user_id"
     t.index ["user_id"], name: "unique_permissions_user", unique: true
+  end
+
+  create_table "quality_calibration_categories", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.string "name", null: false
+    t.integer "calibration_frequency", null: false
+    t.string "instructions_url"
+    t.float "two_point_low_value"
+    t.float "two_point_high_value"
+    t.boolean "calculate_offset_and_gain"
+    t.boolean "require_offset"
+    t.boolean "require_gain"
+    t.boolean "enable_notifications"
+    t.datetime "discarded_at"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["discarded_at"], name: "index_quality_calibration_categories_on_discarded_at"
   end
 
   create_table "quality_calibration_reason_codes", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|

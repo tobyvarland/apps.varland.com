@@ -1,7 +1,2 @@
-class Quality::Calibration::ReasonCodePolicy < ApplicationPolicy
-  class Scope < Scope
-    def resolve
-      scope.all
-    end
-  end
+class Quality::Calibration::ReasonCodePolicy < Quality::Calibration::CalibrationAdminPolicy
 end
