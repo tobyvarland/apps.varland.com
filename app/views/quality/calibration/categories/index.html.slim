@@ -16,21 +16,23 @@ ruby:
       th
         | Name
       th.text-center.w-1
-        | Calibration Frequency 
-      th.text-center.w-1 
-        | Enable Notifications 
-      th.text-center.w-1 
-        | Options   
-    tbody 
+        | Calibration Frequency
+      th.text-center.w-1
+        | Enable Notifications
+      th.text-center.w-1
+        | Options
+    tbody
       - @categories.each do |category|
-        tr  
+        tr
           td.lh-sm
-            .fw-700 = category.name 
+            .fw-700 = category.name
             - unless category.instructions_url.blank?
-              .small = link_to "#{fa "question-circle"} #{category.instructions_url}".html_safe, category.instructions_url, target: "_blank"
-          td.text-center 
+              .small
+                = fa "question-circle"
+                = link_to category.instructions_url, category.instructions_url, target: "_blank", class: "ms-1"
+          td.text-center
             = pluralize category.calibration_frequency, "day"
-          td.text-center 
+          td.text-center
             = fa category.enable_notifications ? "check" : "times"
           td.text-center
             - if policy(category).edit?
