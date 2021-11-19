@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_11_19_152645) do
+ActiveRecord::Schema.define(version: 2021_11_19_194103) do
 
   create_table "active_storage_attachments", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "name", null: false
@@ -308,6 +308,20 @@ ActiveRecord::Schema.define(version: 2021_11_19_152645) do
     t.index ["discarded_at"], name: "index_quality_calibration_categories_on_discarded_at"
   end
 
+  create_table "quality_calibration_devices", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.bigint "category_id", null: false
+    t.string "name", null: false
+    t.string "location"
+    t.date "in_service_on", null: false
+    t.date "retired_on"
+    t.boolean "enable_notifications", default: false, null: false
+    t.datetime "discarded_at"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["category_id"], name: "index_quality_calibration_devices_on_category_id"
+    t.index ["discarded_at"], name: "index_quality_calibration_devices_on_discarded_at"
+  end
+
   create_table "quality_calibration_reason_codes", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "name", null: false
     t.boolean "enable_notifications", default: false, null: false
@@ -496,6 +510,7 @@ ActiveRecord::Schema.define(version: 2021_11_19_152645) do
   add_foreign_key "employee_note_subjects", "users"
   add_foreign_key "employee_notes", "users"
   add_foreign_key "permissions", "users"
+  add_foreign_key "quality_calibration_devices", "quality_calibration_categories", column: "category_id"
   add_foreign_key "quality_hardness_tests", "as400_shop_orders", column: "shop_order_id"
   add_foreign_key "quality_hardness_tests", "quality_hardness_tests", column: "raw_test_id"
   add_foreign_key "quality_hardness_tests", "users"
