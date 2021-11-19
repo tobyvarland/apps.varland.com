@@ -1,10 +1,11 @@
 require 'sidekiq/web'
 
 Rails.application.routes.draw do
-
+  
   namespace :quality do
     namespace :calibration do
       resources :reason_codes, except: [:show]
+      resources :categories
     end
   end
   resources :employee_note_subjects
