@@ -1,5 +1,5 @@
 class Quality::Calibration::DevicesController < ApplicationController
-  before_action :set_quality_calibration_device, only: %i[ show edit update destroy ]
+  before_action :set_device, only: %i[ show edit update destroy ]
 
   def index
     authorize(Quality::Calibration::Device)
@@ -8,7 +8,7 @@ class Quality::Calibration::DevicesController < ApplicationController
 
   def new
     authorize(Quality::Calibration::Device)
-    @device = Quality::Calibration::Device.new
+    @device = Quality::Calibration::Device.new in_service_on: Date.current
   end
 
   def edit
@@ -42,12 +42,12 @@ class Quality::Calibration::DevicesController < ApplicationController
 
   private
     # Use callbacks to share common setup or constraints between actions.
-    def set_quality_calibration_device
+    def set_device
       @device = Quality::Calibration::Device.find(params[:id])
     end
 
     # Only allow a list of trusted parameters through.
-    def quality_calibration_device_params
-      params.require(:quality_calibration_device).permit(:device_id, :name, :location, :in_service_on, :retired_on, :enable_notifications, :discarded_at)
+    def device_params
+      params.require(:quality_calibration_device).permit(:category_id, :name, :location, :in_service_on, :retired_on, :enable_notifications, :discarded_at)
     end
 end

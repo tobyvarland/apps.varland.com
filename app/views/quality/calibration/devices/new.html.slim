@@ -1,0 +1,10 @@
+ruby:
+  provide(:title, 'New Device')
+
+- content_for :nav do
+  = render "quality/calibration/nav"
+
+.d-flex.flex-row.align-items-center.justify-content-between.mt-3
+  h1.font-varland New Device
+
+= render 'form'

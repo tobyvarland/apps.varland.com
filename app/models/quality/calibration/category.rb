@@ -1,5 +1,9 @@
 class Quality::Calibration::Category < ApplicationRecord
 
+  # Associations.
+  has_many  :devices,
+            class_name: 'Quality::Calibration::Device'
+
   # Soft deletes.
   include Discard::Model
   default_scope -> { kept }

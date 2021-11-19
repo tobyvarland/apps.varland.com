@@ -17,6 +17,8 @@ ruby:
         | Name
       th.text-center.w-1
         | Calibration Frequency
+      th.text-center.w-1 
+        | # Devices
       th.text-center.w-1
         | Enable Notifications
       th.text-center.w-1
@@ -32,6 +34,8 @@ ruby:
                 = link_to category.instructions_url, category.instructions_url, target: "_blank", class: "ms-1"
           td.text-center
             = pluralize category.calibration_frequency, "day"
+          td.text-center 
+            = category.devices.length  
           td.text-center
             = fa category.enable_notifications ? "check" : "times"
           td.text-center

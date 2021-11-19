@@ -1,0 +1,19 @@
+= simple_form_for(@device, html: {class: ["vp-gray-form", "my-3"]}) do |f|
+
+  = f.error_notification
+  = f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present?
+
+  .row
+    .col-12.col-md.mt-3 = f.association :category
+    .col-12.col-md.mt-3 = f.input :name, required: true, label: "Device Name:", autofocus: true
+    .col-12.col-md.mt-3 = f.input :location, required: false, label: "Location:"
+    .col-12.col-md.mt-3 = yes_no_dropdown f, :enable_notifications, "Notifications:"
+    .col-12.col-md.mt-3 = f.input :in_service_on, required: true, label: "In Service On:", as: :date, html5: true, input_html: { style: "margin: 0 !important;" }
+    - unless @device.id.blank?
+      .col-12.col-md.mt-3 
+        = f.input :retired_on, required: true, label: "Retired On:", as: :date, html5: true, input_html: { style: "margin: 0 !important;" }
+
+  .form-actions
+    div
+      = link_to "#{fa "times"} Cancel".html_safe, :back, class: ["btn", "btn-light", "btn-sm", "me-3"], tabindex: -1
+      = f.button :button, "#{fa "check"} Save Device".html_safe, class: ["btn-primary", "btn-sm"]
