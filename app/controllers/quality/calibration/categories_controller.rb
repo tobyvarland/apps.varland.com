@@ -48,7 +48,7 @@ class Quality::Calibration::CategoriesController < ApplicationController
     end
 
     def category_params
-      params.require(:quality_calibration_category).permit(:name, :calibration_frequency, :instructions_url, :two_point_low_value, :two_point_high_value, :calculate_offset_and_gain, :require_offset, :require_gain, :enable_notifications, :discarded_at)
+      params.require(:quality_calibration_category).permit(:name, :calibration_frequency, :instructions_url, :two_point_low_value, :two_point_high_value, :calculate_offset_and_gain, :require_offset, :require_gain, :enable_notifications)
     end
 
 end
