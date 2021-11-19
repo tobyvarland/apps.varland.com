@@ -2,6 +2,10 @@ module ApplicationHelper
 
   include Pagy::Frontend
 
+  def yes_no_dropdown(f, attribute, text)
+    f.input attribute, label: text, collection: [["Yes", true], ["No", false]], input_html: { class: "form-select" }, include_blank: false
+  end
+
   def icon_for_file(file)
     excel_types = ["application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
                    "application/vnd.ms-excel"]

@@ -28,6 +28,12 @@
   @extend .rounded;
   @extend .shadow-sm;
   overflow: auto;
+  legend {
+    @extend .fw-700;
+    background-color: rgba(0, 0, 0, 0.1);
+    font-size: 0.85rem;
+    text-transform: uppercase;
+  }
   label, .label {
     @extend .fw-700;
     font-size: 0.85rem;

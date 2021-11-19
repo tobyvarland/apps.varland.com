@@ -3,18 +3,20 @@
   = f.error_notification
   = f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present?
 
-  .row 
-    .col-12.col-md-4.mt-3 = f.input :name, required: true, label: "Name:", autofocus: true 
+  .row
+    .col-12.col-md-4.mt-3 = f.input :name, required: true, label: "Name:", autofocus: true
     .col-12.col-md-4.mt-3 = f.input :instructions_url, required: false, label: "Instructions URL:", hint: "This is where you can add a link to a Google Doc for calibration instructions."
-    .col-12.col-md-2.mt-3 = f.input :calibration_frequency, required: true, label: "Frequency:", hint: "This is the frequency in number of days." 
-    .col-12.col-md-2.mt-3 = f.input :enable_notifications, label: "Notifications:", collection: [["Yes", true], ["No", false]], input_html: { class: "form-select" }, include_blank: false
-  fieldset.border.mt-3.p-3.pt-0
-    .row    
-      .col-12.col-md-3.mt-3 = f.input :two_point_low_value, required: false, label: "Two Point Low Value:", hint: "This is where you should enter the two point low value reading."
-      .col-12.col-md-3.mt-3 = f.input :two_point_high_value, required: false, label: "Two Point High Value:", hint: "This is where you should enter the two point low value reading."
-      .col-12.col-md-2.mt-3 = f.input :calculate_offset_and_gain, label: "Calculate Offset and Gain?:", collection: [["Yes", true], ["No", false]], input_html: { class: "form-select" }, include_blank: false
-      .col-12.col-md-2.mt-3 = f.input :require_offset, label: "Require Offset?:", collection: [["Yes", true], ["No", false]], input_html: { class: "form-select" }, include_blank: false
-      .col-12.col-md-2.mt-3 = f.input :require_gain, label: "Require Gain?:", collection: [["Yes", true], ["No", false]], input_html: { class: "form-select" }, include_blank: false
+    .col-12.col-md-2.mt-3 = f.input :calibration_frequency, required: true, label: "Frequency:", hint: "Frequency in days"
+    .col-12.col-md-2.mt-3 = yes_no_dropdown f, :enable_notifications, "Notifications:"
+  fieldset.border.mt-3.rounded.shadow-sm
+    legend.px-3.py-2.rounded-top.mb-0 Options for Two Point Calibrations
+    .p-3.pt-0
+      .row
+        .col-3.mt-3 = f.input :two_point_low_value, required: false, label: "Expected Low Value:"
+        .col-3.mt-3 = f.input :two_point_high_value, required: false, label: "Expected High Value:"
+        .col-2.mt-3 = yes_no_dropdown f, :calculate_offset_and_gain, "Calculate Offset and Gain:"
+        .col-2.mt-3 = yes_no_dropdown f, :require_offset, "Require User Entry of Offset:"
+        .col-2.mt-3 = yes_no_dropdown f, :require_gain, "Require User Entry of Gain:"
 
   .form-actions
     div
