@@ -4,9 +4,13 @@ class Quality::Calibration::ReasonCode < ApplicationRecord
   include Discard::Model
   default_scope -> { kept }
 
+  # Scopes.
+  default_scope -> { order(:name) }
+
   # Validations.
   validates :name,
-            presence: true
+            presence: true,
+            uniqueness: { case_sensitive: false }
 
 end
 

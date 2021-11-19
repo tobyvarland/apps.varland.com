@@ -2,53 +2,53 @@
 
 <p>
   <strong>Name:</strong>
-  <%= @quality_calibration_category.name %>
+  <%= @category.name %>
 </p>
 
 <p>
   <strong>Calibration frequency:</strong>
-  <%= @quality_calibration_category.calibration_frequency %>
+  <%= @category.calibration_frequency %>
 </p>
 
 <p>
   <strong>Instructions url:</strong>
-  <%= @quality_calibration_category.instructions_url %>
+  <%= @category.instructions_url %>
 </p>
 
 <p>
   <strong>Two point low value:</strong>
-  <%= @quality_calibration_category.two_point_low_value %>
+  <%= @category.two_point_low_value %>
 </p>
 
 <p>
   <strong>Two point high value:</strong>
-  <%= @quality_calibration_category.two_point_high_value %>
+  <%= @category.two_point_high_value %>
 </p>
 
 <p>
   <strong>Calculate offset and gain:</strong>
-  <%= @quality_calibration_category.calculate_offset_and_gain %>
+  <%= @category.calculate_offset_and_gain %>
 </p>
 
 <p>
   <strong>Require offset:</strong>
-  <%= @quality_calibration_category.require_offset %>
+  <%= @category.require_offset %>
 </p>
 
 <p>
   <strong>Require gain:</strong>
-  <%= @quality_calibration_category.require_gain %>
+  <%= @category.require_gain %>
 </p>
 
 <p>
   <strong>Enable notifications:</strong>
-  <%= @quality_calibration_category.enable_notifications %>
+  <%= @category.enable_notifications %>
 </p>
 
 <p>
   <strong>Discarded at:</strong>
-  <%= @quality_calibration_category.discarded_at %>
+  <%= @category.discarded_at %>
 </p>
 
-<%= link_to 'Edit', edit_quality_calibration_category_path(@quality_calibration_category) %> |
+<%= link_to 'Edit', edit_quality_calibration_category_path(@category) %> |
 <%= link_to 'Back', quality_calibration_categories_path %>
