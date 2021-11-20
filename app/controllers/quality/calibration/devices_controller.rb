@@ -6,6 +6,11 @@ class Quality::Calibration::DevicesController < ApplicationController
     @devices = Quality::Calibration::Device.all
   end
 
+  def show 
+    authorize(@device) 
+    @calibration = @device.calibrations.build calibrated_on: Date.current, type: @device.category.calibration_method
+  end
+
   def new
     authorize(Quality::Calibration::Device)
     @device = Quality::Calibration::Device.new in_service_on: Date.current

@@ -4,6 +4,11 @@ Rails.application.routes.draw do
   
   namespace :quality do
     namespace :calibration do
+      resources :calibrations
+    end
+  end
+  namespace :quality do
+    namespace :calibration do
       resources :devices
     end
   end

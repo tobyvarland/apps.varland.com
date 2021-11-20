@@ -2,7 +2,8 @@ class Quality::Calibration::Category < ApplicationRecord
 
   # Associations.
   has_many  :devices,
-            class_name: 'Quality::Calibration::Device'
+            class_name: 'Quality::Calibration::Device', 
+            foreign_key: 'category_id'
 
   # Soft deletes.
   include Discard::Model

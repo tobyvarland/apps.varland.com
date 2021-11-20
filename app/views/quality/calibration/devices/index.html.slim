@@ -30,7 +30,5 @@ ruby:
           td.text-center = device.retired_on.strftime("%m/%d/%y") unless device.retired_on.blank?
           td.text-center = fa device.enable_notifications ? "check" : "times"
           td.text-center
-            - if policy(device).edit?
-              = link_to "#{fa "edit"} Edit".html_safe, edit_quality_calibration_device_path(device), class: ["btn", "btn-sm", "btn-primary"]
-            - if policy(device).destroy?   
-              = link_to "#{fa "trash-alt"} Delete".html_safe, device, method: :delete, data: { confirm: 'Are you sure?' }, class: ["btn", "btn-sm", "btn-danger"]
+            - if policy(device).show?   
+              = link_to "#{fa "eye"} Details".html_safe, device, class: ["btn", "btn-sm", "btn-primary"]

@@ -1,11 +1,11 @@
 ruby:
-  provide(:title, 'Calibration Categories')
+  provide(:title, 'Calibration Device Categories')
 
 - content_for :nav do
   = render "quality/calibration/nav"
 
 .d-flex.flex-row.align-items-center.justify-content-between.mt-3
-  h1.font-varland Categories
+  h1.font-varland Device Categories
   div
     - if policy(Quality::Calibration::Category).create?
       = link_to "#{fa 'plus'} Category".html_safe, new_quality_calibration_category_path, class: ["btn", "btn-sm", "btn-primary"]

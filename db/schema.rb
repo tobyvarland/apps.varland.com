@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_11_19_194103) do
+ActiveRecord::Schema.define(version: 2021_11_20_141748) do
 
   create_table "active_storage_attachments", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "name", null: false
@@ -292,6 +292,28 @@ ActiveRecord::Schema.define(version: 2021_11_19_194103) do
     t.index ["user_id"], name: "unique_permissions_user", unique: true
   end
 
+  create_table "quality_calibration_calibrations", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.bigint "device_id", null: false
+    t.bigint "user_id", null: false
+    t.bigint "reason_code_id", null: false
+    t.date "calibrated_on", null: false
+    t.boolean "calibration_successful", null: false
+    t.datetime "discarded_at"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.string "type", null: false
+    t.float "two_point_low_value"
+    t.float "two_point_low_reading"
+    t.float "two_point_high_value"
+    t.float "two_point_high_reading"
+    t.float "two_point_offset"
+    t.float "two_point_gain"
+    t.index ["device_id"], name: "index_quality_calibration_calibrations_on_device_id"
+    t.index ["discarded_at"], name: "index_quality_calibration_calibrations_on_discarded_at"
+    t.index ["reason_code_id"], name: "index_quality_calibration_calibrations_on_reason_code_id"
+    t.index ["user_id"], name: "index_quality_calibration_calibrations_on_user_id"
+  end
+
   create_table "quality_calibration_categories", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "name", null: false
     t.integer "calibration_frequency", null: false
@@ -305,6 +327,7 @@ ActiveRecord::Schema.define(version: 2021_11_19_194103) do
     t.datetime "discarded_at"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.string "calibration_method", null: false
     t.index ["discarded_at"], name: "index_quality_calibration_categories_on_discarded_at"
   end
 
@@ -510,6 +533,9 @@ ActiveRecord::Schema.define(version: 2021_11_19_194103) do
   add_foreign_key "employee_note_subjects", "users"
   add_foreign_key "employee_notes", "users"
   add_foreign_key "permissions", "users"
+  add_foreign_key "quality_calibration_calibrations", "quality_calibration_devices", column: "device_id"
+  add_foreign_key "quality_calibration_calibrations", "quality_calibration_reason_codes", column: "reason_code_id"
+  add_foreign_key "quality_calibration_calibrations", "users"
   add_foreign_key "quality_calibration_devices", "quality_calibration_categories", column: "category_id"
   add_foreign_key "quality_hardness_tests", "as400_shop_orders", column: "shop_order_id"
   add_foreign_key "quality_hardness_tests", "quality_hardness_tests", column: "raw_test_id"
