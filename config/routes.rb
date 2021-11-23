@@ -2,6 +2,17 @@ require 'sidekiq/web'
 
 Rails.application.routes.draw do
 
+  namespace :groov do
+    get "logs/live/:controller_name", to: "logs#live", constraints: { controller_name: /.*/ }
+    resources :logs, only: [:index, :destroy, :create] do
+      member do
+        post  :reclassify
+      end
+      collection do
+        get   :live
+      end
+    end
+  end
   namespace :quality do
     namespace :calibration do
       resources :reason_codes, except: [:show]

@@ -338,3 +338,20 @@ mark.search-term {
     margin-top: 0.5rem;
   }
 }
+
+.live-highlight {
+  animation: bg-highlight 60s normal;
+  animation-iteration-count: 1;
+  /*
+  td:last-child {
+    animation: font-highlight 60s normal;
+    animation-iteration-count: 1;
+  }
+  */
+}
+
+@keyframes bg-highlight {
+  0% { background-color: yellow; }
+  25% { background-color: yellow; }
+  100% { background-color: auto; }
+}

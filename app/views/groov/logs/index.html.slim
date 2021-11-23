@@ -1,0 +1,21 @@
+ruby:
+  provide(:title, 'Groov Logs')
+
+.d-flex.flex-row.align-items-center.justify-content-between.mt-3
+  h1.font-varland Groov Logs
+
+.d-flex.flex-row.align-items-center.justify-content-center
+  = render partial: "shared/pagination", locals: { label: "Groov Logs" }
+
+.table-responsive.my-3
+  table.table.table-striped.table-hover
+    thead.table-dark
+      tr
+        th.w-1 Date/Time
+        th.w-1 Controller
+        th.w-1 Type
+        th Details
+        - if policy(Groov::Log).destroy?
+          th.text-center.w-1 Options
+    tbody
+      == render partial: "log", collection: @logs

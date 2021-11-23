@@ -1,0 +1,33 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  type: 
+  controller_name: MyString
+  log_at: 2021-11-22 21:33:55
+  lane: 1
+  station: 1
+  shop_order: one
+  load: 1
+  barrel: 1
+  reading: 1.5
+  limit: 1.5
+  low_limit: 1.5
+  high_limit: 1.5
+  device: MyString
+  json_data: MyText
+
+two:
+  type: 
+  controller_name: MyString
+  log_at: 2021-11-22 21:33:55
+  lane: 1
+  station: 1
+  shop_order: two
+  load: 1
+  barrel: 1
+  reading: 1.5
+  limit: 1.5
+  low_limit: 1.5
+  high_limit: 1.5
+  device: MyString
+  json_data: MyText

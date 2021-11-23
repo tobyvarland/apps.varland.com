@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_11_20_163038) do
+ActiveRecord::Schema.define(version: 2021_11_23_023355) do
 
   create_table "active_storage_attachments", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "name", null: false
@@ -253,6 +253,28 @@ ActiveRecord::Schema.define(version: 2021_11_20_163038) do
     t.datetime "updated_at", precision: 6, null: false
     t.index ["discarded_at"], name: "index_employee_notes_on_discarded_at"
     t.index ["user_id"], name: "index_employee_notes_on_user_id"
+  end
+
+  create_table "groov_logs", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.string "type", null: false
+    t.string "controller_name", null: false
+    t.datetime "log_at", null: false
+    t.integer "lane"
+    t.integer "station"
+    t.bigint "shop_order_id"
+    t.integer "load"
+    t.integer "barrel"
+    t.float "reading"
+    t.float "limit"
+    t.float "low_limit"
+    t.float "high_limit"
+    t.string "device"
+    t.text "json_data", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "discarded_at"
+    t.index ["discarded_at"], name: "index_groov_logs_on_discarded_at"
+    t.index ["shop_order_id"], name: "index_groov_logs_on_shop_order_id"
   end
 
   create_table "opto_logs", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
@@ -532,6 +554,7 @@ ActiveRecord::Schema.define(version: 2021_11_20_163038) do
   add_foreign_key "employee_note_subjects", "employee_notes"
   add_foreign_key "employee_note_subjects", "users"
   add_foreign_key "employee_notes", "users"
+  add_foreign_key "groov_logs", "as400_shop_orders", column: "shop_order_id"
   add_foreign_key "permissions", "users"
   add_foreign_key "quality_calibration_devices", "quality_calibration_categories", column: "category_id"
   add_foreign_key "quality_calibration_results", "quality_calibration_devices", column: "device_id"

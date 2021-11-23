@@ -1,0 +1,18 @@
+ruby:
+  provide(:title, 'Groov Logs (Live Stream)' + (@controller_name.blank? ? "" : " [#{@controller_name}]"))
+
+.d-flex.flex-row.align-items-center.justify-content-between.mt-3
+  .d-flex.flex-row.align-items-baseline.justify-content-start
+    h1.font-varland Groov Logs
+    .ms-1.fs-4.fw-200.text-varland-red == "<span class=\"text-uppercase\">Live Stream</span>#{@controller_name.blank? ? "" : " [#{@controller_name}]"}"
+
+.table-responsive.my-3
+  table.table.table-striped.table-hover
+    thead.table-dark
+      tr
+        th.w-1 Date/Time
+        th.w-1 Controller
+        th.w-1 Type
+        th Details
+    tbody#groov-live-logs-container data-controller=@controller_name
+      == render partial: "log", collection: @logs

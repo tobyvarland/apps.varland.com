@@ -2,6 +2,15 @@ module ApplicationHelper
 
   include Pagy::Frontend
 
+  def humanize_seconds(secs)
+    [[60, :second], [60, :minute], [24, :hour], [Float::INFINITY, :day]].map{ |count, name|
+      if secs > 0
+        secs, n = secs.divmod(count)
+        "#{n.to_i} #{name}" unless n.to_i==0
+      end
+    }.compact.reverse.join(' ')
+  end
+
   def yes_no_dropdown(f, attribute, text)
     f.input attribute, label: text, collection: [["Yes", true], ["No", false]], input_html: { class: "form-select" }, include_blank: false
   end
