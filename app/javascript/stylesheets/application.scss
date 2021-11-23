@@ -352,7 +352,7 @@ mark.search-term {
 }
 
 @keyframes bg-highlight {
-  0% { background-color: yellow; }
-  25% { background-color: yellow; }
+  0% { background-color: $color-yellow-200; }
+  25% { background-color: $color-yellow-200; }
   100% { background-color: auto; }
 }

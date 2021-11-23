@@ -1,6 +1,9 @@
 ruby:
   provide(:title, 'Groov Logs')
 
+- content_for :nav do
+  = render "groov/logs/nav"
+
 .d-flex.flex-row.align-items-center.justify-content-between.mt-3
   h1.font-varland Groov Logs
 
