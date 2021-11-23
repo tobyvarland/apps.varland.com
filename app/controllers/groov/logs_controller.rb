@@ -39,7 +39,6 @@ class Groov::LogsController < ApplicationController
     if result
       return head :created
     else
-      puts "\n#{@log.errors.full_messages}\n\n"
       return head :unprocessable_entity
     end
   end

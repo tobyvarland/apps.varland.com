@@ -16,10 +16,12 @@ module ApplicationHelper
   def log_type_badge(log)
     div_classes = ["badge"]
     case log.type
+    when "Groov::ControllerMessage"
+      div_classes << "text-dark" << "bg-gray-100"
     when "Groov::HistorizationWarning"
       div_classes << "text-white" << "bg-blue-600"
     else
-      div_classes << "text-dark" << "bg-light"
+      div_classes << "text-dark" << "bg-gray-100"
     end
     content_tag(:div, log.log_type, class: div_classes.join(" "))
   end
