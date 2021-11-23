@@ -1,21 +1,14 @@
 require 'sidekiq/web'
 
 Rails.application.routes.draw do
-  
-  namespace :quality do
-    namespace :calibration do
-      resources :calibrations
-    end
-  end
-  namespace :quality do
-    namespace :calibration do
-      resources :devices
-    end
-  end
+
   namespace :quality do
     namespace :calibration do
       resources :reason_codes, except: [:show]
       resources :categories
+      resources :devices
+      resources :results
+      resources :groov_two_point_calibrations
     end
   end
   resources :employee_note_subjects

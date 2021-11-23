@@ -1,4 +1,5 @@
 class Quality::Calibration::CalibrationAdminPolicy < ApplicationPolicy
+
   def index?
     require_permission_gte(:calibrations, 1)
   end
@@ -14,4 +15,5 @@ class Quality::Calibration::CalibrationAdminPolicy < ApplicationPolicy
   def destroy?
     require_permission_gte(:calibrations, 3)
   end
+
 end

@@ -1,8 +1,9 @@
-class Quality::Calibration::Calibration < ApplicationRecord
-  
+class Quality::Calibration::Result < ApplicationRecord
+
   # Associations.
   belongs_to  :device,
-              class_name: 'Quality::Calibration::Device'
+              class_name: 'Quality::Calibration::Device',
+              touch: :results_updated_at
   belongs_to  :user,
               class_name: '::User'
   belongs_to  :reason_code,
@@ -16,11 +17,22 @@ class Quality::Calibration::Calibration < ApplicationRecord
 
   # Validations.
   validates :calibrated_on,
-            presence: true   
+            presence: true
   validate  :ensure_calibration_date_not_in_future
-            
-  # Instance Methods
 
+  # Callbacks.
+  after_create    :update_device_calibration_details
+  after_discard   :update_device_calibration_details
+  after_undiscard :update_device_calibration_details
+
+  # Instance methods.
+
+  # Instructs device to update details.
+  def update_device_calibration_details
+    self.device.store_calibration_details
+  end
+
+  # Description of individual calibration. Must be overridden in child class.
   def description
     return "override in child class"
   end
@@ -31,7 +43,7 @@ class Quality::Calibration::Calibration < ApplicationRecord
     errors.add(:calibrated_on, "cannot be in the future") if self.calibrated_on > Date.current
   end
 
-  # Class Methods.
+  # Class methods.
 
   # Define calibration options for categories.
   def self.calibration_method_options

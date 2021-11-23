@@ -6,9 +6,11 @@ class Quality::Calibration::DevicesController < ApplicationController
     @devices = Quality::Calibration::Device.all
   end
 
-  def show 
-    authorize(@device) 
-    @calibration = @device.calibrations.build calibrated_on: Date.current, type: @device.category.calibration_method
+  def show
+    authorize(@device)
+    @result = @device.results.build calibrated_on: Date.current,
+                                    type: @device.category.calibration_method,
+                                    user: current_user
   end
 
   def new
@@ -22,20 +24,20 @@ class Quality::Calibration::DevicesController < ApplicationController
 
   def create
     @device = Quality::Calibration::Device.new(device_params)
-    authorize(@device)  
+    authorize(@device)
     if @device.save
-      redirect_to quality_calibration_devices_url, notice: "Device was successfully created." 
+      redirect_to quality_calibration_devices_url, notice: "Device was successfully created."
     else
-      render :new, status: :unprocessable_entity 
-    end  
+      render :new, status: :unprocessable_entity
+    end
   end
 
   def update
-    authorize(@device)  
+    authorize(@device)
     if @device.update(device_params)
-      redirect_to quality_calibration_devices_url, notice: "Device was successfully updated."        
+      redirect_to quality_calibration_devices_url, notice: "Device was successfully updated."
     else
-      render :edit, status: :unprocessable_entity 
+      render :edit, status: :unprocessable_entity
     end
   end
 

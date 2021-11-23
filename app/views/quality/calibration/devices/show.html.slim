@@ -9,13 +9,8 @@ ruby:
   div
     - if policy(@device).edit?
       = link_to "#{fa "edit"} Edit".html_safe, edit_quality_calibration_device_path(@device), class: ["btn", "btn-sm", "btn-primary"]
-    - if policy(@device).destroy?   
+    - if policy(@device).destroy?
       = link_to "#{fa "trash-alt"} Delete".html_safe, @device, method: :delete, data: { confirm: 'Are you sure?' }, class: ["btn", "btn-sm", "btn-danger", "ms-1"]
-      
-      
-      
-      
-      
-      
-      
-= render "quality/calibration/calibrations/form"
+
+- if @device.retired_on.blank?
+  = render "quality/calibration/results/form"

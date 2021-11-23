@@ -1,0 +1,21 @@
+= simple_form_for(@result, html: {class: ["vp-gray-form", "my-3"]}) do |f|
+
+  .fw-700.text-uppercase.mt-3
+    | Enter New Calibration
+
+  = f.association :device, as: :hidden
+  = f.association :user, as: :hidden
+
+  = f.error_notification
+  = f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present?
+
+  .row
+    .col-12.col-md-2.mt-3 = f.association :reason_code, label: "Calibration Reason:", required: true, input_html: { class: "form-select" }
+    .col-12.col-md-2.mt-3 = f.input :calibrated_on, required: true, label: "Date Calibrated:", as: :date, html5: true, input_html: { style: "margin: 0 !important;" }
+
+  = render partial: "quality/calibration/results/#{@result.class.name.demodulize.underscore}_form", locals: { f: f }
+
+  .form-actions
+    div
+      = link_to "#{fa "times"} Cancel".html_safe, :back, class: ["btn", "btn-light", "btn-sm", "me-3"], tabindex: -1
+      = f.button :button, "#{fa "check"} Save Calibration".html_safe, class: ["btn-primary", "btn-sm"]
