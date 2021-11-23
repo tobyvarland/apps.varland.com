@@ -2,6 +2,28 @@ module ApplicationHelper
 
   include Pagy::Frontend
 
+  def controller_badge(controller_name)
+    div_classes = ["badge"]
+    case controller_name
+    when "epiclc.varland.com"
+      div_classes << "text-white" << "bg-pink-600"
+    else
+      div_classes << "text-dark" << "bg-light"
+    end
+    content_tag(:div, controller_name, class: div_classes.join(" "))
+  end
+
+  def log_type_badge(log)
+    div_classes = ["badge"]
+    case log.type
+    when "Groov::HistorizationWarning"
+      div_classes << "text-white" << "bg-blue-600"
+    else
+      div_classes << "text-dark" << "bg-light"
+    end
+    content_tag(:div, log.log_type, class: div_classes.join(" "))
+  end
+
   def humanize_seconds(secs)
     [[60, :second], [60, :minute], [24, :hour], [Float::INFINITY, :day]].map{ |count, name|
       if secs > 0

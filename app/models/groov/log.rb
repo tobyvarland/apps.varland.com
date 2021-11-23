@@ -37,8 +37,38 @@ class Groov::Log < ApplicationRecord
 
   # Callbacks.
   after_create_commit { Groov::LogBroadcastJob.perform_now self }
+  after_create_commit :process_notification
 
   # Instance methods.
+
+  # Sends notification email if configured.
+  def process_notification
+    if self.notification_settings[:enabled]
+      Groov::LogMailer.with(log: self).log_notification.deliver_later
+    end
+  end
+
+  # Returns notification settings. Must be overridden in child class to send email.
+  def notification_settings
+    return {
+      enabled: false,
+      subject: nil,
+      recipients: nil
+    }
+  end
+
+  # Gets email recipients.
+  def get_recipients
+    recipients = self.notification_settings[:recipients]
+    if recipients.include?(FOREMAN_EMAIL)
+      recipients.delete(FOREMAN_EMAIL)
+      addresses = JSON.parse(Net::HTTP.get(URI.parse(URI.escape("http://timeclock.varland.com/foremen_email.json"))))
+      addresses.each do |email|
+        recipients << email
+      end
+    end
+    return recipients
+  end
 
   # Returns parsed JSON data for all data passed by Opto controller.
   def groov_data

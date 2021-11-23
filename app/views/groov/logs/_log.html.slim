@@ -1,5 +1,5 @@
 tr
   td.align-top = log.log_at.strftime "%m/%d/%y %H:%M:%S"
-  td.align-top = log.controller_name
-  td.align-top = log.log_type
+  td.align-top = controller_badge log.controller_name
+  td.align-top = log_type_badge log
   td.align-top.text-wrap == log.details
