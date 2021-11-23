@@ -41,3 +41,6 @@ yarn-debug.log*
 **/._.DS_Store
 
 .rbenv-vars
+
+/app/models/groov/potentiometer_error.rb
+/app/models/groov/temperature_error.rb
