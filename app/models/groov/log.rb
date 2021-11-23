@@ -37,7 +37,6 @@ class Groov::Log < ApplicationRecord
 
   # Callbacks.
   after_create_commit { Groov::LogBroadcastJob.perform_now self }
-  after_create_commit :process_notification
 
   # Instance methods.
 
