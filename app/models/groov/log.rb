@@ -37,13 +37,14 @@ class Groov::Log < ApplicationRecord
 
   # Callbacks.
   after_create_commit { Groov::LogBroadcastJob.perform_now self }
+  after_create_commit :process_notification
 
   # Instance methods.
 
   # Sends notification email if configured.
   def process_notification
     if self.notification_settings[:enabled]
-      Groov::LogMailer.with(log: self).log_notification.deliver_later
+      Groov::LogMailer.with(log: self).log_notification.deliver_now
     end
   end
 
