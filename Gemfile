@@ -61,6 +61,7 @@ gem 'image_optim_pack'
 gem 'has_scope'
 gem 'activerecord_where_assoc', '~> 1.0'
 gem 'paper_trail'
+gem 'sidekiq-scheduler'
 
 gem 'capistrano', '~> 3.11'
 gem 'capistrano-rails', '~> 1.4'

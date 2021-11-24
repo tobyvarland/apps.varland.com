@@ -1,5 +1,12 @@
 ---
 :concurrency: 1
+
 :queues:
   - default
   - mailers
+
+:schedule:
+  UpdateUsersJob:
+    every: '5m'
+    queue: default
+    enabled: true
