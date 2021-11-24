@@ -37,7 +37,6 @@ class Groov::LogsController < ApplicationController
       result = @log.save
     end
     if result
-      #@log.process_notification
       return head :created
     else
       return head :unprocessable_entity
