@@ -18,7 +18,5 @@ ruby:
         th.w-1 Controller
         th.w-1 Type
         th Details
-        - if policy(Groov::Log).destroy?
-          th.text-center.w-1 Options
     tbody
       == render partial: "log", collection: @logs
