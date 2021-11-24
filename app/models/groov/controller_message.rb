@@ -45,7 +45,12 @@ class Groov::ControllerMessage < Groov::Log
 
   # Log details.
   def details
-    return "<p>#{GROOV_ERROR_CODES[self.groov_data[:controller_message][:code].to_s]}</p><p>Full details:</p><p><code>#{self.groov_data[:controller_message]}</code></p>"
+    case self.groov_data[:controller_message][:code].to_s
+    when "-539"
+      return "<p>#{GROOV_ERROR_CODES[self.groov_data[:controller_message][:code].to_s]} (<code>#{self.groov_data[:controller_message][:object]}</code>)</p>"
+    else
+      return "<p>#{GROOV_ERROR_CODES[self.groov_data[:controller_message][:code].to_s]}</p><p>Full details:</p><p><code>#{self.groov_data[:controller_message]}</code></p>"
+    end
   end
 
 end
