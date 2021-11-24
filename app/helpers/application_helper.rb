@@ -7,7 +7,7 @@ module ApplicationHelper
     case controller_name
     when "epiclc.varland.com"
       div_classes << "text-white" << "bg-pink-600"
-    when "epiclc.varland.com"
+    when "epicww.varland.com"
       div_classes << "text-white" << "bg-green-600"
     else
       div_classes << "text-dark" << "bg-light"
