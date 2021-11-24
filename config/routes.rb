@@ -75,6 +75,8 @@ Rails.application.routes.draw do
     resources :receiving_priority_notes, except: [:edit, :show]
   end
 
+  resources :users, only: [:index]
+
   # Devise routes for Google authentication.
   devise_for :users, controllers: { omniauth_callbacks: 'users/omniauth_callbacks' }
   devise_scope :user do
