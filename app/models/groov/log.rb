@@ -37,20 +37,9 @@ class Groov::Log < ApplicationRecord
 
   # Callbacks.
   after_create_commit { Groov::LogBroadcastJob.perform_now self }
-  after_create_commit { Groov::ProcessNotificationJob.perform_now self }
-  #after_create_commit :process_notification
+  after_create_commit { Groov::ProcessNotificationJob.perform_later self }
 
   # Instance methods.
-
-  # Sends notification email if configured.
-  def process_notification
-    puts "\n🔴 🟠 🟡 🟢 🔵 🟣 ⚫️ ⚪️ 🟤\n\n"
-    puts self.notification_settings
-    puts "\n🔴 🟠 🟡 🟢 🔵 🟣 ⚫️ ⚪️ 🟤\n\n"
-    if self.notification_settings[:enabled]
-      Groov::LogMailer.with(log: self).log_notification.deliver_later
-    end
-  end
 
   # Returns notification settings. Must be overridden in child class to send email.
   def notification_settings
