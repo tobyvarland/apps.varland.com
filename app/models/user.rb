@@ -1,5 +1,5 @@
 class User < ApplicationRecord
-  
+
   # Configure Devise for authentication.
   devise  :rememberable,
           :trackable,
@@ -24,7 +24,7 @@ class User < ApplicationRecord
 
   # Scopes.
   scope :by_number, -> { order(:employee_number) }
-        
+
   # Validations.
   validates :email, :name, :employee_number,
             presence: true
@@ -60,9 +60,11 @@ class User < ApplicationRecord
   # Updates user fields from System i.
   def update_fields_from_system_i
     json = User.system_i_json(self.email)
+    return if json.blank? || !json[:valid]
     self.employee_number = json[:number]
     self.title = json[:title]
     self.username = json[:username]
+    self.pin = json[:pin]
     self.save
   end
 
@@ -77,7 +79,8 @@ class User < ApplicationRecord
       name: name,
       employee_number: system_i[:number],
       title: system_i[:title],
-      username: system_i[:username]
+      username: system_i[:username],
+      pin: system_i[:pin]
     }
     create_with(user_attributes).find_or_create_by!(email: email)
   end

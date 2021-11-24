@@ -7,6 +7,6 @@
 
 :schedule:
   UpdateUsersJob:
-    every: '5m'
+    cron: '0 */5 * * * *'
     queue: default
     enabled: true
