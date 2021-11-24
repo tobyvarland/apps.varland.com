@@ -11,6 +11,9 @@ class Groov::Log < ApplicationRecord
   belongs_to  :shop_order,
               class_name: 'AS400::ShopOrder',
               optional: true
+  belongs_to  :user,
+              class_name: '::User',
+              optional: true
 
   # Validations.
   validates :controller_name,
@@ -83,6 +86,7 @@ class Groov::Log < ApplicationRecord
     json = JSON.parse(self.json_data, symbolize_names: true)
     self.log_at = json[:timestamp].present? ? Time.zone.strptime(json[:timestamp], "%m/%d/%Y %H:%M:%S") : DateTime.current
     self.shop_order_number = json[:shop_order] if json[:shop_order].present?
+    self.user = User.where(employee_number: json[:employee_number]).first if json[:employee_number].present?
     [:lane,
      :station,
      :load,
