@@ -9,6 +9,12 @@ module ApplicationHelper
       div_classes << "text-white" << "bg-pink-600"
     when "epicww.varland.com"
       div_classes << "text-white" << "bg-green-600"
+    when "epiciao.varland.com"
+      div_classes << "text-white" << "bg-red-600"
+    when "epicplant.varland.com"
+      div_classes << "text-white" << "bg-blue-600"
+    when "epicovens.varland.com"
+      div_classes << "text-white" << "bg-purple-600"
     else
       div_classes << "text-dark" << "bg-light"
     end
