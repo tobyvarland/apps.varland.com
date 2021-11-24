@@ -43,8 +43,11 @@ class Groov::Log < ApplicationRecord
 
   # Sends notification email if configured.
   def process_notification
+    puts "\n🔴 🟠 🟡 🟢 🔵 🟣 ⚫️ ⚪️ 🟤\n\n"
+    puts self.notification_settings
+    puts "\n🔴 🟠 🟡 🟢 🔵 🟣 ⚫️ ⚪️ 🟤\n\n"
     if self.notification_settings[:enabled]
-      Groov::LogMailer.with(log: self).log_notification.deliver_now
+      Groov::LogMailer.with(log: self).log_notification.deliver_later
     end
   end
 
