@@ -1,4 +1,4 @@
-class Groov::AuthenticationError < Groov::Log
+class Groov::NitrogenPackSwapped < Groov::Log
 
   # Instance methods.
 
