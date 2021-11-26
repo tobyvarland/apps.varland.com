@@ -4,10 +4,11 @@ class ReclassifyGroovLogsJob < ApplicationJob
 
   def perform
     Groov::GroovLog.all.each do |log|
-      if Object.const_defined? @log.groov_data[:type]
-        @log.type = @log.groov_data[:type]
-        @log.extract_details
-        @log.save
+      type_exists = log.groov_data[:type].constantize rescue false
+      if type_exists
+        log.type = log.groov_data[:type]
+        log.extract_details
+        log.save
       end
     end
   end
