@@ -4,7 +4,7 @@ class Groov::ControllerMessage < Groov::Log
   NOTIFYABLE_CODES = [].freeze
 
   # Codes to skip logging.
-  SKIPPABLE_CODES = ["-98"].freeze
+  SKIPPABLE_CODES = ["-98", "-539"].freeze
 
   # Validations.
   validate  :require_not_skippable
