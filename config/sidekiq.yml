@@ -7,10 +7,10 @@
 
 :schedule:
   UpdateUsersJob:
-    cron: '0 */5 * * * *'
+    cron: '0 0 * * * *'
     queue: default
     enabled: true
   ReclassifyGroovLogsJob:
-    cron: '0 */5 * * * *'
+    cron: '0 0 * * * *'
     queue: default
     enabled: true
