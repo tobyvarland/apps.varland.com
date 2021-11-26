@@ -17,7 +17,7 @@ class Groov::NitrogenPackSwapped < Groov::Log
     if self.user.present?
 			user_string = " by #{self.user.name}"
     end
-		return "<p>#{self.device} swapped#{user_string}. PSI before swap: <code>#{self.groov_data[:start_psi]} PSI</code>. PSI after swap: <code>#{self.groov_data[:end_psi]} PSI</code>.</p>"
+		return "<p><code>#{self.device}</code> swapped#{user_string}. PSI before swap: <code>#{self.groov_data[:start_psi]} PSI</code>. PSI after swap: <code>#{self.groov_data[:end_psi]} PSI</code>.</p>"
   end
 
 end

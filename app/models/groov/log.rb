@@ -86,7 +86,7 @@ class Groov::Log < ApplicationRecord
     json = JSON.parse(self.json_data, symbolize_names: true)
     self.log_at = json[:timestamp].present? ? Time.zone.strptime(json[:timestamp], "%m/%d/%Y %H:%M:%S") : DateTime.current
     self.shop_order_number = json[:shop_order] if json[:shop_order].present?
-    self.user = User.where(employee_number: json[:employee_number]).first if json[:employee_number].present?
+    self.user = User.where(employee_number: json[:employee_number]).first if json[:employee_number].present? && json[:employee_number] != 0
     [:lane,
      :station,
      :load,
