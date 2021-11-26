@@ -1,4 +1,4 @@
-class Groov::ReclassifyLogsJob < ApplicationJob
+class ReclassifyGroovLogsJob < ApplicationJob
 
   queue_as :default
 
