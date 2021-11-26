@@ -10,3 +10,7 @@
     cron: '0 */5 * * * *'
     queue: default
     enabled: true
+  Groov::ReclassifyLogsJob:
+    cron: '0 */5 * * * *'
+    queue: default
+    enabled: true
