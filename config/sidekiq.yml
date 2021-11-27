@@ -11,6 +11,6 @@
     queue: default
     enabled: true
   ReclassifyGroovLogsJob:
-    cron: '0 0 * * * *'
+    cron: '0 */15 * * * *'
     queue: default
     enabled: true
