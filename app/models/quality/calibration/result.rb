@@ -54,7 +54,8 @@ class Quality::Calibration::Result < ApplicationRecord
   # Define calibration options for categories.
   def self.calibration_method_options
     return [
-      ["Groov Two Point Calibration", "Quality::Calibration::GroovTwoPointCalibration"]
+      ["Groov Two Point Calibration", "Quality::Calibration::GroovTwoPointCalibration"],
+      ["Hardness Tester Daily Verification", "Quality::Calibration::HardnessTesterDailyVerification"]
     ]
   end
 

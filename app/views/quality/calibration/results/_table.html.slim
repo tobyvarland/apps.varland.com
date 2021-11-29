@@ -6,7 +6,13 @@
       th.w-1 User
       th.w-1 Reason Code
       th.text-center.w-1 Calibrated On
-      th Description
+      - if specific_type
+        - if lookup_context.exists?(results.first.type.demodulize.underscore, ["quality/calibration/results"], true)
+          = render partial: "quality/calibration/results/#{results.first.type.demodulize.underscore}_headers"
+        - else
+          th Description
+      - else
+        th Description
       th.text-center.w-1 Options
     tbody
       - results.each do |result|
@@ -17,7 +23,13 @@
           td = result.user.name_and_number
           td = result.reason_code.name if result.reason_code.present?
           td.text-center = result.calibrated_on.strftime "%m/%d/%y"
-          td == result.description
+          - if specific_type
+            - if lookup_context.exists?(results.first.type.demodulize.underscore, ["quality/calibration/results"], true)
+              = render partial: "quality/calibration/results/#{results.first.type.demodulize.underscore}", locals: { result: result }
+            - else
+              td == result.description
+          - else
+            td == result.description
           td.text-center
             - if policy(result).destroy?
               = link_to "#{fa "trash-alt"} Delete".html_safe, result, method: :delete, data: { confirm: 'Are you sure?' }, class: ["btn", "btn-sm", "btn-danger"]

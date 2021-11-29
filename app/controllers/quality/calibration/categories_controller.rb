@@ -53,7 +53,12 @@ class Quality::Calibration::CategoriesController < ApplicationController
                                                            :instructions_url,
                                                            :two_point_low_value,
                                                            :two_point_high_value,
-                                                           :calibration_method)
+                                                           :calibration_method,
+                                                           :rockwell_scale,
+                                                           :test_block_hardness,
+                                                           :test_block_serial,
+                                                           :maximum_error,
+                                                           :maximum_repeatability)
     end
 
 end

@@ -14,6 +14,15 @@
       .row
         .col-12.col-md-3.mt-3 = f.input :two_point_low_value, required: true, disabled: true, label: "Expected Low Value:"
         .col-12.col-md-3.mt-3 = f.input :two_point_high_value, required: true, disabled: true, label: "Expected High Value:"
+  fieldset.border.mt-3.rounded.shadow-sm.d-none.calibration-type-fields data-type="Quality::Calibration::HardnessTesterDailyVerification"
+    legend.px-3.py-2.rounded-top.mb-0 Options for Hardness Tester Daily Verifications
+    .p-3.pt-0
+      .row
+        .col-12.col-md.mt-3 = f.input :rockwell_scale, required: true, disabled: true, label: "Rockwell Scale:"
+        .col-12.col-md.mt-3 = f.input :test_block_hardness, required: true, disabled: true, label: "Test Block Hardness:"
+        .col-12.col-md.mt-3 = f.input :test_block_serial, required: true, disabled: true, label: "Test Block ID:"
+        .col-12.col-md.mt-3 = f.input :maximum_error, required: true, disabled: true, label: "Maximum Error:"
+        .col-12.col-md.mt-3 = f.input :maximum_repeatability, required: true, disabled: true, label: "Maximum Repeatability:"
 
   .form-actions
     div

@@ -9,6 +9,7 @@ Rails.application.routes.draw do
       resources :devices
       resources :results
       resources :groov_two_point_calibrations
+      resources :hardness_tester_daily_verifications
     end
   end
   resources :employee_note_subjects

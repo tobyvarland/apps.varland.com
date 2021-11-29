@@ -12,30 +12,30 @@ ruby:
     - if policy(@device).destroy?
       = link_to "#{fa "trash-alt"} Delete".html_safe, @device, method: :delete, data: { confirm: 'Are you sure?' }, class: ["btn", "btn-sm", "btn-danger", "ms-1"]
 
-.row.mb-3 
+.row.mb-3
 
   .col-12.col-md-3
 
     = card_list "Device Details",
                 @device.details
 
-  .col-12.col-md
+  .col-12.col-md-9
 
     - if @device.retired_on.blank?
       .card.bg-light.mt-3
         h6.card-header.d-flex.flex-row.align-items-center.justify-content-between
-          div Enter New Calibration 
+          div Enter New Calibration
         .card-body.p-0
           = render "quality/calibration/results/form"
 
     .card.bg-light.mt-3
       h6.card-header.d-flex.flex-row.align-items-center.justify-content-between
         div Calibration History
-      
+
       - if @device.results.length == 0
-        .card-body.bg-white 
-      
+        .card-body.bg-white
+
           .text-muted.fst-italic No history.
       - else
-        .card-body.bg-white 
-          = render partial: "quality/calibration/results/table", locals: { results: @device.results.sorted_by("newest"), show_device: false }
+        .card-body.bg-white
+          = render partial: "quality/calibration/results/table", locals: { results: @device.results.sorted_by("newest"), show_device: false, specific_type: true }
