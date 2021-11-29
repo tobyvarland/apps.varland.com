@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_11_29_153553) do
+ActiveRecord::Schema.define(version: 2021_11_29_182943) do
 
   create_table "active_storage_attachments", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "name", null: false
@@ -322,14 +322,15 @@ ActiveRecord::Schema.define(version: 2021_11_29_153553) do
     t.string "instructions_url"
     t.float "two_point_low_value"
     t.float "two_point_high_value"
-    t.boolean "calculate_offset_and_gain"
-    t.boolean "require_offset"
-    t.boolean "require_gain"
-    t.boolean "enable_notifications"
     t.datetime "discarded_at"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.string "calibration_method", null: false
+    t.string "rockwell_scale"
+    t.float "test_block_hardness"
+    t.string "test_block_serial"
+    t.float "maximum_error"
+    t.float "maximum_repeatability"
     t.index ["discarded_at"], name: "index_quality_calibration_categories_on_discarded_at"
   end
 
@@ -339,7 +340,6 @@ ActiveRecord::Schema.define(version: 2021_11_29_153553) do
     t.string "location"
     t.date "in_service_on", null: false
     t.date "retired_on"
-    t.boolean "enable_notifications", default: false, null: false
     t.datetime "discarded_at"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
@@ -353,7 +353,6 @@ ActiveRecord::Schema.define(version: 2021_11_29_153553) do
 
   create_table "quality_calibration_reason_codes", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "name", null: false
-    t.boolean "enable_notifications", default: false, null: false
     t.datetime "discarded_at"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
@@ -375,6 +374,8 @@ ActiveRecord::Schema.define(version: 2021_11_29_153553) do
     t.float "two_point_high_reading"
     t.float "two_point_offset"
     t.float "two_point_gain"
+    t.float "reading_1"
+    t.float "reading_2"
     t.index ["device_id"], name: "index_quality_calibration_results_on_device_id"
     t.index ["discarded_at"], name: "index_quality_calibration_results_on_discarded_at"
     t.index ["reason_code_id"], name: "index_quality_calibration_results_on_reason_code_id"

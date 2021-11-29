@@ -16,25 +16,23 @@ ruby:
       th Name
       th Category
       th Location
-      th.text-center.w-1 Status  
+      th.text-center.w-1 Status
       th.text-center.w-1 In Service On
-      th.text-center.w-1 Retired on 
-      th.text-center.w-1 Last Calibrated On 
+      th.text-center.w-1 Retired on
+      th.text-center.w-1 Last Calibrated On
       th.text-center.w-1 Calibration Due On
-      th.text-center.w-1 Enable Notifications 
-      th.text-center.w-1 Options 
-    tbody 
+      th.text-center.w-1 Options
+    tbody
       - @devices.each do |device|
-        tr  
-          td = device.name 
+        tr
+          td = device.name
           td = device.category.name
-          td = device.location 
+          td = device.location
           td.text-center = calibration_status_badge device.calibration_due_status
           td.text-center = device.in_service_on.strftime "%m/%d/%y"
           td.text-center = device.retired_on.strftime("%m/%d/%y") unless device.retired_on.blank?
           td.text-center = device.last_calibrated_on.strftime("%m/%d/%y") unless device.last_calibrated_on.blank?
           td.text-center = device.next_calibration_due_on.strftime("%m/%d/%y") unless device.next_calibration_due_on.blank?
-          td.text-center = fa device.enable_notifications ? "check" : "times"
           td.text-center
-            - if policy(device).show?   
+            - if policy(device).show?
               = link_to "#{fa "eye"} Details".html_safe, device, class: ["btn", "btn-sm", "btn-primary"]
