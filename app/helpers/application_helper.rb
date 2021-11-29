@@ -18,11 +18,11 @@ module ApplicationHelper
     when "next_month"
       div_classes << "text-white" << "bg-purple-500"
       text = "Next Month"
-    else
+    when "future"
       div_classes << "text-white" << "bg-green-500"
       text = "Future"
     end
-    content_tag(:div, text.upcase, class: div_classes.join(" "))
+    content_tag(:div, text.upcase, class: div_classes.join(" ")) unless text.blank?
   end
 
   def yes_no_dropdown(f, attribute, text)

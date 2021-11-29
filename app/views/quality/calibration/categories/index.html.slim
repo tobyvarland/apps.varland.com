@@ -31,7 +31,7 @@ ruby:
                 = fa "question-circle"
                 = link_to category.instructions_url, category.instructions_url, target: "_blank", class: "ms-1"
           td.text-center
-            = pluralize category.calibration_frequency, "day"
+            = pluralize(category.calibration_frequency, "day") unless category.calibration_frequency.blank?
           td.text-center
             = category.devices.length
           td.text-center

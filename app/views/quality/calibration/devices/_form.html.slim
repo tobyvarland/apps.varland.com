@@ -4,7 +4,7 @@
   = f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present?
 
   .row
-    .col-12.col-md.mt-3 = f.association :category
+    .col-12.col-md.mt-3 = f.association :category, required: true, input_html: { class: "form-select" }
     .col-12.col-md.mt-3 = f.input :name, required: true, label: "Device Name:", autofocus: true
     .col-12.col-md.mt-3 = f.input :location, required: false, label: "Location:"
     .col-12.col-md.mt-3 = f.input :in_service_on, required: true, label: "In Service On:", as: :date, html5: true, input_html: { style: "margin: 0 !important;" }

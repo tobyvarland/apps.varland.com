@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_11_29_184641) do
+ActiveRecord::Schema.define(version: 2021_11_29_192523) do
 
   create_table "active_storage_attachments", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "name", null: false
@@ -318,7 +318,7 @@ ActiveRecord::Schema.define(version: 2021_11_29_184641) do
 
   create_table "quality_calibration_categories", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "name", null: false
-    t.integer "calibration_frequency", null: false
+    t.integer "calibration_frequency"
     t.string "instructions_url"
     t.float "two_point_low_value"
     t.float "two_point_high_value"

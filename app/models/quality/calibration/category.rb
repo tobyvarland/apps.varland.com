@@ -17,8 +17,8 @@ class Quality::Calibration::Category < ApplicationRecord
             presence: true,
             uniqueness: { case_sensitive: false }
   validates :calibration_frequency,
-            presence: true,
-            numericality: { only_integer: true, greater_than: 0 }
+            numericality: { only_integer: true, greater_than: 0 },
+            allow_blank: true
   validates :two_point_low_value, :two_point_high_value,
             numericality: { greater_than: 0 },
             allow_blank: true

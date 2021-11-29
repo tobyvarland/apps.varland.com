@@ -7,7 +7,7 @@
     .col-12.col-md.mt-3 = f.input :name, required: true, label: "Name:", autofocus: true
     .col-12.col-md.mt-3 = f.input :calibration_method, required: true, label: "Calibration Method:", collection: Quality::Calibration::Result.calibration_method_options, input_html: { class: "form-select" }
     .col-12.col-md.mt-3 = f.input :instructions_url, required: false, label: "Instructions URL:", hint: "#{fa "google-drive", type: "fab"} Link to instructions in Google Drive".html_safe
-    .col-12.col-md.mt-3 = f.input :calibration_frequency, required: true, label: "Frequency:", hint: "Frequency in days"
+    .col-12.col-md.mt-3 = f.input :calibration_frequency, required: false, label: "Frequency:", hint: "Frequency in days"
   fieldset.border.mt-3.rounded.shadow-sm.d-none.calibration-type-fields data-type="Quality::Calibration::GroovTwoPointCalibration"
     legend.px-3.py-2.rounded-top.mb-0 Options for Groov Two Point Calibrations
     .p-3.pt-0

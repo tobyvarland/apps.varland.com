@@ -37,25 +37,35 @@ class Quality::Calibration::Device < ApplicationRecord
 
   # Default to Today.
   def set_next_calibration_due_date
-    self.next_calibration_due_on = Date.current 
-    self.calibration_due_status = "today"
+    if self.category.calibration_frequency.blank?
+      self.calibration_due_status = "none"
+    else  
+      self.next_calibration_due_on = Date.current 
+      self.calibration_due_status = "today"
+    end
   end
 
   # Saves calibration details before save.
   def store_calibration_details
     if self.results.length == 0
       self.last_calibrated_on = nil
-      self.next_calibration_due_on = Date.current
+      unless self.category.calibration_frequency.blank?
+        self.next_calibration_due_on = Date.current
+      end
     else
       self.last_calibrated_on = self.results.order(calibrated_on: :desc).first.calibrated_on
-      self.next_calibration_due_on = self.last_calibrated_on + self.category.calibration_frequency.days
+      unless self.category.calibration_frequency.blank?
+        self.next_calibration_due_on = self.last_calibrated_on + self.category.calibration_frequency.days
+      end
     end
     self.set_calibration_due_status
   end
 
   # Set calibration due status.
   def set_calibration_due_status
-    if self.next_calibration_due_on < Date.current 
+    if self.next_calibration_due_on.nil? 
+      self.calibration_due_status = "none"
+    elsif self.next_calibration_due_on < Date.current 
       self.calibration_due_status = "past_due"
     elsif self.next_calibration_due_on == Date.current 
       self.calibration_due_status = "today"
