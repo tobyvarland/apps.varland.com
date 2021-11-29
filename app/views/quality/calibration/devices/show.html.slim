@@ -1,16 +1,41 @@
 ruby:
-  provide(:title, 'Device Details')
+  provide(:title, "Device Details: #{@device.name}")
 
 - content_for :nav do
   = render "quality/calibration/nav"
 
 .d-flex.flex-row.align-items-center.justify-content-between.mt-3
-  h1.font-varland Device Details
+  h1.font-varland = "Device Details: #{@device.name}"
   div
     - if policy(@device).edit?
       = link_to "#{fa "edit"} Edit".html_safe, edit_quality_calibration_device_path(@device), class: ["btn", "btn-sm", "btn-primary"]
     - if policy(@device).destroy?
       = link_to "#{fa "trash-alt"} Delete".html_safe, @device, method: :delete, data: { confirm: 'Are you sure?' }, class: ["btn", "btn-sm", "btn-danger", "ms-1"]
 
-- if @device.retired_on.blank?
-  = render "quality/calibration/results/form"
+.row.mb-3 
+
+  .col-12.col-md-3
+
+    = card_list "Device Details",
+                @device.details
+
+  .col-12.col-md
+
+    - if @device.retired_on.blank?
+      .card.bg-light.mt-3
+        h6.card-header.d-flex.flex-row.align-items-center.justify-content-between
+          div Enter New Calibration 
+        .card-body.p-0
+          = render "quality/calibration/results/form"
+
+    .card.bg-light.mt-3
+      h6.card-header.d-flex.flex-row.align-items-center.justify-content-between
+        div Calibration History
+      
+      - if @device.results.length == 0
+        .card-body.bg-white 
+      
+          .text-muted.fst-italic No history.
+      - else
+        .card-body.bg-white 
+          = render partial: "quality/calibration/results/table", locals: { results: @device.results.sorted_by("newest"), show_device: false }

@@ -1,0 +1,23 @@
+.table-responsive
+  table.table.table-striped.table-hover.mb-0
+    thead.table-dark
+      - if show_device
+        th.w-1 Device
+      th.w-1 User
+      th.w-1 Reason Code
+      th.text-center.w-1 Calibrated On
+      th Description
+      th.text-center.w-1 Options
+    tbody
+      - results.each do |result|
+        - next if result.id.blank?
+        tr
+          - if show_device
+            td = result.device.name
+          td = result.user.name_and_number
+          td = result.reason_code.name if result.reason_code.present?
+          td.text-center = result.calibrated_on.strftime "%m/%d/%y"
+          td == result.description
+          td.text-center
+            - if policy(result).destroy?
+              = link_to "#{fa "trash-alt"} Delete".html_safe, result, method: :delete, data: { confirm: 'Are you sure?' }, class: ["btn", "btn-sm", "btn-danger"]

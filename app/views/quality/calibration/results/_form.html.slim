@@ -1,7 +1,5 @@
-= simple_form_for(@result, html: {class: ["vp-gray-form", "my-3"]}) do |f|
+= simple_form_for(@result, html: {class: ["vp-gray-form"]}) do |f|
 
-  .fw-700.text-uppercase.mt-3
-    | Enter New Calibration
 
   = f.association :device, as: :hidden
   = f.association :user, as: :hidden

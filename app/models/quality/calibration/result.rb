@@ -14,6 +14,14 @@ class Quality::Calibration::Result < ApplicationRecord
   default_scope -> { kept }
 
   # Scopes.
+  scope :sorted_by, ->(value) {
+    case value
+    when "oldest"
+      order(:calibrated_on)
+    else
+      order(calibrated_on: :desc)
+    end
+  }
 
   # Validations.
   validates :calibrated_on,
@@ -21,9 +29,7 @@ class Quality::Calibration::Result < ApplicationRecord
   validate  :ensure_calibration_date_not_in_future
 
   # Callbacks.
-  after_create    :update_device_calibration_details
-  after_discard   :update_device_calibration_details
-  after_undiscard :update_device_calibration_details
+  after_commit    :update_device_calibration_details
 
   # Instance methods.
 

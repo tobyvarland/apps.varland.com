@@ -2,6 +2,29 @@ module ApplicationHelper
 
   include Pagy::Frontend
 
+  def calibration_status_badge(status)
+    div_classes = ["badge"]
+    text = ""
+    case status
+    when "past_due"
+      div_classes << "text-white" << "bg-red-500"
+      text = "Past Due"
+    when "today"
+      div_classes << "text-dark" << "bg-yellow-500"
+      text = "Today"
+    when "next_week"
+      div_classes << "text-white" << "bg-blue-500"
+      text = "Next Week"
+    when "next_month"
+      div_classes << "text-white" << "bg-purple-500"
+      text = "Next Month"
+    else
+      div_classes << "text-white" << "bg-green-500"
+      text = "Future"
+    end
+    content_tag(:div, text.upcase, class: div_classes.join(" "))
+  end
+
   def yes_no_dropdown(f, attribute, text)
     f.input attribute, label: text, collection: [["Yes", true], ["No", false]], input_html: { class: "form-select" }, include_blank: false
   end
