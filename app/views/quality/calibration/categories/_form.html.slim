@@ -8,18 +8,47 @@
     .col-12.col-md.mt-3 = f.input :calibration_method, required: true, label: "Calibration Method:", collection: Quality::Calibration::Result.calibration_method_options, input_html: { class: "form-select" }
     .col-12.col-md.mt-3 = f.input :instructions_url, required: false, label: "Instructions URL:", hint: "#{fa "google-drive", type: "fab"} Link to instructions in Google Drive".html_safe
     .col-12.col-md.mt-3 = f.input :calibration_frequency, required: true, label: "Frequency:", hint: "Frequency in days"
-    .col-12.col-md.mt-3 = yes_no_dropdown f, :enable_notifications, "Notifications:"
-  fieldset.border.mt-3.rounded.shadow-sm.d-none#two-point-options
-    legend.px-3.py-2.rounded-top.mb-0 Options for Two Point Calibrations
+  fieldset.border.mt-3.rounded.shadow-sm.d-none.calibration-type-fields data-type="Quality::Calibration::GroovTwoPointCalibration"
+    legend.px-3.py-2.rounded-top.mb-0 Options for Groov Two Point Calibrations
     .p-3.pt-0
       .row
-        .col-3.mt-3 = f.input :two_point_low_value, required: false, label: "Expected Low Value:"
-        .col-3.mt-3 = f.input :two_point_high_value, required: false, label: "Expected High Value:"
-        .col-2.mt-3 = yes_no_dropdown f, :calculate_offset_and_gain, "Calculate Offset and Gain:"
-        .col-2.mt-3 = yes_no_dropdown f, :require_offset, "Require User Entry of Offset:"
-        .col-2.mt-3 = yes_no_dropdown f, :require_gain, "Require User Entry of Gain:"
+        .col-12.col-md-3.mt-3 = f.input :two_point_low_value, required: true, disabled: true, label: "Expected Low Value:"
+        .col-12.col-md-3.mt-3 = f.input :two_point_high_value, required: true, disabled: true, label: "Expected High Value:"
 
   .form-actions
     div
       = link_to "#{fa "times"} Cancel".html_safe, :back, class: ["btn", "btn-light", "btn-sm", "me-3"], tabindex: -1
       = f.button :button, "#{fa "check"} Save Category".html_safe, class: ["btn-primary", "btn-sm"]
+
+javascript:
+
+  $(function() {
+    var selectedValue = $("#quality_calibration_category_calibration_method").val();
+    $('.calibration-type-fields').each(function() {
+      var $fieldsContainer = $(this);
+      var type = $fieldsContainer.data("type");
+      if (type == selectedValue) {
+        $fieldsContainer.removeClass("d-none");
+        $fieldsContainer.find("input").prop('disabled', false);
+      } else {
+        $fieldsContainer.addClass("d-none");
+        $fieldsContainer.find("input").prop('disabled', true);
+      }
+    });
+  });
+
+  $("#quality_calibration_category_calibration_method").on("change", function() {
+    var $dropdown = $(this);
+    var selectedValue = $dropdown.val();
+    $('.calibration-type-fields').each(function() {
+      var $fieldsContainer = $(this);
+      var type = $fieldsContainer.data("type");
+      if (type == selectedValue) {
+        $fieldsContainer.removeClass("d-none");
+        $fieldsContainer.find("input").prop('disabled', false);
+      } else {
+        $fieldsContainer.addClass("d-none");
+        $fieldsContainer.find("input").prop('disabled', true);
+      }
+    });
+  });

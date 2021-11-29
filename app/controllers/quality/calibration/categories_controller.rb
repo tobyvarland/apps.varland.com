@@ -18,20 +18,20 @@ class Quality::Calibration::CategoriesController < ApplicationController
 
   def create
     @category = Quality::Calibration::Category.new(category_params)
-    authorize(@category)  
+    authorize(@category)
     if @category.save
-      redirect_to quality_calibration_categories_url, notice: "Category was successfully created." 
+      redirect_to quality_calibration_categories_url, notice: "Category was successfully created."
     else
-      render :new, status: :unprocessable_entity 
-    end  
+      render :new, status: :unprocessable_entity
+    end
   end
 
   def update
-    authorize(@category)  
+    authorize(@category)
     if @category.update(category_params)
-      redirect_to quality_calibration_categories_url, notice: "Category was successfully updated."        
+      redirect_to quality_calibration_categories_url, notice: "Category was successfully updated."
     else
-      render :edit, status: :unprocessable_entity 
+      render :edit, status: :unprocessable_entity
     end
   end
 
@@ -48,7 +48,7 @@ class Quality::Calibration::CategoriesController < ApplicationController
     end
 
     def category_params
-      params.require(:quality_calibration_category).permit(:name, :calibration_frequency, :instructions_url, :two_point_low_value, :two_point_high_value, :calculate_offset_and_gain, :require_offset, :require_gain, :enable_notifications, :calibration_method)
+      params.require(:quality_calibration_category).permit(:name, :calibration_frequency, :instructions_url, :two_point_low_value, :two_point_high_value, :calibration_method)
     end
 
 end
