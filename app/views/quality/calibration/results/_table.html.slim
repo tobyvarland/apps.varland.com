@@ -7,8 +7,8 @@
       th.w-1 Reason Code
       th.text-center.w-1 Calibrated On
       - if specific_type
-        - if lookup_context.exists?(results.first.type.demodulize.underscore, ["quality/calibration/results"], true)
-          = render partial: "quality/calibration/results/#{results.first.type.demodulize.underscore}_headers"
+        - if lookup_context.exists?(specific_type.demodulize.underscore, ["quality/calibration/results"], true)
+          = render partial: "quality/calibration/results/#{specific_type.demodulize.underscore}_headers"
         - else
           th Description
       - else
@@ -24,8 +24,8 @@
           td = result.reason_code.name if result.reason_code.present?
           td.text-center = result.calibrated_on.strftime "%m/%d/%y"
           - if specific_type
-            - if lookup_context.exists?(results.first.type.demodulize.underscore, ["quality/calibration/results"], true)
-              = render partial: "quality/calibration/results/#{results.first.type.demodulize.underscore}", locals: { result: result }
+            - if lookup_context.exists?(specific_type.demodulize.underscore, ["quality/calibration/results"], true)
+              = render partial: "quality/calibration/results/#{specific_type.demodulize.underscore}", locals: { result: result }
             - else
               td == result.description
           - else

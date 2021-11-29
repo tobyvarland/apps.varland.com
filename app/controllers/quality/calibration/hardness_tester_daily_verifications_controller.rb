@@ -19,7 +19,11 @@ class Quality::Calibration::HardnessTesterDailyVerificationsController < Quality
                                                                                      :calibrated_on,
                                                                                      :reading_1,
                                                                                      :reading_2,
-                                                                                     :test_block)
+                                                                                     :test_block,
+                                                                                     :rockwell_scale,
+                                                                                     :test_block_serial,
+                                                                                     :maximum_error,
+                                                                                     :maximum_repeatability)
     end
 
 end

@@ -38,4 +38,4 @@ ruby:
           .text-muted.fst-italic No history.
       - else
         .card-body.bg-white
-          = render partial: "quality/calibration/results/table", locals: { results: @device.results.sorted_by("newest"), show_device: false, specific_type: true }
+          = render partial: "quality/calibration/results/table", locals: { results: @device.results.sorted_by("newest"), show_device: false, specific_type: @device.category.calibration_method }

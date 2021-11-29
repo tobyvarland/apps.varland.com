@@ -4,8 +4,13 @@ class Quality::Calibration::HardnessTesterDailyVerification < Quality::Calibrati
   validates :reading_1,
             :reading_2,
             :test_block,
+            :maximum_error,
+            :maximum_repeatability,
             presence: true,
             numericality: { greater_than: 0 }
+  validates :rockwell_scale,
+            :test_block_serial,
+            presence: true
 
   # Callbacks.
   after_initialize  :load_category_defaults, if: :new_record?
@@ -36,6 +41,10 @@ class Quality::Calibration::HardnessTesterDailyVerification < Quality::Calibrati
   def load_category_defaults
     return if self.device.blank?
     self.test_block = self.device.category.test_block_hardness
+    self.rockwell_scale = self.device.category.rockwell_scale
+    self.test_block_serial = self.device.category.test_block_serial
+    self.maximum_error = self.device.category.maximum_error
+    self.maximum_repeatability = self.device.category.maximum_repeatability
   end
 
 end
