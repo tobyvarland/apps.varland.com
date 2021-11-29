@@ -24,7 +24,7 @@ class Quality::Calibration::GroovTwoPointCalibration < Quality::Calibration::Res
 
   # Description of individual calibration. Must be overridden in child class.
   def description
-    return "Performed Groov two point calibration. Tested at #{self.two_point_low_value} & #{self.two_point_high_value}. Actual readings: #{self.two_point_low_reading} & #{self.two_point_high_reading}. Calculated offset: <code>#{self.two_point_offset}</code>. Calculated gain: <code>#{self.two_point_gain}</code>."
+    return "Groov two point calibration. Tested at <code>#{self.two_point_low_value}</code> & <code>#{self.two_point_high_value}</code>. Actual readings: <code>#{self.two_point_low_reading}</code> & <code>#{self.two_point_high_reading}</code>. Calculated offset: <code>#{self.two_point_offset}</code>. Calculated gain: <code>#{self.two_point_gain}</code>."
   end
 
   # Loads two point values from device category.

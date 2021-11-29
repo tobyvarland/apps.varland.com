@@ -34,7 +34,14 @@ class Quality::Calibration::HardnessTesterDailyVerification < Quality::Calibrati
 
   # Description of individual calibration. Must be overridden in child class.
   def description
-    return "Hardness tester daily verification. Error: #{self.error}. Repeatability: #{self.repeatability}."
+    parts = ["Hardness tester daily verification."]
+    parts << "Error:"
+    parts << ApplicationController.helpers.fa("#{self.error.abs <= self.maximum_error ? "check" : "times"}-circle", text_class: "text-#{self.error.abs <= self.maximum_error ? "green" : "red"}-500")
+    parts << "<code>#{self.error}</code>."
+    parts << "Repeatability:"
+    parts << ApplicationController.helpers.fa("#{self.repeatability.abs <= self.maximum_repeatability ? "check" : "times"}-circle", text_class: "text-#{self.repeatability.abs <= self.maximum_repeatability ? "green" : "red"}-500")
+    parts << "<code>#{self.repeatability}</code>."
+    return parts.join ' '
   end
 
   # Loads two point values from device category.

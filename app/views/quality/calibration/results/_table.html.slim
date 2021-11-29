@@ -13,16 +13,17 @@
           th Description
       - else
         th Description
-      th.text-center.w-1 Options
+      - if allow_options
+        th.text-center.w-1 Options
     tbody
       - results.each do |result|
         - next if result.id.blank?
         tr
           - if show_device
-            td = result.device.name
-          td = result.user.name_and_number
-          td = result.reason_code.name if result.reason_code.present?
-          td.text-center = result.calibrated_on.strftime "%m/%d/%y"
+            td.align-top = result.device.name
+          td.align-top = result.user.name_and_number
+          td.align-top = result.reason_code.name if result.reason_code.present?
+          td.text-center.align-top = result.calibrated_on.strftime "%m/%d/%y"
           - if specific_type
             - if lookup_context.exists?(specific_type.demodulize.underscore, ["quality/calibration/results"], true)
               = render partial: "quality/calibration/results/#{specific_type.demodulize.underscore}", locals: { result: result }
@@ -30,6 +31,7 @@
               td == result.description
           - else
             td == result.description
-          td.text-center
-            - if policy(result).destroy?
-              = link_to "#{fa "trash-alt"} Delete".html_safe, result, method: :delete, data: { confirm: 'Are you sure?' }, class: ["btn", "btn-sm", "btn-danger"]
+          - if allow_options
+            td.text-center.align-top
+              - if policy(result).destroy?
+                = link_to "#{fa "trash-alt"} Delete".html_safe, result, method: :delete, data: { confirm: 'Are you sure?' }, class: ["btn", "btn-sm", "btn-danger"]
