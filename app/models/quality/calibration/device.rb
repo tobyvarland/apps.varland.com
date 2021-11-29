@@ -27,7 +27,7 @@ class Quality::Calibration::Device < ApplicationRecord
   def details
     fields = [{label: "Category", value: self.category.name}]
     fields << {label: "Location", value: self.location} unless self.location.blank?
-    fields << {label: "Calibration Status", value: ApplicationController.helpers.calibration_status_badge(self.calibration_due_status)}
+    fields << {label: "Calibration Status", value: ApplicationController.helpers.calibration_status_badge(self.calibration_due_status)} unless self.next_calibration_due_on.blank?
     fields << {label: "In Service On", value: self.in_service_on.strftime("%m/%d/%y")}
     fields << {label: "Retired On", value: self.retired_on.strftime("%m/%d/%y")} unless self.retired_on.blank?
     fields << {label: "Last Calibrated On", value: self.last_calibrated_on.strftime("%m/%d/%y")} unless self.last_calibrated_on.blank?
