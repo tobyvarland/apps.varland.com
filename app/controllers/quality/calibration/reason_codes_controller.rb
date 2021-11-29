@@ -18,20 +18,20 @@ class Quality::Calibration::ReasonCodesController < ApplicationController
 
   def create
     @reason_code = Quality::Calibration::ReasonCode.new(reason_code_params)
-    authorize(@reason_code)
+    authorize(@reason_code)  
     if @reason_code.save
-      redirect_to quality_calibration_reason_codes_url, notice: "Reason code was successfully created."
+      redirect_to quality_calibration_reason_codes_url, notice: "Reason code was successfully created." 
     else
-      render :new, status: :unprocessable_entity
-    end
+      render :new, status: :unprocessable_entity 
+    end  
   end
 
   def update
-    authorize(@reason_code)
+    authorize(@reason_code)  
     if @reason_code.update(reason_code_params)
-      redirect_to quality_calibration_reason_codes_url, notice: "Reason code was successfully updated."
+      redirect_to quality_calibration_reason_codes_url, notice: "Reason code was successfully updated."        
     else
-      render :edit, status: :unprocessable_entity
+      render :edit, status: :unprocessable_entity 
     end
   end
 
@@ -48,7 +48,7 @@ class Quality::Calibration::ReasonCodesController < ApplicationController
     end
 
     def reason_code_params
-      params.require(:quality_calibration_reason_code).permit(:name, :discarded_at)
+      params.require(:quality_calibration_reason_code).permit(:name, :enable_notifications, :discarded_at)
     end
 
 end

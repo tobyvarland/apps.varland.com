@@ -17,8 +17,10 @@ ruby:
         | Name
       th.text-center.w-1
         | Calibration Frequency
-      th.text-center.w-1
+      th.text-center.w-1 
         | # Devices
+      th.text-center.w-1
+        | Enable Notifications
       th.text-center.w-1
         | Options
     tbody
@@ -32,8 +34,10 @@ ruby:
                 = link_to category.instructions_url, category.instructions_url, target: "_blank", class: "ms-1"
           td.text-center
             = pluralize category.calibration_frequency, "day"
+          td.text-center 
+            = category.devices.length  
           td.text-center
-            = category.devices.length
+            = fa category.enable_notifications ? "check" : "times"
           td.text-center
             - if policy(category).edit?
               = link_to "#{fa "edit"} Edit".html_safe, edit_quality_calibration_category_path(category), class: ["btn", "btn-sm", "btn-primary"]

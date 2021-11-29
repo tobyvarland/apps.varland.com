@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_11_29_175657) do
+ActiveRecord::Schema.define(version: 2021_11_24_170406) do
 
   create_table "active_storage_attachments", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "name", null: false
@@ -322,6 +322,10 @@ ActiveRecord::Schema.define(version: 2021_11_29_175657) do
     t.string "instructions_url"
     t.float "two_point_low_value"
     t.float "two_point_high_value"
+    t.boolean "calculate_offset_and_gain"
+    t.boolean "require_offset"
+    t.boolean "require_gain"
+    t.boolean "enable_notifications"
     t.datetime "discarded_at"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
@@ -335,19 +339,18 @@ ActiveRecord::Schema.define(version: 2021_11_29_175657) do
     t.string "location"
     t.date "in_service_on", null: false
     t.date "retired_on"
+    t.boolean "enable_notifications", default: false, null: false
     t.datetime "discarded_at"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.datetime "results_updated_at"
-    t.date "last_calibrated_on"
-    t.date "next_calibration_due_on"
-    t.string "calibration_due_status", null: false
     t.index ["category_id"], name: "index_quality_calibration_devices_on_category_id"
     t.index ["discarded_at"], name: "index_quality_calibration_devices_on_discarded_at"
   end
 
   create_table "quality_calibration_reason_codes", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "name", null: false
+    t.boolean "enable_notifications", default: false, null: false
     t.datetime "discarded_at"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false

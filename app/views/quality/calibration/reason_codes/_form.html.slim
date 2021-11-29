@@ -3,8 +3,9 @@
   = f.error_notification
   = f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present?
 
-  .row
-    .col-12.col-md.mt-3 = f.input :name, required: true, label: "Name:", autofocus: true
+  .row 
+    .col-12.col-md-10.mt-3 = f.input :name, required: true, label: "Name:", autofocus: true 
+    .col-12.col-md-2.mt-3 = f.input :enable_notifications, label: "Notifications:", collection: [["Yes", true], ["No", false]], input_html: { class: "form-select" }, include_blank: false
 
   .form-actions
     div

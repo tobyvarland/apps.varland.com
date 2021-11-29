@@ -14,13 +14,15 @@ ruby:
   table.table.table-striped.table-hover
     thead.table-dark
       th Name
-      th.text-center.w-1 Options
-    tbody
+      th.text-center.w-1 Enable Notifications 
+      th.text-center.w-1 Options 
+    tbody 
       - @reason_codes.each do |reason_code|
-        tr
-          td = reason_code.name
+        tr  
+          td = reason_code.name 
+          td.text-center = fa reason_code.enable_notifications ? "check" : "times"
           td.text-center
             - if policy(reason_code).edit?
               = link_to "#{fa "edit"} Edit".html_safe, edit_quality_calibration_reason_code_path(reason_code), class: ["btn", "btn-sm", "btn-primary"]
-            - if policy(reason_code).destroy?
+            - if policy(reason_code).destroy?   
               = link_to "#{fa "trash-alt"} Delete".html_safe, reason_code, method: :delete, data: { confirm: 'Are you sure?' }, class: ["btn", "btn-sm", "btn-danger"]

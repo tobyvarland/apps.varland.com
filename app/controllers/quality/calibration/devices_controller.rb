@@ -55,6 +55,6 @@ class Quality::Calibration::DevicesController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def device_params
-      params.require(:quality_calibration_device).permit(:category_id, :name, :location, :in_service_on, :retired_on, :discarded_at)
+      params.require(:quality_calibration_device).permit(:category_id, :name, :location, :in_service_on, :retired_on, :enable_notifications, :discarded_at)
     end
 end
