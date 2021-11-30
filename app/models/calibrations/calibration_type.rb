@@ -36,8 +36,17 @@ class Calibrations::CalibrationType < ApplicationRecord
 						inclusion: { in: Calibrations::Result.available_methods }
 
 	# Callbacks.
+	after_update_commit	:update_assignment_dates
 
 	# Instance methods.
+
+	# Updates assignment dates when frequency changes.
+	def update_assignment_dates
+		self.assignments.each do |assignment|
+			assignment.set_next_due_date
+			assignment.save
+		end
+	end
 
 	# Class methods.
 

@@ -20,7 +20,10 @@ ruby:
   .col-12.col-md-9
 
     .card.bg-light
-      h6.card-header = "Enter New #{@calibration_type.calibration_method.demodulize.titleize}"
+      h6.card-header.d-flex.flex-row.align-items-center.justify-content-between
+        div = "Enter New #{@calibration_type.calibration_method.demodulize.titleize}"
+        - unless @calibration_type.url.blank?
+          = link_to "#{fa "link"} Instructions".html_safe, @calibration_type.url, target: "_blank", class: ["btn", "btn-sm", "btn-dark"]
       .card-body.p-0
         = render partial: "calibrations/results/calibration_type_form", locals: { result: @calibration_type.results.build(user: current_user, result_on: Date.current), type: @calibration_type.calibration_method }
 
