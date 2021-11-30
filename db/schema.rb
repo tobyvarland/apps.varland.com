@@ -226,7 +226,7 @@ ActiveRecord::Schema.define(version: 2021_11_29_213006) do
     t.bigint "calibration_type_id", null: false
     t.datetime "results_updated_at"
     t.date "last_result_on"
-    t.datetime "next_result_due_on"
+    t.date "next_result_due_on"
     t.integer "next_result_due_in_days"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
