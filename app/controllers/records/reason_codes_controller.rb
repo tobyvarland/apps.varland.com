@@ -45,8 +45,7 @@ class Records::ReasonCodesController < ApplicationController
     end
 
     def reason_code_params
-      params.require(:records_reason_code).permit(:name,
-                                                       :require_comment)
+      params.require(:records_reason_code).permit(:name)
     end
 
 end

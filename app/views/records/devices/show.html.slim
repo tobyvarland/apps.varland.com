@@ -22,11 +22,11 @@ ruby:
     - @device.assignments.each do |obj|
       .card.bg-light.mt-3
         h6.card-header.d-flex.flex-row.align-items-center.justify-content-between
-          div = "Enter New #{obj.record_type.calibration_method.demodulize.titleize}"
+          div = "Enter New #{obj.record_type.record_subclass.demodulize.titleize}"
           - unless obj.record_type.url.blank?
             = link_to "#{fa "link"} Instructions".html_safe, obj.record_type.url, target: "_blank", class: ["btn", "btn-sm", "btn-dark"]
         .card-body.p-0
-          = render partial: "records/results/device_form", locals: { result: @device.results.build(user: current_user, result_on: Date.current, record_type: obj.record_type), type: obj.record_type.calibration_method }
+          = render partial: "records/results/device_form", locals: { result: @device.results.build(user: current_user, result_on: Date.current, record_type: obj.record_type), type: obj.record_type.record_subclass }
 
     .card.bg-light.mt-3
       h6.card-header Current Status
@@ -59,4 +59,4 @@ ruby:
           = "Full History"
           - if @device.assignments.length > 1
             = link_to obj.record_type.name, obj.record_type
-        = render partial: "records/results/table_for_device", locals: { results: @device.results.for_record_type(obj.record_type_id).reverse_chronological, type: obj.record_type.calibration_method }
+        = render partial: "records/results/table_for_device", locals: { results: @device.results.for_record_type(obj.record_type_id).reverse_chronological, type: obj.record_type.record_subclass }

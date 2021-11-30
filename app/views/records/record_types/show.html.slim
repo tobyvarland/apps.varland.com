@@ -21,11 +21,11 @@ ruby:
 
     .card.bg-light
       h6.card-header.d-flex.flex-row.align-items-center.justify-content-between
-        div = "Enter New #{@record_type.calibration_method.demodulize.titleize}"
+        div = "Enter New #{@record_type.record_subclass.demodulize.titleize}"
         - unless @record_type.url.blank?
           = link_to "#{fa "link"} Instructions".html_safe, @record_type.url, target: "_blank", class: ["btn", "btn-sm", "btn-dark"]
       .card-body.p-0
-        = render partial: "records/results/record_type_form", locals: { result: @record_type.results.build(user: current_user, result_on: Date.current), type: @record_type.calibration_method }
+        = render partial: "records/results/record_type_form", locals: { result: @record_type.results.build(user: current_user, result_on: Date.current), type: @record_type.record_subclass }
 
     .card.bg-light.mt-3
       h6.card-header Current Status of Devices
@@ -54,4 +54,4 @@ ruby:
 
     .card.bg-light.mt-3
       h6.card-header Full History
-      = render partial: "records/results/table_for_record_type", locals: { results: @record_type.results.reverse_chronological, type: @record_type.calibration_method }
+      = render partial: "records/results/table_for_record_type", locals: { results: @record_type.results.reverse_chronological, type: @record_type.record_subclass }

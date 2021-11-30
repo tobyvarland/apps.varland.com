@@ -29,7 +29,7 @@ class Records::RecordType < ApplicationRecord
 	validates	:frequency,
 						numericality: { only_integer: true, greater_than: 0 },
 						allow_blank: true
-	validates :calibration_method,
+	validates :record_subclass,
 						inclusion: { in: Records::Result.available_methods }
 	validates	:expected_low,
 						:expected_high,

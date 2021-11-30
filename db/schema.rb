@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_11_30_215747) do
+ActiveRecord::Schema.define(version: 2021_11_30_220752) do
 
   create_table "active_storage_attachments", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "name", null: false
@@ -424,7 +424,7 @@ ActiveRecord::Schema.define(version: 2021_11_30_215747) do
     t.string "name", null: false
     t.integer "frequency"
     t.string "url"
-    t.string "calibration_method", null: false
+    t.string "record_subclass", null: false
     t.boolean "is_internal", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false

@@ -13,7 +13,7 @@
     .col-12.col-md.mt-3
       = f.input :result_on, label: "Date:", required: true, as: :date, html5: true, input_html: { style: "margin: 0 !important;" }
 
-  = render partial: "records/results/#{@result.record_type.calibration_method.demodulize.underscore}_fields", locals: { f: f }
+  = render partial: "records/results/#{@result.record_type.record_subclass.demodulize.underscore}_fields", locals: { f: f }
 
   .form-actions
     div
