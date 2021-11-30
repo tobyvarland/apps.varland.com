@@ -20,3 +20,13 @@
   .form-actions
     div
       = f.button :button, "#{fa "check"} Save Calibration".html_safe, class: ["btn-primary", "btn-sm"]
+
+javascript:
+  $(function() {
+    var $dropdown = $("#calibrations_result_device_id");
+    var options = $dropdown.find("option");
+    if (options.length == 2) {
+      var $option = $(options[1]);
+      $dropdown.val($option.val());
+    }
+  });
