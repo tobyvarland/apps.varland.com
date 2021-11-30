@@ -24,8 +24,21 @@ class Calibrations::Result < ApplicationRecord
   # Scopes.
   scope :kept, -> { undiscarded.joins(:calibration_type).joins(:device).merge(Calibrations::CalibrationType.kept).merge(Calibrations::Device.kept) }
   scope :for_device_and_type, ->(device, type) { where(device_id: device).where(calibration_type_id: type) }
-  scope :for_type, ->(type) { where(calibration_type_id: type) }
+  scope :for_calibration_type, ->(value) { where(calibration_type_id: value) unless value.blank? }
+  scope :for_device, ->(value) { where(device_id: value) unless value.blank? }
+  scope :for_reason_code, ->(value) { where(reason_code_id: value) unless value.blank? }
+  scope :for_user, ->(value) { where(user_id: value) unless value.blank? }
   scope :reverse_chronological, -> { order(result_on: :desc) }
+  scope :on_or_after, ->(value) { where("result_on >= ?", value) unless value.blank? }
+  scope :on_or_before,  ->(value) { where("result_on <= ?", value) unless value.blank? }
+  scope :sorted_by, ->(value) {
+    case value
+    when 'oldest'
+      order(:result_on)
+    else
+      order(result_on: :desc)
+    end
+  }
 
   # Validations.
 	validates	:result_on,
@@ -78,6 +91,11 @@ class Calibrations::Result < ApplicationRecord
   # Returns list of available methods for calibration type for dropdown.
   def self.available_methods_for_dropdown
     return Calibrations::Result.available_methods.map {|x| [x.demodulize.titleize, x]}
+  end
+
+  # Retrieves users for filter dropdown.
+  def self.users
+    return User.where("id in (select distinct user_id from calibrations_results where discarded_at is null)")
   end
 
 end

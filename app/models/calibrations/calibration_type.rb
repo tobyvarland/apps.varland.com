@@ -20,7 +20,6 @@ class Calibrations::CalibrationType < ApplicationRecord
 	accepts_nested_attributes_for :assignments, reject_if: :all_blank, allow_destroy: true
 
   # Scopes.
-	default_scope -> { by_name }
   scope :by_name, -> { order(:name) }
 
   # Validations.

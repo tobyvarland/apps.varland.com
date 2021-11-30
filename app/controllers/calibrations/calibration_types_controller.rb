@@ -3,7 +3,7 @@ class Calibrations::CalibrationTypesController < ApplicationController
   before_action :set_calibration_type, only: %i[ show edit update destroy ]
 
   def index
-    @calibration_types = Calibrations::CalibrationType.all
+    @calibration_types = Calibrations::CalibrationType.by_name
   end
 
   def show

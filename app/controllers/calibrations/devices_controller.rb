@@ -3,7 +3,7 @@ class Calibrations::DevicesController < ApplicationController
   before_action :set_device, only: %i[ show edit update destroy ]
 
   def index
-    @devices = Calibrations::Device.all
+    @devices = Calibrations::Device.by_name
   end
 
   def show

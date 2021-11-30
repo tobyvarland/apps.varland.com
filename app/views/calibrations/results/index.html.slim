@@ -7,6 +7,11 @@ ruby:
 .d-flex.flex-row.align-items-center.justify-content-between.mt-3
   h1.font-varland Calibrations
 
+= render "filter_form"
+
+.d-flex.flex-row.align-items-center.justify-content-center
+  = render partial: "shared/pagination", locals: { label: "Calibrations" }
+
 .table-responsive.my-3
   table.table.table-striped.table-hover.small
     thead.table-dark
@@ -15,7 +20,10 @@ ruby:
       th.w-1 Calibrated By
       th.w-1.text-center Date
       th.w-1 Reason
-      th Details
+      - if @calibration_type
+        = render partial: "calibrations/results/#{@calibration_type.calibration_method.demodulize.underscore}_headers"
+      - else
+        th Details
     tbody
       - @results.each do |obj|
         tr
@@ -24,4 +32,7 @@ ruby:
           td.align-top = obj.user.name_and_number
           td.align-top.text-center = obj.result_on.strftime "%m/%d/%y"
           td.align-top = obj.reason_code.name
-          td.align-top.text-wrap == obj.details
+          - if @calibration_type
+            = render partial: "calibrations/results/#{@calibration_type.calibration_method.demodulize.underscore}_data", locals: { obj: obj }
+          - else
+            td.align-top.text-wrap == obj.details

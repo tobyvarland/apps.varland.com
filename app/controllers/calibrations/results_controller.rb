@@ -2,8 +2,33 @@ class Calibrations::ResultsController < ApplicationController
 
   before_action :set_result, only: %i[ show edit update destroy ]
 
+  has_scope :sorted_by, default: "newest", allow_blank: true
+  has_scope :for_calibration_type
+  has_scope :for_device
+  has_scope :for_reason_code
+  has_scope :for_user
+  has_scope :on_or_after
+  has_scope :on_or_before
+
   def index
-    @results = Calibrations::Result.all
+    parse_filter_params
+    filters_to_cookies
+    begin
+      @calibration_type = Calibrations::CalibrationType.find(params[:for_calibration_type])
+    rescue
+      @calibration_type = nil
+    end
+    begin
+      @pagy, @results = pagy(apply_scopes(Calibrations::Result.all), items: 50)
+    rescue
+      @pagy, @results = pagy(apply_scopes(Calibrations::Result.all), items: 50, page: 1)
+    end
+    if @calibration_type.nil?
+      types = @results.map {|r| r.calibration_type_id}.uniq
+      if types.length == 1
+        @calibration_type = Calibrations::CalibrationType.find(types[0])
+      end
+    end
   end
 
   def show

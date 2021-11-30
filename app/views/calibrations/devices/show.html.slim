@@ -59,4 +59,4 @@ ruby:
           = "Full Calibration History"
           - if @device.assignments.length > 1
             = link_to obj.calibration_type.name, obj.calibration_type
-        = render partial: "calibrations/results/table_for_device", locals: { results: @device.results.for_type(obj.calibration_type_id).reverse_chronological, type: obj.calibration_type.calibration_method }
+        = render partial: "calibrations/results/table_for_device", locals: { results: @device.results.for_calibration_type(obj.calibration_type_id).reverse_chronological, type: obj.calibration_type.calibration_method }
