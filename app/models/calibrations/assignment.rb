@@ -15,6 +15,8 @@ class Calibrations::Assignment < ApplicationRecord
               inverse_of: :assignments
 
   # Scopes.
+  default_scope -> { by_due_date }
+  scope :by_due_date, -> { order("ISNULL(`next_result_due_on`), `next_result_due_on`") }
   scope :kept, -> { undiscarded.joins(:calibration_type).joins(:device).merge(Calibrations::CalibrationType.kept).merge(Calibrations::Device.kept) }
   scope :for_device_and_type, ->(device, type) { where(device_id: device).where(calibration_type_id: type) }
 
