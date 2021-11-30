@@ -15,8 +15,6 @@ class Calibrations::CalibrationType < ApplicationRecord
 						foreign_key: "calibration_type_id",
 						inverse_of: :calibration_type,
 						dependent: :restrict_with_error
-	has_many	:devices,
-						through: :assignments
 
 	# Nested attributes.
 	accepts_nested_attributes_for :assignments, reject_if: :all_blank, allow_destroy: true
@@ -46,10 +44,16 @@ class Calibrations::CalibrationType < ApplicationRecord
 
 	# Updates assignment dates when frequency changes.
 	def update_assignment_dates
+		return unless self.discarded_at.blank?
 		self.assignments.each do |assignment|
 			assignment.set_next_due_date
 			assignment.save
 		end
+	end
+
+	# Returns devices for dropdown.
+	def devices_for_dropdown
+		return self.assignments.map {|a| [a.device.name, a.device_id]}
 	end
 
 	# Class methods.

@@ -15,6 +15,7 @@ class Calibrations::Assignment < ApplicationRecord
               inverse_of: :assignments
 
   # Scopes.
+  scope :kept, -> { undiscarded.joins(:calibration_type).joins(:device).merge(Calibrations::CalibrationType.kept).merge(Calibrations::Device.kept) }
   scope :for_device_and_type, ->(device, type) { where(device_id: device).where(calibration_type_id: type) }
 
   # Validations.

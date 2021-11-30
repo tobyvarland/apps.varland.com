@@ -9,7 +9,7 @@
 
   .row
     .col-12.col-md-4.mt-3
-      = f.association :device, collection: @calibration_type.devices, label: "Device:", required: true, input_html: { class: "form-select" }
+      = f.association :device, collection: @calibration_type.devices_for_dropdown, label: "Device:", required: true, input_html: { class: "form-select" }
     .col-12.col-md-4.mt-3
       = f.association :reason_code, label: "Reason:", required: true, input_html: { class: "form-select" }
     .col-12.col-md-4.mt-3
