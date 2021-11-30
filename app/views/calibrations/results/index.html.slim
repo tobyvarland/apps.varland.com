@@ -1,0 +1,27 @@
+ruby:
+  provide(:title, 'Calibrations')
+
+- content_for :nav do
+  = render "calibrations/nav"
+
+.d-flex.flex-row.align-items-center.justify-content-between.mt-3
+  h1.font-varland Calibrations
+
+.table-responsive.my-3
+  table.table.table-striped.table-hover.small
+    thead.table-dark
+      th.w-1 Device
+      th.w-1 Calibration Type
+      th.w-1 Calibrated By
+      th.w-1.text-center Date
+      th.w-1 Reason
+      th Details
+    tbody
+      - @results.each do |obj|
+        tr
+          td.align-top = link_to obj.device.name, obj.device
+          td.align-top = link_to obj.calibration_type.name, obj.calibration_type
+          td.align-top = obj.user.name_and_number
+          td.align-top.text-center = obj.result_on.strftime "%m/%d/%y"
+          td.align-top = obj.reason_code.name
+          td.align-top.text-wrap == obj.details

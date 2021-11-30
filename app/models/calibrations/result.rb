@@ -22,6 +22,7 @@ class Calibrations::Result < ApplicationRecord
               inverse_of: :results
 
   # Scopes.
+  scope :kept, -> { undiscarded.joins(:calibration_type).joins(:device).merge(Calibrations::CalibrationType.kept).merge(Calibrations::Device.kept) }
   scope :for_device_and_type, ->(device, type) { where(device_id: device).where(calibration_type_id: type) }
   scope :for_type, ->(type) { where(calibration_type_id: type) }
   scope :reverse_chronological, -> { order(result_on: :desc) }
@@ -35,6 +36,11 @@ class Calibrations::Result < ApplicationRecord
   after_initialize  :load_defaults
 
   # Instance methods.
+
+  # Returns result details. Must be overridden in child class to provide any meaningful information.
+  def details
+    return "Must define <code>details</code> method in <code>/app/models/calibrations/#{self.class.name.demodulize.underscore}.rb</code>."
+  end
 
   # Loads default values from calibration type.
   def load_defaults
@@ -63,7 +69,6 @@ class Calibrations::Result < ApplicationRecord
   # Defines available methods for calibration type.
   def self.available_methods
     return [
-      "Calibrations::GenericCalibration",
       "Calibrations::GroovTwoPointCalibration",
       "Calibrations::HardnessTesterDailyVerification",
       "Calibrations::SaltSprayCollectionRecord"
