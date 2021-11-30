@@ -2,7 +2,7 @@ module ApplicationHelper
 
   include Pagy::Frontend
 
-  def calibration_days_badge(days)
+  def record_days_badge(days)
     classes = ["badge", "text-uppercase"]
     text = "#{pluralize(days, "day")} from now"
     case

@@ -1,0 +1,42 @@
+ruby:
+  provide(:title, 'Records')
+
+- content_for :nav do
+  = render "records/nav"
+
+.d-flex.flex-row.align-items-center.justify-content-between.mt-3
+  h1.font-varland Records
+
+= render "filter_form"
+
+.d-flex.flex-row.align-items-center.justify-content-center
+  = render partial: "shared/pagination", locals: { label: "Records" }
+
+.table-responsive.my-3
+  table.table.table-striped.table-hover.small
+    thead.table-dark
+      th.w-1 Device
+      th.w-1 Record Type
+      th.w-1 Entered By
+      th.w-1.text-center Date
+      th.w-1 Reason
+      - if @record_type
+        = render partial: "records/results/#{@record_type.calibration_method.demodulize.underscore}_headers"
+      - else
+        th Details
+      th.w-1.text-center Options
+    tbody
+      - @results.each do |obj|
+        tr
+          td.align-top = link_to obj.device.name, obj.device
+          td.align-top = link_to obj.record_type.name, obj.record_type
+          td.align-top = obj.user.name_and_number
+          td.align-top.text-center = obj.result_on.strftime "%m/%d/%y"
+          td.align-top = obj.reason_code.name
+          - if @record_type
+            = render partial: "records/results/#{@record_type.calibration_method.demodulize.underscore}_data", locals: { obj: obj }
+          - else
+            td.align-top.text-wrap == obj.details
+          td.align-top.text-center
+            = link_to "#{fa "edit"} Edit".html_safe, edit_records_result_path(obj), class: ["btn", "btn-sm", "btn-primary"]
+            = link_to "#{fa "trash-alt"} Delete".html_safe, records_result_path(obj), method: :delete, data: { confirm: 'Are you sure?' }, class: ["btn", "btn-sm", "btn-danger"]

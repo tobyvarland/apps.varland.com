@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_11_30_154353) do
+ActiveRecord::Schema.define(version: 2021_11_30_212224) do
 
   create_table "active_storage_attachments", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "name", null: false
@@ -219,95 +219,6 @@ ActiveRecord::Schema.define(version: 2021_11_30_154353) do
     t.datetime "updated_at", precision: 6, null: false
     t.index ["oven_type_id"], name: "index_baking_type_assignments_on_oven_type_id"
     t.index ["process_code_id"], name: "index_baking_type_assignments_on_process_code_id"
-  end
-
-  create_table "calibrations_assignments", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
-    t.bigint "device_id", null: false
-    t.bigint "calibration_type_id", null: false
-    t.datetime "results_updated_at"
-    t.date "last_result_on"
-    t.date "next_result_due_on"
-    t.integer "next_result_due_in_days"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.datetime "discarded_at"
-    t.index ["calibration_type_id"], name: "index_calibrations_assignments_on_calibration_type_id"
-    t.index ["device_id"], name: "index_calibrations_assignments_on_device_id"
-    t.index ["discarded_at"], name: "index_calibrations_assignments_on_discarded_at"
-  end
-
-  create_table "calibrations_calibration_types", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
-    t.string "name", null: false
-    t.integer "frequency"
-    t.string "url"
-    t.string "calibration_method", null: false
-    t.boolean "is_internal", null: false
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.datetime "discarded_at"
-    t.float "expected_low"
-    t.float "expected_high"
-    t.string "rockwell_scale"
-    t.float "test_block_hardness"
-    t.string "test_block_serial"
-    t.float "max_error"
-    t.float "max_repeatability"
-    t.index ["discarded_at"], name: "index_calibrations_calibration_types_on_discarded_at"
-  end
-
-  create_table "calibrations_devices", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
-    t.string "name", null: false
-    t.string "location"
-    t.date "in_service_on", null: false
-    t.date "retired_on"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.datetime "discarded_at"
-    t.index ["discarded_at"], name: "index_calibrations_devices_on_discarded_at"
-  end
-
-  create_table "calibrations_reason_codes", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
-    t.string "name", null: false
-    t.boolean "require_comment", default: false, null: false
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.datetime "discarded_at"
-    t.index ["discarded_at"], name: "index_calibrations_reason_codes_on_discarded_at"
-  end
-
-  create_table "calibrations_results", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
-    t.string "type"
-    t.bigint "device_id", null: false
-    t.bigint "calibration_type_id", null: false
-    t.bigint "user_id", null: false
-    t.bigint "reason_code_id", null: false
-    t.date "result_on", null: false
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.datetime "discarded_at"
-    t.float "expected_low"
-    t.float "actual_low"
-    t.float "expected_high"
-    t.float "actual_high"
-    t.float "offset"
-    t.float "gain"
-    t.string "rockwell_scale"
-    t.float "test_block_hardness"
-    t.string "test_block_serial"
-    t.float "max_error"
-    t.float "max_repeatability"
-    t.float "reading_1"
-    t.float "reading_2"
-    t.float "temperature"
-    t.float "collection_1_amount"
-    t.float "collection_1_hours"
-    t.float "collection_2_amount"
-    t.float "collection_2_hours"
-    t.index ["calibration_type_id"], name: "index_calibrations_results_on_calibration_type_id"
-    t.index ["device_id"], name: "index_calibrations_results_on_device_id"
-    t.index ["discarded_at"], name: "index_calibrations_results_on_discarded_at"
-    t.index ["reason_code_id"], name: "index_calibrations_results_on_reason_code_id"
-    t.index ["user_id"], name: "index_calibrations_results_on_user_id"
   end
 
   create_table "comments", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
@@ -545,6 +456,95 @@ ActiveRecord::Schema.define(version: 2021_11_30_154353) do
     t.index ["shop_order_id"], name: "index_quality_salt_spray_opto_post_dips_on_shop_order_id"
   end
 
+  create_table "records_assignments", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.bigint "device_id", null: false
+    t.bigint "record_type_id", null: false
+    t.datetime "results_updated_at"
+    t.date "last_result_on"
+    t.date "next_result_due_on"
+    t.integer "next_result_due_in_days"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "discarded_at"
+    t.index ["device_id"], name: "index_records_assignments_on_device_id"
+    t.index ["discarded_at"], name: "index_records_assignments_on_discarded_at"
+    t.index ["record_type_id"], name: "index_records_assignments_on_record_type_id"
+  end
+
+  create_table "records_devices", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.string "name", null: false
+    t.string "location"
+    t.date "in_service_on", null: false
+    t.date "retired_on"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "discarded_at"
+    t.index ["discarded_at"], name: "index_records_devices_on_discarded_at"
+  end
+
+  create_table "records_reason_codes", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.string "name", null: false
+    t.boolean "require_comment", default: false, null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "discarded_at"
+    t.index ["discarded_at"], name: "index_records_reason_codes_on_discarded_at"
+  end
+
+  create_table "records_record_types", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.string "name", null: false
+    t.integer "frequency"
+    t.string "url"
+    t.string "calibration_method", null: false
+    t.boolean "is_internal", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "discarded_at"
+    t.float "expected_low"
+    t.float "expected_high"
+    t.string "rockwell_scale"
+    t.float "test_block_hardness"
+    t.string "test_block_serial"
+    t.float "max_error"
+    t.float "max_repeatability"
+    t.index ["discarded_at"], name: "index_records_record_types_on_discarded_at"
+  end
+
+  create_table "records_results", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.string "type"
+    t.bigint "device_id", null: false
+    t.bigint "record_type_id", null: false
+    t.bigint "user_id", null: false
+    t.bigint "reason_code_id", null: false
+    t.date "result_on", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "discarded_at"
+    t.float "expected_low"
+    t.float "actual_low"
+    t.float "expected_high"
+    t.float "actual_high"
+    t.float "offset"
+    t.float "gain"
+    t.string "rockwell_scale"
+    t.float "test_block_hardness"
+    t.string "test_block_serial"
+    t.float "max_error"
+    t.float "max_repeatability"
+    t.float "reading_1"
+    t.float "reading_2"
+    t.float "temperature"
+    t.float "collection_1_amount"
+    t.float "collection_1_hours"
+    t.float "collection_2_amount"
+    t.float "collection_2_hours"
+    t.index ["device_id"], name: "index_records_results_on_device_id"
+    t.index ["discarded_at"], name: "index_records_results_on_discarded_at"
+    t.index ["reason_code_id"], name: "index_records_results_on_reason_code_id"
+    t.index ["record_type_id"], name: "index_records_results_on_record_type_id"
+    t.index ["user_id"], name: "index_records_results_on_user_id"
+  end
+
   create_table "reviews", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.bigint "user_id", null: false
     t.string "reviewable_type", null: false
@@ -651,12 +651,6 @@ ActiveRecord::Schema.define(version: 2021_11_30_154353) do
   add_foreign_key "baking_status_readings", "baking_ovens", column: "oven_id"
   add_foreign_key "baking_type_assignments", "baking_oven_types", column: "oven_type_id"
   add_foreign_key "baking_type_assignments", "baking_process_codes", column: "process_code_id"
-  add_foreign_key "calibrations_assignments", "calibrations_calibration_types", column: "calibration_type_id"
-  add_foreign_key "calibrations_assignments", "calibrations_devices", column: "device_id"
-  add_foreign_key "calibrations_results", "calibrations_calibration_types", column: "calibration_type_id"
-  add_foreign_key "calibrations_results", "calibrations_devices", column: "device_id"
-  add_foreign_key "calibrations_results", "calibrations_reason_codes", column: "reason_code_id"
-  add_foreign_key "calibrations_results", "users"
   add_foreign_key "comments", "users"
   add_foreign_key "employee_note_subjects", "employee_notes"
   add_foreign_key "employee_note_subjects", "users"
@@ -676,6 +670,12 @@ ActiveRecord::Schema.define(version: 2021_11_30_154353) do
   add_foreign_key "quality_reject_tags", "quality_reject_tags", column: "source_id"
   add_foreign_key "quality_reject_tags", "users"
   add_foreign_key "quality_salt_spray_opto_post_dips", "as400_shop_orders", column: "shop_order_id"
+  add_foreign_key "records_assignments", "records_devices", column: "device_id"
+  add_foreign_key "records_assignments", "records_record_types", column: "record_type_id"
+  add_foreign_key "records_results", "records_devices", column: "device_id"
+  add_foreign_key "records_results", "records_reason_codes", column: "reason_code_id"
+  add_foreign_key "records_results", "records_record_types", column: "record_type_id"
+  add_foreign_key "records_results", "users"
   add_foreign_key "reviews", "users"
   add_foreign_key "shift_notes", "users"
   add_foreign_key "shipping_receiving_priority_notes", "users", column: "completed_by_user_id", name: "fk_recnotes_comp_user"

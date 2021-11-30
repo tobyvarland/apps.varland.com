@@ -3,9 +3,9 @@ require 'sidekiq-scheduler/web'
 
 Rails.application.routes.draw do
 
-  namespace :calibrations do
+  namespace :records do
     resources :devices
-    resources :calibration_types
+    resources :record_types
     resources :reason_codes, except: :show
     resources :results
   end

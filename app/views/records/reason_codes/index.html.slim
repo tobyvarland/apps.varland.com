@@ -1,0 +1,25 @@
+ruby:
+  provide(:title, 'Reason Codes')
+
+- content_for :nav do
+  = render "records/nav"
+
+.d-flex.flex-row.align-items-center.justify-content-between.mt-3
+  h1.font-varland Reason Codes
+  div
+		= link_to "#{fa 'plus'} Reason Code".html_safe, new_records_reason_code_path, class: ["btn", "btn-sm", "btn-primary"]
+
+.table-responsive.my-3
+  table.table.table-striped.table-hover
+    thead.table-dark
+      th Name
+      th.text-center.w-1 Require Comment?
+      th.text-center.w-1 Options
+    tbody
+      - @reason_codes.each do |obj|
+        tr
+          td.fw-700 = obj.name
+          td.text-center = boolean_icon obj.require_comment
+          td.text-center
+            = link_to "#{fa "edit"} Edit".html_safe, edit_records_reason_code_path(obj), class: ["btn", "btn-sm", "btn-primary"]
+            = link_to "#{fa "trash-alt"} Delete".html_safe, obj, method: :delete, data: { confirm: 'Are you sure?' }, class: ["btn", "btn-sm", "btn-danger"]

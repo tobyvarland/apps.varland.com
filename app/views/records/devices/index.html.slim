@@ -1,0 +1,38 @@
+ruby:
+  provide(:title, 'Devices')
+
+- content_for :nav do
+  = render "records/nav"
+
+.d-flex.flex-row.align-items-center.justify-content-between.mt-3
+  h1.font-varland Devices
+  div
+		= link_to "#{fa 'plus'} Device".html_safe, new_records_device_path, class: ["btn", "btn-sm", "btn-primary"]
+
+.table-responsive.my-3
+  table.table.table-striped.table-hover
+    thead.table-dark
+      th Name
+      th Status
+      th.text-center.w-1 Options
+    tbody
+      - @devices.each do |obj|
+        tr
+          td.align-top
+            .fw-700 = obj.name
+            table.m-0
+              tbody
+                - unless obj.location.blank?
+                  tr
+                    td.small.text-uncolor.text-end.pe-1 Location:
+                    td.small.fst-italic = obj.location
+                tr
+                  td.small.text-uncolor.text-end.pe-1 In Service:
+                  td.small.fst-italic = obj.in_service_on.strftime "%m/%d/%y"
+                - unless obj.retired_on.blank?
+                  tr
+                    td.small.text-uncolor.text-end.pe-1 Retired:
+                    td.small.fst-italic = obj.retired_on.strftime "%m/%d/%y"
+          td.align-top == render partial: "records/assignments/assignments_for_device", locals: { assignments: obj.assignments }
+          td.text-center.align-top
+            = link_to "#{fa "eye"} Details".html_safe, obj, class: ["btn", "btn-sm", "btn-primary"]

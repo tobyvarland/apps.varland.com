@@ -1,0 +1,37 @@
+= simple_form_for(@device, html: {class: ["vp-gray-form", "my-3"]}) do |f|
+
+  = f.error_notification
+  = f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present?
+
+  .row
+    .col-12.col-md-8
+      .row
+        .col-12.mt-3 = f.input :name, required: true, label: "Name:", autofocus: true
+      .row
+        .col-12.mt-3 = f.input :location, required: false, label: "Location:"
+      .row
+        .col-12.col-md-6.mt-3 = f.input :in_service_on, required: true, label: "In Service Date:", as: :date, html5: true, input_html: { style: "margin: 0 !important;" }
+        - unless @device.id.blank?
+          .col-12.col-md-6.mt-3 = f.input :retired_on, required: false, label: "Retirement Date:", as: :date, html5: true, input_html: { style: "margin: 0 !important;" }
+    .col-12.col-md-4
+      .shadow-sm.border.p-3.rounded.mt-3
+        table.table.table-bordered.table-striped.table-hover.mb-0
+          thead.table-secondary
+            tr
+              th.col-11.label Record Type
+              th.col-1.text-center
+                = link_to_add_association fa("plus"),
+                                          f,
+                                          :assignments,
+                                          class: ["btn", "btn-sm", "btn-secondary"],
+                                          'data-association-insertion-node': "#assignments",
+                                          'data-association-insertion-method': "prepend",
+                                          partial: "records/assignments/record_type_fields"
+          tbody id="assignments"
+            = f.simple_fields_for :assignments do |assignment|
+              = render "records/assignments/record_type_fields", f: assignment
+
+  .form-actions
+    div
+      = link_to "#{fa "times"} Cancel".html_safe, @device.id.blank? ? records_devices_path : @device, class: ["btn", "btn-light", "btn-sm", "me-3"], tabindex: -1
+      = f.button :button, "#{fa "check"} Save Device".html_safe, class: ["btn-primary", "btn-sm"]
