@@ -63,7 +63,12 @@ class Calibrations::ResultsController < ApplicationController
                                                   :max_error,
                                                   :max_repeatability,
                                                   :reading_1,
-                                                  :reading_2)
+                                                  :reading_2,
+                                                  :temperature,
+                                                  :collection_1_amount,
+                                                  :collection_1_hours,
+                                                  :collection_2_amount,
+                                                  :collection_2_hours)
     end
 
 end

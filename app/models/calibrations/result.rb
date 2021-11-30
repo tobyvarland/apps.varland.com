@@ -65,7 +65,8 @@ class Calibrations::Result < ApplicationRecord
     return [
       "Calibrations::GenericCalibration",
       "Calibrations::GroovTwoPointCalibration",
-      "Calibrations::HardnessTesterDailyVerification"
+      "Calibrations::HardnessTesterDailyVerification",
+      "Calibrations::SaltSprayCollectionRecord"
     ].sort
   end
 

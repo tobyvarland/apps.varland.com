@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_11_30_052253) do
+ActiveRecord::Schema.define(version: 2021_11_30_154353) do
 
   create_table "active_storage_attachments", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "name", null: false
@@ -298,6 +298,11 @@ ActiveRecord::Schema.define(version: 2021_11_30_052253) do
     t.float "max_repeatability"
     t.float "reading_1"
     t.float "reading_2"
+    t.float "temperature"
+    t.float "collection_1_amount"
+    t.float "collection_1_hours"
+    t.float "collection_2_amount"
+    t.float "collection_2_hours"
     t.index ["calibration_type_id"], name: "index_calibrations_results_on_calibration_type_id"
     t.index ["device_id"], name: "index_calibrations_results_on_device_id"
     t.index ["discarded_at"], name: "index_calibrations_results_on_discarded_at"

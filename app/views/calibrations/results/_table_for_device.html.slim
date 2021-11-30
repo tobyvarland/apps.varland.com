@@ -7,7 +7,7 @@
         th.px-3 Calibration Type
         th.px-3 Calibrated By
         th.px-3.text-center Date
-        th.px-3.text-center Reason
+        th.px-3 Reason
         = render partial: "calibrations/results/#{type.demodulize.underscore}_headers"
     tbody
       - results.each do |obj|
@@ -16,5 +16,5 @@
           td.px-3 = link_to obj.calibration_type.name, obj.calibration_type
           td.px-3 = obj.user.name_and_number
           td.px-3.text-center = obj.result_on.strftime "%m/%d/%y"
-          td.px-3.text-center = obj.reason_code.name
+          td.px-3 = obj.reason_code.name
           = render partial: "calibrations/results/#{type.demodulize.underscore}_data", locals: { obj: obj }
