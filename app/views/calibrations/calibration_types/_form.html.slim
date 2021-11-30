@@ -1,0 +1,20 @@
+= simple_form_for(@calibration_type, html: {class: ["vp-gray-form", "my-3"]}) do |f|
+
+  = f.error_notification
+  = f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present?
+
+  .row
+    .col-12.col-md-6
+      .row
+        .col-12.mt-3 = f.input :name, required: true, label: "Name:", autofocus: true
+      .row
+        .col-12.mt-3 = f.input :url, required: false, label: "URL:", hint: "#{fa "google-drive", type: "fab"} Link to instructions on Google Drive".html_safe
+      .row
+        .col-12.col-md-4.mt-3 = f.input :frequency, required: false, label: "Frequency:", hint: "Unit is days, blank for as needed"
+        .col-12.col-md-4.mt-3 = yes_no_dropdown f, :is_internal, "Internal:"
+        .col-12.col-md-4.mt-3 = f.input :calibration_method, required: true, label: "Method:", collection: Calibrations::Result.available_methods_for_dropdown, input_html: { class: "form-select" }
+
+  .form-actions
+    div
+      = link_to "#{fa "times"} Cancel".html_safe, calibrations_calibration_types_url, class: ["btn", "btn-light", "btn-sm", "me-3"], tabindex: -1
+      = f.button :button, "#{fa "check"} Save Calibration Type".html_safe, class: ["btn-primary", "btn-sm"]

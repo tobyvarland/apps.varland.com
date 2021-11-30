@@ -3,6 +3,12 @@ require 'sidekiq-scheduler/web'
 
 Rails.application.routes.draw do
 
+  namespace :calibrations do
+    resources :devices
+    resources :calibration_types
+    resources :reason_codes, except: :show
+    resources :results
+  end
   namespace :groov do
     get "logs/live/:controller_name", to: "logs#live", constraints: { controller_name: /.*/ }
     resources :logs, only: [:index, :destroy, :create] do

@@ -1,0 +1,13 @@
+= simple_form_for(@reason_code, html: {class: ["vp-gray-form", "my-3"]}) do |f|
+
+  = f.error_notification
+  = f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present?
+
+  .row
+    .col-12.col-md-10.mt-3 = f.input :name, required: true, label: "Name:", autofocus: true
+    .col-12.col-md-2.mt-3 = yes_no_dropdown f, :require_comment, "Require Comment:"
+
+  .form-actions
+    div
+      = link_to "#{fa "times"} Cancel".html_safe, calibrations_reason_codes_url, class: ["btn", "btn-light", "btn-sm", "me-3"], tabindex: -1
+      = f.button :button, "#{fa "check"} Save Reason Code".html_safe, class: ["btn-primary", "btn-sm"]

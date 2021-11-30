@@ -1,0 +1,10 @@
+ruby:
+  provide(:title, 'Edit Calibration Type')
+
+- content_for :nav do
+  = render "calibrations/nav"
+
+.d-flex.flex-row.align-items-center.justify-content-between.mt-3
+  h1.font-varland Edit Calibration Type
+
+= render 'form'

@@ -1,0 +1,39 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Calibrations Results</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Type</th>
+      <th>Device</th>
+      <th>Calibration type</th>
+      <th>User</th>
+      <th>Reason code</th>
+      <th>Result on</th>
+      <th>Discarded at</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @results.each do |calibrations_result| %>
+      <tr>
+        <td><%= calibrations_result.type %></td>
+        <td><%= calibrations_result.device_id %></td>
+        <td><%= calibrations_result.calibration_type_id %></td>
+        <td><%= calibrations_result.user_id %></td>
+        <td><%= calibrations_result.reason_code_id %></td>
+        <td><%= calibrations_result.result_on %></td>
+        <td><%= calibrations_result.discarded_at %></td>
+        <td><%= link_to 'Show', calibrations_result %></td>
+        <td><%= link_to 'Edit', edit_calibrations_result_path(calibrations_result) %></td>
+        <td><%= link_to 'Destroy', calibrations_result, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Calibrations Result', new_calibrations_result_path %>

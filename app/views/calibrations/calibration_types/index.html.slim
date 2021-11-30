@@ -1,0 +1,34 @@
+ruby:
+  provide(:title, 'Calibration Types')
+
+- content_for :nav do
+  = render "calibrations/nav"
+
+.d-flex.flex-row.align-items-center.justify-content-between.mt-3
+  h1.font-varland Calibration Types
+  div
+		= link_to "#{fa 'plus'} Calibration Type".html_safe, new_calibrations_calibration_type_path, class: ["btn", "btn-sm", "btn-primary"]
+
+.table-responsive.my-3
+  table.table.table-striped.table-hover
+    thead.table-dark
+      th Name
+      th.text-center.w-1 Frequency
+      th.text-center.w-1 Type
+      th.text-center.w-1 Internal?
+      th.text-center.w-1 Options
+    tbody
+      - @calibration_types.each do |obj|
+        tr
+          td
+            .fw-700 = obj.name
+            - unless obj.url.blank?
+              .small
+                = fa "link"
+                = link_to obj.url, obj.url, target: "_blank", class: "ms-1"
+          td.text-center = pluralize(obj.frequency, "day") unless obj.frequency.blank?
+          td.text-center = obj.calibration_method.demodulize.titleize
+          td.text-center = boolean_icon obj.is_internal
+          td.text-center
+            = link_to "#{fa "edit"} Edit".html_safe, edit_calibrations_calibration_type_path(obj), class: ["btn", "btn-sm", "btn-primary"]
+            = link_to "#{fa "trash-alt"} Delete".html_safe, obj, method: :delete, data: { confirm: 'Are you sure?' }, class: ["btn", "btn-sm", "btn-danger"]
