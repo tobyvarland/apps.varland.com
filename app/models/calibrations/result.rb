@@ -38,9 +38,15 @@ class Calibrations::Result < ApplicationRecord
 
   # Loads default values from calibration type.
   def load_defaults
+    return unless self.id.blank?
     return if self.calibration_type.blank?
     [:expected_low,
-     :expected_high].each do |attr|
+     :expected_high,
+     :rockwell_scale,
+     :test_block_hardness,
+     :test_block_serial,
+     :max_error,
+     :max_repeatability].each do |attr|
       self[attr] = self.calibration_type[attr] unless self.calibration_type[attr].blank?
     end
   end
@@ -58,7 +64,8 @@ class Calibrations::Result < ApplicationRecord
   def self.available_methods
     return [
       "Calibrations::GenericCalibration",
-      "Calibrations::GroovTwoPointCalibration"
+      "Calibrations::GroovTwoPointCalibration",
+      "Calibrations::HardnessTesterDailyVerification"
     ].sort
   end
 

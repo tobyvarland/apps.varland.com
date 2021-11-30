@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_11_30_044646) do
+ActiveRecord::Schema.define(version: 2021_11_30_052253) do
 
   create_table "active_storage_attachments", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "name", null: false
@@ -247,6 +247,11 @@ ActiveRecord::Schema.define(version: 2021_11_30_044646) do
     t.datetime "discarded_at"
     t.float "expected_low"
     t.float "expected_high"
+    t.string "rockwell_scale"
+    t.float "test_block_hardness"
+    t.string "test_block_serial"
+    t.float "max_error"
+    t.float "max_repeatability"
     t.index ["discarded_at"], name: "index_calibrations_calibration_types_on_discarded_at"
   end
 
@@ -286,6 +291,13 @@ ActiveRecord::Schema.define(version: 2021_11_30_044646) do
     t.float "actual_high"
     t.float "offset"
     t.float "gain"
+    t.string "rockwell_scale"
+    t.float "test_block_hardness"
+    t.string "test_block_serial"
+    t.float "max_error"
+    t.float "max_repeatability"
+    t.float "reading_1"
+    t.float "reading_2"
     t.index ["calibration_type_id"], name: "index_calibrations_results_on_calibration_type_id"
     t.index ["device_id"], name: "index_calibrations_results_on_device_id"
     t.index ["discarded_at"], name: "index_calibrations_results_on_discarded_at"

@@ -52,6 +52,11 @@ class Calibrations::CalibrationTypesController < ApplicationController
                                                             :is_internal,
                                                             :expected_low,
                                                             :expected_high,
+                                                            :rockwell_scale,
+                                                            :test_block_hardness,
+                                                            :test_block_serial,
+                                                            :max_error,
+                                                            :max_repeatability,
                                                             assignments_attributes: [:id, :device_id, :_destroy])
     end
 

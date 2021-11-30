@@ -1,0 +1,9 @@
+td.px-3.text-center = obj.reading_1
+td.px-3.text-center = obj.reading_2
+td.px-3.text-center = obj.average.round(2)
+td.px-3.text-center
+  span.me-1 = obj.error.round(2)
+  = boolean_icon obj.error.abs <= obj.max_error, true_text: "valid", false_text: "invalid"
+td.px-3.text-center
+  span.me-1 = obj.repeatability.round(2)
+  = boolean_icon obj.repeatability <= obj.max_repeatability, true_text: "valid", false_text: "invalid"

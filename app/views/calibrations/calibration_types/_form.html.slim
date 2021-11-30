@@ -4,7 +4,7 @@
   = f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present?
 
   .row
-    .col-12.col-md-6
+    .col-12.col-md-8
       .row
         .col-12.mt-3 = f.input :name, required: true, label: "Name:", autofocus: true
       .row
@@ -17,9 +17,18 @@
         legend.px-3.py-2.rounded-top.mb-0 Options for Groov Two Point Calibrations
         .p-3.pt-0
           .row
-            .col-6.mt-3 = f.input :expected_low, required: false, label: "Expected Low Value:"
-            .col-6.mt-3 = f.input :expected_high, required: false, label: "Expected High Value:"
-    .col-12.col-md-6
+            .col-6.mt-3 = f.input :expected_low, required: true, disabled: true, label: "Expected Low Value:"
+            .col-6.mt-3 = f.input :expected_high, required: true, disabled: true, label: "Expected High Value:"
+      fieldset.border.mt-3.rounded.shadow-sm.d-none.calibration-type-fields data-type="Calibrations::HardnessTesterDailyVerification"
+        legend.px-3.py-2.rounded-top.mb-0 Options for Hardness Tester Daily Verifications
+        .p-3.pt-0
+          .row
+            .col.mt-3 = f.input :rockwell_scale, required: true, disabled: true, label: "Rockwell Scale:"
+            .col.mt-3 = f.input :test_block_hardness, required: true, disabled: true, label: "Test Block Hardness:"
+            .col.mt-3 = f.input :test_block_serial, required: true, disabled: true, label: "Test Block ID:"
+            .col.mt-3 = f.input :max_error, required: true, disabled: true, label: "Max Error:"
+            .col.mt-3 = f.input :max_repeatability, required: true, disabled: true, label: "Max Repeatability:"
+    .col-12.col-md-4
       .shadow-sm.border.p-3.rounded.mt-3
         table.table.table-bordered.table-striped.table-hover.mb-0
           thead.table-secondary

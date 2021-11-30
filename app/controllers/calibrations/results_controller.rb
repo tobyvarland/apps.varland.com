@@ -56,7 +56,14 @@ class Calibrations::ResultsController < ApplicationController
                                                   :expected_high,
                                                   :actual_high,
                                                   :offset,
-                                                  :gain)
+                                                  :gain,
+                                                  :rockwell_scale,
+                                                  :test_block_hardness,
+                                                  :test_block_serial,
+                                                  :max_error,
+                                                  :max_repeatability,
+                                                  :reading_1,
+                                                  :reading_2)
     end
 
 end

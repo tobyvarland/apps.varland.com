@@ -4,7 +4,7 @@
   = f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present?
 
   .row
-    .col-12.col-md-6
+    .col-12.col-md-8
       .row
         .col-12.mt-3 = f.input :name, required: true, label: "Name:", autofocus: true
       .row
@@ -13,7 +13,7 @@
         .col-12.col-md-6.mt-3 = f.input :in_service_on, required: true, label: "In Service Date:", as: :date, html5: true, input_html: { style: "margin: 0 !important;" }
         - unless @device.id.blank?
           .col-12.col-md-6.mt-3 = f.input :retired_on, required: false, label: "Retirement Date:", as: :date, html5: true, input_html: { style: "margin: 0 !important;" }
-    .col-12.col-md-6
+    .col-12.col-md-4
       .shadow-sm.border.p-3.rounded.mt-3
         table.table.table-bordered.table-striped.table-hover.mb-0
           thead.table-secondary
