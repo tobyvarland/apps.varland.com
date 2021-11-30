@@ -32,16 +32,16 @@ module ApplicationHelper
     true_class = options.fetch(:true_class, "text-green-700")
     false_class = options.fetch(:false_class, "text-red-700")
     true_text = options.fetch(:true_text, "Yes")
-    false_text = options.fetch(:true_text, "No")
+    false_text = options.fetch(:false_text, "No")
     classes = []
     classes << "text-uppercase" if uppercase
     classes << "fw-700" if bold
     if value
       classes << true_class
-      content_tag :div, "#{fa "check"}#{show_text ? " #{true_text}" : ""}".html_safe, class: classes
+      content_tag :span, "#{fa "check"}#{show_text ? " #{true_text}" : ""}".html_safe, class: classes
     else
       classes << false_class
-      content_tag :div, "#{fa "times"}#{show_text ? " #{false_text}" : ""}".html_safe, class: classes
+      content_tag :span, "#{fa "times"}#{show_text ? " #{false_text}" : ""}".html_safe, class: classes
     end
   end
 
