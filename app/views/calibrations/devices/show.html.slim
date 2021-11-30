@@ -1,0 +1,12 @@
+ruby:
+  provide(:title, "Device Details: #{@device.name}")
+
+- content_for :nav do
+  = render "calibrations/nav"
+
+.d-flex.flex-row.align-items-center.justify-content-between.mt-3
+  h1.font-varland = "Device Details: #{@device.name}"
+  div
+    = link_to "#{fa "list-alt"} All Devices".html_safe, calibrations_devices_url, class: ["btn", "btn-sm", "btn-primary"]
+    = link_to "#{fa "edit"} Edit".html_safe, edit_calibrations_device_path(@device), class: ["btn", "btn-sm", "btn-primary", "ms-1"]
+    = link_to "#{fa "trash-alt"} Delete".html_safe, @device, method: :delete, data: { confirm: 'Are you sure?' }, class: ["btn", "btn-sm", "btn-danger", "ms-1"]
