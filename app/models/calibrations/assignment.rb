@@ -50,8 +50,13 @@ class Calibrations::Assignment < ApplicationRecord
       else
         self.next_result_due_on = self.last_result_on + self.calibration_type.frequency.days
       end
-      self.next_result_due_in_days = (self.next_result_due_on - Date.current).to_i
+      self.update_days_until_due
     end
+  end
+
+  # Updates days until due.
+  def update_days_until_due
+    self.next_result_due_in_days = self.next_result_due_on.blank? ? nil : (self.next_result_due_on - Date.current).to_i
   end
 
   # Initialize due date.
