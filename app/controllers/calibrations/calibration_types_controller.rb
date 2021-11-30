@@ -50,6 +50,8 @@ class Calibrations::CalibrationTypesController < ApplicationController
                                                             :url,
                                                             :calibration_method,
                                                             :is_internal,
+                                                            :expected_low,
+                                                            :expected_high,
                                                             assignments_attributes: [:id, :device_id, :_destroy])
     end
 

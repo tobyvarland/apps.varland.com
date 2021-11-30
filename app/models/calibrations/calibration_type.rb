@@ -34,6 +34,10 @@ class Calibrations::CalibrationType < ApplicationRecord
 						allow_blank: true
 	validates :calibration_method,
 						inclusion: { in: Calibrations::Result.available_methods }
+	validates	:expected_low,
+						:expected_high,
+						numericality: true,
+						allow_blank: true
 
 	# Callbacks.
 	after_update_commit	:update_assignment_dates

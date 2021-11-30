@@ -31,9 +31,19 @@ class Calibrations::Result < ApplicationRecord
             presence: true
 
   # Callbacks.
-  after_commit  :update_assignment
+  after_commit      :update_assignment
+  after_initialize  :load_defaults
 
   # Instance methods.
+
+  # Loads default values from calibration type.
+  def load_defaults
+    return if self.calibration_type.blank?
+    [:expected_low,
+     :expected_high].each do |attr|
+      self[attr] = self.calibration_type[attr] unless self.calibration_type[attr].blank?
+    end
+  end
 
   # Updates assignment after database update.
   def update_assignment
