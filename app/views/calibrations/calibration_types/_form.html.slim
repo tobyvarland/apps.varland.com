@@ -13,6 +13,23 @@
         .col-12.col-md-4.mt-3 = f.input :frequency, required: false, label: "Frequency:", hint: "Unit is days, blank for as needed"
         .col-12.col-md-4.mt-3 = yes_no_dropdown f, :is_internal, "Internal:"
         .col-12.col-md-4.mt-3 = f.input :calibration_method, required: true, label: "Method:", collection: Calibrations::Result.available_methods_for_dropdown, input_html: { class: "form-select" }
+    .col-12.col-md-6
+      .shadow-sm.border.p-3.rounded.mt-3
+        table.table.table-bordered.table-striped.table-hover.mb-0
+          thead.table-secondary
+            tr
+              th.col-11.label Device
+              th.col-1.text-center
+                = link_to_add_association fa("plus"),
+                                          f,
+                                          :assignments,
+                                          class: ["btn", "btn-sm", "btn-secondary"],
+                                          'data-association-insertion-node': "#assignments",
+                                          'data-association-insertion-method': "prepend",
+                                          partial: "calibrations/assignments/device_fields"
+          tbody id="assignments"
+            = f.simple_fields_for :assignments do |assignment|
+              = render "calibrations/assignments/device_fields", f: assignment
 
   .form-actions
     div

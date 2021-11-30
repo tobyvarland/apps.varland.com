@@ -48,7 +48,8 @@ class Calibrations::DevicesController < ApplicationController
       params.require(:calibrations_device).permit(:name,
                                                   :location,
                                                   :in_service_on,
-                                                  :retired_on)
+                                                  :retired_on,
+                                                  assignments_attributes: [:id, :calibration_type_id, :_destroy])
     end
 
 end

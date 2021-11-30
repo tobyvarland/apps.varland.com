@@ -16,6 +16,9 @@ class Calibrations::Device < ApplicationRecord
 						inverse_of: :device,
 						dependent: :restrict_with_error
 
+	# Nested attributes.
+	accepts_nested_attributes_for :assignments, reject_if: :all_blank, allow_destroy: true
+
   # Scopes.
 
   # Validations.

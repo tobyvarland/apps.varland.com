@@ -16,6 +16,9 @@ class Calibrations::CalibrationType < ApplicationRecord
 						inverse_of: :calibration_type,
 						dependent: :restrict_with_error
 
+	# Nested attributes.
+	accepts_nested_attributes_for :assignments, reject_if: :all_blank, allow_destroy: true
+
   # Scopes.
 
   # Validations.

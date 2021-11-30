@@ -19,7 +19,7 @@ class Calibrations::CalibrationTypesController < ApplicationController
   def create
     @calibration_type = Calibrations::CalibrationType.new(calibration_type_params)
     if @calibration_type.save
-      redirect_to @calibration_type, notice: "Calibration type was successfully created."
+      redirect_to calibrations_calibration_types_url, notice: "Calibration type was successfully created."
     else
       render :new, status: :unprocessable_entity
     end
@@ -27,7 +27,7 @@ class Calibrations::CalibrationTypesController < ApplicationController
 
   def update
     if @calibration_type.update(calibration_type_params)
-      redirect_to @calibration_type, notice: "Calibration type was successfully updated."
+      redirect_to calibrations_calibration_types_url, notice: "Calibration type was successfully updated."
     else
       render :edit, status: :unprocessable_entity
     end
@@ -49,7 +49,8 @@ class Calibrations::CalibrationTypesController < ApplicationController
                                                             :frequency,
                                                             :url,
                                                             :calibration_method,
-                                                            :is_internal)
+                                                            :is_internal,
+                                                            assignments_attributes: [:id, :device_id, :_destroy])
     end
 
 end
