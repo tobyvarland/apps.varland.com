@@ -47,7 +47,8 @@ class Calibrations::Result < ApplicationRecord
   # Defines available methods for calibration type.
   def self.available_methods
     return [
-      "Calibrations::GenericCalibration"
+      "Calibrations::GenericCalibration",
+      "Calibrations::GroovTwoPointCalibration"
     ].sort
   end
 

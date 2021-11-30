@@ -1,0 +1,10 @@
+fieldset.border.mt-3.rounded.shadow-sm
+  legend.px-3.py-2.rounded-top.mb-0 Groov Two Point Calibration Results
+  .p-3.pt-0
+    .row
+      .col-12.col-md.mt-3 = f.input :expected_low, label: "Expected Low:", required: true
+      .col-12.col-md.mt-3 = f.input :actual_low, label: "Actual Low:", required: true, hint: "Read by Groov"
+      .col-12.col-md.mt-3 = f.input :expected_high, label: "Expected High:", required: true
+      .col-12.col-md.mt-3 = f.input :actual_high, label: "Actual High:", required: true, hint: "Read by Groov"
+      .col-12.col-md.mt-3 = f.input :offset, label: "Offset:", required: true, hint: "Calculated by Groov"
+      .col-12.col-md.mt-3 = f.input :gain, label: "Gain:", required: true, hint: "Calculated by Groov"

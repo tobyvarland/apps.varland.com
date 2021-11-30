@@ -50,7 +50,13 @@ class Calibrations::ResultsController < ApplicationController
                                                   :calibration_type_id,
                                                   :user_id,
                                                   :reason_code_id,
-                                                  :result_on)
+                                                  :result_on,
+                                                  :expected_low,
+                                                  :actual_low,
+                                                  :expected_high,
+                                                  :actual_high,
+                                                  :offset,
+                                                  :gain)
     end
 
 end
