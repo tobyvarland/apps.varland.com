@@ -19,7 +19,7 @@ class Calibrations::DevicesController < ApplicationController
   def create
     @device = Calibrations::Device.new(device_params)
     if @device.save
-      redirect_to @device, notice: "Device was successfully created."
+      redirect_to calibrations_devices_url, notice: "Device '#{@device.name}' was successfully created.".html_safe
     else
       render :new, status: :unprocessable_entity
     end

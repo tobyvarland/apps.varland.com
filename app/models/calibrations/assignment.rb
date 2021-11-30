@@ -18,7 +18,19 @@ class Calibrations::Assignment < ApplicationRecord
 
   # Validations.
 
+  # Callbacks.
+  before_create :initialize_due_date
+
   # Instance methods.
+
+  # Initialize due date.
+  def initialize_due_date
+    return if self.calibration_type.blank?
+    unless self.calibration_type.frequency.blank?
+      self.next_result_due_on = Date.current
+      self.next_result_due_in_days = 0
+    end
+  end
 
   # Class methods.
 

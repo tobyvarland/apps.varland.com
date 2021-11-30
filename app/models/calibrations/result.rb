@@ -27,6 +27,8 @@ class Calibrations::Result < ApplicationRecord
 	validates	:result_on,
             presence: true
 
+  # Callbacks.
+
   # Instance methods.
 
   # Class methods.

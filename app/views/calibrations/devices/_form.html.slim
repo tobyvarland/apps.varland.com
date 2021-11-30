@@ -33,5 +33,5 @@
 
   .form-actions
     div
-      = link_to "#{fa "times"} Cancel".html_safe, @device, class: ["btn", "btn-light", "btn-sm", "me-3"], tabindex: -1
+      = link_to "#{fa "times"} Cancel".html_safe, @device.id.blank? ? calibrations_devices_path : @device, class: ["btn", "btn-light", "btn-sm", "me-3"], tabindex: -1
       = f.button :button, "#{fa "check"} Save Device".html_safe, class: ["btn-primary", "btn-sm"]

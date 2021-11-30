@@ -27,7 +27,7 @@ class Calibrations::CalibrationTypesController < ApplicationController
 
   def update
     if @calibration_type.update(calibration_type_params)
-      redirect_to calibrations_calibration_types_url, notice: "Calibration type was successfully updated."
+      redirect_to @calibration_type, notice: "Calibration type was successfully updated."
     else
       render :edit, status: :unprocessable_entity
     end

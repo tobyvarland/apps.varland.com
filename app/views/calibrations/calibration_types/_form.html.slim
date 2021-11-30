@@ -33,5 +33,5 @@
 
   .form-actions
     div
-      = link_to "#{fa "times"} Cancel".html_safe, calibrations_calibration_types_url, class: ["btn", "btn-light", "btn-sm", "me-3"], tabindex: -1
+      = link_to "#{fa "times"} Cancel".html_safe, @calibration_type.id.blank? ? calibrations_calibration_types_path : @calibration_type, class: ["btn", "btn-light", "btn-sm", "me-3"], tabindex: -1
       = f.button :button, "#{fa "check"} Save Calibration Type".html_safe, class: ["btn-primary", "btn-sm"]

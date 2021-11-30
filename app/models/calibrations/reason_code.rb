@@ -20,6 +20,8 @@ class Calibrations::ReasonCode < ApplicationRecord
 						presence: true,
 						uniqueness: { case_sensitive: false }
 
+	# Callbacks.
+
 	# Instance methods.
 
 	# Class methods.

@@ -13,22 +13,26 @@ ruby:
   table.table.table-striped.table-hover
     thead.table-dark
       th Name
-      th.text-center.w-1 Frequency
-      th.text-center.w-1 Type
-      th.text-center.w-1 Internal?
+      th Calibration Status
       th.text-center.w-1 Options
     tbody
       - @calibration_types.each do |obj|
         tr
-          td
+          td.align-top
             .fw-700 = obj.name
-            - unless obj.url.blank?
-              .small
-                = fa "link"
-                = link_to obj.url, obj.url, target: "_blank", class: "ms-1"
-          td.text-center = pluralize(obj.frequency, "day") unless obj.frequency.blank?
-          td.text-center = obj.calibration_method.demodulize.titleize
-          td.text-center = boolean_icon obj.is_internal
-          td.text-center
-            = link_to "#{fa "edit"} Edit".html_safe, edit_calibrations_calibration_type_path(obj), class: ["btn", "btn-sm", "btn-primary"]
-            = link_to "#{fa "trash-alt"} Delete".html_safe, obj, method: :delete, data: { confirm: 'Are you sure?' }, class: ["btn", "btn-sm", "btn-danger"]
+            table.m-0
+              tbody
+                - unless obj.frequency.blank?
+                  tr
+                    td.small.text-uncolor.text-end.pe-1 Frequency:
+                    td.small.fst-italic = "every #{pluralize(obj.frequency, "day")}"
+                - unless obj.url.blank?
+                  tr
+                    td.small.text-uncolor.text-end.pe-1 Instructions:
+                    td.small.fst-italic = link_to obj.url, obj.url, target: "_blank"
+                tr
+                  td.small.text-uncolor.text-end.pe-1 Internal:
+                  td.small.fst-italic = boolean_icon obj.is_internal
+          td.align-top == render partial: "calibrations/assignments/assignments_for_calibration_type", locals: { assignments: obj.assignments }
+          td.text-center.align-top
+            = link_to "#{fa "eye"} Details".html_safe, obj, class: ["btn", "btn-sm", "btn-primary"]

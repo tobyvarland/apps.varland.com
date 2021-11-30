@@ -13,6 +13,7 @@ ruby:
   table.table.table-striped.table-hover
     thead.table-dark
       th Name
+      th Calibration Status
       th.text-center.w-1 Options
     tbody
       - @devices.each do |obj|
@@ -32,5 +33,6 @@ ruby:
                   tr
                     td.small.text-uncolor.text-end.pe-1 Retired:
                     td.small.fst-italic = obj.retired_on.strftime "%m/%d/%y"
+          td.align-top == render partial: "calibrations/assignments/assignments_for_device", locals: { assignments: obj.assignments }
           td.text-center.align-top
             = link_to "#{fa "eye"} Details".html_safe, obj, class: ["btn", "btn-sm", "btn-primary"]

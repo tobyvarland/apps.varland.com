@@ -31,6 +31,8 @@ class Calibrations::CalibrationType < ApplicationRecord
 	validates :calibration_method,
 						inclusion: { in: Calibrations::Result.available_methods }
 
+	# Callbacks.
+
 	# Instance methods.
 
 	# Class methods.

@@ -2,6 +2,29 @@ module ApplicationHelper
 
   include Pagy::Frontend
 
+  def calibration_days_badge(days)
+    classes = ["badge", "text-uppercase"]
+    text = "#{pluralize(days, "day")} from now"
+    case
+    when days < 0
+      classes << "bg-red-500"
+      text = "#{pluralize(days.abs, "day")} past due"
+    when days == 0
+      classes << "bg-yellow-500"
+      text = "Today"
+    when days == 1
+      classes << "bg-yellow-500"
+      text = "Tomorrow"
+    when days <= 7
+      classes << "bg-blue-500"
+    when days <= 30
+      classes << "bg-purple-500"
+    when days > 30
+      classes << "bg-green-500"
+    end
+    content_tag :div, text, class: classes
+  end
+
   def boolean_icon(value, options = {})
     show_text = options.fetch(:show_text, true)
     uppercase = options.fetch(:uppercase, true)

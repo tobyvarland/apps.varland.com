@@ -20,6 +20,8 @@ class Calibrations::Device < ApplicationRecord
 	accepts_nested_attributes_for :assignments, reject_if: :all_blank, allow_destroy: true
 
   # Scopes.
+	default_scope -> { by_name }
+  scope :by_name, -> { order(:name) }
 
   # Validations.
 	validates	:name,
@@ -27,6 +29,8 @@ class Calibrations::Device < ApplicationRecord
 						uniqueness: { case_sensitive: false }
 	validates	:in_service_on,
 						presence: true
+
+	# Callbacks.
 
   # Instance methods.
 
