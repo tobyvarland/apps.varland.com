@@ -11,7 +11,7 @@ class Records::SaltSprayCollectionRecord < Records::Result
 
   # Instance methods.
 
-  # Returns summary details for individual calibration.
+  # Returns summary details for individual record.
   def details
     return <<-DETAILS
     Collection #1: <code class="fw-700">#{self.collection_1_amount} ml</code> in <code class="fw-700">#{self.collection_1_hours} hrs</code>

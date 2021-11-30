@@ -31,7 +31,7 @@ class Records::Result < ApplicationRecord
   scope :reverse_chronological, -> { order(result_on: :desc) }
   scope :on_or_after, ->(value) { where("result_on >= ?", value) unless value.blank? }
   scope :on_or_before,  ->(value) { where("result_on <= ?", value) unless value.blank? }
-  scope :with_math_field, ->(field, value) { where("calibrations_results.#{field} #{value}") unless value.blank? }
+  scope :with_math_field, ->(field, value) { where("records_results.#{field} #{value}") unless value.blank? }
   scope :with_offset,  ->(value) { with_math_field("offset", value) }
   scope :with_gain,  ->(value) { with_math_field("gain", value) }
   scope :with_expected_low,  ->(value) { with_math_field("expected_low", value) }
@@ -62,7 +62,7 @@ class Records::Result < ApplicationRecord
     return "Must define <code>details</code> method in <code>/app/models/records/#{self.class.name.demodulize.underscore}.rb</code>."
   end
 
-  # Loads default values from calibration type.
+  # Loads default values from record type.
   def load_defaults
     return unless self.id.blank?
     return if self.record_type.blank?
@@ -86,7 +86,7 @@ class Records::Result < ApplicationRecord
 
   # Class methods.
 
-  # Defines available methods for calibration type.
+  # Defines available methods for record type.
   def self.available_methods
     return [
       "Records::GroovTwoPointCalibration",
@@ -95,7 +95,7 @@ class Records::Result < ApplicationRecord
     ].sort
   end
 
-  # Returns list of available methods for calibration type for dropdown.
+  # Returns list of available methods for record type for dropdown.
   def self.available_methods_for_dropdown
     return Records::Result.available_methods.map {|x| [x.demodulize.titleize, x]}
   end

@@ -20,15 +20,6 @@ Rails.application.routes.draw do
       end
     end
   end
-  namespace :quality do
-    namespace :calibration do
-      resources :reason_codes, except: [:show]
-      resources :categories
-      resources :devices
-      resources :results
-      resources :groov_two_point_calibrations
-    end
-  end
   resources :employee_note_subjects
   resources :employee_notes do
     member do

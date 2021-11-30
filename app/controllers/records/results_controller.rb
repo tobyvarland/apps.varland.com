@@ -50,7 +50,7 @@ class Records::ResultsController < ApplicationController
   def create
     @result = Records::Result.new(result_params)
     if @result.save
-      redirect_back fallback_location: @result.record_type, notice: "Calibration was successfully created."
+      redirect_back fallback_location: @result.record_type, notice: "Record was successfully created."
     else
       render :new, status: :unprocessable_entity
     end
@@ -58,7 +58,7 @@ class Records::ResultsController < ApplicationController
 
   def update
     if @result.update(result_params)
-      redirect_to records_results_url, notice: "Calibration was successfully updated."
+      redirect_to records_results_url, notice: "Record was successfully updated."
     else
       render :edit, status: :unprocessable_entity
     end
@@ -66,7 +66,7 @@ class Records::ResultsController < ApplicationController
 
   def destroy
     @result.discard
-    redirect_to records_results_url, notice: "Calibration was successfully destroyed."
+    redirect_to records_results_url, notice: "Record was successfully destroyed."
   end
 
   private

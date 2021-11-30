@@ -19,7 +19,7 @@ class Records::RecordTypesController < ApplicationController
   def create
     @record_type = Records::RecordType.new(record_type_params)
     if @record_type.save
-      redirect_to records_record_types_url, notice: "Calibration type was successfully created."
+      redirect_to records_record_types_url, notice: "Record type was successfully created."
     else
       render :new, status: :unprocessable_entity
     end
@@ -27,7 +27,7 @@ class Records::RecordTypesController < ApplicationController
 
   def update
     if @record_type.update(record_type_params)
-      redirect_to @record_type, notice: "Calibration type was successfully updated."
+      redirect_to @record_type, notice: "Record type was successfully updated."
     else
       render :edit, status: :unprocessable_entity
     end
@@ -35,7 +35,7 @@ class Records::RecordTypesController < ApplicationController
 
   def destroy
     @record_type.discard
-    redirect_to records_record_types_url, notice: "Calibration type was successfully destroyed."
+    redirect_to records_record_types_url, notice: "Record type was successfully destroyed."
   end
 
   private

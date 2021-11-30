@@ -14,7 +14,7 @@ class Records::HardnessTesterDailyVerification < Records::Result
 
   # Instance methods.
 
-  # Returns summary details for individual calibration.
+  # Returns summary details for individual record.
   def details
     return <<-DETAILS
     Test block hardness: <code class="fw-700">#{self.test_block_hardness}</code>.

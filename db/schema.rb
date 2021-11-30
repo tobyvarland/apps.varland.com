@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_11_30_212224) do
+ActiveRecord::Schema.define(version: 2021_11_30_215747) do
 
   create_table "active_storage_attachments", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "name", null: false
@@ -316,77 +316,6 @@ ActiveRecord::Schema.define(version: 2021_11_30_212224) do
     t.index ["user_id"], name: "unique_permissions_user", unique: true
   end
 
-  create_table "quality_calibration_categories", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
-    t.string "name", null: false
-    t.integer "calibration_frequency"
-    t.string "instructions_url"
-    t.float "two_point_low_value"
-    t.float "two_point_high_value"
-    t.datetime "discarded_at"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.string "calibration_method", null: false
-    t.string "rockwell_scale"
-    t.float "test_block_hardness"
-    t.string "test_block_serial"
-    t.float "maximum_error"
-    t.float "maximum_repeatability"
-    t.index ["discarded_at"], name: "index_quality_calibration_categories_on_discarded_at"
-  end
-
-  create_table "quality_calibration_devices", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
-    t.bigint "category_id", null: false
-    t.string "name", null: false
-    t.string "location"
-    t.date "in_service_on", null: false
-    t.date "retired_on"
-    t.datetime "discarded_at"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.datetime "results_updated_at"
-    t.date "last_calibrated_on"
-    t.date "next_calibration_due_on"
-    t.string "calibration_due_status", null: false
-    t.index ["category_id"], name: "index_quality_calibration_devices_on_category_id"
-    t.index ["discarded_at"], name: "index_quality_calibration_devices_on_discarded_at"
-  end
-
-  create_table "quality_calibration_reason_codes", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
-    t.string "name", null: false
-    t.datetime "discarded_at"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.index ["discarded_at"], name: "index_quality_calibration_reason_codes_on_discarded_at"
-  end
-
-  create_table "quality_calibration_results", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
-    t.bigint "device_id", null: false
-    t.bigint "user_id", null: false
-    t.bigint "reason_code_id", null: false
-    t.date "calibrated_on", null: false
-    t.datetime "discarded_at"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.string "type", null: false
-    t.float "two_point_low_value"
-    t.float "two_point_low_reading"
-    t.float "two_point_high_value"
-    t.float "two_point_high_reading"
-    t.float "two_point_offset"
-    t.float "two_point_gain"
-    t.float "reading_1"
-    t.float "reading_2"
-    t.float "test_block"
-    t.string "rockwell_scale"
-    t.string "test_block_serial"
-    t.float "maximum_error"
-    t.float "maximum_repeatability"
-    t.index ["device_id"], name: "index_quality_calibration_results_on_device_id"
-    t.index ["discarded_at"], name: "index_quality_calibration_results_on_discarded_at"
-    t.index ["reason_code_id"], name: "index_quality_calibration_results_on_reason_code_id"
-    t.index ["user_id"], name: "index_quality_calibration_results_on_user_id"
-  end
-
   create_table "quality_hardness_tests", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.bigint "user_id", null: false
     t.bigint "shop_order_id", null: false
@@ -658,10 +587,6 @@ ActiveRecord::Schema.define(version: 2021_11_30_212224) do
   add_foreign_key "groov_logs", "as400_shop_orders", column: "shop_order_id"
   add_foreign_key "groov_logs", "users"
   add_foreign_key "permissions", "users"
-  add_foreign_key "quality_calibration_devices", "quality_calibration_categories", column: "category_id"
-  add_foreign_key "quality_calibration_results", "quality_calibration_devices", column: "device_id"
-  add_foreign_key "quality_calibration_results", "quality_calibration_reason_codes", column: "reason_code_id"
-  add_foreign_key "quality_calibration_results", "users"
   add_foreign_key "quality_hardness_tests", "as400_shop_orders", column: "shop_order_id"
   add_foreign_key "quality_hardness_tests", "quality_hardness_tests", column: "raw_test_id"
   add_foreign_key "quality_hardness_tests", "users"

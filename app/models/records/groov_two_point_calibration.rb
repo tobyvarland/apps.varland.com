@@ -12,7 +12,7 @@ class Records::GroovTwoPointCalibration < Records::Result
 
   # Instance methods.
 
-  # Returns summary details for individual calibration.
+  # Returns summary details for individual record.
   def details
     return <<-DETAILS
     Groov two point calibration.
