@@ -31,6 +31,13 @@ class Calibrations::Result < ApplicationRecord
   scope :reverse_chronological, -> { order(result_on: :desc) }
   scope :on_or_after, ->(value) { where("result_on >= ?", value) unless value.blank? }
   scope :on_or_before,  ->(value) { where("result_on <= ?", value) unless value.blank? }
+  scope :with_math_field, ->(field, value) { where("calibrations_results.#{field} #{value}") unless value.blank? }
+  scope :with_offset,  ->(value) { with_math_field("offset", value) }
+  scope :with_gain,  ->(value) { with_math_field("gain", value) }
+  scope :with_expected_low,  ->(value) { with_math_field("expected_low", value) }
+  scope :with_expected_high,  ->(value) { with_math_field("expected_high", value) }
+  scope :with_actual_low,  ->(value) { with_math_field("actual_low", value) }
+  scope :with_actual_high,  ->(value) { with_math_field("actual_high", value) }
   scope :sorted_by, ->(value) {
     case value
     when 'oldest'

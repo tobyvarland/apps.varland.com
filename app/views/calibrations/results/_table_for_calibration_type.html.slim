@@ -13,8 +13,8 @@
       - results.each do |obj|
         - next if obj.id.blank?
         tr
-          td.px-3 = link_to obj.device.name, obj.device
-          td.px-3 = obj.user.name_and_number
-          td.px-3.text-center = obj.result_on.strftime "%m/%d/%y"
-          td.px-3 = obj.reason_code.name
+          td.px-3.align-top = link_to obj.device.name, obj.device
+          td.px-3.align-top = obj.user.name_and_number
+          td.px-3.text-center.align-top = obj.result_on.strftime "%m/%d/%y"
+          td.px-3.align-top = obj.reason_code.name
           = render partial: "calibrations/results/#{type.demodulize.underscore}_data", locals: { obj: obj }

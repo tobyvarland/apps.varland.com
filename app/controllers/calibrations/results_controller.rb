@@ -9,6 +9,12 @@ class Calibrations::ResultsController < ApplicationController
   has_scope :for_user
   has_scope :on_or_after
   has_scope :on_or_before
+  has_scope :with_offset
+  has_scope :with_gain
+  has_scope :with_expected_low
+  has_scope :with_expected_high
+  has_scope :with_actual_low
+  has_scope :with_actual_high
 
   def index
     parse_filter_params
@@ -52,7 +58,7 @@ class Calibrations::ResultsController < ApplicationController
 
   def update
     if @result.update(result_params)
-      redirect_back fallback_location: @result.calibration_type, notice: "Calibration was successfully updated."
+      redirect_to calibrations_results_url, notice: "Calibration was successfully updated."
     else
       render :edit, status: :unprocessable_entity
     end
@@ -60,7 +66,7 @@ class Calibrations::ResultsController < ApplicationController
 
   def destroy
     @result.discard
-    redirect_back fallback_location: @result.calibration_type, notice: "Calibration was successfully destroyed."
+    redirect_to calibrations_results_url, notice: "Calibration was successfully destroyed."
   end
 
   private

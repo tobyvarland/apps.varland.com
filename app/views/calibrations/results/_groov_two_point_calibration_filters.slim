@@ -1,0 +1,7 @@
+.row
+  .col-12.col-md.mt-3 = f.input :with_expected_low, required: false, label: "Expected Low:", input_html: { value: params[:filters].blank? ? nil : params[:filters][:with_expected_low] }, hint: "Math expression"
+  .col-12.col-md.mt-3 = f.input :with_actual_low, required: false, label: "Actual Low:", input_html: { value: params[:filters].blank? ? nil : params[:filters][:with_actual_low] }, hint: "Math expression"
+  .col-12.col-md.mt-3 = f.input :with_expected_high, required: false, label: "Expected High:", input_html: { value: params[:filters].blank? ? nil : params[:filters][:with_expected_high] }, hint: "Math expression"
+  .col-12.col-md.mt-3 = f.input :with_actual_high, required: false, label: "Actual High:", input_html: { value: params[:filters].blank? ? nil : params[:filters][:with_actual_high] }, hint: "Math expression"
+  .col-12.col-md.mt-3 = f.input :with_offset, required: false, label: "Offset:", input_html: { value: params[:filters].blank? ? nil : params[:filters][:with_offset] }, hint: "Math expression"
+  .col-12.col-md.mt-3 = f.input :with_gain, required: false, label: "Gain:", input_html: { value: params[:filters].blank? ? nil : params[:filters][:with_gain] }, hint: "Math expression"
