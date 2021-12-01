@@ -10,6 +10,8 @@
       .row
         .col-12.mt-3 = f.input :url, required: false, label: "URL:", hint: "#{fa "google-drive", type: "fab"} Link to instructions on Google Drive".html_safe
       .row
+        .col-12.col-md-6.mt-3 = f.input :data_type, required: true, label: "Data Type:", collection: Records::RecordType.available_data_types, input_html: { class: "form-select" }
+        .col-12.col-md-6.mt-3 = f.input :responsibility, required: true, label: "Responsibility:", collection: Records::RecordType.available_responsibilities, input_html: { class: "form-select" }
         .col-12.col-md-6.mt-3 = f.input :frequency, required: false, label: "Frequency:", hint: "Unit is days, blank for as needed"
         .col-12.col-md-6.mt-3 = f.input :record_subclass, required: true, label: "Sub Class:", collection: Records::Result.available_methods_for_dropdown, input_html: { class: "form-select" }
       fieldset.border.mt-3.rounded.shadow-sm.d-none.record-type-fields data-type="Records::GroovTwoPointCalibration"

@@ -25,6 +25,8 @@ class Records::Assignment < ApplicationRecord
   scope :due_within_days, ->(value) { where("next_result_due_in_days <= ?", value) unless value.blank? }
   scope :for_record_type, ->(value) { where(record_type_id: value) unless value.blank? }
   scope :for_device, ->(value) { where(device_id: value) unless value.blank? }
+  scope :for_data_type, ->(value) { joins(:record_type).merge(Records::RecordType.for_data_type(value)) }
+  scope :for_responsibility, ->(value) { joins(:record_type).merge(Records::RecordType.for_responsibility(value)) }
 
   # Validations.
 	validates	:device_id,

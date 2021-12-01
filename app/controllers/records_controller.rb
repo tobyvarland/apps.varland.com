@@ -4,6 +4,8 @@ class RecordsController < ApplicationController
   has_scope :for_device
   has_scope :due_within_days
   has_scope :due_on_or_before
+  has_scope :for_data_type
+  has_scope :for_responsibility
 
   def upcoming
     parse_filter_params

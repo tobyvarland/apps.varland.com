@@ -28,6 +28,8 @@ class Records::Result < ApplicationRecord
   scope :for_device, ->(value) { where(device_id: value) unless value.blank? }
   scope :for_reason_code, ->(value) { where(reason_code_id: value) unless value.blank? }
   scope :for_user, ->(value) { where(user_id: value) unless value.blank? }
+  scope :for_data_type, ->(value) { joins(:record_type).merge(Records::RecordType.for_data_type(value)) }
+  scope :for_responsibility, ->(value) { joins(:record_type).merge(Records::RecordType.for_responsibility(value)) }
   scope :reverse_chronological, -> { order(result_on: :desc) }
   scope :on_or_after, ->(value) { where("result_on >= ?", value) unless value.blank? }
   scope :on_or_before,  ->(value) { where("result_on <= ?", value) unless value.blank? }

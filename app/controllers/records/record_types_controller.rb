@@ -56,6 +56,8 @@ class Records::RecordTypesController < ApplicationController
                                                             :test_block_serial,
                                                             :max_error,
                                                             :max_repeatability,
+                                                            :data_type,
+                                                            :responsibility,
                                                             assignments_attributes: [:id, :device_id, :_destroy])
     end
 

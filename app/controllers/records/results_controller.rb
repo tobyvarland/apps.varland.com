@@ -27,6 +27,8 @@ class Records::ResultsController < ApplicationController
   has_scope :with_collection_hours
   has_scope :with_collection_rate
   has_scope :with_collection_rate_valid
+  has_scope :for_data_type
+  has_scope :for_responsibility
 
   def index
     parse_filter_params

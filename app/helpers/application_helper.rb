@@ -2,6 +2,13 @@ module ApplicationHelper
 
   include Pagy::Frontend
 
+  def dropdown_human_readable(list, value)
+    list.each do |l|
+      return l[0] if l[1] == value
+    end
+    return "Unknown"
+  end
+
   def record_days_badge(days)
     classes = ["badge", "text-uppercase"]
     text = "#{pluralize(days, "day")} from now"

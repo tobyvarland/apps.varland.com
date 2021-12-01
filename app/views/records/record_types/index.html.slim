@@ -20,17 +20,22 @@ ruby:
         tr
           td.align-top
             .fw-700 = obj.name
-            - unless obj.frequency.blank? && obj.url.blank?
-              table.m-0
-                tbody
-                  - unless obj.frequency.blank?
-                    tr
-                      td.small.text-uncolor.text-end.pe-1 Frequency:
-                      td.small.fst-italic = "every #{pluralize(obj.frequency, "day")}"
-                  - unless obj.url.blank?
-                    tr
-                      td.small.text-uncolor.text-end.pe-1 Instructions:
-                      td.small.fst-italic = link_to obj.url.truncate(30), obj.url, target: "_blank"
+            table.m-0
+              tbody
+                tr
+                  td.small.text-uncolor.text-end.pe-1 Data Type:
+                  td.small.fst-italic = dropdown_human_readable(Records::RecordType.available_data_types, obj.data_type)
+                tr
+                  td.small.text-uncolor.text-end.pe-1 Responsibility:
+                  td.small.fst-italic = dropdown_human_readable(Records::RecordType.available_responsibilities, obj.responsibility)
+                - unless obj.frequency.blank?
+                  tr
+                    td.small.text-uncolor.text-end.pe-1 Frequency:
+                    td.small.fst-italic = "every #{pluralize(obj.frequency, "day")}"
+                - unless obj.url.blank?
+                  tr
+                    td.small.text-uncolor.text-end.pe-1 Instructions:
+                    td.small.fst-italic = link_to obj.url.truncate(30), obj.url, target: "_blank"
           td.align-top == render partial: "records/assignments/assignments_for_record_type", locals: { assignments: obj.assignments.for_active_device }
           td.text-center.align-top
             = link_to "#{fa "eye"} Details".html_safe, obj, class: ["btn", "btn-sm", "btn-primary"]

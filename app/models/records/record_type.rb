@@ -22,6 +22,8 @@ class Records::RecordType < ApplicationRecord
   # Scopes.
   scope :by_name, -> { order(:name) }
 	scope :with_frequency, -> { where.not(frequency: nil) }
+  scope :for_data_type, ->(value) { where(data_type: value) unless value.blank? }
+  scope :for_responsibility, ->(value) { where(responsibility: value) unless value.blank? }
 
   # Validations.
 	validates	:name,
@@ -36,11 +38,21 @@ class Records::RecordType < ApplicationRecord
 						:expected_high,
 						numericality: true,
 						allow_blank: true
+	validates :data_type,
+						:responsibility,
+						presence: true
+	validate	:match_calibration_in_name_and_data_type
 
 	# Callbacks.
 	after_update_commit	:update_assignment_dates
 
 	# Instance methods.
+
+	# Require matching calibration in name and data type.
+	def match_calibration_in_name_and_data_type
+		errors.add(:name, "must include 'Calibration' if calibration data type is selected") if self.data_type == 'calibration' && !self.name.downcase.include?("calibration")
+		errors.add(:data_type, "must be 'Calibration' because the name contains the word calibration") if self.data_type != 'calibration' && self.name.downcase.include?("calibration")
+	end
 
 	# Updates assignment dates when frequency changes.
 	def update_assignment_dates
@@ -57,5 +69,24 @@ class Records::RecordType < ApplicationRecord
 	end
 
 	# Class methods.
+
+	# Define data types for dropdown.
+	def self.available_data_types
+		return [
+			["Calibration", "calibration"],
+			["Internal Metric", "internal_metric"]
+		].sort
+	end
+
+	# Define responsibilities for dropdown.
+	def self.available_responsibilities
+		return [
+			["QC", "qc"],
+			["Lab", "lab"],
+			["Maintenance", "maintenance"],
+			["IT", "it"],
+			["Shipping", "shipping"]
+		].sort
+	end
 
 end
