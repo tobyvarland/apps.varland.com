@@ -86,4 +86,8 @@ Rails.application.configure do
 
   # Uncomment if you wish to allow Action Cable access from any origin.
   # config.action_cable.disable_request_forgery_protection = true
+
+  # Allow the local 192.168.x.x block of addresses using CIDR notation:
+  BetterErrors::Middleware.allow_ip! '192.168.0.0/16'
+
 end

@@ -1,6 +1,6 @@
 td.px-3.text-center.align-top = obj.salt_added
 td.px-3.text-center.align-top = obj.distilled_water_added
-td.px-3.text-center.align-top *{class: "#{obj.is_valid.nil? ? "" : (obj.is_valid ? "valid" : "invalid")}"}
+td.px-3.text-center.align-top *{class: "#{obi.is_valid.nil? ? "" : (obj.is_valid ? "valid" : "invalid")}"}
   span.me-1 = obj.ph
   - unless obj.is_valid.nil?
     = boolean_icon obj.is_valid, true_text: "valid", false_text: "invalid"
