@@ -15,8 +15,9 @@ class Records::Assignment < ApplicationRecord
               inverse_of: :assignments
 
   # Scopes.
-  default_scope -> { by_due_date }
-  scope :by_due_date, -> { order("ISNULL(`next_result_due_on`), `next_result_due_on`") }
+  scope :by_due_date, -> { joins(:record_type).joins(:device).order("ISNULL(`records_assignments`.`next_result_due_on`), `records_assignments`.`next_result_due_on`, `records_record_types`.`name`, `records_devices`.`name`") }
+  scope :by_device, -> { joins(:device).order("`records_devices`.`name`") }
+  scope :by_type, -> { joins(:record_type).order("`records_record_types`.`name`") }
   scope :kept, -> { undiscarded.joins(:record_type).joins(:device).merge(Records::RecordType.kept).merge(Records::Device.kept) }
   scope :for_active_device, -> { joins(:device).merge(Records::Device.not_retired) }
   scope :for_device_and_type, ->(device, type) { where(device_id: device).where(record_type_id: type) }

@@ -17,6 +17,10 @@
 
   = render partial: "records/results/#{type.demodulize.underscore}_fields", locals: { f: f }
 
+  .row
+    .col-12.mt-3
+      = f.input :comments, label: "Comments:", required: false
+
   .form-actions
     div
       = f.button :button, "#{fa "check"} Save Record".html_safe, class: ["btn-primary", "btn-sm"]

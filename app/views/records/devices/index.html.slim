@@ -35,7 +35,7 @@ ruby:
                     td.small.text-uncolor.text-end.pe-1 Retired:
                     td.small.fst-italic = obj.retired_on.strftime "%m/%d/%y"
           - if obj.retired_on.blank?
-            td.align-top == render partial: "records/assignments/assignments_for_device", locals: { assignments: obj.assignments }
+            td.align-top == render partial: "records/assignments/assignments_for_device", locals: { assignments: obj.assignments.by_due_date }
           - else
             td.align-top.fst-italic.text-uncolor Retired.
           td.text-center.align-top

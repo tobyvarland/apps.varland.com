@@ -12,9 +12,9 @@ class RecordsController < ApplicationController
     parse_filter_params
     filters_to_cookies
     begin
-      @pagy, @assignments = pagy(apply_scopes(Records::Assignment.for_active_device.with_due_date), items: 50)
+      @pagy, @assignments = pagy(apply_scopes(Records::Assignment.for_active_device.with_due_date.by_due_date), items: 50)
     rescue
-      @pagy, @assignments = pagy(apply_scopes(Records::Assignment.for_active_device.with_due_date), items: 50, page: 1)
+      @pagy, @assignments = pagy(apply_scopes(Records::Assignment.for_active_device.with_due_date.by_due_date), items: 50, page: 1)
     end
   end
 

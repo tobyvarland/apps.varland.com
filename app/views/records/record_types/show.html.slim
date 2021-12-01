@@ -48,7 +48,7 @@ ruby:
               th.px-3.text-center Next Record Due
               th.px-3.text-center Days Until Due
           tbody
-            - @record_type.assignments.for_active_device.each do |obj|
+            - @record_type.assignments.for_active_device.by_due_date.each do |obj|
               tr *{class: "#{"past-due" if obj.next_result_due_in_days && obj.next_result_due_in_days < 0}"}
                 td.px-3 = link_to obj.device.name, obj.device
                 td.px-3.text-center

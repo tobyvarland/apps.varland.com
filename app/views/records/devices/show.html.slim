@@ -29,7 +29,7 @@ ruby:
     - if @device.retired_on.blank?
 
       - if policy(:records).data_entry?
-        - @device.assignments.each do |obj|
+        - @device.assignments.by_type.each do |obj|
           .card.bg-light.mt-3
             h6.card-header.d-flex.flex-row.align-items-center.justify-content-between
               div = "Enter New #{obj.record_type.record_subclass.demodulize.titleize}"
@@ -48,7 +48,7 @@ ruby:
               th.px-3.text-center Next Record Due
               th.px-3.text-center Days Until Due
           tbody
-            - @device.assignments.each do |obj|
+            - @device.assignments.by_due_date.each do |obj|
               tr *{class: "#{"past-due" if obj.next_result_due_in_days && obj.next_result_due_in_days < 0}"}
                 td.px-3 = link_to obj.record_type.name, obj.record_type
                 td.px-3.text-center
@@ -63,7 +63,7 @@ ruby:
                   td.text-center = obj.next_result_due_on.strftime "%m/%d/%y"
                   td.text-center = record_days_badge obj.next_result_due_in_days
 
-    - @device.assignments.each do |obj|
+    - @device.assignments.by_type.each do |obj|
       .card.bg-light.mt-3
         h6.card-header.d-flex.flex-row.align-items-center.justify-content-between
           = "Full History"

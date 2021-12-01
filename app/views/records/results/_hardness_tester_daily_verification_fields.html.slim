@@ -4,8 +4,8 @@ fieldset.border.mt-3.rounded.shadow-sm
   = f.input :max_repeatability, as: :hidden
   .p-3.pt-0
     .row
-      .col-12.col-md.mt-3 = f.input :rockwell_scale, label: "Rockwell Scale:", required: true, readonly: true
-      .col-12.col-md.mt-3 = f.input :test_block_hardness, label: "Test Block Hardness:", required: true, readonly: true
-      .col-12.col-md.mt-3 = f.input :test_block_serial, label: "Test Block ID:", required: true, readonly: true
+      .col-12.col-md.mt-3 = f.input :rockwell_scale, label: "Rockwell Scale:", required: true, readonly: true, input_html: { tabindex: -1 }
+      .col-12.col-md.mt-3 = f.input :test_block_hardness, label: "Test Block Hardness:", required: true, readonly: true, input_html: { tabindex: -1 }
+      .col-12.col-md.mt-3 = f.input :test_block_serial, label: "Test Block ID:", required: true, readonly: true, input_html: { tabindex: -1 }
       .col-12.col-md.mt-3 = f.input :reading_1, label: "Reading #1:", required: true
       .col-12.col-md.mt-3 = f.input :reading_2, label: "Reading #2:", required: true
