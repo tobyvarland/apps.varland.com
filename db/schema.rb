@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_12_01_185209) do
+ActiveRecord::Schema.define(version: 2021_12_01_202934) do
 
   create_table "active_storage_attachments", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "name", null: false
@@ -477,6 +477,10 @@ ActiveRecord::Schema.define(version: 2021_12_01_185209) do
     t.boolean "collection_1_rate_valid"
     t.float "collection_2_rate"
     t.boolean "collection_2_rate_valid"
+    t.float "salt_added"
+    t.float "distilled_water_added"
+    t.float "ph"
+    t.float "weight"
     t.index ["device_id"], name: "index_records_results_on_device_id"
     t.index ["discarded_at"], name: "index_records_results_on_discarded_at"
     t.index ["reason_code_id"], name: "index_records_results_on_reason_code_id"

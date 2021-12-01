@@ -29,6 +29,10 @@ class Records::ResultsController < ApplicationController
   has_scope :with_collection_rate_valid
   has_scope :for_data_type
   has_scope :for_responsibility
+  has_scope :with_salt_added
+  has_scope :with_distilled_water_added
+  has_scope :with_ph
+  has_scope :with_weight
 
   def index
     authorize :records, :view?
@@ -115,7 +119,11 @@ class Records::ResultsController < ApplicationController
                                                   :collection_1_amount,
                                                   :collection_1_hours,
                                                   :collection_2_amount,
-                                                  :collection_2_hours)
+                                                  :collection_2_hours,
+                                                  :salt_added,
+                                                  :distilled_water_added,
+                                                  :ph,
+                                                  :weight)
     end
 
 end

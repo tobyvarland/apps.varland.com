@@ -69,6 +69,10 @@ class Records::Result < ApplicationRecord
     test_value = "TRUE" if value == "1"
     where("records_results.collection_1_rate_valid IS #{test_value} or records_results.collection_2_rate_valid IS #{test_value}")
   }
+  scope :with_weight,  ->(value) { with_math_field("weight", value) }
+  scope :with_ph,  ->(value) { with_math_field("ph", value) }
+  scope :with_salt_added,  ->(value) { with_math_field("salt_added", value) }
+  scope :with_distilled_water_added,  ->(value) { with_math_field("distilled_water_added", value) }
   scope :sorted_by, ->(value) {
     case value
     when 'oldest'
@@ -123,7 +127,8 @@ class Records::Result < ApplicationRecord
       "Records::GroovTwoPointCalibration",
       "Records::HardnessTesterDailyVerification",
       "Records::SaltSprayCollectionRecord",
-      "Records::IAOProbeCalibration"
+      "Records::IAOProbeCalibration",
+      "Records::SaltSprayCabinetRecord"
     ].sort
   end
 

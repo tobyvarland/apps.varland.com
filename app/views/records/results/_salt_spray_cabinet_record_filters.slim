@@ -1,0 +1,7 @@
+.row
+  .col-12.col-md.mt-3 = f.input :with_salt_added, required: false, label: "Salt Added:", input_html: { value: params[:filters].blank? ? nil : params[:filters][:with_salt_added] }, hint: "Math expression"
+  .col-12.col-md.mt-3 = f.input :with_distilled_water_added, required: false, label: "DW Added:", input_html: { value: params[:filters].blank? ? nil : params[:filters][:with_distilled_water_added] }, hint: "Math expression"
+  .col-12.col-md.mt-3 = f.input :with_ph, required: false, label: "pH:", input_html: { value: params[:filters].blank? ? nil : params[:filters][:with_ph] }, hint: "Math expression"
+  .col-12.col-md.mt-3 = f.input :with_temperature, required: false, label: "Collect Temp:", input_html: { value: params[:filters].blank? ? nil : params[:filters][:with_temperature] }, hint: "Math expression"
+  .col-12.col-md.mt-3 = f.input :with_weight, required: false, label: "Collect Wt:", input_html: { value: params[:filters].blank? ? nil : params[:filters][:with_weight] }, hint: "Math expression"
+  .col-12.col-md.mt-3 = f.input :with_is_valid, required: false, include_blank: true, label: "Valid:", collection: [["Yes", true], ["No", false]], selected: params[:filters].blank? ? "" : params[:filters][:with_is_valid], input_html: { class: "form-select" }
