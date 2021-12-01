@@ -1,7 +1,7 @@
 ruby:
   assignments = Records::Assignment.for_responsibility(responsibility).with_due_date.by_due_date
 
-.card.bg-light
+.card.bg-light.shadow-sm
   h6.card-header.px-2.d-flex.flex-row.align-items-center.justify-content-between
     div = "Upcoming Records Due for #{label}"
     .small = link_to "All Items", records_upcoming_url
@@ -10,20 +10,20 @@ ruby:
   - else
     .card-body.p-0.small
       .d-flex.flex-row.align-items-center.justify-content-start *{style: "overflow-y: scroll !important;"}
-        .w-25.p-2.fw-700 Device
-        .w-35.p-2.fw-700 Record Type
-        .w-10.text-center.p-2.fw-700 Last
-        .w-10.text-center.p-2.fw-700 Due
-        .w-20.text-center.p-2.fw-700 Days
+        .w-23.p-2.fw-700.overflow-hidden.text-nowrap Device
+        .w-32.p-2.fw-700.overflow-hidden.text-nowrap Record Type
+        .w-10.text-center.p-2.fw-700.overflow-hidden.text-nowrap Last
+        .w-10.text-center.p-2.fw-700.overflow-hidden.text-nowrap Due
+        .w-25.text-center.p-2.fw-700.overflow-hidden.text-nowrap Days
       .d-block.striped-rows *{style: "max-height: 20vh !important; overflow-y: scroll !important;"}
         - assignments.each do |obj|
           .d-flex.flex-row.align-items-center.justify-content-start.stripable-row
-            .w-25.p-2.overflow-hidden = link_to obj.device.name, obj.device
-            .w-35.p-2.overflow-hidden = link_to obj.record_type.name, obj.record_type
-            .w-10.text-center.p-2
+            .w-23.p-2.overflow-hidden.text-nowrap = link_to obj.device.name, obj.device
+            .w-32.p-2.overflow-hidden.text-nowrap = link_to obj.record_type.name, obj.record_type
+            .w-10.text-center.p-2.overflow-hidden.text-nowrap
               - if obj.last_result_on.blank?
                 span.fst-italic Never
               - else
                 = obj.last_result_on.strftime "%m/%d/%y"
-            .w-10.text-center.p-2 = obj.next_result_due_on.strftime "%m/%d/%y"
-            .w-20.text-center.p-2 = record_days_badge obj.next_result_due_in_days
+            .w-10.text-center.p-2.overflow-hidden.text-nowrap = obj.next_result_due_on.strftime "%m/%d/%y"
+            .w-25.text-center.p-2.overflow-hidden.text-nowrap = record_days_badge obj.next_result_due_in_days

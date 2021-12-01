@@ -11,5 +11,5 @@ ruby:
         .date.text-white.fw-700.m-0 Jobs Promised Today
         .count.m-0.d-flex.flex-col.align-items-center.justify-content-center
           .badge.bg-warning.text-dark.rounded-pill.fw-700 = orders.length
-      .orders
+      .orders *{style: "overflow-y: scroll !important; max-height: 23vh !important;"}
         = render partial: "vcms/shipping/promise_list_order", collection: orders, as: :order
