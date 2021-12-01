@@ -11,15 +11,20 @@ ruby:
     = link_to "#{fa "edit"} Edit".html_safe, edit_records_record_type_path(@record_type), class: ["btn", "btn-sm", "btn-primary", "ms-1"]
     = link_to "#{fa "trash-alt"} Delete".html_safe, @record_type, method: :delete, data: { confirm: 'Are you sure?' }, class: ["btn", "btn-sm", "btn-danger", "ms-1"]
 
-.row.mt-3
+.row
 
   .col-12.col-md-3
 
-    .fst-italic Record type details go here&hellip;
+    ruby:
+      details = []
+      details << {label: "Frequency", value: "every #{pluralize @record_type.frequency, "day"}"} unless @record_type.frequency.blank?
+      details << {label: "Instructions", value: link_to(@record_type.url, @record_type.url, target: "_blank")} unless @record_type.url.blank?
+      details << {label: "# Devices Assigned", value: @record_type.assignments.for_active_device.length}
+    = card_list "Record Type Details", details
 
   .col-12.col-md-9
 
-    .card.bg-light
+    .card.bg-light.mt-3
       h6.card-header.d-flex.flex-row.align-items-center.justify-content-between
         div = "Enter New #{@record_type.record_subclass.demodulize.titleize}"
         - unless @record_type.url.blank?
@@ -37,7 +42,7 @@ ruby:
             th.px-3.text-center Next Record Due
             th.px-3.text-center Days Until Due
         tbody
-          - @record_type.assignments.each do |obj|
+          - @record_type.assignments.for_active_device.each do |obj|
             tr
               td.px-3 = link_to obj.device.name, obj.device
               td.px-3.text-center

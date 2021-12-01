@@ -15,7 +15,13 @@ ruby:
 
   .col-12.col-md-3
 
-    .fst-italic.mt-3 Device details go here&hellip;
+    ruby:
+      details = []
+      details << {label: "Location", value: @device.location} unless @device.location.blank?
+      details << {label: "In Service", value: @device.in_service_on.strftime("%m/%d/%Y")}
+      details << {label: "Retired", value: @device.retired_on.strftime("%m/%d/%Y")} unless @device.retired_on.blank?
+      details << {label: "# Record Types Assigned", value: @device.assignments.length} if @device.retired_on.blank?
+    = card_list "Device Details", details
 
   .col-12.col-md-9
 
