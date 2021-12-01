@@ -15,6 +15,18 @@ class Records::ResultsController < ApplicationController
   has_scope :with_expected_high
   has_scope :with_actual_low
   has_scope :with_actual_high
+  has_scope :with_reading
+  has_scope :with_reading_average
+  has_scope :with_reading_error
+  has_scope :with_reading_repeatability
+  has_scope :with_reading_error_valid
+  has_scope :with_reading_repeatability_valid
+  has_scope :with_is_valid
+  has_scope :with_temperature
+  has_scope :with_collection_amount
+  has_scope :with_collection_hours
+  has_scope :with_collection_rate
+  has_scope :with_collection_rate_valid
 
   def index
     parse_filter_params

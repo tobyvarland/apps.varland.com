@@ -32,12 +32,41 @@ class Records::Result < ApplicationRecord
   scope :on_or_after, ->(value) { where("result_on >= ?", value) unless value.blank? }
   scope :on_or_before,  ->(value) { where("result_on <= ?", value) unless value.blank? }
   scope :with_math_field, ->(field, value) { where("records_results.#{field} #{value}") unless value.blank? }
+  scope :with_boolean_field, ->(field, value) {
+    return if value.blank?
+    test_value = "FALSE"
+    test_value = "TRUE" if value == true
+    test_value = "TRUE" if value == "true"
+    test_value = "TRUE" if value == 1
+    test_value = "TRUE" if value == "1"
+    where("records_results.#{field} IS #{test_value}")
+  }
   scope :with_offset,  ->(value) { with_math_field("offset", value) }
   scope :with_gain,  ->(value) { with_math_field("gain", value) }
   scope :with_expected_low,  ->(value) { with_math_field("expected_low", value) }
   scope :with_expected_high,  ->(value) { with_math_field("expected_high", value) }
   scope :with_actual_low,  ->(value) { with_math_field("actual_low", value) }
   scope :with_actual_high,  ->(value) { with_math_field("actual_high", value) }
+  scope :with_reading, ->(value) { where("records_results.reading_1 #{value} or records_results.reading_2 #{value}") unless value.blank? }
+  scope :with_reading_average,  ->(value) { with_math_field("reading_average", value) }
+  scope :with_reading_error,  ->(value) { with_math_field("reading_error", value) }
+  scope :with_reading_repeatability,  ->(value) { with_math_field("reading_repeatability", value) }
+  scope :with_reading_error_valid,  ->(value) { with_boolean_field("reading_error_valid", value) }
+  scope :with_reading_repeatability_valid,  ->(value) { with_boolean_field("reading_repeatability_valid", value) }
+  scope :with_is_valid,  ->(value) { with_boolean_field("is_valid", value) }
+  scope :with_temperature,  ->(value) { with_math_field("temperature", value) }
+  scope :with_collection_amount, ->(value) { where("records_results.collection_1_amount #{value} or records_results.collection_2_amount #{value}") unless value.blank? }
+  scope :with_collection_hours, ->(value) { where("records_results.collection_1_hours #{value} or records_results.collection_2_hours #{value}") unless value.blank? }
+  scope :with_collection_rate, ->(value) { where("records_results.collection_1_rate #{value} or records_results.collection_2_rate #{value}") unless value.blank? }
+  scope :with_collection_rate_valid,  ->(value) {
+    return if value.blank?
+    test_value = "FALSE"
+    test_value = "TRUE" if value == true
+    test_value = "TRUE" if value == "true"
+    test_value = "TRUE" if value == 1
+    test_value = "TRUE" if value == "1"
+    where("records_results.collection_1_rate_valid IS #{test_value} or records_results.collection_2_rate_valid IS #{test_value}")
+  }
   scope :sorted_by, ->(value) {
     case value
     when 'oldest'
