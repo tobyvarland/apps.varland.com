@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_12_01_174435) do
+ActiveRecord::Schema.define(version: 2021_12_01_185209) do
 
   create_table "active_storage_attachments", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "name", null: false
@@ -311,7 +311,7 @@ ActiveRecord::Schema.define(version: 2021_12_01_174435) do
     t.integer "shift_notes", default: 0, null: false
     t.integer "employee_notes", default: 0, null: false
     t.integer "final_inspection", default: 0, null: false
-    t.integer "calibrations", default: 0, null: false
+    t.integer "records", default: 0, null: false
     t.index ["user_id"], name: "index_permissions_on_user_id"
     t.index ["user_id"], name: "unique_permissions_user", unique: true
   end

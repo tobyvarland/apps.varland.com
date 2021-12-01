@@ -8,8 +8,9 @@ ruby:
   h1.font-varland = "Device Details: #{@device.name}"
   div
     = link_to "#{fa "list-alt"} All Devices".html_safe, records_devices_url, class: ["btn", "btn-sm", "btn-primary"]
-    = link_to "#{fa "edit"} Edit".html_safe, edit_records_device_path(@device), class: ["btn", "btn-sm", "btn-primary", "ms-1"]
-    = link_to "#{fa "trash-alt"} Delete".html_safe, @device, method: :delete, data: { confirm: 'Are you sure?' }, class: ["btn", "btn-sm", "btn-danger", "ms-1"]
+    - if policy(:records).admin?
+      = link_to "#{fa "edit"} Edit".html_safe, edit_records_device_path(@device), class: ["btn", "btn-sm", "btn-primary", "ms-1"]
+      = link_to "#{fa "trash-alt"} Delete".html_safe, @device, method: :delete, data: { confirm: 'Are you sure?' }, class: ["btn", "btn-sm", "btn-danger", "ms-1"]
 
 .row
 
@@ -27,14 +28,15 @@ ruby:
 
     - if @device.retired_on.blank?
 
-      - @device.assignments.each do |obj|
-        .card.bg-light.mt-3
-          h6.card-header.d-flex.flex-row.align-items-center.justify-content-between
-            div = "Enter New #{obj.record_type.record_subclass.demodulize.titleize}"
-            - unless obj.record_type.url.blank?
-              = link_to "#{fa "link"} Instructions".html_safe, obj.record_type.url, target: "_blank", class: ["btn", "btn-sm", "btn-dark"]
-          .card-body.p-0
-            = render partial: "records/results/device_form", locals: { result: @device.results.build(user: current_user, result_on: Date.current, record_type: obj.record_type), type: obj.record_type.record_subclass }
+      - if policy(:records).data_entry?
+        - @device.assignments.each do |obj|
+          .card.bg-light.mt-3
+            h6.card-header.d-flex.flex-row.align-items-center.justify-content-between
+              div = "Enter New #{obj.record_type.record_subclass.demodulize.titleize}"
+              - unless obj.record_type.url.blank?
+                = link_to "#{fa "link"} Instructions".html_safe, obj.record_type.url, target: "_blank", class: ["btn", "btn-sm", "btn-dark"]
+            .card-body.p-0
+              = render partial: "records/results/device_form", locals: { result: @device.results.build(user: current_user, result_on: Date.current, record_type: obj.record_type), type: obj.record_type.record_subclass }
 
       .card.bg-light.mt-3
         h6.card-header Current Status

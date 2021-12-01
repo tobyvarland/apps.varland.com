@@ -31,6 +31,7 @@ class Records::ResultsController < ApplicationController
   has_scope :for_responsibility
 
   def index
+    authorize :records, :view?
     parse_filter_params
     filters_to_cookies
     begin
@@ -52,16 +53,15 @@ class Records::ResultsController < ApplicationController
   end
 
   def show
-  end
-
-  def new
-    @result = Records::Result.new
+    authorize :records, :view?
   end
 
   def edit
+    authorize :records, :admin?
   end
 
   def create
+    authorize :records, :data_entry?
     @result = Records::Result.new(result_params)
     if @result.save
       redirect_back fallback_location: @result.record_type, notice: "Record was successfully created."
@@ -71,6 +71,7 @@ class Records::ResultsController < ApplicationController
   end
 
   def update
+    authorize :records, :admin?
     if @result.update(result_params)
       redirect_to records_results_url, notice: "Record was successfully updated."
     else
@@ -79,6 +80,7 @@ class Records::ResultsController < ApplicationController
   end
 
   def destroy
+    authorize :records, :admin?
     @result.discard
     redirect_to records_results_url, notice: "Record was successfully destroyed."
   end

@@ -3,20 +3,25 @@ class Records::RecordTypesController < ApplicationController
   before_action :set_record_type, only: %i[ show edit update destroy ]
 
   def index
+    authorize :records, :view?
     @record_types = Records::RecordType.by_name
   end
 
   def show
+    authorize :records, :view?
   end
 
   def new
+    authorize :records, :admin?
     @record_type = Records::RecordType.new
   end
 
   def edit
+    authorize :records, :admin?
   end
 
   def create
+    authorize :records, :admin?
     @record_type = Records::RecordType.new(record_type_params)
     if @record_type.save
       redirect_to records_record_types_url, notice: "Record type was successfully created."
@@ -26,6 +31,7 @@ class Records::RecordTypesController < ApplicationController
   end
 
   def update
+    authorize :records, :admin?
     if @record_type.update(record_type_params)
       redirect_to @record_type, notice: "Record type was successfully updated."
     else
@@ -34,6 +40,7 @@ class Records::RecordTypesController < ApplicationController
   end
 
   def destroy
+    authorize :records, :admin?
     @record_type.discard
     redirect_to records_record_types_url, notice: "Record type was successfully destroyed."
   end

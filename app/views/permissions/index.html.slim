@@ -14,7 +14,7 @@ h1.font-varland.mt-3 Permission Management
         th.text-center Shift Notes
         th.text-center Employee Notes
         th.text-center Final Inspection
-        th.text-center Calibrations
+        th.text-center Records
     tbody
       - @permissions.each do |permission|
         tr
@@ -39,4 +39,4 @@ h1.font-varland.mt-3 Permission Management
               = f.input :final_inspection, collection: [["No Access", 0], ["View Only", 1], ["Record Inspection", 2]], include_blank: false, label: false, input_html: { class: ["form-select", "form-select-sm"], onchange: "this.form.submit();" }
           td.text-center
             = simple_form_for(permission) do |f|
-              = f.input :calibrations, collection: [["No Access", 0], ["View Only", 1], ["Record Calibration", 2], ["Calibrations Admin", 3]], include_blank: false, label: false, input_html: { class: ["form-select", "form-select-sm"], onchange: "this.form.submit();" }    
+              = f.input :records, collection: [["No Access", 0], ["View Only", 1], ["Data Entry", 2], ["Admin", 3]], include_blank: false, label: false, input_html: { class: ["form-select", "form-select-sm"], onchange: "this.form.submit();" }

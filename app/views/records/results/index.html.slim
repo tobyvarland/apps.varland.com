@@ -24,7 +24,8 @@ ruby:
         = render partial: "records/results/#{@record_type.record_subclass.demodulize.underscore}_headers"
       - else
         th Details
-      th.w-1.text-center Options
+      - if policy(:records).admin?
+        th.w-1.text-center Options
     tbody
       - @results.each do |obj|
         tr *{class: "#{"invalid" if obj.is_valid == false}"}
@@ -37,6 +38,7 @@ ruby:
             = render partial: "records/results/#{@record_type.record_subclass.demodulize.underscore}_data", locals: { obj: obj }
           - else
             td.align-top.text-wrap == obj.details
-          td.align-top.text-center
-            = link_to "#{fa "edit"} Edit".html_safe, edit_records_result_path(obj), class: ["btn", "btn-sm", "btn-primary"]
-            = link_to "#{fa "trash-alt"} Delete".html_safe, records_result_path(obj), method: :delete, data: { confirm: 'Are you sure?' }, class: ["btn", "btn-sm", "btn-danger"]
+          - if policy(:records).admin?
+            td.align-top.text-center
+              = link_to "#{fa "edit"} Edit".html_safe, edit_records_result_path(obj), class: ["btn", "btn-sm", "btn-primary"]
+              = link_to "#{fa "trash-alt"} Delete".html_safe, records_result_path(obj), method: :delete, data: { confirm: 'Are you sure?' }, class: ["btn", "btn-sm", "btn-danger"]

@@ -8,6 +8,7 @@ class RecordsController < ApplicationController
   has_scope :for_responsibility
 
   def upcoming
+    authorize :records, :view?
     parse_filter_params
     filters_to_cookies
     begin
