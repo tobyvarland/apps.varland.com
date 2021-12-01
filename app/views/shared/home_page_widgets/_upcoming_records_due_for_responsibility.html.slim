@@ -2,9 +2,11 @@ ruby:
   assignments = Records::Assignment.for_responsibility(responsibility).with_due_date
 
 .card.bg-light
-  h6.card-header = "Upcoming Records Due for #{label}"
+  h6.card-header.px-2.d-flex.flex-row.align-items-center.justify-content-between
+    div = "Upcoming Records Due for #{label}"
+    .small = link_to "All Items", records_upcoming_url
   - if assignments.length == 0
-    .card-body.fst-italic.text-uncolor.px-3.py-2 Nothing due.
+    .card-body.fst-italic.text-uncolor.px-2.py-2 Nothing due.
   - else
     table.table.mb-0.small.table-hover.table-striped.table-borderless
       thead
