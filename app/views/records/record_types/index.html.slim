@@ -1,0 +1,42 @@
+ruby:
+  provide(:title, 'Record Types')
+
+- content_for :nav do
+  = render "records/nav"
+
+.d-flex.flex-row.align-items-center.justify-content-between.mt-3
+  h1.font-varland Record Types
+  div
+    - if policy(:records).admin?
+		  = link_to "#{fa 'plus'} Record Type".html_safe, new_records_record_type_path, class: ["btn", "btn-sm", "btn-primary"]
+
+.table-responsive.my-3
+  table.table.table-striped.table-hover
+    thead.table-dark
+      th Name
+      th Status
+      th.text-center.w-1 Options
+    tbody
+      - @record_types.each do |obj|
+        tr
+          td.align-top
+            .fw-700 = obj.name
+            table.m-0
+              tbody
+                tr
+                  td.small.text-uncolor.text-end.pe-1 Data Type:
+                  td.small.fst-italic = dropdown_human_readable(Records::RecordType.available_data_types, obj.data_type)
+                tr
+                  td.small.text-uncolor.text-end.pe-1 Responsibility:
+                  td.small.fst-italic = dropdown_human_readable(Records::RecordType.available_responsibilities, obj.responsibility)
+                - unless obj.frequency.blank?
+                  tr
+                    td.small.text-uncolor.text-end.pe-1 Frequency:
+                    td.small.fst-italic = "every #{pluralize(obj.frequency, "day")}"
+                - unless obj.url.blank?
+                  tr
+                    td.small.text-uncolor.text-end.pe-1 Instructions:
+                    td.small.fst-italic = link_to obj.url.truncate(30), obj.url, target: "_blank"
+          td.align-top == render partial: "records/assignments/assignments_for_record_type", locals: { assignments: obj.assignments.for_active_device }
+          td.text-center.align-top
+            = link_to "#{fa "eye"} Details".html_safe, obj, class: ["btn", "btn-sm", "btn-primary"]

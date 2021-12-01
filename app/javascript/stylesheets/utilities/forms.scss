@@ -21,6 +21,12 @@
   }
 }
 
+.card-body {
+  .vp-gray-form {
+    @extend .shadow-none;
+  }
+}
+
 .vp-gray-form {
   @extend .bg-light;
   @extend .pb-3;

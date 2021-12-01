@@ -34,7 +34,7 @@ class PermissionsController < ApplicationController
                                          :shift_notes,
                                          :employee_notes,
                                          :final_inspection,
-                                         :calibrations)
+                                         :records)
     end
 
 end

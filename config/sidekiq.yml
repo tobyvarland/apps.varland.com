@@ -14,3 +14,7 @@
     cron: '0 */15 * * * *'
     queue: default
     enabled: true
+  UpdateRecordAssignmentDaysJob:
+    cron: '0 20 0 * * *'
+    queue: default
+    enabled: true

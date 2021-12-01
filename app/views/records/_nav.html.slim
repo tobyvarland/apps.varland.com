@@ -1,0 +1,6 @@
+li.nav-item = primary_nav_link "calendar-alt", "Upcoming", records_upcoming_url
+li.nav-item = primary_nav_link "list-alt", "Record Types", records_record_types_url
+li.nav-item = primary_nav_link "list-alt", "Devices", records_devices_url
+li.nav-item = primary_nav_link "list-alt", "Records", records_results_url
+- if policy(:records).admin?
+  li.nav-item = primary_nav_link "list-alt", "Reason Codes", records_reason_codes_url

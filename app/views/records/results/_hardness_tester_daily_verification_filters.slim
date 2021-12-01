@@ -1,0 +1,8 @@
+.row
+  .col-12.col-md.mt-3 = f.input :with_reading, required: false, label: "Individual Reading:", input_html: { value: params[:filters].blank? ? nil : params[:filters][:with_reading] }, hint: "Math expression"
+  .col-12.col-md.mt-3 = f.input :with_reading_average, required: false, label: "Average:", input_html: { value: params[:filters].blank? ? nil : params[:filters][:with_reading_average] }, hint: "Math expression"
+  .col-12.col-md.mt-3 = f.input :with_reading_error, required: false, label: "Error:", input_html: { value: params[:filters].blank? ? nil : params[:filters][:with_reading_error] }, hint: "Math expression"
+  .col-12.col-md.mt-3 = f.input :with_reading_repeatability, required: false, label: "Repeatability:", input_html: { value: params[:filters].blank? ? nil : params[:filters][:with_reading_repeatability] }, hint: "Math expression"
+  .col-12.col-md.mt-3 = f.input :with_reading_error_valid, required: false, include_blank: true, label: "Error Valid:", collection: [["Yes", true], ["No", false]], selected: params[:filters].blank? ? "" : params[:filters][:with_reading_error_valid], input_html: { class: "form-select" }
+  .col-12.col-md.mt-3 = f.input :with_reading_repeatability_valid, required: false, include_blank: true, label: "Repeatability Valid:", collection: [["Yes", true], ["No", false]], selected: params[:filters].blank? ? "" : params[:filters][:with_reading_repeatability_valid], input_html: { class: "form-select" }
+  .col-12.col-md.mt-3 = f.input :with_is_valid, required: false, include_blank: true, label: "Valid:", collection: [["Yes", true], ["No", false]], selected: params[:filters].blank? ? "" : params[:filters][:with_is_valid], input_html: { class: "form-select" }

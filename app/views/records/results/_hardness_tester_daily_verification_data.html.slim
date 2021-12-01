@@ -1,0 +1,9 @@
+td.px-3.text-center.align-top = obj.reading_1
+td.px-3.text-center.align-top = obj.reading_2
+td.px-3.text-center.fw-700.align-top = obj.reading_average.round(2)
+td.px-3.text-center.align-top *{class: "#{obj.reading_error_valid ? "valid" : "invalid"}"}
+  span.me-1.fw-700 = obj.reading_error.round(2)
+  = boolean_icon obj.reading_error_valid, true_text: "valid", false_text: "invalid"
+td.px-3.text-center.align-top *{class: "#{obj.reading_repeatability_valid ? "valid" : "invalid"}"}
+  span.me-1.fw-700 = obj.reading_repeatability.round(2)
+  = boolean_icon obj.reading_repeatability_valid, true_text: "valid", false_text: "invalid"

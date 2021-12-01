@@ -1,0 +1,7 @@
+.row
+  .col-12.col-md.mt-3 = f.input :with_temperature, required: false, label: "Temperature:", input_html: { value: params[:filters].blank? ? nil : params[:filters][:with_temperature] }, hint: "Math expression"
+  .col-12.col-md.mt-3 = f.input :with_collection_amount, required: false, label: "Amount:", input_html: { value: params[:filters].blank? ? nil : params[:filters][:with_collection_amount] }, hint: "Math expression"
+  .col-12.col-md.mt-3 = f.input :with_collection_hours, required: false, label: "Hours:", input_html: { value: params[:filters].blank? ? nil : params[:filters][:with_collection_hours] }, hint: "Math expression"
+  .col-12.col-md.mt-3 = f.input :with_collection_rate, required: false, label: "Rate:", input_html: { value: params[:filters].blank? ? nil : params[:filters][:with_collection_rate] }, hint: "Math expression"
+  .col-12.col-md.mt-3 = f.input :with_collection_rate_valid, required: false, include_blank: true, label: "Rate Valid:", collection: [["Yes", true], ["No", false]], selected: params[:filters].blank? ? "" : params[:filters][:with_collection_rate_valid], input_html: { class: "form-select" }
+  .col-12.col-md.mt-3 = f.input :with_is_valid, required: false, include_blank: true, label: "Valid:", collection: [["Yes", true], ["No", false]], selected: params[:filters].blank? ? "" : params[:filters][:with_is_valid], input_html: { class: "form-select" }

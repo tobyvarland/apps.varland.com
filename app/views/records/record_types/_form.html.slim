@@ -1,0 +1,90 @@
+= simple_form_for(@record_type, html: {class: ["vp-gray-form", "my-3"]}) do |f|
+
+  = f.error_notification
+  = f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present?
+
+  .row
+    .col-12.col-md-8
+      .row
+        .col-12.mt-3 = f.input :name, required: true, label: "Name:", autofocus: true
+      .row
+        .col-12.mt-3 = f.input :url, required: false, label: "URL:", hint: "#{fa "google-drive", type: "fab"} Link to instructions on Google Drive".html_safe
+      .row
+        .col-12.col-md-6.mt-3 = f.input :data_type, required: true, label: "Data Type:", collection: Records::RecordType.available_data_types, input_html: { class: "form-select" }
+        .col-12.col-md-6.mt-3 = f.input :responsibility, required: true, label: "Responsibility:", collection: Records::RecordType.available_responsibilities, input_html: { class: "form-select" }
+        .col-12.col-md-6.mt-3 = f.input :frequency, required: false, label: "Frequency:", hint: "Unit is days, blank for as needed"
+        .col-12.col-md-6.mt-3 = f.input :record_subclass, required: true, label: "Sub Class:", collection: Records::Result.available_methods_for_dropdown, input_html: { class: "form-select" }
+      fieldset.border.mt-3.rounded.shadow-sm.d-none.record-type-fields data-type="Records::GroovTwoPointCalibration"
+        legend.px-3.py-2.rounded-top.mb-0 Options for Groov Two Point Calibrations
+        .p-3.pt-0
+          .row
+            .col-6.mt-3 = f.input :expected_low, required: true, disabled: true, label: "Expected Low Value:"
+            .col-6.mt-3 = f.input :expected_high, required: true, disabled: true, label: "Expected High Value:"
+      fieldset.border.mt-3.rounded.shadow-sm.d-none.record-type-fields data-type="Records::IAOProbeCalibration"
+        legend.px-3.py-2.rounded-top.mb-0 Options for IAO Probe Calibrations
+        .p-3.pt-0
+          .row
+            .col-6.mt-3 = f.input :expected_low, required: true, disabled: true, label: "Expected Low Value:"
+            .col-6.mt-3 = f.input :expected_high, required: true, disabled: true, label: "Expected High Value:"
+      fieldset.border.mt-3.rounded.shadow-sm.d-none.record-type-fields data-type="Records::HardnessTesterDailyVerification"
+        legend.px-3.py-2.rounded-top.mb-0 Options for Hardness Tester Daily Verifications
+        .p-3.pt-0
+          .row
+            .col.mt-3 = f.input :rockwell_scale, required: true, disabled: true, label: "Rockwell Scale:"
+            .col.mt-3 = f.input :test_block_hardness, required: true, disabled: true, label: "Test Block Hardness:"
+            .col.mt-3 = f.input :test_block_serial, required: true, disabled: true, label: "Test Block ID:"
+            .col.mt-3 = f.input :max_error, required: true, disabled: true, label: "Max Error:"
+            .col.mt-3 = f.input :max_repeatability, required: true, disabled: true, label: "Max Repeatability:"
+    .col-12.col-md-4
+      .shadow-sm.border.p-3.rounded.mt-3
+        table.table.table-bordered.table-striped.table-hover.mb-0
+          thead.table-secondary
+            tr
+              th.col-11.label Device
+              th.col-1.text-center
+                = link_to_add_association fa("plus"),
+                                          f,
+                                          :assignments,
+                                          class: ["btn", "btn-sm", "btn-secondary"],
+                                          'data-association-insertion-node': "#assignments",
+                                          'data-association-insertion-method': "prepend",
+                                          partial: "records/assignments/device_fields"
+          tbody id="assignments"
+            = f.simple_fields_for :assignments do |assignment|
+              = render "records/assignments/device_fields", f: assignment
+
+  .form-actions
+    div
+      = link_to "#{fa "times"} Cancel".html_safe, @record_type.id.blank? ? records_record_types_path : @record_type, class: ["btn", "btn-light", "btn-sm", "me-3"], tabindex: -1
+      = f.button :button, "#{fa "check"} Save Record Type".html_safe, class: ["btn-primary", "btn-sm"]
+
+javascript:
+  $(function() {
+    var selectedValue = $("#records_record_type_record_subclass").val();
+    $('.record-type-fields').each(function() {
+      var $fieldsContainer = $(this);
+      var type = $fieldsContainer.data("type");
+      if (type == selectedValue) {
+        $fieldsContainer.removeClass("d-none");
+        $fieldsContainer.find("input").prop('disabled', false);
+      } else {
+        $fieldsContainer.addClass("d-none");
+        $fieldsContainer.find("input").prop('disabled', true);
+      }
+    });
+  });
+  $("#records_record_type_record_subclass").on("change", function() {
+    var $dropdown = $(this);
+    var selectedValue = $dropdown.val();
+    $('.record-type-fields').each(function() {
+      var $fieldsContainer = $(this);
+      var type = $fieldsContainer.data("type");
+      if (type == selectedValue) {
+        $fieldsContainer.removeClass("d-none");
+        $fieldsContainer.find("input").prop('disabled', false);
+      } else {
+        $fieldsContainer.addClass("d-none");
+        $fieldsContainer.find("input").prop('disabled', true);
+      }
+    });
+  });

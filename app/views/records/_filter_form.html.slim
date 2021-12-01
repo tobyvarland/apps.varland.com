@@ -1,0 +1,13 @@
+= simple_form_for(:filters, method: "GET", html: {class: ["vp-gray-form", "my-3", "all-auto-submit"]}) do |f|
+
+  .row.loading-icon.d-none
+    .col-12.text-center.mt-3.fs-1 == fa "spinner", spin: true
+
+  .form-fields
+    .row
+      .col-12.col-md.mt-3 = f.input :for_data_type, collection: Records::RecordType.available_data_types, selected: params[:filters].blank? ? "" : params[:filters][:for_data_type], required: false, label: "Data Type:", include_blank: true, input_html: { class: "form-select" }
+      .col-12.col-md.mt-3 = f.input :for_responsibility, collection: Records::RecordType.available_responsibilities, selected: params[:filters].blank? ? "" : params[:filters][:for_responsibility], required: false, label: "Responsibility:", include_blank: true, input_html: { class: "form-select" }
+      .col-12.col-md.mt-3 = f.input :for_record_type, collection: Records::RecordType.with_frequency.by_name, selected: params[:filters].blank? ? "" : params[:filters][:for_record_type], required: false, label: "Record Type:", include_blank: true, input_html: { class: "form-select" }
+      .col-12.col-md.mt-3 = f.input :for_device, collection: Records::Device.by_name, selected: params[:filters].blank? ? "" : params[:filters][:for_device], required: false, label: "Device:", include_blank: true, input_html: { class: "form-select" }
+      .col-12.col-md.mt-3 = f.input :due_within_days, required: false, label: "Due Within Days:", input_html: { value: params[:filters].blank? ? nil : params[:filters][:due_within_days] }, hint: "-1 shows only past due"
+      .col-12.col-md.mt-3 = f.input :due_on_or_before, as: :date, html5: true, required: false, label: "Due On or Before:", input_html: { value: params[:filters].blank? ? nil : params[:filters][:due_on_or_before] }

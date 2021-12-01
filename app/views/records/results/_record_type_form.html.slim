@@ -1,0 +1,32 @@
+= simple_form_for(result, html: {class: ["vp-gray-form"]}) do |f|
+
+  = f.error_notification
+  = f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present?
+
+  = f.association :record_type, as: :hidden
+  = f.association :user, as: :hidden
+  = f.input :type, as: :hidden, input_html: { value: type }
+
+  .row
+    .col-12.col-md-4.mt-3
+      = f.association :device, collection: @record_type.devices_for_dropdown, label: "Device:", required: true, input_html: { class: "form-select" }
+    .col-12.col-md-4.mt-3
+      = f.association :reason_code, label: "Reason:", required: true, input_html: { class: "form-select" }
+    .col-12.col-md-4.mt-3
+      = f.input :result_on, label: "Date:", required: true, as: :date, html5: true, input_html: { style: "margin: 0 !important;" }
+
+  = render partial: "records/results/#{type.demodulize.underscore}_fields", locals: { f: f }
+
+  .form-actions
+    div
+      = f.button :button, "#{fa "check"} Save Record".html_safe, class: ["btn-primary", "btn-sm"]
+
+javascript:
+  $(function() {
+    var $dropdown = $("#records_result_device_id");
+    var options = $dropdown.find("option");
+    if (options.length == 2) {
+      var $option = $(options[1]);
+      $dropdown.val($option.val());
+    }
+  });

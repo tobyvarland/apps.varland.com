@@ -2,6 +2,56 @@ module ApplicationHelper
 
   include Pagy::Frontend
 
+  def dropdown_human_readable(list, value)
+    list.each do |l|
+      return l[0] if l[1] == value
+    end
+    return "Unknown"
+  end
+
+  def record_days_badge(days)
+    classes = ["badge", "text-uppercase"]
+    text = "#{pluralize(days, "day")} from now"
+    case
+    when days < 0
+      classes << "bg-red-500"
+      text = "#{pluralize(days.abs, "day")} past due"
+    when days == 0
+      classes << "bg-yellow-500"
+      text = "Today"
+    when days == 1
+      classes << "bg-yellow-500"
+      text = "Tomorrow"
+    when days <= 7
+      classes << "bg-blue-500"
+    when days <= 30
+      classes << "bg-purple-500"
+    when days > 30
+      classes << "bg-green-500"
+    end
+    content_tag :div, text, class: classes
+  end
+
+  def boolean_icon(value, options = {})
+    show_text = options.fetch(:show_text, true)
+    uppercase = options.fetch(:uppercase, true)
+    bold = options.fetch(:bold, true)
+    true_class = options.fetch(:true_class, "text-green-700")
+    false_class = options.fetch(:false_class, "text-red-700")
+    true_text = options.fetch(:true_text, "Yes")
+    false_text = options.fetch(:false_text, "No")
+    classes = []
+    classes << "text-uppercase" if uppercase
+    classes << "fw-700" if bold
+    if value
+      classes << true_class
+      content_tag :span, "#{fa "check"}#{show_text ? " #{true_text}" : ""}".html_safe, class: classes
+    else
+      classes << false_class
+      content_tag :span, "#{fa "times"}#{show_text ? " #{false_text}" : ""}".html_safe, class: classes
+    end
+  end
+
   def controller_badge(controller_name)
     div_classes = ["badge"]
     case controller_name

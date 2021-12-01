@@ -1,0 +1,23 @@
+= simple_form_for(:filters, method: "GET", html: {class: ["vp-gray-form", "my-3", "all-auto-submit"]}) do |f|
+
+  .row.loading-icon.d-none
+    .col-12.text-center.mt-3.fs-1 == fa "spinner", spin: true
+
+  .form-fields
+    .row
+      .col-12.col-md.mt-3 = f.input :for_data_type, collection: Records::RecordType.available_data_types, selected: params[:filters].blank? ? "" : params[:filters][:for_data_type], required: false, label: "Data Type:", include_blank: true, input_html: { class: "form-select" }
+      .col-12.col-md.mt-3 = f.input :for_responsibility, collection: Records::RecordType.available_responsibilities, selected: params[:filters].blank? ? "" : params[:filters][:for_responsibility], required: false, label: "Responsibility:", include_blank: true, input_html: { class: "form-select" }
+      .col-12.col-md.mt-3 = f.input :for_record_type, collection: Records::RecordType.by_name, selected: params[:filters].blank? ? "" : params[:filters][:for_record_type], required: false, label: "Record Type:", include_blank: true, input_html: { class: "form-select" }
+      .col-12.col-md.mt-3 = f.input :for_device, collection: Records::Device.by_name, selected: params[:filters].blank? ? "" : params[:filters][:for_device], required: false, label: "Device:", include_blank: true, input_html: { class: "form-select" }
+      .col-12.col-md.mt-3 = f.input :for_reason_code, collection: Records::ReasonCode.by_name, selected: params[:filters].blank? ? "" : params[:filters][:for_reason_code], required: false, label: "Reason Code:", include_blank: true, input_html: { class: "form-select" }
+      .col-12.col-md.mt-3 = f.input :for_user, collection: Records::Result.users.collect {|u| [u.name_and_number, u.id]}.sort, selected: params[:filters].blank? ? "" : params[:filters][:for_user], required: false, label: "Calibrated By:", include_blank: true, input_html: { class: "form-select" }
+    - if @record_type
+      - if lookup_context.exists?("#{@record_type.record_subclass.demodulize.underscore}_filters", ["records/results"], true)
+        = render partial: "#{@record_type.record_subclass.demodulize.underscore}_filters", locals: { f: f }
+    .row
+      .col-12.col-md.mt-3 = f.input :on_or_after, as: :date, html5: true, required: false, label: "Start Date:", input_html: { value: params[:filters].blank? ? nil : params[:filters][:on_or_after] }
+      .col-12.col-md.mt-3 = f.input :on_or_before, as: :date, html5: true, required: false, label: "End Date:", input_html: { value: params[:filters].blank? ? nil : params[:filters][:on_or_before] }
+      .col-12.col-md.mt-3
+      .col-12.col-md.mt-3
+      .col-12.col-md.mt-3
+      .col-12.col-md.mt-3 = f.input :sorted_by, collection: [["Newest First", "newest"], ["Oldest First", "oldest"]].sort, selected: params[:filters].blank? ? "" : params[:filters][:sorted_by], required: false, label: "Sort By:", include_blank: true, input_html: { class: "form-select" }

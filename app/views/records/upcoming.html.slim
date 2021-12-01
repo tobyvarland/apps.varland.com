@@ -1,0 +1,34 @@
+ruby:
+  provide(:title, 'Upcoming Items Due')
+
+- content_for :nav do
+  = render "records/nav"
+
+.d-flex.flex-row.align-items-center.justify-content-between.mt-3
+  h1.font-varland Upcoming Items Due
+
+= render "filter_form"
+
+.d-flex.flex-row.align-items-center.justify-content-center
+  = render partial: "shared/pagination", locals: { label: "Items" }
+
+.table-responsive.my-3
+  table.table.table-striped.table-hover.small
+    thead.table-dark
+      th Device
+      th Record Type
+      th.text-center Last
+      th.text-center Due
+      th.text-center Days
+    tbody
+      - @assignments.each do |obj|
+        tr *{class: "#{"past-due" if obj.next_result_due_in_days < 0}"}
+          td = link_to obj.device.name, obj.device
+          td = link_to obj.record_type.name, obj.record_type
+          td.text-center
+            - if obj.last_result_on.nil?
+              .fst-italic Never
+            - else
+              = obj.last_result_on.strftime "%m/%d/%y"
+          td.text-center = obj.next_result_due_on.strftime "%m/%d/%y"
+          td.text-center = record_days_badge obj.next_result_due_in_days
