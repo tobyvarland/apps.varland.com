@@ -32,3 +32,19 @@ td {
     }
   }
 }
+
+tr.invalid {
+  background-color: $color-red-200;
+}
+
+tr.valid {
+  background-color: $color-green-100;
+}
+
+td.invalid {
+  background-color: $color-red-200 !important;
+}
+
+td.valid {
+  background-color: $color-green-100 !important;
+}

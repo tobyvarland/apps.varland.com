@@ -3,14 +3,14 @@
 
 /* Import Varland utilities. */
 @import "utilities/variables.scss",
+        "utilities/colors.scss",
         "utilities/functions.scss",
         "utilities/fonts.scss",
         "utilities/size.scss",
         "utilities/typography.scss",
         "utilities/tables.scss",
         "utilities/forms.scss",
-        "utilities/pagination.scss",
-        "utilities/colors.scss";
+        "utilities/pagination.scss";
 
 /* Base style overrides. */
 html { overflow: auto; height: 100%; }

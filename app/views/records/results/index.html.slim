@@ -27,7 +27,7 @@ ruby:
       th.w-1.text-center Options
     tbody
       - @results.each do |obj|
-        tr *{class: "#{"table-danger" if obj.is_valid == false}"}
+        tr *{class: "#{"invalid" if obj.is_valid == false}"}
           td.align-top = link_to obj.device.name, obj.device
           td.align-top = link_to obj.record_type.name, obj.record_type
           td.align-top = obj.user.name_and_number

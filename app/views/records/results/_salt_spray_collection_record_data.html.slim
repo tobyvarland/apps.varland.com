@@ -1,11 +1,11 @@
 td.px-3.text-center.align-top = number_with_precision obj.temperature, precision: 2
 td.px-3.text-center.align-top = obj.collection_1_amount.to_i
 td.px-3.text-center.align-top = obj.collection_1_hours.to_i
-td.px-3.text-center.align-top *{class: "table-#{obj.collection_1_rate_valid ? "success" : "danger"}"}
+td.px-3.text-center.align-top *{class: "#{obj.collection_1_rate_valid ? "valid" : "invalid"}"}
   span.me-1.fw-700 = number_with_precision obj.collection_1_rate, precision: 3
   = boolean_icon obj.collection_1_rate_valid, true_text: "valid", false_text: "invalid"
 td.px-3.text-center.align-top = obj.collection_2_amount.to_i
 td.px-3.text-center.align-top = obj.collection_2_hours.to_i
-td.px-3.text-center.align-top *{class: "table-#{obj.collection_2_rate_valid ? "success" : "danger"}"}
+td.px-3.text-center.align-top *{class: "#{obj.collection_2_rate_valid ? "valid" : "invalid"}"}
   span.me-1.fw-700 = number_with_precision obj.collection_2_rate, precision: 3
   = boolean_icon obj.collection_2_rate_valid, true_text: "valid", false_text: "invalid"
