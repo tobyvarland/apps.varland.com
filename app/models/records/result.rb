@@ -120,7 +120,8 @@ class Records::Result < ApplicationRecord
     return [
       "Records::GroovTwoPointCalibration",
       "Records::HardnessTesterDailyVerification",
-      "Records::SaltSprayCollectionRecord"
+      "Records::SaltSprayCollectionRecord",
+      "Records::IAOProbeCalibration"
     ].sort
   end
 
