@@ -21,6 +21,7 @@ class Records::RecordType < ApplicationRecord
 
   # Scopes.
   scope :by_name, -> { order(:name) }
+	scope :with_frequency, -> { where.not(frequency: nil) }
 
   # Validations.
 	validates	:name,

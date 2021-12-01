@@ -20,6 +20,11 @@ class Records::Assignment < ApplicationRecord
   scope :kept, -> { undiscarded.joins(:record_type).joins(:device).merge(Records::RecordType.kept).merge(Records::Device.kept) }
   scope :for_active_device, -> { joins(:device).merge(Records::Device.not_retired) }
   scope :for_device_and_type, ->(device, type) { where(device_id: device).where(record_type_id: type) }
+  scope :with_due_date, -> { where.not(next_result_due_on: nil) }
+  scope :due_on_or_before, ->(value) { where("next_result_due_on <= ?", value) unless value.blank? }
+  scope :due_within_days, ->(value) { where("next_result_due_in_days <= ?", value) unless value.blank? }
+  scope :for_record_type, ->(value) { where(record_type_id: value) unless value.blank? }
+  scope :for_device, ->(value) { where(device_id: value) unless value.blank? }
 
   # Validations.
 	validates	:device_id,

@@ -41,6 +41,10 @@ tr.valid {
   background-color: $color-green-100;
 }
 
+tr.past-due {
+  background-color: $color-yellow-100;
+}
+
 td.invalid {
   background-color: $color-red-200 !important;
 }

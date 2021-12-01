@@ -9,7 +9,7 @@
       th.text-center.col-2 Days
     tbody
       - assignments.each do |assignment|
-        tr
+        tr *{class: "#{"past-due" if assignment.next_result_due_in_days && assignment.next_result_due_in_days < 0}"}
           td = link_to assignment.device.name, assignment.device
           td.text-center
             - if assignment.last_result_on.blank?
