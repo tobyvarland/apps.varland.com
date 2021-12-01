@@ -356,3 +356,9 @@ mark.search-term {
   25% { background-color: $color-yellow-200; }
   100% { background-color: auto; }
 }
+
+.striped-rows {
+  .stripable-row:nth-child(odd) {
+    background-color: rgba(0, 0, 0, 0.05);
+  }
+}
