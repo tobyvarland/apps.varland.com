@@ -30,7 +30,7 @@ ruby:
                   - unless obj.url.blank?
                     tr
                       td.small.text-uncolor.text-end.pe-1 Instructions:
-                      td.small.fst-italic = link_to obj.url, obj.url, target: "_blank"
+                      td.small.fst-italic = link_to obj.url.truncate(30), obj.url, target: "_blank"
           td.align-top == render partial: "records/assignments/assignments_for_record_type", locals: { assignments: obj.assignments.for_active_device }
           td.text-center.align-top
             = link_to "#{fa "eye"} Details".html_safe, obj, class: ["btn", "btn-sm", "btn-primary"]
