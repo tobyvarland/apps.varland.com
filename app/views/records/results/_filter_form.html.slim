@@ -10,7 +10,7 @@
       .col-12.col-md.mt-3 = f.input :for_record_type, collection: Records::RecordType.by_name, selected: params[:filters].blank? ? "" : params[:filters][:for_record_type], required: false, label: "Record Type:", include_blank: true, input_html: { class: "form-select" }
       .col-12.col-md.mt-3 = f.input :for_device, collection: Records::Device.by_name, selected: params[:filters].blank? ? "" : params[:filters][:for_device], required: false, label: "Device:", include_blank: true, input_html: { class: "form-select" }
       .col-12.col-md.mt-3 = f.input :for_reason_code, collection: Records::ReasonCode.by_name, selected: params[:filters].blank? ? "" : params[:filters][:for_reason_code], required: false, label: "Reason Code:", include_blank: true, input_html: { class: "form-select" }
-      .col-12.col-md.mt-3 = f.input :for_user, collection: Records::Result.users.collect {|u| [u.name_and_number, u.id]}.sort, selected: params[:filters].blank? ? "" : params[:filters][:for_user], required: false, label: "Calibrated By:", include_blank: true, input_html: { class: "form-select" }
+      .col-12.col-md.mt-3 = f.input :for_user, collection: Records::Result.users.collect {|u| [u.name_and_number, u.id]}.sort, selected: params[:filters].blank? ? "" : params[:filters][:for_user], required: false, label: "Entered By:", include_blank: true, input_html: { class: "form-select" }
     - if @record_type
       - if lookup_context.exists?("#{@record_type.record_subclass.demodulize.underscore}_filters", ["records/results"], true)
         = render partial: "#{@record_type.record_subclass.demodulize.underscore}_filters", locals: { f: f }
