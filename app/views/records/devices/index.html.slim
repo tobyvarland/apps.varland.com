@@ -33,6 +33,9 @@ ruby:
                   tr
                     td.small.text-uncolor.text-end.pe-1 Retired:
                     td.small.fst-italic = obj.retired_on.strftime "%m/%d/%y"
-          td.align-top == render partial: "records/assignments/assignments_for_device", locals: { assignments: obj.assignments }
+          - if obj.retired_on.blank?
+            td.align-top == render partial: "records/assignments/assignments_for_device", locals: { assignments: obj.assignments }
+          - else
+            td.align-top.fst-italic.text-uncolor Retired.
           td.text-center.align-top
             = link_to "#{fa "eye"} Details".html_safe, obj, class: ["btn", "btn-sm", "btn-primary"]

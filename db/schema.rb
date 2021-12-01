@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_11_30_220752) do
+ActiveRecord::Schema.define(version: 2021_12_01_113249) do
 
   create_table "active_storage_attachments", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "name", null: false
@@ -413,7 +413,6 @@ ActiveRecord::Schema.define(version: 2021_11_30_220752) do
 
   create_table "records_reason_codes", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "name", null: false
-    t.boolean "require_comment", default: false, null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.datetime "discarded_at"
@@ -425,7 +424,6 @@ ActiveRecord::Schema.define(version: 2021_11_30_220752) do
     t.integer "frequency"
     t.string "url"
     t.string "record_subclass", null: false
-    t.boolean "is_internal", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.datetime "discarded_at"
@@ -467,6 +465,16 @@ ActiveRecord::Schema.define(version: 2021_11_30_220752) do
     t.float "collection_1_hours"
     t.float "collection_2_amount"
     t.float "collection_2_hours"
+    t.boolean "is_valid"
+    t.float "reading_average"
+    t.float "reading_error"
+    t.float "reading_repeatability"
+    t.boolean "reading_error_valid"
+    t.boolean "reading_repeatability_valid"
+    t.float "collection_1_rate"
+    t.boolean "collection_1_rate_valid"
+    t.float "collection_2_rate"
+    t.boolean "collection_2_rate_valid"
     t.index ["device_id"], name: "index_records_results_on_device_id"
     t.index ["discarded_at"], name: "index_records_results_on_discarded_at"
     t.index ["reason_code_id"], name: "index_records_results_on_reason_code_id"

@@ -21,6 +21,7 @@ class Records::Device < ApplicationRecord
 
   # Scopes.
   scope :by_name, -> { order(:name) }
+	scope :not_retired, -> { where(retired_on: nil) }
 
   # Validations.
 	validates	:name,

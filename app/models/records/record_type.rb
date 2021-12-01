@@ -52,7 +52,7 @@ class Records::RecordType < ApplicationRecord
 
 	# Returns devices for dropdown.
 	def devices_for_dropdown
-		return self.assignments.map {|a| [a.device.name, a.device_id]}
+		return self.assignments.for_active_device.map {|a| [a.device.name, a.device_id]}
 	end
 
 	# Class methods.

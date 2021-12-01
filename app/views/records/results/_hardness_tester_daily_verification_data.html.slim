@@ -1,9 +1,9 @@
 td.px-3.text-center.align-top = obj.reading_1
 td.px-3.text-center.align-top = obj.reading_2
-td.px-3.text-center.fw-700.align-top = obj.average.round(2)
-td.px-3.text-center.align-top *{class: "table-#{obj.error.abs <= obj.max_error ? "success" : "danger"}"}
-  span.me-1.fw-700 = obj.error.round(2)
-  = boolean_icon obj.error.abs <= obj.max_error, true_text: "valid", false_text: "invalid"
-td.px-3.text-center.align-top *{class: "table-#{obj.repeatability <= obj.max_repeatability ? "success" : "danger"}"}
-  span.me-1.fw-700 = obj.repeatability.round(2)
-  = boolean_icon obj.repeatability <= obj.max_repeatability, true_text: "valid", false_text: "invalid"
+td.px-3.text-center.fw-700.align-top = obj.reading_average.round(2)
+td.px-3.text-center.align-top *{class: "table-#{obj.reading_error_valid ? "success" : "danger"}"}
+  span.me-1.fw-700 = obj.reading_error.round(2)
+  = boolean_icon obj.reading_error_valid, true_text: "valid", false_text: "invalid"
+td.px-3.text-center.align-top *{class: "table-#{obj.reading_repeatability_valid ? "success" : "danger"}"}
+  span.me-1.fw-700 = obj.reading_repeatability.round(2)
+  = boolean_icon obj.reading_repeatability_valid, true_text: "valid", false_text: "invalid"

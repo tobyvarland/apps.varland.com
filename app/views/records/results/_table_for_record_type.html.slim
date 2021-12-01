@@ -12,7 +12,7 @@
     tbody
       - results.each do |obj|
         - next if obj.id.blank?
-        tr
+        tr *{class: "#{"table-danger" if obj.is_valid == false}"}
           td.px-3.align-top = link_to obj.device.name, obj.device
           td.px-3.align-top = obj.user.name_and_number
           td.px-3.text-center.align-top = obj.result_on.strftime "%m/%d/%y"

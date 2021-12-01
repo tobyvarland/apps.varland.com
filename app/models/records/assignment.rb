@@ -18,6 +18,7 @@ class Records::Assignment < ApplicationRecord
   default_scope -> { by_due_date }
   scope :by_due_date, -> { order("ISNULL(`next_result_due_on`), `next_result_due_on`") }
   scope :kept, -> { undiscarded.joins(:record_type).joins(:device).merge(Records::RecordType.kept).merge(Records::Device.kept) }
+  scope :for_active_device, -> { joins(:device).merge(Records::Device.not_retired) }
   scope :for_device_and_type, ->(device, type) { where(device_id: device).where(record_type_id: type) }
 
   # Validations.
