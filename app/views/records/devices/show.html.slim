@@ -31,7 +31,7 @@ ruby:
       - if policy(:records).data_entry?
         - @device.assignments.by_type.each do |obj|
           .card.bg-light.mt-3
-            h6.card-header.d-flex.flex-row.align-items-center.justify-content-between
+            h6.card-header.d-flex.flex-row.align-items-center.justify-content-between.px-2
               div = "Enter New #{obj.record_type.record_subclass.demodulize.titleize}"
               - unless obj.record_type.url.blank?
                 = link_to "#{fa "link"} Instructions".html_safe, obj.record_type.url, target: "_blank", class: ["btn", "btn-sm", "btn-dark"]
@@ -39,19 +39,19 @@ ruby:
               = render partial: "records/results/device_form", locals: { result: @device.results.build(user: current_user, result_on: Date.current, record_type: obj.record_type), type: obj.record_type.record_subclass }
 
       .card.bg-light.mt-3
-        h6.card-header Current Status
+        h6.card-header.px-2 Current Status
         table.table.mb-0.small.table-hover.table-striped.table-borderless
           thead
             tr
-              th.px-3 Type
-              th.px-3.text-center Last Record
-              th.px-3.text-center Next Record Due
-              th.px-3.text-center Days Until Due
+              th Type
+              th.text-center Last Record
+              th.text-center Next Record Due
+              th.text-center Days Until Due
           tbody
             - @device.assignments.by_due_date.each do |obj|
               tr *{class: "#{"past-due" if obj.next_result_due_in_days && obj.next_result_due_in_days < 0}"}
-                td.px-3 = link_to obj.record_type.name, obj.record_type
-                td.px-3.text-center
+                td = link_to obj.record_type.name, obj.record_type
+                td.text-center
                   - if obj.last_result_on.blank?
                     span.fst-italic Never
                   - else
@@ -65,7 +65,7 @@ ruby:
 
     - @device.assignments.by_type.each do |obj|
       .card.bg-light.mt-3
-        h6.card-header.d-flex.flex-row.align-items-center.justify-content-between
+        h6.card-header.d-flex.flex-row.align-items-center.justify-content-between.px-2
           = "Full History"
           - if @device.assignments.length > 1
             = link_to obj.record_type.name, obj.record_type

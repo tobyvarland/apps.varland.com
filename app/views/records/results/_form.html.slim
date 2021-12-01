@@ -15,6 +15,10 @@
 
   = render partial: "records/results/#{@result.record_type.record_subclass.demodulize.underscore}_fields", locals: { f: f }
 
+  .row
+    .col-12.mt-3
+      = f.input :comments, label: "Comments:", required: false
+
   .form-actions
     div
       = link_to "#{fa "times"} Cancel".html_safe, records_results_url, class: ["btn", "btn-light", "btn-sm", "me-3"], tabindex: -1

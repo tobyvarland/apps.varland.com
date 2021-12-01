@@ -74,7 +74,8 @@ class Records::RecordType < ApplicationRecord
 	def self.available_data_types
 		return [
 			["Calibration", "calibration"],
-			["Internal Metric", "internal_metric"]
+			["Internal Metric", "internal_metric"],
+			["IT Function", "it_function"]
 		].sort
 	end
 

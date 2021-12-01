@@ -33,6 +33,7 @@ class Records::ResultsController < ApplicationController
   has_scope :with_distilled_water_added
   has_scope :with_ph
   has_scope :with_weight
+  has_scope :with_id
 
   def index
     authorize :records, :view?
@@ -123,7 +124,8 @@ class Records::ResultsController < ApplicationController
                                                   :salt_added,
                                                   :distilled_water_added,
                                                   :ph,
-                                                  :weight)
+                                                  :weight,
+                                                  :comments)
     end
 
 end

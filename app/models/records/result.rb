@@ -73,6 +73,7 @@ class Records::Result < ApplicationRecord
   scope :with_ph,  ->(value) { with_math_field("ph", value) }
   scope :with_salt_added,  ->(value) { with_math_field("salt_added", value) }
   scope :with_distilled_water_added,  ->(value) { with_math_field("distilled_water_added", value) }
+  scope :with_id,  ->(value) { where(id: value) unless value.blank? }
   scope :sorted_by, ->(value) {
     case value
     when 'oldest'
@@ -128,7 +129,8 @@ class Records::Result < ApplicationRecord
       "Records::HardnessTesterDailyVerification",
       "Records::SaltSprayCollectionRecord",
       "Records::IAOProbeCalibration",
-      "Records::SaltSprayCabinetRecord"
+      "Records::SaltSprayCabinetRecord",
+      "Records::QuickCheck"
     ].sort
   end
 

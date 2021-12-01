@@ -4,17 +4,21 @@
   table.table.mb-0.small.table-hover.table-striped.table-borderless
     thead
       tr
-        th.px-3 Record Type
-        th.px-3 Entered By
-        th.px-3.text-center Date
-        th.px-3 Reason
+        th Record Type
+        th Entered By
+        th.text-center Date
+        th Reason
         = render partial: "records/results/#{type.demodulize.underscore}_headers"
+        th.w-1 &nbsp;
     tbody
       - results.each do |obj|
         - next if obj.id.blank?
         tr *{class: "#{"invalid" if obj.is_valid == false}"}
-          td.px-3.align-top = link_to obj.record_type.name, obj.record_type
-          td.px-3.align-top = obj.user.name_and_number
-          td.px-3.text-center.align-top = obj.result_on.strftime "%m/%d/%y"
-          td.px-3.align-top = obj.reason_code.name
+          td.align-top = link_to obj.record_type.name, obj.record_type
+          td.align-top = obj.user.name_and_number
+          td.text-center.align-top = obj.result_on.strftime "%m/%d/%y"
+          td.align-top = obj.reason_code.name
           = render partial: "records/results/#{type.demodulize.underscore}_data", locals: { obj: obj }
+          td.text-center.align-top
+            - unless obj.comments.blank?
+              = link_to fa("comment"), records_results_path(filters: { with_id: obj.id }), target: "_blank"
