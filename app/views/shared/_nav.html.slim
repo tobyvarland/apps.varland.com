@@ -72,6 +72,11 @@ nav.navbar.fixed-top.navbar-expand-md.navbar-dark.bg-dark id="primary-nav"
           = link_to groov_logs_url do
             = fa "link"
             div Groov Logs
+      - if policy(:records).view?
+        li
+          = link_to records_url do
+            = fa "link"
+            div Records
       - if policy(ShiftNote).index?
         li
           = link_to shift_notes_url do

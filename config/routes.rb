@@ -10,6 +10,7 @@ Rails.application.routes.draw do
     resources :results
   end
   get "records/upcoming",   to: "records#upcoming"
+  get "records",            to: "records#upcoming"
   namespace :groov do
     get "logs/live/:controller_name", to: "logs#live", constraints: { controller_name: /.*/ }
     resources :logs, only: [:index, :destroy, :create] do
