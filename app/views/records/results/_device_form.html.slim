@@ -14,7 +14,8 @@
     .col-12.col-md-6.mt-3
       = f.input :result_on, label: "Date:", required: true, as: :date, html5: true, input_html: { style: "margin: 0 !important;" }
 
-  = render partial: "records/results/#{type.demodulize.underscore}_fields", locals: { f: f }
+  - if lookup_context.exists?("#{type.demodulize.underscore}_fields", ["records/results"], true)
+    = render partial: "records/results/#{type.demodulize.underscore}_fields", locals: { f: f }
 
   .row
     .col-12.mt-3
