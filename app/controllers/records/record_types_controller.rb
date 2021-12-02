@@ -48,7 +48,11 @@ class Records::RecordTypesController < ApplicationController
   private
 
     def set_record_type
-      @record_type = Records::RecordType.find(params[:id])
+      begin
+        @record_type = Records::RecordType.friendly.find(params[:id])
+      rescue ActiveRecord::RecordNotFound
+        redirect_to records_record_types_url, alert: "Could not find record type requested."
+      end
     end
 
     def record_type_params

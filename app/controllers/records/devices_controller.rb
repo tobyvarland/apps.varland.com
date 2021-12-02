@@ -48,7 +48,11 @@ class Records::DevicesController < ApplicationController
   private
 
     def set_device
-      @device = Records::Device.find(params[:id])
+      begin
+        @device = Records::Device.friendly.find(params[:id])
+      rescue ActiveRecord::RecordNotFound
+        redirect_to records_devices_url, alert: "Could not find device requested."
+      end
     end
 
     def device_params

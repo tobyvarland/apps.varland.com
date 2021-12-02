@@ -1,5 +1,9 @@
 class Records::RecordType < ApplicationRecord
 
+	# Friendly ID.
+	extend FriendlyId
+  friendly_id :name, use: :slugged
+
   # Soft deletes.
   include Discard::Model
   default_scope -> { kept }
