@@ -37,7 +37,6 @@ class Records::Assignment < ApplicationRecord
 
   # Callbacks.
   before_create :initialize_due_date
-  before_update :ensure_due_date_is_workday
 
   # Instance methods.
 
