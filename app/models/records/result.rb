@@ -79,7 +79,7 @@ class Records::Result < ApplicationRecord
     when 'oldest'
       order(:result_on)
     else
-      order(result_on: :desc)
+      order(result_on: :desc, id: :desc)
     end
   }
 
