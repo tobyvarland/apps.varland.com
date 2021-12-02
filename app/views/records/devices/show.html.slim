@@ -60,7 +60,10 @@ ruby:
           tbody
             - @device.assignments.by_due_date.each do |obj|
               tr *{class: "#{"past-due" if obj.next_result_due_in_days && obj.next_result_due_in_days < 0}"}
-                td = link_to obj.record_type.name, obj.record_type
+                td
+                  = link_to obj.record_type.name, obj.record_type
+                  - unless obj.record_type.frequency.blank?
+                    span.small.text-uncolor.ms-1 = "(every #{pluralize obj.record_type.frequency, "day"})"
                 td.text-center
                   - if obj.last_result_on.blank?
                     span.fst-italic Never
