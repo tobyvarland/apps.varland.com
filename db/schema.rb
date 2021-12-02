@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_12_02_142632) do
+ActiveRecord::Schema.define(version: 2021_12_02_223815) do
 
   create_table "active_storage_attachments", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "name", null: false
@@ -439,6 +439,7 @@ ActiveRecord::Schema.define(version: 2021_12_02_142632) do
     t.string "data_type", null: false
     t.string "responsibility", null: false
     t.string "slug"
+    t.text "instructions"
     t.index ["discarded_at"], name: "index_records_record_types_on_discarded_at"
     t.index ["slug"], name: "index_records_record_types_on_slug", unique: true
   end

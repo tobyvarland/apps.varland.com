@@ -21,7 +21,7 @@ ruby:
       details << {label: "Data Type", value: dropdown_human_readable(Records::RecordType.available_data_types, @record_type.data_type)}
       details << {label: "Responsibility", value: dropdown_human_readable(Records::RecordType.available_responsibilities, @record_type.responsibility)}
       details << {label: "Frequency", value: "every #{pluralize @record_type.frequency, "day"}"} unless @record_type.frequency.blank?
-      details << {label: "Instructions", value: link_to(@record_type.url.truncate(30), @record_type.url, target: "_blank")} unless @record_type.url.blank?
+      details << {label: "Instructions URL", value: link_to(@record_type.url.truncate(30), @record_type.url, target: "_blank")} unless @record_type.url.blank?
       details << {label: "# Devices Assigned", value: @record_type.assignments.for_active_device.length}
     = card_list "Record Type Details", details
 

@@ -14,6 +14,9 @@
     .col-12.col-md-6.mt-3
       = f.input :result_on, label: "Date:", required: true, as: :date, html5: true, input_html: { style: "margin: 0 !important;" }
 
+  - unless result.record_type.instructions.blank?
+    .mt-3.border.rounded.shadow-sm.p-3.small == @markdown.render(result.record_type.instructions)
+
   - if lookup_context.exists?("#{type.demodulize.underscore}_fields", ["records/results"], true)
     = render partial: "records/results/#{type.demodulize.underscore}_fields", locals: { f: f }
 

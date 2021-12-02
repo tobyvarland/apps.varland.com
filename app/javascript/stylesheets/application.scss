@@ -278,7 +278,9 @@ h1 {
 /* Miscellaneous */
 
 .card-body {
-  p:last-child {
+  p:last-child,
+  ul:last-child,
+  ol:last-child {
     @extend .mb-0;
   }
   .comment + .comment {

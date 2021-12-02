@@ -57,19 +57,20 @@ class Records::RecordTypesController < ApplicationController
 
     def record_type_params
       params.require(:records_record_type).permit(:name,
-                                                            :frequency,
-                                                            :url,
-                                                            :record_subclass,
-                                                            :expected_low,
-                                                            :expected_high,
-                                                            :rockwell_scale,
-                                                            :test_block_hardness,
-                                                            :test_block_serial,
-                                                            :max_error,
-                                                            :max_repeatability,
-                                                            :data_type,
-                                                            :responsibility,
-                                                            assignments_attributes: [:id, :device_id, :_destroy])
+                                                  :frequency,
+                                                  :url,
+                                                  :record_subclass,
+                                                  :expected_low,
+                                                  :expected_high,
+                                                  :rockwell_scale,
+                                                  :test_block_hardness,
+                                                  :test_block_serial,
+                                                  :max_error,
+                                                  :max_repeatability,
+                                                  :data_type,
+                                                  :responsibility,
+                                                  :instructions,
+                                                  assignments_attributes: [:id, :device_id, :_destroy])
     end
 
 end
