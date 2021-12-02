@@ -39,7 +39,7 @@ ruby:
             = render partial: "records/results/#{@record_type.record_subclass.demodulize.underscore}_data", locals: { obj: obj }
           - else
             td.align-top.text-wrap == obj.details
-          td.align-top.text-wrap == obj.comments
+          td.align-top.text-wrap == @markdown.render(obj.comments) unless obj.comments.blank?
           - if policy(:records).admin?
             td.align-top.text-center
               = link_to "#{fa "edit"} Edit".html_safe, edit_records_result_path(obj), class: ["btn", "btn-sm", "btn-primary"]

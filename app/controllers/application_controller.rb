@@ -8,7 +8,13 @@ class ApplicationController < ActionController::Base
   before_action :authenticate_user!
   before_action :set_paper_trail_whodunnit
 
+  before_action :generate_markdown_renderer
+
   private
+
+    def generate_markdown_renderer
+      @markdown = Redcarpet::Markdown.new(Redcarpet::Render::HTML, autolink: true, tables: true)
+    end
 
     def parse_filter_params
       if params[:filters]
