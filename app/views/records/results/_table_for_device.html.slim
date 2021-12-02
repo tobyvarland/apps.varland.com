@@ -21,4 +21,5 @@
           = render partial: "records/results/#{type.demodulize.underscore}_data", locals: { obj: obj }
           td.text-center.align-top
             - unless obj.comments.blank?
-              = link_to fa("comment"), records_results_path(filters: { with_id: obj.id }), target: "_blank"
+              button.btn.btn-link.p-0.lh-1 *{data: {'bs-toggle': "modal", 'bs-target': "#comments-#{obj.id}"} } = fa("comment")
+              = render partial: "records/results/comment_modal", locals: { comments: obj.comments, id: obj.id }

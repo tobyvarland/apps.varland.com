@@ -1,0 +1,7 @@
+.modal.fade.text-start *{id: "comments-#{id}"}
+  .modal-dialog.modal-dialog-scrollable.modal-dialog-centered.modal-lg
+    .modal-content
+      .modal-header.bg-dark.py-2.text-end
+        button.btn.btn-link.text-light.p-0.small.ms-auto *{data: { 'bs-dismiss': "modal" } } = fa 'times', fw: false
+      .modal-body
+        p == comments

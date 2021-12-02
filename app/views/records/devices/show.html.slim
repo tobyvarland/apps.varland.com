@@ -29,14 +29,24 @@ ruby:
     - if @device.retired_on.blank?
 
       - if policy(:records).data_entry?
-        - @device.assignments.by_type.each do |obj|
-          .card.bg-light.mt-3
-            h6.card-header.d-flex.flex-row.align-items-center.justify-content-between.px-2
-              div = "New Record: #{obj.record_type.name}"
-              - unless obj.record_type.url.blank?
-                = link_to "#{fa "link"} Instructions".html_safe, obj.record_type.url, target: "_blank", class: ["btn", "btn-sm", "btn-dark"]
-            .card-body.p-0
-              = render partial: "records/results/device_form", locals: { result: @device.results.build(user: current_user, result_on: Date.current, record_type: obj.record_type), type: obj.record_type.record_subclass }
+        .card.bg-light.mt-3
+          h6.card-header.d-flex.flex-row.align-items-center.justify-content-between.px-2
+            .d-flex.flex-row.align-items-center.justify-content-start
+              div.text-nowrap New Record:
+              - if @device.assignments.length > 1
+                select.form-select.w-auto#data-entry-form-selector.ms-3
+                  - @device.assignments.by_type.each do |obj|
+                    option *{value: "#{obj.record_type.slug}"} = obj.record_type.name
+              - else
+                div.ms-1 = @device.assignments.by_type.first.record_type.name
+            div
+              - @device.assignments.by_type.each do |obj|
+                - unless obj.record_type.url.blank?
+                  = link_to "#{fa "link"} Instructions".html_safe, obj.record_type.url, target: "_blank", class: ["btn", "btn-sm", "btn-dark", "record-instructions"], id: "#{obj.record_type.slug}-instructions"
+          .card-body.p-0
+            - @device.assignments.by_type.each do |obj|
+              .record-entry-form *{id: "#{obj.record_type.slug}-form"}
+                = render partial: "records/results/device_form", locals: { result: @device.results.build(user: current_user, result_on: Date.current, record_type: obj.record_type), type: obj.record_type.record_subclass }
 
       .card.bg-light.mt-3
         h6.card-header.px-2 Current Status
@@ -63,10 +73,45 @@ ruby:
                   td.text-center = obj.next_result_due_on.strftime "%m/%d/%y"
                   td.text-center = record_days_badge obj.next_result_due_in_days
 
-    - @device.assignments.by_type.each do |obj|
-      .card.bg-light.mt-3
-        h6.card-header.d-flex.flex-row.align-items-center.justify-content-between.px-2
-          = "Full History"
-          - if @device.assignments.length > 1
-            = link_to obj.record_type.name, obj.record_type
-        = render partial: "records/results/table_for_device", locals: { results: @device.results.for_record_type(obj.record_type_id).reverse_chronological, type: obj.record_type.record_subclass }
+    .card.bg-light.mt-3
+      h6.card-header.d-flex.flex-row.align-items-center.justify-content-start.px-2
+        div.text-nowrap Full History:
+        - if @device.assignments.length > 1
+          select.form-select.w-auto#history-selector.ms-3
+            - @device.assignments.by_type.each do |obj|
+              option *{value: "#{obj.record_type.slug}"} = obj.record_type.name
+      - @device.assignments.by_type.each do |obj|
+        .history-table *{id: "#{obj.record_type.slug}-history"}
+          = render partial: "records/results/table_for_device", locals: { results: @device.results.for_record_type(obj.record_type_id).reverse_chronological, type: obj.record_type.record_subclass }
+
+javascript:
+
+  $(function() {
+
+    $recordEntryForms = $(".record-entry-form");
+    if ($recordEntryForms.length > 1) $recordEntryForms.addClass("d-none");
+    $instructionsButtons = $(".record-instructions");
+    if ($recordEntryForms.length > 1) $instructionsButtons.addClass("d-none");
+    $historyTables = $(".history-table");
+    if ($historyTables.length > 1) $historyTables.addClass("d-none");
+
+    $formDropdown = $("#data-entry-form-selector");
+    $("#" + $formDropdown.val() + "-form").removeClass("d-none");
+    $("#" + $formDropdown.val() + "-instructions").removeClass("d-none");
+
+    $historyDropdown = $("#history-selector");
+    $("#" + $historyDropdown.val() + "-history").removeClass("d-none");
+
+    $formDropdown.on("change", function() {
+      $recordEntryForms.addClass("d-none");
+      $instructionsButtons.addClass("d-none");
+      $("#" + $formDropdown.val() + "-form").removeClass("d-none");
+      $("#" + $formDropdown.val() + "-instructions").removeClass("d-none");
+    });
+
+    $historyDropdown.on("change", function() {
+      $historyTables.addClass("d-none");
+      $("#" + $historyDropdown.val() + "-history").removeClass("d-none");
+    });
+
+  });
