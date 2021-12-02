@@ -37,8 +37,26 @@ class Records::Assignment < ApplicationRecord
 
   # Callbacks.
   before_create :initialize_due_date
+  before_update :ensure_due_date_is_workday
 
   # Instance methods.
+
+  # Make sure due date is workday.
+  def ensure_due_date_is_workday
+    return if self.next_result_due_on.blank?
+    uri = URI.parse("http://vcmsapi.varland.com/workday?date=#{self.next_result_due_on.strftime("%Y-%m-%d")}")
+    http = Net::HTTP.new(uri.host, uri.port)
+    request = Net::HTTP::Get.new(uri.request_uri)
+    response = http.request(request)
+    return unless response.code.to_s == "200"
+    date_info = JSON.parse(response.body, symbolize_names: true)
+    return if date_info[:is_workday]
+    if self.record_type && self.record_type.frequency && self.record_type.frequency == 1
+      self.next_result_due_on = date_info[:next_workday].to_date
+    else
+      self.next_result_due_on = date_info[:previous_workday].to_date
+    end
+  end
 
   # Updates results (called from after_commit callback in result)
   def update_results
@@ -62,6 +80,7 @@ class Records::Assignment < ApplicationRecord
       else
         self.next_result_due_on = self.last_result_on + self.record_type.frequency.days
       end
+      self.ensure_due_date_is_workday
       self.update_days_until_due
     end
   end

@@ -40,6 +40,11 @@ class User < ApplicationRecord
 
   # Instance methods.
 
+  # Shortcut method for converting object to string.
+  def to_s
+    return self.name_and_number
+  end
+
   # Returns user name and number.
   def name_and_number
     "<code class=\"fw-700\">#{self.employee_number}</code> #{self.name}".html_safe
