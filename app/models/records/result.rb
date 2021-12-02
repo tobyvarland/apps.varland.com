@@ -30,7 +30,7 @@ class Records::Result < ApplicationRecord
   scope :for_user, ->(value) { where(user_id: value) unless value.blank? }
   scope :for_data_type, ->(value) { joins(:record_type).merge(Records::RecordType.for_data_type(value)) }
   scope :for_responsibility, ->(value) { joins(:record_type).merge(Records::RecordType.for_responsibility(value)) }
-  scope :reverse_chronological, -> { order(result_on: :desc) }
+  scope :reverse_chronological, -> { order(result_on: :desc, id: :desc) }
   scope :on_or_after, ->(value) { where("result_on >= ?", value) unless value.blank? }
   scope :on_or_before,  ->(value) { where("result_on <= ?", value) unless value.blank? }
   scope :with_math_field, ->(field, value) { where("records_results.#{field} #{value}") unless value.blank? }
@@ -77,7 +77,7 @@ class Records::Result < ApplicationRecord
   scope :sorted_by, ->(value) {
     case value
     when 'oldest'
-      order(:result_on)
+      order(:result_on, :id)
     else
       order(result_on: :desc, id: :desc)
     end
