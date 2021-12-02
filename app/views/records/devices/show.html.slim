@@ -35,7 +35,7 @@ ruby:
               div.text-nowrap New Record:
               - if @device.assignments.length > 1
                 select.form-select.w-auto#data-entry-form-selector.ms-3
-                  - @device.assignments.by_type.each do |obj|
+                  - @device.assignments.by_due_date.each do |obj|
                     option *{value: "#{obj.record_type.slug}"} = obj.record_type.name
               - else
                 div.ms-1 = @device.assignments.by_type.first.record_type.name
