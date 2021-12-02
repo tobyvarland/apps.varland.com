@@ -4,5 +4,5 @@ td.text-center.align-top *{class: "#{obj.is_valid.nil? ? "" : (obj.is_valid ? "v
   span.me-1 = obj.ph
   - unless obj.is_valid.nil?
     = boolean_icon obj.is_valid, true_text: "valid", false_text: "invalid"
-td.text-center.align-top = "#{obj.temperature}&deg; F"
+td.text-center.align-top == "#{obj.temperature}&deg; F" unless obj.temperature.blank?
 td.text-center.align-top = obj.weight
