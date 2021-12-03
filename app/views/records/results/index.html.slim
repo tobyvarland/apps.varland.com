@@ -21,7 +21,8 @@ ruby:
       th.w-1.text-center Date
       th.w-1 Reason
       - if @record_type
-        = render partial: "records/results/#{@record_type.record_subclass.demodulize.underscore}_headers"
+        - if lookup_context.exists?("#{@record_type.record_subclass.demodulize.underscore}_headers", ["records/results"], true) && lookup_context.exists?("#{@record_type.record_subclass.demodulize.underscore}_data", ["records/results"], true)
+          = render partial: "records/results/#{@record_type.record_subclass.demodulize.underscore}_headers"
       - else
         th Details
       th Comments
@@ -36,7 +37,8 @@ ruby:
           td.align-top.text-center = obj.result_on.strftime "%m/%d/%y"
           td.align-top = obj.reason_code.name
           - if @record_type
-            = render partial: "records/results/#{@record_type.record_subclass.demodulize.underscore}_data", locals: { obj: obj }
+            - if lookup_context.exists?("#{@record_type.record_subclass.demodulize.underscore}_headers", ["records/results"], true) && - if lookup_context.exists?("#{@record_type.record_subclass.demodulize.underscore}_data", ["records/results"], true)
+              = render partial: "records/results/#{@record_type.record_subclass.demodulize.underscore}_data", locals: { obj: obj }
           - else
             td.align-top.text-wrap == obj.details
           td.align-top.text-wrap == @markdown.render(obj.comments) unless obj.comments.blank?

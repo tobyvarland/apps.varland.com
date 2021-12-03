@@ -8,7 +8,8 @@
         th Entered By
         th.text-center Date
         th Reason
-        = render partial: "records/results/#{type.demodulize.underscore}_headers"
+        - if lookup_context.exists?("#{type.demodulize.underscore}_headers", ["records/results"], true) && lookup_context.exists?("#{type.demodulize.underscore}_data", ["records/results"], true)
+          = render partial: "records/results/#{type.demodulize.underscore}_headers"
         th.w-1 &nbsp;
     tbody
       - results.each do |obj|
@@ -18,7 +19,8 @@
           td.align-top = obj.user.name_and_number
           td.text-center.align-top = obj.result_on.strftime "%m/%d/%y"
           td.align-top = obj.reason_code.name
-          = render partial: "records/results/#{type.demodulize.underscore}_data", locals: { obj: obj }
+          - if lookup_context.exists?("#{type.demodulize.underscore}_headers", ["records/results"], true) && lookup_context.exists?("#{type.demodulize.underscore}_data", ["records/results"], true)
+            = render partial: "records/results/#{type.demodulize.underscore}_data", locals: { obj: obj }
           td.text-center.align-top
             - unless obj.comments.blank?
               button.btn.btn-link.p-0.lh-1 *{data: {'bs-toggle': "modal", 'bs-target': "#comments-#{obj.id}"} } = fa("comment")
