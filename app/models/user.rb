@@ -12,6 +12,7 @@ class User < ApplicationRecord
   # Associations.
   has_one   :permission
   has_many  :reviews
+  has_many  :notifications
   has_many  :comments
   has_many  :reject_tags,
             class_name: 'Quality::RejectTag'

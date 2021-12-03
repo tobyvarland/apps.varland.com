@@ -27,7 +27,7 @@ h1 {
 
 /* Primary navigation. */
 
-#app-nav {
+#app-nav, #notifications {
   .offcanvas-header {
     @extend .lh-1;
     align-items: center !important;

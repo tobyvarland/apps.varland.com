@@ -100,8 +100,19 @@ class Records::Result < ApplicationRecord
   # Callbacks.
   after_commit      :update_assignment
   after_initialize  :load_defaults
+  after_create_commit   :generate_notifications
 
   # Instance methods.
+
+  # Generates notifications.
+  def generate_notifications
+    User.where(employee_number: [937, 940]).each do |u|
+      if self.user.id != u.id
+        n = u.notifications.build(text: "New result recorded by #{self.user}.")
+        n.save
+      end
+    end
+  end
 
   # Loads default values from record type.
   def load_defaults

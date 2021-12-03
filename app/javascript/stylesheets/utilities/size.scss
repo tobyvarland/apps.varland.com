@@ -9,6 +9,7 @@
       .end-#{$size} { right: #{(100 - $size) * 1%} !important; }
       .top-#{$size} { top: #{$size * 1%} !important; }
       .bottom-#{$size} { bottom: #{(100 - $size) * 1%} !important; }
+      .font-size-#{$size} { font-size: #{$size/100}rem !important; }
     }
   } @else {
     @media (min-width: breakpoint($key)) {
@@ -21,6 +22,7 @@
         .end-#{$key}-#{$size} { right: #{(100 - $size) * 1%} !important; }
         .top-#{$key}-#{$size} { top: #{$size * 1%} !important; }
         .bottom-#{$key}-#{$size} { bottom: #{(100 - $size) * 1%} !important; }
+        .font-size-#{$key}-#{$size} { font-size: #{$size/100}rem !important; }
       }
     }
   }
