@@ -20,6 +20,14 @@ class Records::Result < ApplicationRecord
               class_name: "Records::ReasonCode",
               foreign_key: "reason_code_id",
               inverse_of: :results
+  has_many	  :xray_calibration_checks,
+              class_name: "Records::XrayCalibrationCheck",
+              foreign_key: "result_id",
+              inverse_of: :xray_weekly_check,
+              dependent: :destroy
+
+  # Nested attributes.
+  accepts_nested_attributes_for :xray_calibration_checks, reject_if: proc { |attributes| attributes['action'].blank? }, allow_destroy: true
 
   # Scopes.
   scope :kept, -> { undiscarded.joins(:record_type).joins(:device).merge(Records::RecordType.kept).merge(Records::Device.kept) }
@@ -38,7 +46,7 @@ class Records::Result < ApplicationRecord
     return if value.blank?
     test_value = "FALSE"
     test_value = "TRUE" if value == true
-    test_value = "TRUE" if value == "true"
+    test_value = "TRUE" if value.downcase == "true"
     test_value = "TRUE" if value == 1
     test_value = "TRUE" if value == "1"
     where("records_results.#{field} IS #{test_value}")
@@ -82,6 +90,8 @@ class Records::Result < ApplicationRecord
       order(result_on: :desc, id: :desc)
     end
   }
+  scope :with_reference,  ->(value) { with_boolean_field("reference", value) }
+  scope :with_fwhm_number,  ->(value) { with_math_field("fwhm_number", value) }
 
   # Validations.
 	validates	:result_on,
@@ -92,11 +102,6 @@ class Records::Result < ApplicationRecord
   after_initialize  :load_defaults
 
   # Instance methods.
-
-  # Returns result details. Must be overridden in child class to provide any meaningful information.
-  def details
-    return "Must define <code>details</code> method in <code>/app/models/records/#{self.class.name.demodulize.underscore}.rb</code>."
-  end
 
   # Loads default values from record type.
   def load_defaults
@@ -130,7 +135,8 @@ class Records::Result < ApplicationRecord
       "Records::SaltSprayCollectionRecord",
       "Records::IAOProbeCalibration",
       "Records::SaltSprayCabinetRecord",
-      "Records::QuickCheck"
+      "Records::QuickCheck",
+      "Records::XrayWeeklyCheck"
     ].sort
   end
 

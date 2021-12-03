@@ -33,7 +33,8 @@ class Records::ResultsController < ApplicationController
   has_scope :with_distilled_water_added
   has_scope :with_ph
   has_scope :with_weight
-  has_scope :with_id
+  has_scope :with_reference
+  has_scope :with_fwhm_number
 
   def index
     authorize :records, :view?
@@ -125,7 +126,10 @@ class Records::ResultsController < ApplicationController
                                              :distilled_water_added,
                                              :ph,
                                              :weight,
-                                             :comments)
+                                             :comments,
+                                             :reference,
+                                             :fwhm_number,
+                                             xray_calibration_checks_attributes: [:id, :result_id, :name, :action, :position, :_destroy])
     end
 
 end

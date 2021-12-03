@@ -1,0 +1,3 @@
+.row
+  .col-12.col-md.mt-3 = f.input :with_reference, required: false, include_blank: true, label: "Reference:", collection: [["Yes", true], ["No", false]], selected: params[:filters].blank? ? "" : params[:filters][:with_reference], input_html: { class: "form-select" }
+  .col-12.col-md.mt-3 = f.input :with_fwhm_number, required: false, label: "FWHM #:", input_html: { value: params[:filters].blank? ? nil : params[:filters][:with_fwhm_number] }, hint: "Math expression"

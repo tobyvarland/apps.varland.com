@@ -22,14 +22,4 @@ class Records::IAOProbeCalibration < Records::Result
     self.offset = min_offset + ((max_offset - min_offset) / 2)
   end
 
-  # Returns summary details for individual record.
-  def details
-    return <<-DETAILS
-    IAO probe calibration.
-    Low (expected/actual): <code class="fw-700">#{self.expected_low}</code> / <code class="fw-700">#{self.actual_low}</code>.
-    High (expected/actual): <code class="fw-700">#{self.expected_high}</code> / <code class="fw-700">#{self.actual_high}</code>.
-    Calculated offset: <code class="fw-700">#{ApplicationController.helpers.number_with_precision self.offset, precision: 2}</code>.
-    DETAILS
-  end
-
 end

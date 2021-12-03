@@ -17,7 +17,7 @@
     .mt-3.border.rounded.shadow-sm.p-3.small.card-body == @markdown.render(@result.record_type.instructions)
 
   - if lookup_context.exists?("#{@result.record_type.record_subclass.demodulize.underscore}_fields", ["records/results"], true)
-    = render partial: "records/results/#{@result.record_type.record_subclass.demodulize.underscore}_fields", locals: { f: f }
+    = render partial: "records/results/#{@result.record_type.record_subclass.demodulize.underscore}_fields", locals: { f: f, result: @result }
 
   .row
     .col-12.mt-3

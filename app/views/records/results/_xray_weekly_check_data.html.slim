@@ -1,0 +1,13 @@
+td.text-center.align-top = boolean_icon obj.reference
+td.text-center.align-top = obj.fwhm_number
+td.align-top
+  table.table.table-sm.mb-0.table-bordered
+    thead
+      tr
+        th.w-50 Name
+        th.w-50 Action
+    tbody
+      - obj.xray_calibration_checks.each do |c|
+        tr
+          td = c.name
+          td *{class: c.table_cell_class} = c.action.titleize

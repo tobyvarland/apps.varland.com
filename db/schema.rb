@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_12_02_223815) do
+ActiveRecord::Schema.define(version: 2021_12_03_162120) do
 
   create_table "active_storage_attachments", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "name", null: false
@@ -487,11 +487,23 @@ ActiveRecord::Schema.define(version: 2021_12_02_223815) do
     t.float "ph"
     t.float "weight"
     t.text "comments"
+    t.boolean "reference"
+    t.float "fwhm_number"
     t.index ["device_id"], name: "index_records_results_on_device_id"
     t.index ["discarded_at"], name: "index_records_results_on_discarded_at"
     t.index ["reason_code_id"], name: "index_records_results_on_reason_code_id"
     t.index ["record_type_id"], name: "index_records_results_on_record_type_id"
     t.index ["user_id"], name: "index_records_results_on_user_id"
+  end
+
+  create_table "records_xray_calibration_checks", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.bigint "result_id", null: false
+    t.string "name", null: false
+    t.string "action", null: false
+    t.integer "position", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["result_id"], name: "index_records_xray_calibration_checks_on_result_id"
   end
 
   create_table "reviews", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
@@ -621,6 +633,7 @@ ActiveRecord::Schema.define(version: 2021_12_02_223815) do
   add_foreign_key "records_results", "records_reason_codes", column: "reason_code_id"
   add_foreign_key "records_results", "records_record_types", column: "record_type_id"
   add_foreign_key "records_results", "users"
+  add_foreign_key "records_xray_calibration_checks", "records_results", column: "result_id"
   add_foreign_key "reviews", "users"
   add_foreign_key "shift_notes", "users"
   add_foreign_key "shipping_receiving_priority_notes", "users", column: "completed_by_user_id", name: "fk_recnotes_comp_user"

@@ -1,0 +1,18 @@
+ruby:
+  Records::XrayWeeklyCheck.calibration_names.each_with_index do |name, position|
+    if result.xray_calibration_checks.where(name: name).length == 0
+      result.xray_calibration_checks.build(name: name, position: position + 1)
+    end
+  end
+fieldset.border.mt-3.rounded.shadow-sm
+  legend.px-3.py-2.rounded-top.mb-0 X-Ray Weekly Check Results
+  .p-3.pt-0
+    .row
+      .col-12.col-md-2.mt-3 = f.input :reference, collection: [["Yes", true], ["No", false]], label: "Reference:", required: true, input_html: { class: "form-select" }
+      .col-12.col-md-2.mt-3 = f.input :fwhm_number, label: "FWHM #:", required: true
+      = f.simple_fields_for :xray_calibration_checks do |c|
+        .col-12.col-md-2.mt-3.calibration-record-column *{data: { position: c.object.position }}
+          = c.input :id, as: :hidden
+          = c.input :name, as: :hidden
+          = c.input :position, as: :hidden
+          = c.input :action, collection: Records::XrayCalibrationCheck.actions_for_dropdown, label: "#{c.object.name}:", required: false, input_html: { class: "form-select" }
