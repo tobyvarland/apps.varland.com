@@ -13,7 +13,7 @@ class ApplicationController < ActionController::Base
   private
 
     def generate_markdown_renderer
-      @markdown = Redcarpet::Markdown.new(Redcarpet::Render::HTML, autolink: true, tables: true)
+      @markdown = Redcarpet::Markdown.new(VarlandMarkdownRenderer, autolink: true, tables: true)
     end
 
     def parse_filter_params
