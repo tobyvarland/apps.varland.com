@@ -9,6 +9,6 @@ class Notification < ApplicationRecord
 
   # Scopes.
   default_scope -> { order(created_at: :desc) }
-  scope :unread,  -> { where(is_read: false) }
+  scope :unread,  -> { where("is_read IS FALSE") }
 
 end
