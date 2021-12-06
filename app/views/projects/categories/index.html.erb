@@ -1,0 +1,53 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Projects Categories</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>System</th>
+      <th>Name</th>
+      <th>Abbreviation</th>
+      <th>Last number used</th>
+      <th>Comment sections</th>
+      <th>Priority levels</th>
+      <th>Use tasks</th>
+      <th>Use time tracking</th>
+      <th>Use reviews</th>
+      <th>Use percent complete</th>
+      <th>Allow children</th>
+      <th>Allow requests</th>
+      <th>Send feedback</th>
+      <th>Use due date</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @projects_categories.each do |projects_category| %>
+      <tr>
+        <td><%= projects_category.system_id %></td>
+        <td><%= projects_category.name %></td>
+        <td><%= projects_category.abbreviation %></td>
+        <td><%= projects_category.last_number_used %></td>
+        <td><%= projects_category.comment_sections %></td>
+        <td><%= projects_category.use_priorities %></td>
+        <td><%= projects_category.use_tasks %></td>
+        <td><%= projects_category.use_time_tracking %></td>
+        <td><%= projects_category.use_reviews %></td>
+        <td><%= projects_category.use_percent_complete %></td>
+        <td><%= projects_category.allow_children %></td>
+        <td><%= projects_category.allow_requests %></td>
+        <td><%= projects_category.send_feedback %></td>
+        <td><%= projects_category.use_due_date %></td>
+        <td><%= link_to 'Show', projects_category %></td>
+        <td><%= link_to 'Edit', edit_projects_category_path(projects_category) %></td>
+        <td><%= link_to 'Destroy', projects_category, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Projects Category', new_projects_category_path %>

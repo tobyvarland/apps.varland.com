@@ -4,6 +4,12 @@ require 'sidekiq-scheduler/web'
 Rails.application.routes.draw do
 
   namespace :projects do
+    resources :items
+  end
+  namespace :projects do
+    resources :categories
+  end
+  namespace :projects do
     resources :systems
   end
   namespace :records do

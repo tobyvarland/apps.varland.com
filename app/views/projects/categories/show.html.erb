@@ -1,0 +1,74 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>System:</strong>
+  <%= @projects_category.system_id %>
+</p>
+
+<p>
+  <strong>Name:</strong>
+  <%= @projects_category.name %>
+</p>
+
+<p>
+  <strong>Abbreviation:</strong>
+  <%= @projects_category.abbreviation %>
+</p>
+
+<p>
+  <strong>Last number used:</strong>
+  <%= @projects_category.last_number_used %>
+</p>
+
+<p>
+  <strong>Comment sections:</strong>
+  <%= @projects_category.comment_sections %>
+</p>
+
+<p>
+  <strong>Priority levels:</strong>
+  <%= @projects_category.use_priorities %>
+</p>
+
+<p>
+  <strong>Use tasks:</strong>
+  <%= @projects_category.use_tasks %>
+</p>
+
+<p>
+  <strong>Use time tracking:</strong>
+  <%= @projects_category.use_time_tracking %>
+</p>
+
+<p>
+  <strong>Use reviews:</strong>
+  <%= @projects_category.use_reviews %>
+</p>
+
+<p>
+  <strong>Use percent complete:</strong>
+  <%= @projects_category.use_percent_complete %>
+</p>
+
+<p>
+  <strong>Allow children:</strong>
+  <%= @projects_category.allow_children %>
+</p>
+
+<p>
+  <strong>Allow requests:</strong>
+  <%= @projects_category.allow_requests %>
+</p>
+
+<p>
+  <strong>Send feedback:</strong>
+  <%= @projects_category.send_feedback %>
+</p>
+
+<p>
+  <strong>Use due date:</strong>
+  <%= @projects_category.use_due_date %>
+</p>
+
+<%= link_to 'Edit', edit_projects_category_path(@projects_category) %> |
+<%= link_to 'Back', projects_categories_path %>

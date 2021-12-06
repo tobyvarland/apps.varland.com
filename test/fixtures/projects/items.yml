@@ -1,0 +1,23 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  category: one
+  number: 1
+  current_status: MyString
+  current_status_at: 2021-12-06 14:56:45
+  percent_complete: 1
+  current_priority: MyString
+  current_priority_at: 2021-12-06 14:56:45
+  due_on: 2021-12-06
+  projected_hours: 1.5
+
+two:
+  category: two
+  number: 1
+  current_status: MyString
+  current_status_at: 2021-12-06 14:56:45
+  percent_complete: 1
+  current_priority: MyString
+  current_priority_at: 2021-12-06 14:56:45
+  due_on: 2021-12-06
+  projected_hours: 1.5

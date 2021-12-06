@@ -1,0 +1,43 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Projects Items</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Category</th>
+      <th>Number</th>
+      <th>Current status</th>
+      <th>Current status at</th>
+      <th>Percent complete</th>
+      <th>Current priority</th>
+      <th>Current priority at</th>
+      <th>Due on</th>
+      <th>Projected hours</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @projects_items.each do |projects_item| %>
+      <tr>
+        <td><%= projects_item.category_id %></td>
+        <td><%= projects_item.number %></td>
+        <td><%= projects_item.current_status %></td>
+        <td><%= projects_item.current_status_at %></td>
+        <td><%= projects_item.percent_complete %></td>
+        <td><%= projects_item.current_priority %></td>
+        <td><%= projects_item.current_priority_at %></td>
+        <td><%= projects_item.due_on %></td>
+        <td><%= projects_item.projected_hours %></td>
+        <td><%= link_to 'Show', projects_item %></td>
+        <td><%= link_to 'Edit', edit_projects_item_path(projects_item) %></td>
+        <td><%= link_to 'Destroy', projects_item, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Projects Item', new_projects_item_path %>

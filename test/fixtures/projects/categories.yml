@@ -1,0 +1,33 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  system: one
+  name: MyString
+  abbreviation: MyString
+  last_number_used: 1
+  comment_sections: MyString
+  priority_levels: MyString
+  use_tasks: false
+  use_time_tracking: false
+  use_reviews: false
+  use_percent_complete: false
+  allow_children: false
+  allow_requests: false
+  send_feedback: false
+  use_due_date: false
+
+two:
+  system: two
+  name: MyString
+  abbreviation: MyString
+  last_number_used: 1
+  comment_sections: MyString
+  priority_levels: MyString
+  use_tasks: false
+  use_time_tracking: false
+  use_reviews: false
+  use_percent_complete: false
+  allow_children: false
+  allow_requests: false
+  send_feedback: false
+  use_due_date: false
