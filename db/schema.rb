@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_12_03_215823) do
+ActiveRecord::Schema.define(version: 2021_12_06_183340) do
 
   create_table "active_storage_attachments", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "name", null: false
@@ -323,6 +323,14 @@ ActiveRecord::Schema.define(version: 2021_12_03_215823) do
     t.integer "records", default: 0, null: false
     t.index ["user_id"], name: "index_permissions_on_user_id"
     t.index ["user_id"], name: "unique_permissions_user", unique: true
+  end
+
+  create_table "projects_systems", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.string "name", null: false
+    t.string "abbreviation", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "discarded_at"
   end
 
   create_table "quality_hardness_tests", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|

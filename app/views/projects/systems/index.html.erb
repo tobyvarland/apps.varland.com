@@ -1,0 +1,29 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Projects Systems</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Abbreviation</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @projects_systems.each do |projects_system| %>
+      <tr>
+        <td><%= projects_system.name %></td>
+        <td><%= projects_system.abbreviation %></td>
+        <td><%= link_to 'Show', projects_system %></td>
+        <td><%= link_to 'Edit', edit_projects_system_path(projects_system) %></td>
+        <td><%= link_to 'Destroy', projects_system, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Projects System', new_projects_system_path %>
