@@ -107,6 +107,7 @@ Rails.application.routes.draw do
   get "shipping/smalog_labels",     to: "shipping#smalog_labels",       as: :smalog_labels
   get "vcms/link_part_spec",        to: "vcms#link_part_spec",          as: :link_part_spec
   get "vcms/record_final_inspect",  to: "vcms#record_final_inspect",    as: :record_final_inspect
+  get "vacation_calendars",         to: "pages#vacation_calendars"
 
   # Mount Sidekiq.
   mount Sidekiq::Web => "/sidekiq"

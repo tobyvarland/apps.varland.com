@@ -2,6 +2,13 @@
   - if lookup_context.exists?(current_user.username.downcase, ["users/user_home_pages"], true)
     = render partial: "users/user_home_pages/#{current_user.username.downcase}"
 
+.row.d-none
+  .col-12.col-md-3.mb-3
+    .fw-700 Vacation Calendars
+    .vh-50
+      = render "shared/vacation_calendars_embed"
+  .col-12.col-md-9
+
 .row
   = home_page_link("link", "Days Turn", "http://daysturn.varland.com")
   = home_page_link("link", "DMRs", "http://dmr.varland.com")
