@@ -1,0 +1,14 @@
+ul.list-unstyled
+  li.header Maintenance
+  li
+    = link_to "http://192.168.82.2/maintenance/history", target: "_blank" do
+      = fa "external-link-alt"
+      div Maintenance History Report
+  li
+    = link_to "http://vms.varland.com/maintenance/scheduled_task_status", target: "_blank" do
+      = fa "external-link-alt"
+      div PM Scheduled Tasks
+  li
+    = link_to "http://maintenance.varland.com", target: "_blank" do
+      = fa "external-link-alt"
+      div Work Orders

@@ -1,0 +1,29 @@
+ul.list-unstyled
+  li.header Quality
+  li
+    = link_to "http://dmr.varland.com", target: "_blank" do
+      = fa "external-link-alt"
+      div DMRs
+  - if policy(:home).view_final_inspection?
+    li
+      = link_to vcms_quality_final_inspect_url do
+        = fa "link"
+        div Final Inspection
+  - if policy(Quality::HardnessTest).index?
+    li
+      = link_to quality_hardness_tests_url do
+        = fa "link"
+        div Hardness Tests
+  - if policy(Quality::RejectTag).index? && !policy(Quality::RejectTag).index?
+    li
+      = link_to quality_reject_tags_url do
+        = fa "link"
+        div Reject Tags
+  li
+    = link_to "http://vms.varland.com/qc/rejected_parts/new", target: "_blank" do
+      = fa "external-link-alt"
+      div Reject Tag
+  li
+    = link_to "http://saltspray.varland.com", target: "_blank" do
+      = fa "external-link-alt"
+      div Salt Spray

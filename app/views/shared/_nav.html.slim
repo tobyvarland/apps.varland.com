@@ -1,3 +1,49 @@
+ruby:
+  nav_links = []
+  nav_links << { text: "Timeclock", url: "http://timeclock.varland.com", target: "_blank", search: "break" }
+  nav_links << { text: "Timeclock (iPad View)", url: "http://timeclock.varland.com/ipad/", target: "_blank", search: "break" }
+  nav_links << { text: "QMS", url: "http://vmsqms.varland.com", target: "_blank", search: "VMSQMS" }
+  nav_links << { text: "Permissions", url: permissions_url } if policy(Permission).index?
+  if policy(:home).sidekiq?
+    nav_links << { text: "Reset Sidekiq", url: reset_sidekiq_url, target: "_blank" }
+    nav_links << { text: "Sidekiq", url: sidekiq_web_url, target: "_blank" }
+  end
+  nav_links << { text: "Varland Email", url: "http://mail.varland.com", target: "_blank", search: "external webmail gmail", external: true }
+  nav_links << { text: "Employee Information", url: "https://drive.google.com/drive/u/0/folders/0ADakPLFe9iZlUk9PVA", target: "_blank", search: "external departmental information", external: true }
+  nav_links << { text: "Vector Solutions Training", url: "https://varland.convergencetraining.com", target: "_blank", search: "external quizzes", external: true }
+  nav_links << { text: "Specifications", url: "http://vms.varland.com/specifications", target: "_blank" }
+  nav_links << { text: "Vat History Notes", url: "http://vms.varland.com/materials/vat_history_notes", target: "_blank" }
+  nav_links << { text: "Maintenance History Report", url: "http://192.168.82.2/maintenance/history", target: "_blank" }
+  nav_links << { text: "PM Scheduled Tasks", url: "http://vms.varland.com/maintenance/scheduled_task_status", target: "_blank", search: "maintenance" }
+  nav_links << { text: "Maintenance Work Orders", url: "http://maintenance.varland.com", target: "_blank" }
+  nav_links << { text: "Days Turn", url: "http://daysturn.varland.com", target: "_blank", search: "turnaround" }
+  nav_links << { text: "Employee Notes", url: employee_notes_url } if policy(EmployeeNote).index?
+  nav_links << { text: "Groov Logs", url: groov_logs_url } if policy(Groov::Log).index?
+  nav_links << { text: "IAO Bakesheets", url: "http://opto.varland.com/inert/bakesheets", target: "_blank", search: "grieve jpw" }
+  nav_links << { text: "Online Bakesheet", url: "http://optoapi.varland.com/ovens", target: "_blank" }
+  nav_links << { text: "Opto Logs (Old)", url: "http://vms.varland.com/opto/logs", target: "_blank" }
+  nav_links << { text: "Records", url: records_url } if policy(:records).view?
+  nav_links << { text: "Shift Notes", url: shift_notes_url } if policy(ShiftNote).index?
+  nav_links << { text: "Thickness Data", url: "http://thickness.varland.com", target: "_blank" }
+  nav_links << { text: "DMRs", url: "http://dmr.varland.com", target: "_blank" }
+  nav_links << { text: "Reject Tag", url: "http://vms.varland.com/qc/rejected_parts/new", target: "_blank" }
+  nav_links << { text: "Salt Spray", url: "http://saltspray.varland.com", target: "_blank" }
+  nav_links << { text: "Final Inspection", url: vcms_quality_final_inspect_url, search: "green dot" } if policy(:home).view_final_inspection?
+  nav_links << { text: "Hardness Tests", url: quality_hardness_tests_url } if policy(Quality::HardnessTest).index?
+  nav_links << { text: "Reject Tags", url: quality_reject_tags_url } if policy(Quality::RejectTag).index? && !policy(Quality::RejectTag).index?
+  nav_links << { text: "Jobs on Receipt", url: vcms_production_jobs_on_receipt_url }
+  nav_links << { text: "Labeling Instructions", url: vcms_shipping_labeling_instructions_url }
+  nav_links << { text: "Promise List", url: vcms_shipping_promise_list_url }
+  nav_links << { text: "Part Search", url: vcms_production_part_search_url } if policy(:vcms).part_search?
+  nav_links << { text: "Part History Search", url: vcms_production_part_history_search_url } if policy(:vcms).part_history_search?
+  nav_links << { text: "Quote Search", url: vcms_sales_quote_search_url } if policy(:vcms).quote_search?
+  nav_links << { text: "Recent Customers", url: vcms_sales_recent_customers_url, search: "query" } if policy(:vcms).recent_customers?
+  nav_links << { text: "Receiving Priority Notes", url: shipping_receiving_priority_notes_url } if policy(Shipping::ReceivingPriorityNote).index?
+  nav_links << { text: "SMALOG Labels", url: smalog_labels_url, search: "labels" } if policy(:shipping).smalog_labels?
+  nav_links << { text: "TRIBRO Labels", url: trico_labels_url, search: "labels" } if policy(:shipping).trico_labels?
+
+  nav_links.sort_by! { |nav| nav[:text] }
+
 nav.navbar.fixed-top.navbar-expand-md.navbar-dark.bg-dark id="primary-nav"
   .container-fluid
     = link_to root_url do
@@ -12,10 +58,10 @@ nav.navbar.fixed-top.navbar-expand-md.navbar-dark.bg-dark id="primary-nav"
         ul.navbar-nav
           li.nav-item.me-3.d-flex.flex-row.align-items-center.justify-content-center.d-none id="auto_refresh"
             .navbar-text.px-md-2.shadow-sm.bg-black.rounded.font-monospace.fs-5 == "#{fa "sync-alt", spin: true, text_class: "text-white-important"} <span id=\"auto_refresh_remaining\">0:10</span>"
-          li.nav-item.me-3.d-none = primary_nav_link "sitemap", "Apps", "#", link_class: ["app-nav-toggler"]
+          li.nav-item.me-3 = primary_nav_link "sitemap", "Apps", "#", link_class: ["app-nav-toggler"]
           - if current_user
             - if current_user.notifications.length > 0
-              li.nav-item = primary_nav_link "bell", "Notifications".html_safe, "#", badge: (current_user.notifications.unread.length > 0 ? current_user.notifications.unread.length : nil), link_class: ["notifications-toggler"]
+              li.nav-item.me-3.d-none = primary_nav_link "bell", "Notifications".html_safe, "#", badge: (current_user.notifications.unread.length > 0 ? current_user.notifications.unread.length : nil), link_class: ["notifications-toggler"]
             li.nav-item = primary_nav_link "id-badge", "Sign Out", destroy_user_session_path
           - else
             li.nav-item = primary_nav_link "user", "Sign In", user_google_oauth2_omniauth_authorize_path
@@ -36,149 +82,58 @@ nav.navbar.fixed-top.navbar-expand-md.navbar-dark.bg-dark id="primary-nav"
               == notification.text
               .small.text-muted.mt-1 = notification.created_at.strftime("%m/%d/%y %l:%M%P")
 
-.offcanvas.offcanvas-start.bg-dark.text-light id="app-nav" tabindex="-1"
+.offcanvas.offcanvas-start.bg-dark.text-light.w-100.border-0 id="app-navxxx" tabindex="-1"
   .offcanvas-header
     .title Applications
     button type="button" = fa "times-circle"
   .offcanvas-body.py-0
-    ul.list-unstyled
-      li.header Administration
-      - if policy(Permission).index?
-        li
-          = link_to permissions_url do
-            = fa "link"
-            div Manage Permissions
-      - if policy(:home).sidekiq?
-        li
-          = link_to reset_sidekiq_url, target: "_blank" do
-            = fa "external-link-alt"
-            div Reset Sidekiq
-          = link_to sidekiq_web_url, target: "_blank" do
-            = fa "external-link-alt"
-            div Sidekiq
-    ul.list-unstyled
-      li.header External Links
-      li
-        = link_to "http://www.fastmail.com/calendar", target: "_blank" do
-          = fa "external-link-alt"
-          div Vacation Calendars
-        div.mt-1
-          i.fa.fa-fw.text-dark.me-2
-          small.text-uppercase Username:
-          code.fw-700 varland@fastmail.com
-        div.mb-1
-          i.fa.fa-fw.text-dark.me-2
-          small.text-uppercase Password:
-          code.fw-700 plantplant
-      li
-        = link_to "http://mail.varland.com", target: "_blank" do
-          = fa "external-link-alt"
-          div Varland Email
-      li
-        = link_to "https://drive.google.com/drive/u/0/folders/0ADakPLFe9iZlUk9PVA", target: "_blank" do
-          = fa "external-link-alt"
-          div Varland Employee Information
-      li
-        = link_to "https://varland.convergencetraining.com", target: "_blank" do
-          = fa "external-link-alt"
-          div Vector Solutions Training LMS
-    ul.list-unstyled
-      li.header Miscellaneous
-      - if policy(EmployeeNote).index?
-        li
-          = link_to employee_notes_url do
-            = fa "link"
-            div Employee Notes
-      - if policy(Groov::Log).index?
-        li
-          = link_to groov_logs_url do
-            = fa "link"
-            div Groov Logs
-      - if policy(:records).view?
-        li
-          = link_to records_url do
-            = fa "link"
-            div Records
-      - if policy(ShiftNote).index?
-        li
-          = link_to shift_notes_url do
-            = fa "link"
-            div Shift Notes
-    ul.list-unstyled
-      li.header Quality
-      - if policy(:home).view_final_inspection?
-        li
-          = link_to vcms_quality_final_inspect_url do
-            = fa "link"
-            div Final Inspection
-      - if policy(Quality::HardnessTest).index?
-        li
-          = link_to quality_hardness_tests_url do
-            = fa "link"
-            div Hardness Tests
-      - if policy(Quality::RejectTag).index?
-        li
-          = link_to quality_reject_tags_url do
-            = fa "link"
-            div Reject Tags
-    ul.list-unstyled
-      li.header Shipping
-      - if policy(Shipping::ReceivingPriorityNote).index?
-        li
-          = link_to shipping_receiving_priority_notes_url do
-            = fa "link"
-            div Receiving Priority Notes
-      - if policy(:shipping).smalog_labels?
-        li
-          = link_to smalog_labels_url do
-            = fa "link"
-            div Small Parts Labels
-      - if policy(:shipping).trico_labels?
-        li
-          = link_to trico_labels_url do
-            = fa "link"
-            div Trico Labels
-    ul.list-unstyled
-      li.header System i Queries
-      li
-        = link_to vcms_production_dept_5_recipes_url do
-          = fa "link"
-          div Dept. 5 Recipe Viewer
-      li
-        = link_to vcms_production_jobs_on_receipt_url do
-          = fa "link"
-          div Jobs on Receipt
-      li
-        = link_to vcms_shipping_labeling_instructions_url do
-          = fa "link"
-          div Labeling Instructions
-      - if policy(:vcms).part_search?
-        li
-          = link_to vcms_production_part_search_url do
-            = fa "link"
-            div Part Search
-      - if policy(:vcms).part_history_search?
-        li
-          = link_to vcms_production_part_history_search_url do
-            = fa "link"
-            div Part History Search
-      li
-        = link_to vcms_shipping_promise_list_url do
-          = fa "link"
-          div Promise List
-      - if policy(:vcms).quote_search?
-        li
-          = link_to vcms_sales_quote_search_url do
-            = fa "link"
-            div Quote Search
-      - if policy(:vcms).recent_customers?
-        li
-          = link_to vcms_sales_recent_customers_url do
-            = fa "link"
-            div Recent Customers
+    .row
+      .col-12.col-md
+        = render "shared/navigation_menus/general"
+      .col-12.col-md
+        = render "shared/navigation_menus/production"
+      .col-12.col-md
+        = render "shared/navigation_menus/quality"
+        = render "shared/navigation_menus/shipping"
+      .col-12.col-md
+        = render "shared/navigation_menus/maintenance"
+        = render "shared/navigation_menus/lab"
+      .col-12.col-md
+        = render "shared/navigation_menus/queries"
+      .col-12.col-md
+        = render "shared/navigation_menus/external"
+        = render "shared/navigation_menus/admin"
+
+.offcanvas.offcanvas-start.bg-dark.text-light id="app-nav" tabindex="-1"
+  .offcanvas-header
+    input.form-control.me-3.form-control-sm#nav-link-filter type="text" placeholder="Type to filter..."
+    button type="button" = fa "times-circle"
+  .offcanvas-body.pt-0
+    .row
+      - nav_links.each do |nav|
+        .col-12.nav-link-container *{data: {search: "#{nav[:text]} #{nav[:search]}".downcase}} = link_to "#{fa (nav[:external].present? && nav[:external] ? "external-link-alt" : "link")} #{nav[:text]}".html_safe, nav[:url], target: "#{nav[:target].present? ? nav[:target] : "_self"}", class: "#{nav[:external].present? && nav[:external] ? "text-yellow-400" : ""}"
 
 javascript:
   $(function() {
+
+    // Search navigation links upon text box entry.
+    $("#nav-link-filter").on("keyup", function() {
+      var $filter = $(this);
+      var filterVal = $filter.val().toLowerCase();
+      if (filterVal == "") {
+        $(".nav-link-container").removeClass("d-none");
+      } else {
+        $(".nav-link-container").each(function() {
+          var $container = $(this);
+          var searchString = $container.data('search');
+          if (searchString.includes(filterVal)) {
+            $container.removeClass("d-none");
+          } else {
+            $container.addClass("d-none");
+          }
+        });
+      }
+    });
 
     // Hide offcanvas toggler if no visible links.
     var $offcanvas = $("#app-nav");
@@ -202,6 +157,7 @@ javascript:
         var $offcanvas = $(".offcanvas");
         if ($offcanvas.hasClass("show")) {
           $offcanvas.removeClass("show").css("visibility", "hidden");
+          $("#nav-link-filter").val("");
         }
       }
     });
@@ -212,6 +168,7 @@ javascript:
       var $offcanvas = $("#app-nav");
       if ($offcanvas.hasClass("show")) {
         $offcanvas.removeClass("show").css("visibility", "hidden");
+        $("#nav-link-filter").val("");
       }
     });
     $("#notifications .offcanvas-header button").on("click", function(event) {
@@ -230,6 +187,8 @@ javascript:
         $offcanvas.removeClass("show").css("visibility", "hidden");
       } else {
         $offcanvas.addClass("show").css("visibility", "visible");
+        $(".nav-link-container").removeClass("d-none");
+        $("#nav-link-filter").focus();
       }
     });
     $(".notifications-toggler").on("click", function(event) {
