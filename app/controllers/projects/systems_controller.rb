@@ -1,6 +1,6 @@
 class Projects::SystemsController < ApplicationController
 
-  before_action :set_system, only: %i[ edit update destroy admin ]
+  before_action :set_system, only: %i[ edit update destroy admin dashboard ]
 
   def index
     @systems = Projects::System.all
@@ -8,7 +8,10 @@ class Projects::SystemsController < ApplicationController
   end
 
   def admin
-    @category = @system.categories.build
+    @category = @system.categories.build(comment_sections: "Comments")
+  end
+
+  def dashboard
   end
 
   def new
@@ -36,7 +39,7 @@ class Projects::SystemsController < ApplicationController
   end
 
   def destroy
-    @system.destroy
+    @system.discard
     redirect_to projects_systems_url, notice: "System was successfully destroyed."
   end
 

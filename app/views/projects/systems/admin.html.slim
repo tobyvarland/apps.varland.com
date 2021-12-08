@@ -8,9 +8,32 @@ ruby:
   h1.font-varland = "Administration: #{@system.name}"
   div
     = link_to "#{fa "list-alt"} All Systems".html_safe, projects_systems_url, class: ["btn", "btn-sm", "btn-primary"]
+    = link_to "#{fa "tachometer-alt"} Dashboard".html_safe, dashboard_projects_system_path(@system), class: ["btn", "btn-sm", "btn-primary", "ms-1"]
     = link_to "#{fa "edit"} Edit".html_safe, edit_projects_system_path(@system), class: ["btn", "btn-sm", "btn-primary", "ms-1"]
     = link_to "#{fa "trash-alt"} Delete".html_safe, @system, method: :delete, data: { confirm: 'Are you sure?' }, class: ["btn", "btn-sm", "btn-danger", "ms-1"]
 
 .row
 
-  .col-12.mt-3 = render "projects/categories/form"
+  .col-12.mt-3 Manage permissions here.
+
+.row
+
+  .col-12.col-md-9
+    .card.bg-light.mt-3
+      h6.card-header.px-2 = "Categories in #{@system.name}"
+      table.table.mb-0.small.table-hover.table-striped.table-borderless
+        thead
+          tr
+            th Category
+            th.text-center.w-1 Last #
+            th.w-1 Comment Sections
+            th.w-1 Settings
+            th.text-center.w-1 Options
+        tbody
+          - @system.categories.each do |obj|
+            - next if obj.id.blank?
+            = render partial: "projects/categories/category", object: obj, locals: { show_system: false }
+  .col-12.col-md-3
+    .card.bg-light.mt-3
+      h6.card-header = "New Project Category in #{@system.name}"
+      .card-body.p-0 = render "projects/categories/system_form"

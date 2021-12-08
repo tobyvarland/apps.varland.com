@@ -1,5 +1,12 @@
 /* Form utility classes. */
 
+.form-check {
+  small {
+    @extend .m-0;
+    display: block;
+  }
+}
+
 .check-centered {
   @extend .text-center;
   align-items: center;

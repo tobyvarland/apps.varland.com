@@ -1,16 +1,9 @@
 class Projects::CategoriesController < ApplicationController
 
-  before_action :set_category, only: %i[ show edit update destroy ]
+  before_action :set_category, only: %i[ edit update destroy ]
 
   def index
     @categories = Projects::Category.all
-  end
-
-  def show
-  end
-
-  def new
-    @category = Projects::Category.new
   end
 
   def edit
@@ -19,7 +12,7 @@ class Projects::CategoriesController < ApplicationController
   def create
     @category = Projects::Category.new(category_params)
     if @category.save
-      redirect_to @category, notice: "Category was successfully created."
+      redirect_to admin_projects_system_path(@category.system), notice: "Category '#{@category.name}' was successfully created."
     else
       render :new, status: :unprocessable_entity
     end
@@ -27,15 +20,15 @@ class Projects::CategoriesController < ApplicationController
 
   def update
     if @category.update(category_params)
-      redirect_to @category, notice: "Category was successfully updated."
+      redirect_to admin_projects_system_path(@category.system), notice: "Category '#{@category.name}' was successfully updated."
     else
       render :edit, status: :unprocessable_entity
     end
   end
 
   def destroy
-    @category.destroy
-    redirect_to projects_categories_url, notice: "Category was successfully destroyed."
+    @category.discard
+    redirect_to admin_projects_system_path(@category.system), notice: "Category '#{@category.name}' was successfully destroyed."
   end
 
   private

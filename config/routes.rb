@@ -10,7 +10,7 @@ Rails.application.routes.draw do
         get :dashboard
       end
     end
-    resources :categories
+    resources :categories, except: ["show"]
     resources :items
   end
   namespace :records do

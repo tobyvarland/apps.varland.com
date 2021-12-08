@@ -1,8 +1,5 @@
 = simple_form_for(@system, html: {class: ["vp-gray-form", "my-3"]}) do |f|
 
-  = f.error_notification
-  = f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present?
-
   .row
     .col-12.mt-3 = f.input :name, required: true, label: "Name:", autofocus: true, hint: "Must be unique"
     .col-12.mt-3 = f.input :abbreviation, required: true, label: "Abbreviation:", hint: "Must be unique"

@@ -1,0 +1,10 @@
+.col-12.mt-3 = f.input :comment_sections, required: true, label: "Comment Sections:", hint: "Separate sections with a single <code class=\"fw-700\">|</code> character (i.e. Root Cause|Notes|Verification of Effectiveness)".html_safe
+.col-12.mt-3 = f.input :use_priorities, hint: "Check to allow assigning priorities to items"
+.col-12 = f.input :use_tasks, hint: "Check to allow specific bullet-point tasks to be created in items (all must be completed before item can be closed)"
+.col-12 = f.input :use_time_tracking, hint: "Check to require asignees to record time against item before it can be closed"
+.col-12 = f.input :use_reviews, hint: "Check to require sign-off by stakeholders after item closed"
+.col-12 = f.input :use_percent_complete, hint: "Check to allow asignees to update percent complete for item"
+.col-12 = f.input :allow_children, hint: "Check to allow other items to be assigned to this item (child items must be closed before parent items may be closed)"
+.col-12 = f.input :allow_requests, hint: "Check to allow anybody to submit an item into the system (requested items must be approved by a manager before being opened)"
+.col-12 = f.input :send_feedback, hint: "Check to automatically send feedback to the opener of the item when it is closed"
+.col-12 = f.input :use_due_date, hint: "Check to allow assigning a due date to items"

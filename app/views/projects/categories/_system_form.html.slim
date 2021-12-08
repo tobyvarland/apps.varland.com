@@ -1,0 +1,12 @@
+= simple_form_for(@category, html: {class: ["vp-gray-form"]}) do |f|
+
+  = f.association :system, as: :hidden
+
+  .row
+    .col-12.mt-3 = f.input :name, required: true, label: "Name:", autofocus: true, hint: "Must be unique within system"
+    .col-12.mt-3 = f.input :abbreviation, required: true, label: "Abbreviation:", hint: "Must be globally unique"
+    = render partial: "projects/categories/form_common", locals: { f: f }
+
+  .form-actions
+    div
+      = f.button :button, "#{fa "check"} Save Category".html_safe, class: ["btn-primary", "btn-sm"]

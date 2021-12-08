@@ -1,0 +1,44 @@
+tr
+  - if show_system
+    td.align-top.fw-700
+      code.me-2 = category.system.abbreviation
+      = link_to category.system.name, admin_projects_system_path(category.system)
+  td.align-top
+    .fw-700
+      code.me-2 = category.abbreviation
+      = category.name
+  td.align-top.text-center = category.last_number_used
+  td.align-top == category.comment_sections_array.join("<br>")
+  td.align-top
+    table.table.table-sm.small.table-bordered.mb-0
+      tbody
+        tr
+          td Priorities:
+          td = boolean_icon category.use_priorities
+        tr
+          td Tasks:
+          td = boolean_icon category.use_tasks
+        tr
+          td Time Tracking:
+          td = boolean_icon category.use_time_tracking
+        tr
+          td Reviews:
+          td = boolean_icon category.use_reviews
+        tr
+          td % Complete:
+          td = boolean_icon category.use_percent_complete
+        tr
+          td Children:
+          td = boolean_icon category.allow_children
+        tr
+          td Requests:
+          td = boolean_icon category.allow_requests
+        tr
+          td Feedback:
+          td = boolean_icon category.send_feedback
+        tr
+          td Due Date:
+          td = boolean_icon category.use_due_date
+  td.align-top.text-center
+    = link_to "#{fa "edit"} Edit".html_safe, edit_projects_category_path(category), class: ["btn", "btn-sm", "btn-primary"]
+    = link_to "#{fa "trash-alt"} Delete".html_safe, category, method: :delete, data: { confirm: 'Are you sure?' }, class: ["btn", "btn-sm", "btn-danger", "ms-1"]

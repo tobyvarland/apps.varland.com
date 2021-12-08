@@ -1,0 +1,27 @@
+ruby:
+  provide(:title, 'Categories')
+
+- content_for :nav do
+  = render "projects/nav"
+
+.d-flex.flex-row.align-items-center.justify-content-between.mt-3
+  h1.font-varland Categories
+  div
+
+.row
+
+  .col-12
+
+    .table-responsive.my-3
+      table.table.table-striped.table-hover
+        thead.table-dark
+          tr
+            th System
+            th Category
+            th.text-center.w-1 Last #
+            th.w-1 Comment Sections
+            th.w-1 Settings
+            th.text-center.w-1 Options
+        tbody
+          - @categories.each do |obj|
+            = render partial: "projects/categories/category", object: obj, locals: { show_system: true }
