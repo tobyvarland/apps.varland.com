@@ -3,3 +3,5 @@
     = render partial: "users/user_home_pages/#{current_user.username.downcase}"
   - else
     = render partial: "shared/no_user_home"
+- else
+  = render partial: "shared/no_user_home"
