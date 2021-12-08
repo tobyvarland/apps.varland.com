@@ -1,48 +1,200 @@
 ruby:
-  nav_links = []
-  nav_links << { text: "Timeclock", url: "http://timeclock.varland.com", target: "_blank", search: "break" }
-  nav_links << { text: "Timeclock (iPad View)", url: "http://timeclock.varland.com/ipad/", target: "_blank", search: "break" }
-  nav_links << { text: "QMS", url: "http://vmsqms.varland.com", target: "_blank", search: "VMSQMS" }
-  nav_links << { text: "Permissions", url: permissions_url } if policy(Permission).index?
-  if policy(:home).sidekiq?
-    nav_links << { text: "Reset Sidekiq", url: reset_sidekiq_url, target: "_blank" }
-    nav_links << { text: "Sidekiq", url: sidekiq_web_url, target: "_blank" }
-  end
-  nav_links << { text: "Varland Email", url: "http://mail.varland.com", target: "_blank", search: "external webmail gmail", external: true }
-  nav_links << { text: "Employee Information", url: "https://drive.google.com/drive/u/0/folders/0ADakPLFe9iZlUk9PVA", target: "_blank", search: "external departmental information", external: true }
-  nav_links << { text: "Vector Solutions Training", url: "https://varland.convergencetraining.com", target: "_blank", search: "external quizzes", external: true }
-  nav_links << { text: "Specifications", url: "http://vms.varland.com/specifications", target: "_blank" }
-  nav_links << { text: "Vat History Notes", url: "http://vms.varland.com/materials/vat_history_notes", target: "_blank" }
-  nav_links << { text: "Maintenance History Report", url: "http://192.168.82.2/maintenance/history", target: "_blank" }
-  nav_links << { text: "PM Scheduled Tasks", url: "http://vms.varland.com/maintenance/scheduled_task_status", target: "_blank", search: "maintenance" }
-  nav_links << { text: "Maintenance Work Orders", url: "http://maintenance.varland.com", target: "_blank" }
-  nav_links << { text: "Days Turn", url: "http://daysturn.varland.com", target: "_blank", search: "turnaround" }
-  nav_links << { text: "Employee Notes", url: employee_notes_url } if policy(EmployeeNote).index?
-  nav_links << { text: "Groov Logs", url: groov_logs_url } if policy(Groov::Log).index?
-  nav_links << { text: "IAO Bakesheets", url: "http://opto.varland.com/inert/bakesheets", target: "_blank", search: "grieve jpw" }
-  nav_links << { text: "Online Bakesheet", url: "http://optoapi.varland.com/ovens", target: "_blank" }
-  nav_links << { text: "Opto Logs (Old)", url: "http://vms.varland.com/opto/logs", target: "_blank" }
-  nav_links << { text: "Records", url: records_url } if policy(:records).view?
-  nav_links << { text: "Shift Notes", url: shift_notes_url } if policy(ShiftNote).index?
-  nav_links << { text: "Thickness Data", url: "http://thickness.varland.com", target: "_blank" }
-  nav_links << { text: "DMRs", url: "http://dmr.varland.com", target: "_blank" }
-  nav_links << { text: "Reject Tag", url: "http://vms.varland.com/qc/rejected_parts/new", target: "_blank" }
-  nav_links << { text: "Salt Spray", url: "http://saltspray.varland.com", target: "_blank" }
-  nav_links << { text: "Final Inspection", url: vcms_quality_final_inspect_url, search: "green dot" } if policy(:home).view_final_inspection?
-  nav_links << { text: "Hardness Tests", url: quality_hardness_tests_url } if policy(Quality::HardnessTest).index?
-  nav_links << { text: "Reject Tags", url: quality_reject_tags_url } if policy(Quality::RejectTag).index? && !policy(Quality::RejectTag).index?
-  nav_links << { text: "Jobs on Receipt", url: vcms_production_jobs_on_receipt_url }
-  nav_links << { text: "Labeling Instructions", url: vcms_shipping_labeling_instructions_url }
-  nav_links << { text: "Promise List", url: vcms_shipping_promise_list_url }
-  nav_links << { text: "Part Search", url: vcms_production_part_search_url } if policy(:vcms).part_search?
-  nav_links << { text: "Part History Search", url: vcms_production_part_history_search_url } if policy(:vcms).part_history_search?
-  nav_links << { text: "Quote Search", url: vcms_sales_quote_search_url } if policy(:vcms).quote_search?
-  nav_links << { text: "Recent Customers", url: vcms_sales_recent_customers_url, search: "query" } if policy(:vcms).recent_customers?
-  nav_links << { text: "Receiving Priority Notes", url: shipping_receiving_priority_notes_url } if policy(Shipping::ReceivingPriorityNote).index?
-  nav_links << { text: "SMALOG Labels", url: smalog_labels_url, search: "labels" } if policy(:shipping).smalog_labels?
-  nav_links << { text: "TRIBRO Labels", url: trico_labels_url, search: "labels" } if policy(:shipping).trico_labels?
 
+  nav_headings = [
+    "Quality",
+    "Shipping",
+    "Timeclock",
+    "Administration",
+    "General",
+    "IT",
+    "Maintenance",
+    "Lab",
+    "Production",
+    "External Links",
+    "H/R",
+    "Opto",
+    "Sales",
+    "Training"
+  ].sort
+
+  nav_links = []
+  nav_links << {  text: "Timeclock",
+                  url: "http://timeclock.varland.com",
+                  search: "break",
+                  headings: ["Timeclock"],
+                  other_app: true }
+  nav_links << {  text: "Timeclock (iPad View)",
+                  url: "http://timeclock.varland.com/ipad/",
+                  search: "break",
+                  headings: ["Timeclock"],
+                  other_app: true }
+  nav_links << {  text: "QMS",
+                  url: "http://vmsqms.varland.com",
+                  search: "VMSQMS",
+                  headings: ["General"],
+                  other_app: true }
+  nav_links << {  text: "Permissions",
+                  url: permissions_url,
+                  headings: ["Administration"] } if policy(Permission).index?
+  if policy(:home).sidekiq?
+    nav_links << {  text: "Reset Sidekiq",
+                    url: reset_sidekiq_url,
+                    headings: ["Administration"] }
+    nav_links << {  text: "Sidekiq",
+                    url: sidekiq_web_url,
+                    headings: ["Administration"] }
+  end
+  nav_links << {  text: "Varland Email",
+                  url: "http://mail.varland.com",
+                  search: "external webmail gmail",
+                  external: true,
+                  headings: ["External Links"] }
+  nav_links << {  text: "Employee Information",
+                  url: "https://drive.google.com/drive/u/0/folders/0ADakPLFe9iZlUk9PVA",
+                  search: "external departmental information",
+                  external: true,
+                  headings: ["External Links"] }
+  nav_links << {  text: "Vector Solutions Training",
+                  url: "https://varland.convergencetraining.com",
+                  search: "external quizzes",
+                  external: true,
+                  headings: ["External Links", "Training"] }
+  nav_links << {  text: "Specifications",
+                  url: "http://vms.varland.com/specifications",
+                  headings: ["Quality", "Sales", "Production", "General"],
+                  other_app: true }
+  nav_links << {  text: "Vat History Notes",
+                  url: "http://vms.varland.com/materials/vat_history_notes",
+                  headings: ["Lab"],
+                  other_app: true }
+  nav_links << {  text: "Maintenance History Report",
+                  url: "http://192.168.82.2/maintenance/history",
+                  headings: ["Maintenance"],
+                  other_app: true }
+  nav_links << {  text: "PM Scheduled Tasks",
+                  url: "http://vms.varland.com/maintenance/scheduled_task_status",
+                  search: "maintenance",
+                  headings: ["Maintenance"],
+                  other_app: true }
+  nav_links << {  text: "Maintenance Work Orders",
+                  url: "http://maintenance.varland.com",
+                  headings: ["Maintenance"] ,
+                  other_app: true}
+  nav_links << {  text: "Days Turn",
+                  url: "http://daysturn.varland.com",
+                  search: "turnaround",
+                  headings: ["Production"],
+                  other_app: true }
+  nav_links << {  text: "Employee Notes",
+                  url: employee_notes_url,
+                  headings: ["General", "H/R"] } if policy(EmployeeNote).index?
+  nav_links << {  text: "Groov Logs",
+                  url: groov_logs_url,
+                  search: "opto",
+                  headings: ["Production", "Opto"] } if policy(Groov::Log).index?
+  nav_links << {  text: "IAO Bakesheets",
+                  url: "http://opto.varland.com/inert/bakesheets",
+                  search: "grieve jpw",
+                  headings: ["Production", "Opto"],
+                  other_app: true }
+  nav_links << {  text: "Online Bakesheet",
+                  url: "http://optoapi.varland.com/ovens",
+                  headings: ["Production", "Opto"],
+                  other_app: true }
+  nav_links << {  text: "Opto Logs (Old)",
+                  url: "http://vms.varland.com/opto/logs",
+                  headings: ["Production", "Opto"],
+                  other_app: true }
+  nav_links << {  text: "Records",
+                  url: records_url,
+                  headings: ["General"] } if policy(:records).view?
+  nav_links << {  text: "Shift Notes",
+                  url: shift_notes_url,
+                  headings: ["Production", "General"] } if policy(ShiftNote).index?
+  nav_links << {  text: "Thickness Data",
+                  url: "http://thickness.varland.com",
+                  headings: ["Production", "Quality"],
+                  other_app: true }
+  nav_links << {  text: "DMRs",
+                  url: "http://dmr.varland.com",
+                  headings: ["Quality"],
+                  other_app: true }
+  nav_links << {  text: "Reject Tag",
+                  url: "http://vms.varland.com/qc/rejected_parts/new",
+                  headings: ["Quality"],
+                  other_app: true }
+  nav_links << {  text: "Salt Spray",
+                  url: "http://saltspray.varland.com",
+                  headings: ["Quality"],
+                  other_app: true }
+  nav_links << {  text: "Final Inspection",
+                  url: vcms_quality_final_inspect_url,
+                  search: "green dot",
+                  headings: ["Quality"] } if policy(:home).view_final_inspection?
+  nav_links << {  text: "Hardness Tests",
+                  url: quality_hardness_tests_url,
+                  headings: ["Quality"] } if policy(Quality::HardnessTest).index?
+  nav_links << {  text: "Reject Tags",
+                  url: quality_reject_tags_url,
+                  headings: ["Quality"] } if policy(Quality::RejectTag).index? && !policy(Quality::RejectTag).index?
+  nav_links << {  text: "Jobs on Receipt",
+                  url: vcms_production_jobs_on_receipt_url,
+                  headings: ["Production", "Sales", "Shipping"] }
+  nav_links << {  text: "Labeling Instructions",
+                  url: vcms_shipping_labeling_instructions_url,
+                  headings: ["Shipping"] }
+  nav_links << {  text: "Promise List",
+                  url: vcms_shipping_promise_list_url,
+                  headings: ["Production", "Quality", "Shipping"] }
+  nav_links << {  text: "Part Search",
+                  url: vcms_production_part_search_url,
+                  headings: ["Production", "Sales"] } if policy(:vcms).part_search?
+  nav_links << {  text: "Part History Search",
+                  url: vcms_production_part_history_search_url,
+                  headings: ["Production", "Sales"] } if policy(:vcms).part_history_search?
+  nav_links << {  text: "Quote Search",
+                  url: vcms_sales_quote_search_url,
+                  headings: ["Sales"] } if policy(:vcms).quote_search?
+  nav_links << {  text: "Recent Customers",
+                  url: vcms_sales_recent_customers_url,
+                  search: "query",
+                  headings: ["Sales"] } if policy(:vcms).recent_customers?
+  nav_links << {  text: "Receiving Priority Notes",
+                  url: shipping_receiving_priority_notes_url,
+                  headings: ["Shipping", "General"] } if policy(Shipping::ReceivingPriorityNote).index?
+  nav_links << {  text: "SMALOG Labels",
+                  url: smalog_labels_url,
+                  headings: ["Shipping", "Quality"] } if policy(:shipping).smalog_labels?
+  nav_links << {  text: "TRIBRO Labels",
+                  url: trico_labels_url,
+                  headings: ["Shipping", "Quality"] } if policy(:shipping).trico_labels?
+  nav_links << {  text: "Vacation Calendars",
+                  url: vacation_calendars_url,
+                  headings: ["General"] }
+  nav_links << {  text: "Home",
+                  url: root_url,
+                  search: "dashboard",
+                  headings: ["General"] }
+  nav_links.each do |nav|
+    nav[:target] = "_self"
+    nav[:target] = "_blank" if nav[:external].present? || nav[:other_app].present?
+    nav[:link_class] = ""
+    nav[:link_class] = "text-yellow-400" if nav[:external].present?
+    nav[:icon] = "link"
+    nav[:icon] = "external-link-alt" if nav[:external].present?
+  end
   nav_links.sort_by! { |nav| nav[:text] }
+  used_headings = []
+  nav_links.each do |nav|
+    nav[:headings].each do |heading|
+      used_headings << heading
+      unless nav_headings.include?(heading)
+        raise "Fucked up a heading definiting in nav_links (#{heading})."
+      end
+    end
+  end
+  used_headings.uniq!
+  nav_headings.reject! {|heading| !used_headings.include?(heading) }
 
 nav.navbar.fixed-top.navbar-expand-md.navbar-dark.bg-dark id="primary-nav"
   .container-fluid
@@ -82,28 +234,6 @@ nav.navbar.fixed-top.navbar-expand-md.navbar-dark.bg-dark id="primary-nav"
               == notification.text
               .small.text-muted.mt-1 = notification.created_at.strftime("%m/%d/%y %l:%M%P")
 
-.offcanvas.offcanvas-start.bg-dark.text-light.w-100.border-0 id="app-navxxx" tabindex="-1"
-  .offcanvas-header
-    .title Applications
-    button type="button" = fa "times-circle"
-  .offcanvas-body.py-0
-    .row
-      .col-12.col-md
-        = render "shared/navigation_menus/general"
-      .col-12.col-md
-        = render "shared/navigation_menus/production"
-      .col-12.col-md
-        = render "shared/navigation_menus/quality"
-        = render "shared/navigation_menus/shipping"
-      .col-12.col-md
-        = render "shared/navigation_menus/maintenance"
-        = render "shared/navigation_menus/lab"
-      .col-12.col-md
-        = render "shared/navigation_menus/queries"
-      .col-12.col-md
-        = render "shared/navigation_menus/external"
-        = render "shared/navigation_menus/admin"
-
 .offcanvas.offcanvas-start.bg-dark.text-light id="app-nav" tabindex="-1"
   .offcanvas-header
     input.form-control.me-3.form-control-sm#nav-link-filter type="text" placeholder="Type to filter..."
@@ -111,7 +241,18 @@ nav.navbar.fixed-top.navbar-expand-md.navbar-dark.bg-dark id="primary-nav"
   .offcanvas-body.pt-0
     .row
       - nav_links.each do |nav|
-        .col-12.nav-link-container *{data: {search: "#{nav[:text]} #{nav[:search]}".downcase}} = link_to "#{fa (nav[:external].present? && nav[:external] ? "external-link-alt" : "link")} #{nav[:text]}".html_safe, nav[:url], target: "#{nav[:target].present? ? nav[:target] : "_self"}", class: "#{nav[:external].present? && nav[:external] ? "text-yellow-400" : ""}"
+        - if nav[:headings].length == 0
+          .col-12.nav-link-container *{data: {search: "#{nav[:text]} #{nav[:search]}".downcase}} = link_to "#{fa nav[:icon]} #{nav[:text]}".html_safe, nav[:url], target: nav[:target], class: nav[:link_class]
+        - else
+          .col-12.nav-link-container.hidden-unless-search *{data: {search: "#{nav[:text]} #{nav[:search]}".downcase}} = link_to "#{fa nav[:icon]} #{nav[:text]}".html_safe, nav[:url], target: nav[:target], class: nav[:link_class]
+      - nav_headings.each_with_index do |heading, index|
+        .col-12.nav-link-header
+          .row
+            .col-12.header = link_to heading, "#nav-links-#{index}", data: { 'bs-toggle': "collapse" }
+            .row.mb-2.collapse *{id: "nav-links-#{index}"}
+              - nav_links.each do |nav|
+                - if nav[:headings].include?(heading)
+                  .col-12.nav-link-container *{data: {search: "#{nav[:text]} #{nav[:search]}".downcase}} = link_to "#{fa nav[:icon]} #{nav[:text]}".html_safe, nav[:url], target: nav[:target], class: nav[:link_class]
 
 javascript:
   $(function() {
@@ -121,8 +262,11 @@ javascript:
       var $filter = $(this);
       var filterVal = $filter.val().toLowerCase();
       if (filterVal == "") {
+        $(".nav-link-header").removeClass("d-none");
         $(".nav-link-container").removeClass("d-none");
+        $(".hidden-unless-search").addClass("d-none");
       } else {
+        $(".nav-link-header").addClass("d-none");
         $(".nav-link-container").each(function() {
           var $container = $(this);
           var searchString = $container.data('search');
@@ -140,16 +284,6 @@ javascript:
     if ($offcanvas.find(".offcanvas-body ul li a").length != 0) {
       $(".app-nav-toggler").parent().removeClass("d-none");
     }
-
-    // Hide lists with no visible links.
-    var $lists = $offcanvas.find(".offcanvas-body ul");
-    $lists.each(function() {
-      var $list = $(this);
-      var countLinks = $list.find('a').length;
-      if (countLinks == 0) {
-        $list.remove();
-      }
-    });
 
     // Hide offcanvas menu on escape key.
     $(document).on("keydown", function(event) {
@@ -187,7 +321,9 @@ javascript:
         $offcanvas.removeClass("show").css("visibility", "hidden");
       } else {
         $offcanvas.addClass("show").css("visibility", "visible");
+        $(".nav-link-header").removeClass("d-none");
         $(".nav-link-container").removeClass("d-none");
+        $(".hidden-unless-search").addClass("d-none");
         $("#nav-link-filter").focus();
       }
     });
@@ -197,7 +333,6 @@ javascript:
       if ($offcanvas.hasClass("show")) {
         $offcanvas.removeClass("show").css("visibility", "hidden");
       } else {
-        alert("Need to mark all unread notifications read.");
         $offcanvas.addClass("show").css("visibility", "visible");
       }
     });

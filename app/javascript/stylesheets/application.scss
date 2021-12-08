@@ -62,27 +62,15 @@ h1 {
       text-decoration: underline;
       text-decoration-color: $color-varland-red;
       text-decoration-thickness: 0.15em;
+      a {
+        text-decoration: underline;
+        text-decoration-color: $color-varland-red;
+        text-decoration-thickness: 0.15em;
+        text-transform: none !important;
+      }
     }
     li + .header {
       @extend .mt-2;
-    }
-    p {
-      align-items: center;
-      color: #fff;
-      display: flex;
-      flex-direction: row;
-      font-weight: 700;
-      justify-content: flex-start;
-      padding: 0.5rem 0;
-      text-decoration: none;
-      text-transform: uppercase;
-      i, svg {
-        margin-right: 0.5rem;
-      }
-      &:hover, &:active {
-        background: lighten($bg-dark, 10%) !important;
-        padding-left: 0.5rem;
-      }
     }
     a {
       align-items: center;
