@@ -1,0 +1,16 @@
+.row
+  .col-12.col-md-4
+    = simple_form_for(:filters, url: vcms_sales_quote_search_url, method: "GET", html: {target: "_blank", class: ["vp-gray-form", "my-3", "all-auto-submit"]}) do |f|
+      .row
+        .col-12.mt-3
+          = f.input :search, required: true, label: "Quote Search:"
+  .col-12.col-md-4
+    = simple_form_for(:filters, url: vcms_production_part_search_url, method: "GET", html: {target: "_blank", class: ["vp-gray-form", "my-3", "all-auto-submit"]}) do |f|
+      .row
+        .col-12.mt-3
+          = f.input :search, required: true, label: "Part Search:"
+  .col-12.col-md-4
+    = simple_form_for(:filters, url: vcms_production_part_history_search_url, method: "GET", html: {target: "_blank", class: ["vp-gray-form", "my-3", "all-auto-submit"]}) do |f|
+      .row
+        .col-12.mt-3
+          = f.input :search, required: true, label: "Part History Search:"
