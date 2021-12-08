@@ -1,0 +1,36 @@
+ruby:
+  provide(:title, 'Systems')
+
+- content_for :nav do
+  = render "projects/nav"
+
+.d-flex.flex-row.align-items-center.justify-content-between.mt-3
+  h1.font-varland Systems
+  div
+
+.row
+
+  .col-12.col-md-10
+
+    .table-responsive.my-3
+      table.table.table-striped.table-hover
+        thead.table-dark
+          th Name
+          th.w-1 Abbreviation
+          th.text-center.w-1 Options
+        tbody
+          - @systems.each do |obj|
+            tr
+              td.fw-700 = obj.name
+              td
+                code.fw-700 = obj.abbreviation
+              td.text-center
+                = link_to "#{fa "cogs"} Admin".html_safe, admin_projects_system_path(obj), class: ["btn", "btn-sm", "btn-primary"]
+                = link_to "#{fa "tachometer-alt"} Dashboard".html_safe, dashboard_projects_system_path(obj), class: ["btn", "btn-sm", "btn-primary"]
+                .d-none
+                  = link_to "#{fa "edit"} Edit".html_safe, edit_projects_system_path(obj), class: ["btn", "btn-sm", "btn-primary"]
+                  = link_to "#{fa "trash-alt"} Delete".html_safe, obj, method: :delete, data: { confirm: 'Are you sure?' }, class: ["btn", "btn-sm", "btn-danger"]
+
+  .col-12.col-md-2
+
+    = render 'index_form'

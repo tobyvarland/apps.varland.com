@@ -2,48 +2,48 @@
 
 <p>
   <strong>Category:</strong>
-  <%= @projects_item.category_id %>
+  <%= @item.category_id %>
 </p>
 
 <p>
   <strong>Number:</strong>
-  <%= @projects_item.number %>
+  <%= @item.number %>
 </p>
 
 <p>
   <strong>Current status:</strong>
-  <%= @projects_item.current_status %>
+  <%= @item.current_status %>
 </p>
 
 <p>
   <strong>Current status at:</strong>
-  <%= @projects_item.current_status_at %>
+  <%= @item.current_status_at %>
 </p>
 
 <p>
   <strong>Percent complete:</strong>
-  <%= @projects_item.percent_complete %>
+  <%= @item.percent_complete %>
 </p>
 
 <p>
   <strong>Current priority:</strong>
-  <%= @projects_item.current_priority %>
+  <%= @item.current_priority %>
 </p>
 
 <p>
   <strong>Current priority at:</strong>
-  <%= @projects_item.current_priority_at %>
+  <%= @item.current_priority_at %>
 </p>
 
 <p>
   <strong>Due on:</strong>
-  <%= @projects_item.due_on %>
+  <%= @item.due_on %>
 </p>
 
 <p>
   <strong>Projected hours:</strong>
-  <%= @projects_item.projected_hours %>
+  <%= @item.projected_hours %>
 </p>
 
-<%= link_to 'Edit', edit_projects_item_path(@projects_item) %> |
+<%= link_to 'Edit', edit_projects_item_path(@item) %> |
 <%= link_to 'Back', projects_items_path %>

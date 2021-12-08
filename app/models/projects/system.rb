@@ -1,5 +1,5 @@
 class Projects::System < ApplicationRecord
-  
+
   # Soft Deletes.
   include Discard::Model
   default_scope -> { kept }
@@ -19,6 +19,9 @@ class Projects::System < ApplicationRecord
             presence: true,
             uniqueness: { case_sensitive: false },
             format: { with: /\A[a-z0-9_]+\z/ },
-            length: { in: 2..15 }          
+            length: { in: 2..15 }
+
+  # Scopes.
+  default_scope -> { order(:name) }
 
 end
