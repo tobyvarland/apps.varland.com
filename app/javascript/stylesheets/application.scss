@@ -56,17 +56,16 @@ h1 {
       @extend .lh-1;
     }
     .header {
-      @extend .fs-5;
-      @extend .fw-700;
       @extend .mb-2;
       text-decoration: underline;
       text-decoration-color: $color-varland-red;
       text-decoration-thickness: 0.15em;
       a {
+        @extend .fs-4;
+        @extend .fw-500;
         text-decoration: underline;
         text-decoration-color: $color-varland-red;
-        text-decoration-thickness: 0.15em;
-        text-transform: none !important;
+        text-decoration-thickness: 0.1em !important;
       }
     }
     li + .header {
@@ -77,7 +76,7 @@ h1 {
       color: #fff;
       display: flex;
       flex-direction: row;
-      font-weight: 700;
+      font-weight: 500;
       justify-content: flex-start;
       padding: 0.25rem 0;
       text-decoration: none;
@@ -89,6 +88,9 @@ h1 {
         text-decoration: underline;
         text-decoration-color: $color-varland-red;
         text-decoration-thickness: 0.15em;
+        .fa-link {
+          color: $color-varland-red;
+        }
       }
     }
   }
