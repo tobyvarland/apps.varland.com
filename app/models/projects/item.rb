@@ -12,6 +12,7 @@ class Projects::Item < ApplicationRecord
   }
 
   # Associations.
+  include Attachable
   include Commentable
   belongs_to  :category,
               class_name: "Projects::Category",
@@ -29,10 +30,12 @@ class Projects::Item < ApplicationRecord
               dependent: :destroy
 
   # Nested attributes.
-  accepts_nested_attributes_for :comments, reject_if: :all_blank, allow_destroy: true
   accepts_nested_attributes_for :assignments, reject_if: :all_blank, allow_destroy: true
+  accepts_nested_attributes_for :attachments, reject_if: :all_blank, allow_destroy: true
 
   # Validations.
+  validates   :description,
+              presence: true
   validates   :status,
               presence: true,
               inclusion: { in: ["requested", "opened", "close_requested", "closed", "deleted", "reopened", "held"] }

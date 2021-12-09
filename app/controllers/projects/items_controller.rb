@@ -68,18 +68,13 @@ class Projects::ItemsController < ApplicationController
                                             :priority,
                                             :due_on,
                                             :projected_hours,
+                                            :description,
+                                            attachments_attributes: [:id,
+                                                                     :file,
+                                                                     :_destroy],
                                             assignments_attributes: [:id,
                                                                      :user_id,
-                                                                     :_destroy],
-                                            comments_attributes: [:id,
-                                                                  :user_id,
-                                                                  :body,
-                                                                  :_destroy,
-                                                                  attachments_attributes: [:id,
-                                                                                           :name,
-                                                                                           :description,
-                                                                                           :file,
-                                                                                           :_destroy]])
+                                                                     :_destroy])
     end
 
 end

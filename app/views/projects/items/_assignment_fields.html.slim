@@ -1,3 +1,3 @@
-.nested-fields.d-flex.flex-row.align-items-center.justify-content-start.mt-1
+.nested-fields.flex-row-start-center.mt-1
   = f.association :user, label: false, collection: User.active.by_number, input_html: { class: "form-select" }
-  = link_to_remove_association "#{fa "trash-alt"} Remove".html_safe, f, class: ["btn", "btn-sm", "btn-danger", "ms-3"], tabindex: -1
+  = link_to_remove_association "#{fa "trash-alt"}".html_safe, f, class: ["btn", "btn-sm", "btn-danger", "ms-3"], tabindex: -1

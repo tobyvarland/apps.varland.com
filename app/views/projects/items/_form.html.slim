@@ -8,36 +8,34 @@
 
   .row
 
-    .col-12.col-md-8
+    .col-12.col-md-6
 
       .row
         - if @system.categories.length > 1
-          .col-12.col-md-5.mt-3 = f.association :category, required: true, label: "Category:", autofocus: true, collection: @system.categories, input_html: { class: "form-select" }
+          .col-12.col-md-4.mt-3 = f.association :category, required: true, label: "Category:", autofocus: true, collection: @system.categories, input_html: { class: "form-select" }
         .col-12.col-md-2.mt-3#item-priority = f.input :priority, required: true, label: "Priority:", autofocus: true, collection: [1, 2, 3], input_html: { class: "form-select" }
-        .col-12.col-md-2.mt-3#item-hours = f.input :projected_hours, required: false, label: "Hours:"
+        .col-12.col-md-3.mt-3#item-hours = f.input :projected_hours, required: false, label: "Projected Hours:"
         .col-12.col-md-3.mt-3#item-due-date = f.input :due_on, required: false, label: "Target:", as: :date, html5: true, input_html: { style: "margin: 0 !important;" }
+        .col-12.mt-3 = f.input :description, required: true, label: "Description:"
 
-      .row
-        = f.simple_fields_for :comments do |comment|
-          = comment.association :user, as: :hidden
-          .col-12.mt-3 = comment.input :body, required: true, label: "Description:"
-          .col-12.mt-3
-            .shadow-sm.border.p-3.rounded
-              .d-flex.flex-col.flex-md-row.align-items-center.justify-content-between
-                .fw-700.small.text-uppercase Attachments
-                .links
-                  = link_to_add_association fa("plus"),
-                                            comment,
-                                            :attachments,
-                                            class: ["btn", "btn-sm", "btn-secondary"],
-                                            'data-association-insertion-node': "#attachments",
-                                            'data-association-insertion-method': "append",
-                                            partial: "attachments/attachment_fields_simple"
-              div id="attachments"
-                = comment.simple_fields_for :attachments do |attachment|
-                  = render "attachments/attachment_fields_simple", f: attachment
+    .col-12.col-md-3
 
-    .col-12.col-md-4
+      .shadow-sm.border.p-3.rounded.mt-3
+        .d-flex.flex-col.flex-md-row.align-items-center.justify-content-between
+          .fw-700.small.text-uppercase Attachments
+          .links
+            = link_to_add_association fa("plus"),
+                                      f,
+                                      :attachments,
+                                      class: ["btn", "btn-sm", "btn-secondary"],
+                                      'data-association-insertion-node': "#attachments",
+                                      'data-association-insertion-method': "append",
+                                      partial: "attachments/attachment_fields_simple"
+        div id="attachments"
+          = f.simple_fields_for :attachments do |atachment|
+            = render "attachments/attachment_fields_simple", f: atachment
+
+    .col-12.col-md-3
 
       .shadow-sm.border.p-3.rounded.mt-3
         .d-flex.flex-col.flex-md-row.align-items-center.justify-content-between
@@ -49,10 +47,10 @@
                                       class: ["btn", "btn-sm", "btn-secondary"],
                                       'data-association-insertion-node': "#assignments",
                                       'data-association-insertion-method': "append",
-                                      partial: "projects/items/assignment_fields"
+                                      partial: "assignment_fields"
         div id="assignments"
           = f.simple_fields_for :assignments do |assignment|
-            = render "projects/items/assignment_fields", f: assignment
+            = render "assignment_fields", f: assignment
 
   .form-actions
     div

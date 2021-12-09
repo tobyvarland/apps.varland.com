@@ -363,6 +363,7 @@ ActiveRecord::Schema.define(version: 2021_12_09_203609) do
     t.integer "priority"
     t.date "due_on"
     t.float "projected_hours"
+    t.text "description", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.datetime "discarded_at"
