@@ -2,15 +2,11 @@ ruby:
   provide(:title, "Administration: #{@system.name}")
 
 - content_for :nav do
-  = render "projects/nav"
+  = render "projects/system_nav", system: @system
 
 .d-flex.flex-row.align-items-center.justify-content-between.mt-3
   h1.font-varland = "Administration: #{@system.name}"
   div
-    = link_to "#{fa "list-alt"} All Systems".html_safe, projects_systems_url, class: ["btn", "btn-sm", "btn-primary"]
-    = link_to "#{fa "tachometer-alt"} Dashboard".html_safe, dashboard_projects_system_path(@system), class: ["btn", "btn-sm", "btn-primary", "ms-1"]
-    = link_to "#{fa "edit"} Edit".html_safe, edit_projects_system_path(@system), class: ["btn", "btn-sm", "btn-primary", "ms-1"]
-    = link_to "#{fa "trash-alt"} Delete".html_safe, @system, method: :delete, data: { confirm: 'Are you sure?' }, class: ["btn", "btn-sm", "btn-danger", "ms-1"]
 
 .row
 

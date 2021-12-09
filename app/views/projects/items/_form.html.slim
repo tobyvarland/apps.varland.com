@@ -8,7 +8,7 @@
 
   .row
 
-    .col-12.col-md-6
+    .col-12.col-md
 
       .row
         - if @system.categories.length > 1
@@ -18,22 +18,23 @@
         .col-12.col-md-3.mt-3#item-due-date = f.input :due_on, required: false, label: "Target:", as: :date, html5: true, input_html: { style: "margin: 0 !important;" }
         .col-12.mt-3 = f.input :description, required: true, label: "Description:"
 
-    .col-12.col-md-3
+    - if @item.id.blank?
+      .col-12.col-md-3
 
-      .shadow-sm.border.p-3.rounded.mt-3
-        .d-flex.flex-col.flex-md-row.align-items-center.justify-content-between
-          .fw-700.small.text-uppercase Attachments
-          .links
-            = link_to_add_association fa("plus"),
-                                      f,
-                                      :attachments,
-                                      class: ["btn", "btn-sm", "btn-secondary"],
-                                      'data-association-insertion-node': "#attachments",
-                                      'data-association-insertion-method': "append",
-                                      partial: "attachments/attachment_fields_simple"
-        div id="attachments"
-          = f.simple_fields_for :attachments do |atachment|
-            = render "attachments/attachment_fields_simple", f: atachment
+        .shadow-sm.border.p-3.rounded.mt-3
+          .d-flex.flex-col.flex-md-row.align-items-center.justify-content-between
+            .fw-700.small.text-uppercase Attachments
+            .links
+              = link_to_add_association fa("plus"),
+                                        f,
+                                        :attachments,
+                                        class: ["btn", "btn-sm", "btn-secondary"],
+                                        'data-association-insertion-node': "#attachments",
+                                        'data-association-insertion-method': "append",
+                                        partial: "attachments/attachment_fields_simple"
+          div id="attachments"
+            = f.simple_fields_for :attachments do |atachment|
+              = render "attachments/attachment_fields_simple", f: atachment
 
     .col-12.col-md-3
 

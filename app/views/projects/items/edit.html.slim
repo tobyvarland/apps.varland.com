@@ -1,10 +1,10 @@
 ruby:
-  provide(:title, "New Item in #{@system.name}")
+  provide(:title, "Edit #{@item.categorized_name}")
 
 - content_for :nav do
   = render "projects/system_nav", system: @item.category.system
 
 .d-flex.flex-row.align-items-center.justify-content-between.mt-3
-  h1.font-varland = "New Item in #{@system.name}"
+  h1.font-varland = "Edit #{@item.categorized_name}"
 
 = render 'form'

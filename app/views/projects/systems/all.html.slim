@@ -2,11 +2,8 @@ ruby:
   provide(:title, @system.name)
 
 - content_for :nav do
-  = render "projects/nav"
+  = render "projects/system_nav", system: @system
 
 .d-flex.flex-row.align-items-center.justify-content-between.mt-3
   h1.font-varland = @system.name
   div
-    = link_to "#{fa "cogs"} Admin".html_safe, admin_projects_system_path(@system), class: ["btn", "btn-sm", "btn-primary", "ms-1"]
-    = link_to "#{fa "tachometer-alt"} Dashboard".html_safe, dashboard_projects_system_path(@system), class: ["btn", "btn-sm", "btn-primary", "ms-1"]
-    = link_to "#{fa "plus"} Open Item".html_safe, new_projects_item_path(system: @system), class: ["btn", "btn-sm", "btn-primary", "ms-1"], target: "_blank"

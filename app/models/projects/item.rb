@@ -55,6 +55,11 @@ class Projects::Item < ApplicationRecord
 
   # Instance Methods.
 
+  # Returns categorized name.
+  def categorized_name
+    return "#{self.category.abbreviation.upcase}-#{self.number}";
+  end
+
   # Returns date when item closed.
   def closed_on
     return nil if self.status != "closed"
