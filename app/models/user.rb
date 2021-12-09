@@ -25,6 +25,7 @@ class User < ApplicationRecord
 
   # Scopes.
   scope :by_number, -> { order(:employee_number) }
+  scope :active, -> { where("is_active IS TRUE") }
 
   # Validations.
   validates :email, :name, :employee_number,
@@ -99,6 +100,15 @@ class User < ApplicationRecord
     response = http.request(request)
     return nil unless response.code.to_s == "200"
     return JSON.parse(response.body, symbolize_names: true)
+  end
+
+  class << self
+    def current_user=(user)
+      Thread.current[:current_user] = user
+    end
+    def current_user
+      Thread.current[:current_user]
+    end
   end
 
 end

@@ -25,11 +25,7 @@ ruby:
               td
                 code.fw-700 = obj.abbreviation
               td.text-center
-                = link_to "#{fa "cogs"} Admin".html_safe, admin_projects_system_path(obj), class: ["btn", "btn-sm", "btn-primary"]
                 = link_to "#{fa "tachometer-alt"} Dashboard".html_safe, dashboard_projects_system_path(obj), class: ["btn", "btn-sm", "btn-primary"]
-                .d-none
-                  = link_to "#{fa "edit"} Edit".html_safe, edit_projects_system_path(obj), class: ["btn", "btn-sm", "btn-primary"]
-                  = link_to "#{fa "trash-alt"} Delete".html_safe, obj, method: :delete, data: { confirm: 'Are you sure?' }, class: ["btn", "btn-sm", "btn-danger"]
 
   .col-12.col-md-2
 

@@ -1,0 +1,110 @@
+= simple_form_for(@item, html: {class: ["vp-gray-form", "my-3"]}) do |f|
+
+  = f.error_notification
+  = f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present?
+
+  - if @system.categories.length == 1
+    = f.association :category, as: :hidden
+
+  .row
+
+    .col-12.col-md-8
+
+      .row
+        - if @system.categories.length > 1
+          .col-12.col-md-5.mt-3 = f.association :category, required: true, label: "Category:", autofocus: true, collection: @system.categories, input_html: { class: "form-select" }
+        .col-12.col-md-2.mt-3#item-priority = f.input :priority, required: true, label: "Priority:", autofocus: true, collection: [1, 2, 3], input_html: { class: "form-select" }
+        .col-12.col-md-2.mt-3#item-hours = f.input :projected_hours, required: false, label: "Hours:"
+        .col-12.col-md-3.mt-3#item-due-date = f.input :due_on, required: false, label: "Target:", as: :date, html5: true, input_html: { style: "margin: 0 !important;" }
+
+      .row
+        = f.simple_fields_for :comments do |comment|
+          = comment.association :user, as: :hidden
+          .col-12.mt-3 = comment.input :body, required: true, label: "Description:"
+          .col-12.mt-3
+            .shadow-sm.border.p-3.rounded
+              .d-flex.flex-col.flex-md-row.align-items-center.justify-content-between
+                .fw-700.small.text-uppercase Attachments
+                .links
+                  = link_to_add_association fa("plus"),
+                                            comment,
+                                            :attachments,
+                                            class: ["btn", "btn-sm", "btn-secondary"],
+                                            'data-association-insertion-node': "#attachments",
+                                            'data-association-insertion-method': "append",
+                                            partial: "attachments/attachment_fields_simple"
+              div id="attachments"
+                = comment.simple_fields_for :attachments do |attachment|
+                  = render "attachments/attachment_fields_simple", f: attachment
+
+    .col-12.col-md-4
+
+      .shadow-sm.border.p-3.rounded.mt-3
+        .d-flex.flex-col.flex-md-row.align-items-center.justify-content-between
+          .fw-700.small.text-uppercase Assignments
+          .links
+            = link_to_add_association fa("plus"),
+                                      f,
+                                      :assignments,
+                                      class: ["btn", "btn-sm", "btn-secondary"],
+                                      'data-association-insertion-node': "#assignments",
+                                      'data-association-insertion-method': "append",
+                                      partial: "projects/items/assignment_fields"
+        div id="assignments"
+          = f.simple_fields_for :assignments do |assignment|
+            = render "projects/items/assignment_fields", f: assignment
+
+  .form-actions
+    div
+      = link_to "#{fa "times"} Cancel".html_safe, @item.id.blank? ? dashboard_projects_system_path(@system) : @item, class: ["btn", "btn-light", "btn-sm", "me-3"], tabindex: -1
+      = f.button :button, "#{fa "check"} Save Item".html_safe, class: ["btn-primary", "btn-sm"]
+
+javascript:
+
+  const CATEGORY_FIELD = "#projects_item_category_id";
+  const CATEGORY_URL = "/projects/categories/?.json";
+  const PRIORITY_CONTAINER = "#item-priority";
+  const DUE_DATE_CONTAINER = "#item-due-date";
+  const HOURS_CONTAINER = "#item-hours";
+
+  function hideAndDisableField(field) {
+    $(field).addClass("d-none").attr("disabled", true);
+  }
+
+  function showAndEnableField(field) {
+    $(field).removeClass("d-none").attr("disabled", false);
+  }
+
+  function loadCategory() {
+    var $categoryField = $(CATEGORY_FIELD);
+    var category = $categoryField.val();
+    if (category == "") {
+      hideAndDisableField(PRIORITY_CONTAINER);
+      hideAndDisableField(DUE_DATE_CONTAINER);
+      hideAndDisableField(HOURS_CONTAINER);
+      return;
+    }
+    var url = CATEGORY_URL.replace("?", category);
+    $.ajax(url).done(function(data) {
+      if (data.use_priorities) {
+        showAndEnableField(PRIORITY_CONTAINER);
+      } else {
+        hideAndDisableField(PRIORITY_CONTAINER);
+      }
+      if (data.use_due_date) {
+        showAndEnableField(DUE_DATE_CONTAINER);
+      } else {
+        hideAndDisableField(DUE_DATE_CONTAINER);
+      }
+      if (data.use_time_tracking) {
+        showAndEnableField(HOURS_CONTAINER);
+      } else {
+        hideAndDisableField(HOURS_CONTAINER);
+      }
+    });
+  }
+
+  $(function() {
+    loadCategory();
+    $(CATEGORY_FIELD).on("change", loadCategory);
+  });

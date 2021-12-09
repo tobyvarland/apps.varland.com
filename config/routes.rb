@@ -8,9 +8,10 @@ Rails.application.routes.draw do
       member do
         get :admin
         get :dashboard
+        get :all
       end
     end
-    resources :categories, except: ["show"]
+    resources :categories
     resources :items
   end
   namespace :records do

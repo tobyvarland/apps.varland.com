@@ -10,17 +10,33 @@ class Projects::ItemsController < ApplicationController
   end
 
   def new
-    @item = Projects::Item.new
+    begin
+      @system = Projects::System.find(params[:system])
+    rescue
+      redirect_back fallback_location: root_url, alert: "Failed to load new item form due to error loading system."
+    end
+    case @system.categories.length
+    when 0
+      redirect_back fallback_location: root_url, alert: "Cannot create new item because system has no categories defined."
+    when 1
+      @item = @system.categories.first.items.build
+    else
+      @item = Projects::Item.new
+    end
+    @item.comments.build(user: current_user)
   end
 
   def edit
+    @system = @item.category.system
   end
 
   def create
     @item = Projects::Item.new(item_params)
+    @system = @item.category.system
     if @item.save
       redirect_to @item, notice: "Item was successfully created."
     else
+      puts @item.errors.full_messages
       render :new, status: :unprocessable_entity
     end
   end
@@ -45,7 +61,25 @@ class Projects::ItemsController < ApplicationController
     end
 
     def item_params
-      params.require(:projects_item).permit(:category_id, :number, :current_status, :current_status_at, :percent_complete, :current_priority, :current_priority_at, :due_on, :projected_hours)
+      params.require(:projects_item).permit(:category_id,
+                                            :number,
+                                            :status,
+                                            :percent_complete,
+                                            :priority,
+                                            :due_on,
+                                            :projected_hours,
+                                            assignments_attributes: [:id,
+                                                                     :user_id,
+                                                                     :_destroy],
+                                            comments_attributes: [:id,
+                                                                  :user_id,
+                                                                  :body,
+                                                                  :_destroy,
+                                                                  attachments_attributes: [:id,
+                                                                                           :name,
+                                                                                           :description,
+                                                                                           :file,
+                                                                                           :_destroy]])
     end
 
 end

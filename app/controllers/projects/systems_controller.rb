@@ -1,6 +1,6 @@
 class Projects::SystemsController < ApplicationController
 
-  before_action :set_system, only: %i[ edit update destroy admin dashboard ]
+  before_action :set_system, only: %i[ edit update destroy admin dashboard all ]
 
   def index
     @systems = Projects::System.all
@@ -12,6 +12,9 @@ class Projects::SystemsController < ApplicationController
   end
 
   def dashboard
+  end
+
+  def all
   end
 
   def new

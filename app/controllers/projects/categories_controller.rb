@@ -1,12 +1,16 @@
 class Projects::CategoriesController < ApplicationController
 
-  before_action :set_category, only: %i[ edit update destroy ]
+  before_action :set_category, only: %i[ show edit update destroy ]
 
   def index
     @categories = Projects::Category.all
   end
 
   def edit
+  end
+
+  def show
+    render "projects/categories/show.json"
   end
 
   def create

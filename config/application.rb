@@ -5,7 +5,7 @@ Bundler.require(*Rails.groups)
 
 module AppsVarlandCom
   class Application < Rails::Application
-    
+
     config.load_defaults 6.1
 
     config.active_job.queue_adapter = :sidekiq
@@ -16,9 +16,11 @@ module AppsVarlandCom
       generate.helper false
       generate.assets false
       generate.stylesheets false
-      generate.jbuilder false
+      generate.jbuilder true
+      generate.test_framework nil
+      generate.template_engine :slim
     end
-    
+
     config.time_zone = 'Eastern Time (US & Canada)'
     config.active_record.default_timezone = :local
 
@@ -31,6 +33,6 @@ module AppsVarlandCom
     config.active_storage.content_types_allowed_inline << "application/json"
     config.active_storage.content_types_allowed_inline << "text/markdown"
     config.active_storage.content_types_to_serve_as_binary -= ["text/html", "image/svg+xml", "text/xml", "application/xml"]
-    
+
   end
 end

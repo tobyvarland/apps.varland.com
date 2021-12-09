@@ -10,7 +10,13 @@ class ApplicationController < ActionController::Base
 
   before_action :generate_markdown_renderer
 
+  before_action :set_current_user_for_model
+
   private
+
+    def set_current_user_for_model
+      User.current_user = current_user
+    end
 
     def generate_markdown_renderer
       @markdown = Redcarpet::Markdown.new(VarlandMarkdownRenderer, autolink: true, tables: true)
