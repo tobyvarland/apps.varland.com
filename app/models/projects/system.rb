@@ -10,6 +10,9 @@ class Projects::System < ApplicationRecord
             foreign_key: "system_id",
             inverse_of: :system,
             dependent: :restrict_with_error
+  has_many  :items,
+            class_name: "Projects::Item",
+            through: :categories
 
   # Validations.
   validates	:name,

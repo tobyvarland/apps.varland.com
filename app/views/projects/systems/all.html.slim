@@ -7,3 +7,28 @@ ruby:
 .d-flex.flex-row.align-items-center.justify-content-between.mt-3
   h1.font-varland = @system.name
   div
+
+.table-responsive.my-3
+  table.table.table-striped.table-hover
+    thead.table-dark
+      th.text-center Type
+      th.text-center Item
+      th.text-center Status
+      th.text-center Priority
+      th.text-center Date Opened
+      th.text-center Date Closed
+      th Assigned To
+      th Description
+    tbody
+      - @system.items.each do |obj|
+        tr
+          td.align-top.text-center.font-monospace.fw-700 = obj.category.abbreviation.upcase
+          td.align-top.text-center.font-monospace.fw-700 = obj.categorized_name
+          td.align-top.text-center = obj.status
+          td.align-top.text-center = obj.priority if obj.category.use_priorities
+          td.align-top.text-center
+            - unless obj.opened_on.blank?
+              = obj.opened_on.strftime("%m/%d/%y")
+          td.align-top.text-center = obj.closed_on.strftime("%m/%d/%y") unless obj.closed_on.blank?
+          td.align-top == obj.assigned_users.join("<br>")
+          td.align-top.text-wrap == @markdown.render(obj.description)

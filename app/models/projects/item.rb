@@ -14,6 +14,8 @@ class Projects::Item < ApplicationRecord
   # Associations.
   include Attachable
   include Commentable
+  delegate  :system,
+            to: :category
   belongs_to  :category,
               class_name: "Projects::Category",
               foreign_key: "category_id",
@@ -28,6 +30,10 @@ class Projects::Item < ApplicationRecord
               foreign_key: "item_id",
               inverse_of: :item,
               dependent: :destroy
+  has_many    :assigned_users,
+              class_name: "::User",
+              through: :assignments,
+              source: :user
 
   # Nested attributes.
   accepts_nested_attributes_for :assignments, reject_if: :all_blank, allow_destroy: true

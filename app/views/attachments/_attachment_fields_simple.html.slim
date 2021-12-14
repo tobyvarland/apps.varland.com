@@ -1,3 +1,3 @@
 .nested-fields.flex-row-start-center.mt-1
-  = f.input :file, label: "File:", label: false, input_html: { class: ["form-control"] }
+  = f.input :file, label: false, input_html: { class: ["form-control"] }
   = link_to_remove_association "#{fa "trash-alt"}".html_safe, f, class: ["btn", "btn-sm", "btn-danger", "ms-3"], tabindex: -1

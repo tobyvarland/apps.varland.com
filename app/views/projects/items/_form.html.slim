@@ -34,7 +34,7 @@
                                         partial: "attachments/attachment_fields_simple"
           div id="attachments"
             = f.simple_fields_for :attachments do |atachment|
-              = render "attachments/attachment_fields_simple", f: atachment
+              = render "attachments/attachment_fields_simple_existing", f: atachment
 
     .col-12.col-md-3
 
