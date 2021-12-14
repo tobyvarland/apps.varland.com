@@ -24,7 +24,7 @@ ruby:
         tr
           td.align-top.text-center.font-monospace.fw-700 = obj.category.abbreviation.upcase
           td.align-top.text-center.font-monospace.fw-700 = obj.categorized_name
-          td.align-top.text-center = obj.status
+          td.text-center.align-top = item_status_badge obj.status            
           td.align-top.text-center = obj.priority if obj.category.use_priorities
           td.align-top.text-center
             - unless obj.opened_on.blank?

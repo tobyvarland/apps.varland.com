@@ -32,6 +32,29 @@ module ApplicationHelper
     content_tag :div, text, class: classes
   end
 
+  def item_status_badge(status)
+    classes = ["badge", "text-uppercase"]
+    text = status.titleize
+    case status
+    when "opened"
+      text = "Open"
+      classes << "bg-green-500"
+    when "closed"
+      classes << "bg-purple-500"
+    when "requested"
+      classes << "bg-yellow-500"
+    when "close_requested"
+      classes << "bg-yellow-500"
+    when "deleted"
+      classes << "bg-red-500"
+    when "reopened"
+      classes << "bg-blue-500"
+    when "held"
+      classes << "bg-blue-500"
+    end
+    content_tag :div, text, class: classes
+  end
+
   def boolean_icon(value, options = {})
     show_text = options.fetch(:show_text, true)
     uppercase = options.fetch(:uppercase, true)
