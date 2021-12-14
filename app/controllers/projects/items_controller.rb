@@ -11,7 +11,7 @@ class Projects::ItemsController < ApplicationController
 
   def new
     begin
-      @system = Projects::System.find(params[:system])
+      @system = Projects::System.friendly.find(params[:system])
     rescue
       redirect_back fallback_location: root_url, alert: "Failed to load new item form due to error loading system."
     end

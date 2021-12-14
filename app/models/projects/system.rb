@@ -1,5 +1,9 @@
 class Projects::System < ApplicationRecord
 
+  # Friendly ID.
+  extend FriendlyId
+  friendly_id :abbreviation
+
   # Soft Deletes.
   include Discard::Model
   default_scope -> { kept }

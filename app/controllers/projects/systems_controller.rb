@@ -49,7 +49,7 @@ class Projects::SystemsController < ApplicationController
   private
 
     def set_system
-      @system = Projects::System.find(params[:id])
+      @system = Projects::System.friendly.find(params[:id])
     end
 
     def system_params

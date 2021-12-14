@@ -12,19 +12,19 @@ ruby:
   table.table.table-striped.table-hover
     thead.table-dark
       th.text-center Type
-      th.text-center Item
+      th Item
       th.text-center Status
       th.text-center Priority
       th.text-center Date Opened
       th.text-center Date Closed
       th Assigned To
-      th Description
+      th.w-50 Description
     tbody
       - @system.items.each do |obj|
         tr
           td.align-top.text-center.font-monospace.fw-700 = obj.category.abbreviation.upcase
-          td.align-top.text-center.font-monospace.fw-700 = obj.categorized_name
-          td.text-center.align-top = item_status_badge obj.status            
+          td.align-top.font-monospace.fw-700 = link_to obj.categorized_name, obj
+          td.text-center.align-top = item_status_badge obj.status
           td.align-top.text-center = obj.priority if obj.category.use_priorities
           td.align-top.text-center
             - unless obj.opened_on.blank?
