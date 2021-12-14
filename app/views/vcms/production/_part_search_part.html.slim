@@ -8,25 +8,28 @@ tr.part-search-part
       tbody
         - unless part[:last_used_on].blank?
           tr
-            td.fw-300.small.w-1 Last Used: 
+            td.fw-300.small.w-1 Last Used:
             td.fw-500.small = Date.strptime(part[:last_used_on], "%Y-%m-%d").strftime("%m/%d/%y")
         tr
-          td.fw-300.small.w-1 Per Piece: 
+          td.fw-300.small.w-1 Per Piece:
           td.fw-500.small == ["#{number_with_precision part[:weight], precision: 4, strip_insignificant_zeros: true} lbs", "#{number_with_precision part[:area], precision: 4, strip_insignificant_zeros: true} ft<sup>2</sup>"].join(" <span class=\"text-uncolor\">/</span> ")
         tr
-          td.fw-300.small.w-1 Per Pound: 
+          td.fw-300.small.w-1 Per Pound:
           td.fw-500.small == ["#{number_with_precision part[:pieces_per_pound], precision: 4, strip_insignificant_zeros: true} pcs", "#{number_with_precision part[:area_per_pound], precision: 4, strip_insignificant_zeros: true} ft<sup>2</sup>"].join(" <span class=\"text-uncolor\">/</span> ")
         tr
-          td.fw-300.small.w-1 Base Metal: 
+          td.fw-300.small.w-1 Base Metal:
           td.fw-500.small = part[:base_metal]
         tr
-          td.fw-300.small.w-1 Control #: 
+          td.fw-300.small.w-1 Certify Code:
+          td.fw-500.small == part[:certification_code].blank? ? "<em class=\"text-uncolor\">none</em>" : part[:certification_code]
+        tr
+          td.fw-300.small.w-1 Control #:
           td.fw-500.small.control-number-container = part[:control_number]
         tr
-          td.fw-300.small.w-1 Industry: 
+          td.fw-300.small.w-1 Industry:
           td.fw-500.small = part[:industry]
         tr
-          td.fw-300.small.w-1 Sub-Industry: 
+          td.fw-300.small.w-1 Sub-Industry:
           td.fw-500.small = part[:sub_industry]
   td.align-top.part-search-image-container
   td.align-top
