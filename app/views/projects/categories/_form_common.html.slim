@@ -1,4 +1,6 @@
 .col-12.mt-3 = f.input :comment_sections, required: true, label: "Comment Sections:", hint: "Separate sections with a single <code class=\"fw-700\">|</code> character (i.e. Root Cause|Notes|Verification of Effectiveness)".html_safe
+.col-12.mt-3 = f.input :source_options, required: false, label: "Source Options:", hint: "Separate sources with a single <code class=\"fw-700\">|</code> character (i.e. Internal Audit|Customer Request)".html_safe
+.col-12.mt-3 = f.input :designation_options, required: false, label: "Designation Options:", hint: "Separate designations with a single <code class=\"fw-700\">|</code> character (i.e. Dept. 3|Dept. 4)".html_safe
 .col-12.mt-3 = f.input :use_priorities, hint: "Check to allow assigning priorities to items"
 .col-12 = f.input :use_tasks, hint: "Check to allow specific bullet-point tasks to be created in items (all must be completed before item can be closed)"
 .col-12 = f.input :use_time_tracking, hint: "Check to require asignees to record time against item before it can be closed"

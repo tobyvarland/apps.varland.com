@@ -2,7 +2,7 @@ ruby:
   provide(:title, "New Item in #{@system.name}")
 
 - content_for :nav do
-  = render "projects/system_nav", system: @item.category.system
+  = render "projects/system_nav", system: @system
 
 .d-flex.flex-row.align-items-center.justify-content-between.mt-3
   h1.font-varland = "New Item in #{@system.name}"

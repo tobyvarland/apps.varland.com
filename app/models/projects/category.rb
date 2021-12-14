@@ -36,9 +36,25 @@ class Projects::Category < ApplicationRecord
 
   # Instance Methods.
 
+  # Splits pipe separated string field into array.
+  def split_pipe_field(field)
+    return [] if field.blank?
+    return field.split("|").map {|section| section.strip }
+  end
+
   # Returns array of comment sections.
   def comment_sections_array
-    return self.comment_sections.split("|").map {|section| section.strip }
+    return self.split_pipe_field self.comment_sections
+  end
+
+  # Returns array of source options.
+  def source_options_array
+    return self.split_pipe_field self.source_options
+  end
+
+  # Returns array of designation options.
+  def designation_options_array
+    return self.split_pipe_field self.designation_options
   end
 
   # Initialize to 0.

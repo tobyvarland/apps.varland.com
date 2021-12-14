@@ -5,6 +5,10 @@ json.abbreviation @category.abbreviation
 json.last_number_used @category.last_number_used
 json.comment_sections_raw @category.comment_sections
 json.comment_sections @category.comment_sections_array
+json.source_options_raw @category.source_options
+json.source_options @category.source_options_array.sort
+json.designation_options_raw @category.designation_options
+json.designation_options @category.designation_options_array.sort
 json.use_priorities @category.use_priorities
 json.use_tasks @category.use_tasks
 json.use_time_tracking @category.use_time_tracking

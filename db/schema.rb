@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_12_09_203609) do
+ActiveRecord::Schema.define(version: 2021_12_14_205130) do
 
   create_table "active_storage_attachments", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "name", null: false
@@ -352,6 +352,8 @@ ActiveRecord::Schema.define(version: 2021_12_09_203609) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.datetime "discarded_at"
+    t.string "source_options"
+    t.string "designation_options"
     t.index ["system_id"], name: "index_projects_categories_on_system_id"
   end
 
@@ -367,6 +369,8 @@ ActiveRecord::Schema.define(version: 2021_12_09_203609) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.datetime "discarded_at"
+    t.string "source"
+    t.string "designation"
     t.index ["category_id"], name: "index_projects_items_on_category_id"
   end
 

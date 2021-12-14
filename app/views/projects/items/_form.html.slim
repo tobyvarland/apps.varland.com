@@ -16,6 +16,10 @@
         .col-12.col-md-2.mt-3#item-priority = f.input :priority, required: true, label: "Priority:", autofocus: true, collection: [1, 2, 3], input_html: { class: "form-select" }
         .col-12.col-md-3.mt-3#item-hours = f.input :projected_hours, required: false, label: "Projected Hours:"
         .col-12.col-md-3.mt-3#item-due-date = f.input :due_on, required: false, label: "Target:", as: :date, html5: true, input_html: { style: "margin: 0 !important;" }
+      .row
+        .col-12.col-md-6.mt-3#item-source = f.input :source, required: false, label: "Source:", collection: [], input_html: { class: "form-select" }
+        .col-12.col-md-6.mt-3#item-designation = f.input :designation, required: false, label: "Designation:", collection: [], input_html: { class: "form-select" }
+      .row
         .col-12.mt-3 = f.input :description, required: true, label: "Description:"
 
     - if @item.id.blank?
@@ -65,6 +69,8 @@ javascript:
   const PRIORITY_CONTAINER = "#item-priority";
   const DUE_DATE_CONTAINER = "#item-due-date";
   const HOURS_CONTAINER = "#item-hours";
+  const SOURCE_CONTAINER = "#item-source";
+  const DESIGNATION_CONTAINER = "#item-designation";
 
   function hideAndDisableField(field) {
     $(field).addClass("d-none").attr("disabled", true);
@@ -74,6 +80,16 @@ javascript:
     $(field).removeClass("d-none").attr("disabled", false);
   }
 
+  function resetSelectOptions(select, options) {
+    select.empty();
+    var blank = $("<option value=\"\"></option>");
+    select.append(blank);
+    for (var i = 0, c = options.length; i < c; i++) {
+      var option = $("<option value=\"" + options[i] + "\">" + options[i] + "</option>");
+      select.append(option);
+    }
+  }
+
   function loadCategory() {
     var $categoryField = $(CATEGORY_FIELD);
     var category = $categoryField.val();
@@ -81,10 +97,26 @@ javascript:
       hideAndDisableField(PRIORITY_CONTAINER);
       hideAndDisableField(DUE_DATE_CONTAINER);
       hideAndDisableField(HOURS_CONTAINER);
+      hideAndDisableField(SOURCE_CONTAINER);
+      hideAndDisableField(DESIGNATION_CONTAINER);
       return;
     }
     var url = CATEGORY_URL.replace("?", category);
     $.ajax(url).done(function(data) {
+      if (data.designation_options.length > 0) {
+        var $select = $(DESIGNATION_CONTAINER + " select");
+        resetSelectOptions($select, data.designation_options);
+        showAndEnableField(DESIGNATION_CONTAINER);
+      } else {
+        hideAndDisableField(DESIGNATION_CONTAINER);
+      }
+      if (data.source_options.length > 0) {
+        var $select = $(SOURCE_CONTAINER + " select");
+        resetSelectOptions($select, data.source_options);
+        showAndEnableField(SOURCE_CONTAINER);
+      } else {
+        hideAndDisableField(SOURCE_CONTAINER);
+      }
       if (data.use_priorities) {
         showAndEnableField(PRIORITY_CONTAINER);
       } else {

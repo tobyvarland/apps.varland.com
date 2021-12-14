@@ -69,6 +69,8 @@ class Projects::ItemsController < ApplicationController
                                             :due_on,
                                             :projected_hours,
                                             :description,
+                                            :source,
+                                            :designation,
                                             attachments_attributes: [:id,
                                                                      :file,
                                                                      :_destroy],

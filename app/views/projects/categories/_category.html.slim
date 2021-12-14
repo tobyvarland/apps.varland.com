@@ -9,6 +9,8 @@ tr
       = category.name
   td.align-top.text-center = category.last_number_used
   td.align-top == category.comment_sections_array.join("<br>")
+  td.align-top == category.source_options_array.sort.join("<br>")
+  td.align-top == category.designation_options_array.sort.join("<br>")
   td.align-top
     table.table.table-sm.small.table-bordered.mb-0
       tbody

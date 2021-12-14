@@ -42,7 +42,22 @@ class Projects::CategoriesController < ApplicationController
     end
 
     def category_params
-      params.require(:projects_category).permit(:system_id, :name, :abbreviation, :last_number_used, :comment_sections, :use_priorities, :use_tasks, :use_time_tracking, :use_reviews, :use_percent_complete, :allow_children, :allow_requests, :send_feedback, :use_due_date)
+      params.require(:projects_category).permit(:system_id,
+                                                :name,
+                                                :abbreviation,
+                                                :last_number_used,
+                                                :comment_sections,
+                                                :source_options,
+                                                :designation_options,
+                                                :use_priorities,
+                                                :use_tasks,
+                                                :use_time_tracking,
+                                                :use_reviews,
+                                                :use_percent_complete,
+                                                :allow_children,
+                                                :allow_requests,
+                                                :send_feedback,
+                                                :use_due_date)
     end
 
 end
