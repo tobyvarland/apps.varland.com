@@ -1,4 +1,4 @@
 tr.nested-fields
-  td = f.association :user, label_method: :name_and_number, required: true, label: false, input_html: { class: "form-select" }
+  td = f.association :user, collection: User.active.by_number, label_method: :name_and_number, required: true, label: false, input_html: { class: "form-select" }
   td = f.input :note_type, required: true, label: false, collection: ["Positive", "Negative", "Neutral"], input_html: { class: "form-select" }
   td.text-center = link_to_remove_association "#{fa "trash-alt"}".html_safe, f, class: ["btn", "btn-sm", "btn-danger"], tabindex: -1
