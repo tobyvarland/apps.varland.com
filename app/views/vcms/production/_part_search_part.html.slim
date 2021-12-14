@@ -21,7 +21,7 @@ tr.part-search-part
           td.fw-500.small = part[:base_metal]
         tr
           td.fw-300.small.w-1 Certify Code:
-          td.fw-500.small == part[:certification_code].blank? ? "<em class=\"text-uncolor\">none</em>" : part[:certification_code]
+          td.fw-500.small == part[:certification_code]
         tr
           td.fw-300.small.w-1 Control #:
           td.fw-500.small.control-number-container = part[:control_number]
