@@ -25,6 +25,7 @@ class User < ApplicationRecord
 
   # Scopes.
   scope :by_number, -> { order(:employee_number) }
+  scope :active, -> { where("is_active IS TRUE") }
 
   # Validations.
   validates :email, :name, :employee_number,
