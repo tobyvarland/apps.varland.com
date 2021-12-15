@@ -19,7 +19,7 @@ class VCMS::ProductionController < ApplicationController
   def part_search
     query_fields = {}
     if params[:filters].present?
-      [:customer, :process, :part, :sub, :base_metal, :industry, :sub_industry, :on_or_after, :on_or_before, :search].each do |sym|
+      [:customer, :process, :part, :sub, :base_metal, :industry, :sub_industry, :on_or_after, :on_or_before, :search, :certification_code].each do |sym|
         if params[:filters][sym].present?
           query_fields[sym] = CGI.escape(params[:filters][sym])
         end

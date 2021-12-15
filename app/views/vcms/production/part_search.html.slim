@@ -45,14 +45,16 @@ ruby:
       .col-12.col-md.mt-3
         = f.input :on_or_before, required: false, label: "Last Used On or Before:", as: :date, html5: true, input_html: { style: "margin: 0 !important;", value: params[:filters].blank? ? "" : params[:filters][:on_or_before] }
     .row
-      .col-12.col-md-3.mt-3
+      .col-12.col-md.mt-3
         = f.input :valid_price, collection: ["Valid Only", "Invalid Only"], selected: params[:filters].blank? ? "" : params[:filters][:valid_price], required: false, label: "Valid Price:", include_blank: true, input_html: { class: "form-select" }
-      .col-12.col-md-3.mt-3
+      .col-12.col-md.mt-3
         = f.input :valid_procedure, collection: ["Valid Only", "Invalid Only"], selected: params[:filters].blank? ? "" : params[:filters][:valid_procedure], required: false, label: "Valid Procedure:", include_blank: true, input_html: { class: "form-select" }
-      .col-12.col-md-3.mt-3
+      .col-12.col-md.mt-3
         = f.input :active, collection: ["Active Only", "Inactive Only"], selected: params[:filters].blank? ? "" : params[:filters][:active], required: false, label: "Active/Inactive Parts:", include_blank: true, input_html: { class: "form-select" }
-      .col-12.col-md-3.mt-3
+      .col-12.col-md.mt-3
         = f.input :developmental, collection: ["Developmental Only", "Exclude Developmental"], selected: params[:filters].blank? ? "" : params[:filters][:developmental], required: false, label: "Developmental Parts:", include_blank: true, input_html: { class: "form-select" }
+      .col-12.col-md.mt-3
+        = f.input :certification_code, collection: @data[:filters][:certification_code], selected: params[:filters].blank? ? "" : params[:filters][:certification_code].to_s.upcase, required: false, label: "Certification Code:", include_blank: true, input_html: { class: "form-select" }
     .row
       .col-12.col-md.mt-3
         = f.input :search, required: false, label: "Search:", hint: "Searches part ID, part name, part description, process specification, and part application.", input_html: { value: params[:filters].blank? ? "" : params[:filters][:search] }
