@@ -20,6 +20,7 @@ class Quality::HardnessTestsController < ApplicationController
   has_scope :with_average_lte, only: [:index, :deleted]
   has_scope :has_comments, only: [:index, :deleted]
   has_scope :has_comment_attachments, only: [:index, :deleted]
+  has_scope :with_oven_type, only: [:index, :deleted]
 
   # GET /quality/hardness_tests or /quality/hardness_tests.json
   def index
@@ -131,6 +132,6 @@ class Quality::HardnessTestsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def hardness_test_params
-      params.require(:quality_hardness_test).permit(:user_id, :shop_order_id, :shop_order_number, :raw_test_id, :tested_on, :load, :is_rework, :test_type, :piece_1, :piece_2, :piece_3, :piece_4, :piece_5)
+      params.require(:quality_hardness_test).permit(:user_id, :shop_order_id, :shop_order_number, :raw_test_id, :tested_on, :load, :is_rework, :test_type, :piece_1, :piece_2, :piece_3, :piece_4, :piece_5, :oven_type)
     end
 end

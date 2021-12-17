@@ -37,7 +37,8 @@ wb.add_worksheet(name: "Tests") do |sheet|
                    test.piece_2,
                    test.piece_3,
                    test.piece_4,
-                   test.piece_5]
+                   test.piece_5,
+                   test.oven_type]
   end
 end
 

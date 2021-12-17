@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_12_03_215823) do
+ActiveRecord::Schema.define(version: 2021_12_17_174900) do
 
   create_table "active_storage_attachments", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "name", null: false
@@ -325,6 +325,73 @@ ActiveRecord::Schema.define(version: 2021_12_03_215823) do
     t.index ["user_id"], name: "unique_permissions_user", unique: true
   end
 
+  create_table "projects_assignments", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.bigint "item_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["item_id"], name: "index_projects_assignments_on_item_id"
+    t.index ["user_id"], name: "index_projects_assignments_on_user_id"
+  end
+
+  create_table "projects_categories", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.bigint "system_id", null: false
+    t.string "name", null: false
+    t.string "abbreviation", null: false
+    t.integer "last_number_used", null: false
+    t.string "comment_sections", null: false
+    t.boolean "use_priorities", null: false
+    t.boolean "use_tasks", null: false
+    t.boolean "use_time_tracking", null: false
+    t.boolean "use_reviews", null: false
+    t.boolean "use_percent_complete", null: false
+    t.boolean "allow_children", null: false
+    t.boolean "allow_requests", null: false
+    t.boolean "send_feedback", null: false
+    t.boolean "use_due_date", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "discarded_at"
+    t.string "source_options"
+    t.text "designation_options"
+    t.index ["system_id"], name: "index_projects_categories_on_system_id"
+  end
+
+  create_table "projects_items", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.bigint "category_id", null: false
+    t.integer "number"
+    t.column "status", "enum('requested','opened','close_requested','closed','deleted','reopened','held')"
+    t.integer "percent_complete"
+    t.integer "priority"
+    t.date "due_on"
+    t.float "projected_hours"
+    t.text "description", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "discarded_at"
+    t.string "source"
+    t.string "designation"
+    t.index ["category_id"], name: "index_projects_items_on_category_id"
+  end
+
+  create_table "projects_status_updates", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.bigint "item_id", null: false
+    t.column "status", "enum('requested','opened','close_requested','closed','deleted','reopened','held')"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["item_id"], name: "index_projects_status_updates_on_item_id"
+    t.index ["user_id"], name: "index_projects_status_updates_on_user_id"
+  end
+
+  create_table "projects_systems", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.string "name", null: false
+    t.string "abbreviation", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "discarded_at"
+  end
+
   create_table "quality_hardness_tests", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.bigint "user_id", null: false
     t.bigint "shop_order_id", null: false
@@ -342,6 +409,7 @@ ActiveRecord::Schema.define(version: 2021_12_03_215823) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.float "average"
+    t.string "oven_type"
     t.index ["discarded_at"], name: "index_quality_hardness_tests_on_discarded_at"
     t.index ["raw_test_id"], name: "index_quality_hardness_tests_on_raw_test_id"
     t.index ["shop_order_id"], name: "index_quality_hardness_tests_on_shop_order_id"
@@ -629,6 +697,12 @@ ActiveRecord::Schema.define(version: 2021_12_03_215823) do
   add_foreign_key "groov_logs", "users"
   add_foreign_key "notifications", "users"
   add_foreign_key "permissions", "users"
+  add_foreign_key "projects_assignments", "projects_items", column: "item_id"
+  add_foreign_key "projects_assignments", "users"
+  add_foreign_key "projects_categories", "projects_systems", column: "system_id"
+  add_foreign_key "projects_items", "projects_categories", column: "category_id"
+  add_foreign_key "projects_status_updates", "projects_items", column: "item_id"
+  add_foreign_key "projects_status_updates", "users"
   add_foreign_key "quality_hardness_tests", "as400_shop_orders", column: "shop_order_id"
   add_foreign_key "quality_hardness_tests", "quality_hardness_tests", column: "raw_test_id"
   add_foreign_key "quality_hardness_tests", "users"

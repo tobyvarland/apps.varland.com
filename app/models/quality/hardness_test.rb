@@ -43,6 +43,10 @@ class Quality::HardnessTest < ApplicationRecord
     return if value.blank?
     where(test_type: value)
   }
+  scope :with_oven_type, ->(value) {
+    return if value.blank?
+    where(oven_type: value)
+  }
   scope :with_load, ->(value) {
     return if value.blank?
     where(load: value)
@@ -87,6 +91,8 @@ class Quality::HardnessTest < ApplicationRecord
   validates :test_type,
             inclusion: { in: ["High Temp Bake", "Hydrogen Embrittlement Bake", "No Bake", "Raw", "Strip"] }
   validate  :require_smalog
+  validates :oven_type,
+            inclusion: { in: ["JPW", "Grieve"] }
 
   before_create   :link_raw_test
   after_save      :fix_tests_missing_raw
@@ -140,6 +146,7 @@ class Quality::HardnessTest < ApplicationRecord
     return nil unless self.raw_test.present?
     return self.average  - self.raw_test.average
   end
+  
   def load_with_rework
     if self.is_rework
       return "#{self.load}RW"
@@ -148,9 +155,14 @@ class Quality::HardnessTest < ApplicationRecord
     end
   end
 
-   # Returns options for reject tag defect.
-   def self.type_options
+  # Returns options for reject tag defect.
+  def self.type_options
     return ["High Temp Bake", "Hydrogen Embrittlement Bake", "No Bake", "Raw", "Strip"].sort
+  end
+
+  # Returns options for oven type. 
+  def self.oven_type_options
+    return ["JPW", "Grieve"]
   end
 
   # Returns options for reject tag permission.
@@ -159,5 +171,3 @@ class Quality::HardnessTest < ApplicationRecord
   end
 
 end
-
-
