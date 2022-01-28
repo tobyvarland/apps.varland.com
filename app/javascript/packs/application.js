@@ -102,7 +102,7 @@ function updateRemaining() {
 
 function disableFormFieldsWaitingForSubmit() {
   $(".all-auto-submit :input").on("change", function() {
-    if ($(this).val() == "") return;
+    //if ($(this).val() == "") return;
     var $form = $(this).closest('form');
     var $icon = $form.find('.loading-icon');
     $icon.removeClass("d-none");
