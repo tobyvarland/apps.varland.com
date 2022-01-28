@@ -44,6 +44,7 @@ ruby:
                   [{label: "Entered By", value: @hardness_test.user.name_and_number},
                    {label: "Date", value: @hardness_test.tested_on.strftime("%m/%d/%Y")},
                    {label: "Type", value: @hardness_test.test_type},
+                   {label: "Oven Type", value: @hardness_test.oven_type},
                    {label: "Average", value: number_with_precision(@hardness_test.average, precision: 2)},
                    {label: "Raw Average", value: number_with_precision(@hardness_test.raw_test.average, precision: 2)},
                    {label: "Δ from Raw", value: number_with_precision(@hardness_test.change_from_raw, precision: 2)},
