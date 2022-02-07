@@ -92,7 +92,8 @@ class Quality::HardnessTest < ApplicationRecord
             inclusion: { in: ["High Temp Bake", "Hydrogen Embrittlement Bake", "No Bake", "Raw", "Strip"] }
   validate  :require_smalog
   validates :oven_type,
-            inclusion: { in: ["JPW", "Grieve"] }
+            inclusion: { in: ["JPW", "Grieve"] },
+            allow_blank: true
 
   before_create   :link_raw_test
   after_save      :fix_tests_missing_raw
