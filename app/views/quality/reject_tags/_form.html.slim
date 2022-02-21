@@ -23,7 +23,7 @@
     .col-12.col-md-3.mt-3
       = f.input :department, required: true, label: "Department:", collection: Quality::RejectTag.department_options, input_html: { class: "form-select" }, hint: "Enter the department where the defect or problem occurred."
     .col-12.col-md-3.mt-3
-      = f.input :print_partial_tag, label: "Print partial order tag"
+      = f.input :print_partial_tag, label: "Print Partial Order Tag:", collection: [["Yes", true], ["No", false]], input_html: { class: "form-select" }, include_blank: false, wrapper_html: { class: "d-none" }
   .row
     .col-12.col-md-3.mt-3
       = f.input :defect, required: true, collection: Quality::RejectTag.defect_options, label: "Defect:", input_html: { class: "form-select" }
