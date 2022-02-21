@@ -175,6 +175,11 @@ ruby:
                   url: root_url,
                   search: "dashboard",
                   headings: ["General"] }
+  nav_links << {  text: "Historian",
+                  url: "Historian",
+                  search: "external historian groov",
+                  external: true,
+                  headings: ["External Links"] }
   nav_links.each do |nav|
     nav[:target] = "_self"
     nav[:target] = "_blank" if nav[:external].present? || nav[:other_app].present?

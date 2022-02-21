@@ -39,14 +39,14 @@ class Quality::PrintRejectTagJob < ApplicationJob
       system(partial_tag_command)
 
       # Delete PDF file.
-      File.delete(path)
+      #File.delete(path)
 
       # Clear flag.
-      reject_tag.print_partial_tag = false
-      reject_tag.save
+      #reject_tag.print_partial_tag = false
+      #reject_tag.save
 
     end
-    
+
   end
 
 end
