@@ -9,7 +9,7 @@
     .col-12.col-md.mt-3 = f.input :tested_on, required: true, label: "Date:", autofocus: true , as: :date, html5: true, input_html: { style: "margin: 0 !important;" }
     .col-12.col-md.mt-3 = f.input :test_type, required: true, collection: Quality::HardnessTest.type_options, label: "Type:", input_html: { class: "form-select" }
     .col-12.col-md.mt-3 = f.input :shop_order_number, required: true, label: "Shop Order:"
-    .col-12.col-md.mt-3 = f.input :oven_type, required: false, collection: Quality::HardnessTest.oven_type_options, label: "Oven:", input_html: { class: "form-select" }
+    .col-12.col-md = f.input :oven_type, required: true, collection: Quality::HardnessTest.oven_type_options, label: "Oven:", input_html: { class: "form-select" }
     .col-12.col-md = f.input :load, required: true, label: "Load:", wrapper_html: { class: "d-none" }
     .col-12.col-md = f.input :is_rework, label: "Rework:", collection: [["Yes", true], ["No", false]], input_html: { class: "form-select" }, include_blank: false, wrapper_html: { class: "d-none" }
   .row
@@ -38,6 +38,8 @@ javascript:
       var $loadWrapper = $loadInput.parent();
       var $reworkWrapper = $reworkInput.parent();
       var $shopOrderInput = $("#quality_hardness_test_shop_order_number");
+      var $ovenTypeInput = $("#quality_hardness_test_oven_type");
+      var $ovenTypeWrapper = $ovenTypeInput.parent()
 
       // Display shop order.
       if ($shopOrderInput.val() != "") {
@@ -53,11 +55,15 @@ javascript:
           $reworkInput.prop('disabled', true);
           $loadWrapper.addClass("d-none").removeClass("mt-3");
           $reworkWrapper.addClass("d-none").removeClass("mt-3");
+          $ovenTypeInput.prop('disabled', true);
+          $ovenTypeWrapper.addClass("d-none").removeClass("mt-3")
         } else {
           $loadInput.prop('disabled', false);
           $reworkInput.prop('disabled', false);
           $loadWrapper.removeClass("d-none").addClass("mt-3");
           $reworkWrapper.removeClass("d-none").addClass("mt-3");
+          $ovenTypeInput.prop('disabled', false);
+          $ovenTypeWrapper.removeClass("d-none").addClass("mt-3")
         }
 
       // Handle shop order change.
@@ -79,11 +85,15 @@ javascript:
             $reworkInput.prop('disabled', true);
             $loadWrapper.addClass("d-none").removeClass("mt-3");
             $reworkWrapper.addClass("d-none").removeClass("mt-3");
+            $ovenTypeInput.prop('disabled', true);
+            $ovenTypeWrapper.addClass("d-none").removeClass("mt-3")
          } else {
             $loadInput.prop('disabled', false);
             $reworkInput.prop('disabled', false);
             $loadWrapper.removeClass("d-none").addClass("mt-3");
             $reworkWrapper.removeClass("d-none").addClass("mt-3");
+            $ovenTypeInput.prop('disabled', false);
+            $ovenTypeWrapper.removeClass("d-none").addClass("mt-3")
          }
 
       });

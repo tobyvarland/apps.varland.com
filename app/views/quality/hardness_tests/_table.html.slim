@@ -21,6 +21,7 @@
         th.text-center.w-1 Load #
         th Tested By
         th Test Type
+        th Oven
         th.text-center.w-1 Average
         th.text-center.w-1 Δ from Raw
         th.text-center.w-1 Piece #1
@@ -47,6 +48,8 @@
                   = "#{fa "comments"} #{pluralize hardness_test.comments.length, "comment"}".html_safe
                   - if hardness_test.comment_attachments.length > 0
                     span.ms-1 = "#{fa "paperclip"} #{pluralize hardness_test.comment_attachments.length, "attachment"}".html_safe
+            td 
+              = hardness_test.oven_type        
             td.text-center
               - if (hardness_test.test_type == "Raw" && hardness_test.average < 68) || hardness_test.average < 63
                 .bg-danger.text-white.fw-700.rounded = number_with_precision hardness_test.average, precision: 2
