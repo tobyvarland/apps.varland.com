@@ -7,7 +7,7 @@ class Groov::AirCompressorFault < Groov::Log
     return {
       enabled: true,
       subject: "#{self.controller_name}: #{self.groov_data[:fault_type]}",
-      recipients: [TOBY_VARLAND_EMAIL, FOREMAN_EMAIL, CLIFF_QUEEN_EMAIL, RICH_BRANSON_EMAIL, TED_MCKEEHAN_EMAIL, CASEY_MCKEEHAN_EMAIL]
+      recipients: [FOREMAN_EMAIL, CLIFF_QUEEN_EMAIL, RICH_BRANSON_EMAIL, TED_MCKEEHAN_EMAIL, CASEY_MCKEEHAN_EMAIL]
     }
   end
 
