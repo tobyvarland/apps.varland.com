@@ -61,6 +61,7 @@ GROOV_ERROR_CODES = {
   "-444" => "Could not send on socket.",
   "-446" => "FTP: Login failed.",
   "-531" => "Buffer full.",
+  "-534" => "Attempts to communicate with I/O unit failed.",
   "-537" => "Attempts to communicate with I/O unit failed.",
   "-539" => "I/O error; performing retry",
   "-612" => "Unable to enqueue sync command",
