@@ -1,6 +1,7 @@
 # Define email addresses used for Opto logs.
 BRIAN_MANGOLD_EMAIL = "brian.mangold@varland.com".freeze
 BRIAN_MANGOLD_SMS = "5133820273@vtext.com".freeze
+CASEY_MCKEEHAN_EMAIL = "casey.mckeehan@varland.com".freeze
 CLIFF_QUEEN_EMAIL = "cliff.queen@varland.com".freeze
 CLIFF_QUEEN_SMS = "5134700754@tmomail.net".freeze
 FOREMAN_EMAIL = "FOREMAN".freeze
