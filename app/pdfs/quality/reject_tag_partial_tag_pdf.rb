@@ -72,7 +72,7 @@ class Quality::RejectTagPartialTagPdf < ::VarlandPdf
     self.txtb(@shop_order.received_on.strftime("%m/%d/%y"), 0.25, 8.75, 1.25, 0.3, size: 14, h_pad: 0.05)
     self.txtb(self.format_number(@shop_order.pounds, decimals: 2, delimiter: ","), 1.5, 8.75, 1.4, 0.3, size: 14, h_pad: 0.05)
     self.txtb(self.format_number(@shop_order.pieces, delimiter: ","), 2.9, 8.75, 1.4, 0.3, size: 14, h_pad: 0.05)
-    self.txtb(self.helpers.pluralize(@shop_order.container_count, @shop_order.container_type), 4.3, 8.75, 2.15, 0.3, size: 14, h_align: :left, h_pad: 0.05)
+    self.txtb(self.helpers.pluralize(@shop_order.container_count, @shop_order.container_type).upcase, 4.3, 8.75, 2.15, 0.3, size: 14, h_align: :left, h_pad: 0.05)
     0.upto(8) {|i|
       self.txtb(@shop_order.process_spec[i], 0.25, 8.25 - 0.2 * i, 4.05, 0.2, size: 11, h_align: :left, h_pad: 0.05)
     }
