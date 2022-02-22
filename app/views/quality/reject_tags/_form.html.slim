@@ -23,7 +23,7 @@
     .col-12.col-md-3.mt-3
       = f.input :department, required: true, label: "Department:", collection: Quality::RejectTag.department_options, input_html: { class: "form-select" }, hint: "Enter the department where the defect or problem occurred."
     .col-12.col-md-3.mt-3
-      = f.input :print_partial_tag, label: "Print Partial Order Tag:", collection: [["Yes", true], ["No", false]], input_html: { class: "form-select" }, include_blank: false
+      = f.input :print_partial_tag, label: "Print Partial Order Tag:", collection: [["Yes", 1], ["No", 0]], input_html: { class: "form-select" }, include_blank: false
   .row
     .col-12.col-md-3.mt-3
       = f.input :defect, required: true, collection: Quality::RejectTag.defect_options, label: "Defect:", input_html: { class: "form-select" }
@@ -82,8 +82,7 @@ javascript:
     // Reference input.
     var $shopOrderInput = $("#quality_reject_tag_shop_order_number");
     var $poundsInput = $("#quality_reject_tag_pounds");
-    var $partialTagInputs = $("input[name*=print_partial_tag]");
-    var $partialTagCheckbox = $("#quality_reject_tag_print_partial_tag");
+    var $partialTagDropdown = $("#quality_reject_tag_print_partial_tag");
 
     // Handle pounds change.
     $poundsInput.on("change", function() {
@@ -91,8 +90,11 @@ javascript:
       // Read pounds and max.
       var pounds = parseFloat($poundsInput.val());
       var max = parseFloat($poundsInput.attr("max"));
-      $partialTagInputs.val(pounds < max ? 1 : 0);
-      $partialTagCheckbox.prop("checked", pounds < max);
+      if (pounds < max) {
+        $partialTagDropdown.val(1);
+      } else {
+        $partialTagDropdown.val(0);
+      }
 
     });
 
@@ -105,6 +107,16 @@ javascript:
 
       // Handle valid shop order number entry.
       if (shopOrder.match(/^\d{6}$/) !== null) {
+
+        // Set max pounds.
+        var url = "http://vcmsapi.varland.com/shop_order?shop_order=" + shopOrder;
+        $.ajax(url).done(function(data) {
+          if (data.valid) {
+            $poundsInput.prop("max", data.pounds);
+          } else {
+            $poundsInput.prop("max", null);
+          }
+        });
 
         // Load reject tag number.
         var url = "/quality/reject_tags/tag_number_for/" + shopOrder;
@@ -123,6 +135,9 @@ javascript:
         });
 
       } else {
+
+        // Clear max from pounds input.
+        $poundsInput.prop("max", null);
 
         // Clear reject tag number field.
         $("#quality_reject_tag_number").val(null);
