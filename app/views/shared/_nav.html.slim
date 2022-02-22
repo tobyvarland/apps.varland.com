@@ -119,10 +119,10 @@ ruby:
                   url: "http://dmr.varland.com",
                   headings: ["Quality"],
                   other_app: true }
-  nav_links << {  text: "Reject Tag",
-                  url: "http://vms.varland.com/qc/rejected_parts/new",
-                  headings: ["Quality"],
-                  other_app: true }
+  #nav_links << {  text: "Reject Tag",
+  #                url: "http://vms.varland.com/qc/rejected_parts/new",
+  #                headings: ["Quality"],
+  #                other_app: true }
   nav_links << {  text: "Salt Spray",
                   url: "http://saltspray.varland.com",
                   headings: ["Quality"],
@@ -136,7 +136,7 @@ ruby:
                   headings: ["Quality"] } if policy(Quality::HardnessTest).index?
   nav_links << {  text: "Reject Tags",
                   url: quality_reject_tags_url,
-                  headings: ["Quality"] } if policy(Quality::RejectTag).index? && !policy(Quality::RejectTag).index?
+                  headings: ["Quality"] } if policy(Quality::RejectTag).index?
   nav_links << {  text: "Jobs on Receipt",
                   url: vcms_production_jobs_on_receipt_url,
                   headings: ["Production", "Sales", "Shipping"] }

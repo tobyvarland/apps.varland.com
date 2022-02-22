@@ -10,7 +10,7 @@ class Quality::RejectTagMailer < ApplicationMailer
         content: attachment.file.download
       }
     end
-    mail  to: "toby.varland@varland.com",
+    mail  to: "rejectedparts@varland.com",
           subject: "Reject Tag #{@reject_tag.description} (#{@reject_tag.shop_order.part_spec.join(", ")})"
   end
 

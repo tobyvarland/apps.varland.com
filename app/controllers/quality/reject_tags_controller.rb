@@ -56,6 +56,7 @@ class Quality::RejectTagsController < ApplicationController
     if @reject_tag.save
       Quality::RejectTagMailer.with(reject_tag: @reject_tag).notification_email.deliver_later
       Quality::PrintRejectTagJob.perform_later @reject_tag, "RejectTag", "RL"
+      Quality::UpdateRejectTagCountJob.perform_later @reject_tag.shop_order.number
       redirect_to @reject_tag
     else
       render :new, status: :unprocessable_entity
@@ -74,6 +75,7 @@ class Quality::RejectTagsController < ApplicationController
   def destroy
     authorize @reject_tag
     @reject_tag.discard
+    Quality::UpdateRejectTagCountJob.perform_later @reject_tag.shop_order.number
     redirect_to quality_reject_tags_url
   end
 
