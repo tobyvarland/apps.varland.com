@@ -28,4 +28,8 @@ class Quality::RejectTagPolicy < ApplicationPolicy
     show?
   end
 
+  def show?
+    index?
+  end  
+
 end
