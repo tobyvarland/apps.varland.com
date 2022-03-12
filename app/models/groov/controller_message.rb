@@ -1,7 +1,7 @@
 class Groov::ControllerMessage < Groov::Log
 
   # Codes to trigger email.
-  NOTIFYABLE_CODES = ["-534"].freeze
+  NOTIFYABLE_CODES = [].freeze # ["-534"].freeze
 
   # Codes to skip logging.
   SKIPPABLE_CODES = ["-98", "-539"].freeze
