@@ -13,7 +13,12 @@ class Groov::HclFeedNeeded < Groov::Log
 
   # Log details.
   def details
-		return "<p>HCL feed needed. Pump: <code>#{self.device}</code>. Amount: <code>#{self.reading} gal</code>..</p>"
+		return "<p>HCL feed needed. Pump: <code>#{self.device}</code>. Amount: <code>#{self.reading} gal</code>.</p>"
+  end
+
+  # Returns human readable log type.
+  def log_type
+    return "HCL Feed Needed"
   end
 
 end
