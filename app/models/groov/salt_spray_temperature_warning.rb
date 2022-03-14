@@ -7,7 +7,7 @@ class Groov::SaltSprayTemperatureWarning < Groov::Log
     return {
       enabled: true,
       subject: "#{self.controller_name}: Salt Spray Temperature Out of Limits",
-      recipients: [FOREMAN_EMAIL, GREG_TURNER_EMAIL, GREG_TURNER_SMS, RICH_BRANSON_EMAIL, RICH_BRANSON_SMS, TOBY_VARLAND_EMAIL]
+      recipients: [FOREMAN_EMAIL, GREG_TURNER_EMAIL, GREG_TURNER_SMS, RICH_BRANSON_EMAIL, RICH_BRANSON_SMS]
     }
   end
 

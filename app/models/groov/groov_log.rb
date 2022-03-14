@@ -5,7 +5,7 @@ class Groov::GroovLog < Groov::Log
   # Notification settings.
   def notification_settings
     return {
-      enabled: false,
+      enabled: true,
       subject: "#{self.controller_name}: Unconfigured Groov Log",
       recipients: [TOBY_VARLAND_EMAIL]
     }
