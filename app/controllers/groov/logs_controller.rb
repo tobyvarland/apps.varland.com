@@ -21,7 +21,7 @@ class Groov::LogsController < ApplicationController
   def live
     authorize(Groov::Log)
     @controller_name = params.fetch(:controller_name, nil)
-    @logs = Groov::Log.for_controller(@controller_name).sorted_by("newest").limit(10)
+    @logs = Groov::Log.for_controller(@controller_name).sorted_by("newest").limit(30)
   end
 
   def create
