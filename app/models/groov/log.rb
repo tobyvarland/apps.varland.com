@@ -66,6 +66,11 @@ class Groov::Log < ApplicationRecord
     return recipients
   end
 
+  # Returns user name (or "unknown") for log.
+  def groov_user
+    return self.user.blank? ? "Unknown" : self.user.name
+  end
+
   # Returns parsed JSON data for all data passed by Opto controller.
   def groov_data
     return JSON.parse(self.json_data, symbolize_names: true)

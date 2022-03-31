@@ -13,7 +13,7 @@ class Groov::IAOProfileCancelled < Groov::Log
 
   # Log details.
   def details
-		return "<p>Profile cancelled by user. IAO: <code>#{self.device}</code>. Cancelled by: <code>#{self.user.name}</code>. Reason: <code>#{self.groov_data[:reason]}</code>.</p>"
+		return "<p>Profile cancelled by user. IAO: <code>#{self.device}</code>. Cancelled by: <code>#{self.groov_user}</code>. Reason: <code>#{self.groov_data[:reason]}</code>.</p>"
   end
 
   # Returns human readable log type.
