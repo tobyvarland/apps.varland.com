@@ -13,8 +13,7 @@ class Groov::IAONitrogenFlowRateError < Groov::Log
 
   # Log details.
   def details
-    ##{self.groov_data[:emergency_pack]}
-		return "<p>Nitrogen flow rate error.</p>"
+		return "<p>Nitrogen flow rate error.</p><p><small>Calculated Rate:</small> <code>#{self.reading.to_f.round(3)} PSI/min</code><br><small>Low Limit:</small> <code>#{self.low_limit.to_f.round(3)} PSI/min</code><br><small>High Limit:</small> <code>#{self.high_limit.to_f.round(3)} PSI/min</code><br><small>Oven Count:</small> <code>#{self.groov_data[:oven_count]}</code></p>"
   end
 
   # Returns human readable log type.
