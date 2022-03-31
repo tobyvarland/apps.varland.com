@@ -14,7 +14,7 @@ class Groov::WatlowCommunicationError < Groov::Log
   # Log details.
   def details
     ##{self.groov_data[:emergency_pack]}
-		return "<p>Watlow communication failure.</p><p><small>IAO:</small> <code>#{self.device}</code>.</p>"
+		return "<p>Watlow communication failure.</p><p><small>IAO:</small> <code>#{self.device}</code><br><small>Seconds Since Communication:</small> <code>#{self.reading.to_f.round(3)} seconds</code><br><small>Limit:</small> <code>#{self.limit.to_i} seconds</code></p>"
   end
 
   # Returns human readable log type.

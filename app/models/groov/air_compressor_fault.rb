@@ -13,7 +13,7 @@ class Groov::AirCompressorFault < Groov::Log
 
   # Log details.
   def details
-		return "<p>Air compressor fault. Compressor: <code>#{self.device}</code>. Fault Type: <code>#{self.groov_data[:fault_type]}</code>.</p>"
+		return "<p>Air compressor fault. Compressor: <code>#{self.device}</code> Fault Type: <code>#{self.groov_data[:fault_type]}</code>.</p>"
   end
 
 end

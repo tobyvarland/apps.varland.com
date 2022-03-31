@@ -14,7 +14,7 @@ class Groov::IAOHighTempCutoffError < Groov::Log
   # Log details.
   def details
     ##{self.groov_data[:emergency_pack]}
-		return "<p>High temperature cutoff error.</p><p><small>IAO:</small> <code>#{self.device}</code>.</p>"
+		return "<p>High temperature cutoff error.</p><p><small>IAO:</small> <code>#{self.device}</code></p>"
   end
 
   # Returns human readable log type.

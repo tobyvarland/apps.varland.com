@@ -13,7 +13,7 @@ class Groov::IAONotEnoughGasToStart < Groov::Log
 
   # Log details.
   def details
-		return "<p>IAO can't start because not enough gas available.</p><p><small>IAO:</small> <code>#{self.device}</code>.</p>"
+		return "<p>IAO can't start because not enough gas available.</p><p><small>IAO:</small> <code>#{self.device}</code></p>"
   end
 
   # Returns human readable log type.

@@ -14,7 +14,7 @@ class Groov::IAOSoakTooLong < Groov::Log
   # Log details.
   def details
     ##{self.groov_data[:emergency_pack]}
-		return "<p>IAO soak taking too long.</p><p><small>IAO:</small> <code>#{self.device}</code>.</p>"
+		return "<p>IAO soak taking too long.</p><p><small>IAO:</small> <code>#{self.device}</code></p>"
   end
 
   # Returns human readable log type.

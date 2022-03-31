@@ -14,7 +14,7 @@ class Groov::IAOCoolingSwitchSucceeded < Groov::Log
   # Log details.
   def details
     ##{self.groov_data[:emergency_pack]}
-		return "<p>IAO switched to cooling profile.</p><p><small>IAO:</small> <code>#{self.device}</code>.</p>"
+		return "<p>IAO switched to cooling profile.</p><p><small>IAO:</small> <code>#{self.device}</code></p>"
   end
 
   # Returns human readable log type.

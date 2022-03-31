@@ -13,7 +13,7 @@ class Groov::IAOProfileFinished < Groov::Log
 
   # Log details.
   def details
-		return "<p>IAO profile finished.</p><p><small>IAO:</small> <code>#{self.device}</code>.</p>"
+		return "<p>IAO profile finished.</p><p><small>IAO:</small> <code>#{self.device}</code></p>"
   end
 
   # Returns human readable log type.
