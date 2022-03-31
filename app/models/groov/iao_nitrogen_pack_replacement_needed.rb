@@ -1,0 +1,24 @@
+class Groov::IAONitrogenPackReplacementNeeded < Groov::Log
+
+  # Instance methods.
+
+  # Notification settings.
+  def notification_settings
+    return {
+      enabled: true,
+      subject: "#{self.controller_name}: Nitrogen Pack Replacement Needed",
+      recipients: [TOBY_VARLAND_EMAIL]
+    }
+  end
+
+  # Log details.
+  def details
+		return "<p>Nitrogen pack replacement needed.</p>"
+  end
+
+  # Returns human readable log type.
+  def log_type
+    return "Nitrogen Pack Replacement Needed"
+  end
+
+end
