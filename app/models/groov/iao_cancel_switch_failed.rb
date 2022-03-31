@@ -13,7 +13,7 @@ class Groov::IAOCancelSwitchFailed < Groov::Log
 
   # Log details.
   def details
-		return "<p>User tried to cancel profile, but switch to cooling profile failed.</p><p><small>IAO:</small> <code>#{self.device}</code><br>Cancelled by: <code>#{self.groov_user}</code><br>Reason: <code>#{self.groov_data[:reason]}</code></p>"
+		return "<p>User tried to cancel profile, but switch to cooling profile failed.</p><p><small>IAO:</small> <code>#{self.device}</code><br><small>Cancelled By:</small> <code>#{self.groov_user}</code><br><small>Reason:</small> <code>#{self.groov_data[:reason]}</code></p>"
   end
 
   # Returns human readable log type.

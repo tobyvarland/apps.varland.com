@@ -13,7 +13,7 @@ class Groov::IAOPressureCancel < Groov::Log
 
   # Log details.
   def details
-		return "<p>Profile terminated due to low pressure during purge.</p><p><small>IAO:</small> <code>#{self.device}</code><br>Reading: <code>#{self.reading} IWC</code><br>Limit: <code>#{self.limit} IWC</code></p>"
+		return "<p>Profile terminated due to low pressure during purge.</p><p><small>IAO:</small> <code>#{self.device}</code><br><small>Reading:</small> <code>#{self.reading.to_f.round(3)} IWC</code><br><small>Limit:</small> <code>#{self.limit.to_f.round(3)} IWC</code></p>"
   end
 
   # Returns human readable log type.
