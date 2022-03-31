@@ -13,7 +13,8 @@ class Groov::IAOUnknownState < Groov::Log
 
   # Log details.
   def details
-		return "<p>IAO is in unknown state.</p><p><small>IAO:</small> <code>#{self.device}</code></p>"
+    heat_output = self.groov_data[:oven_heat].to_i == 1 ? "On" : "Off"
+		return "<p>IAO is in unknown state.</p><p><small>IAO:</small> <code>#{self.device}</code><br><small>Heat Output from Opto:</small> <code>#{heat_output}</code></p>"
   end
 
   # Returns human readable log type.
