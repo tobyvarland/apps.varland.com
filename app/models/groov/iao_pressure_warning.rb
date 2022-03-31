@@ -1,4 +1,4 @@
-class Groov::IaoPressureWarning < Groov::Log
+class Groov::IAOPressureWarning < Groov::Log
 
   # Instance methods.
 
