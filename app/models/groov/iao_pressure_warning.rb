@@ -13,7 +13,7 @@ class Groov::IAOPressureWarning < Groov::Log
 
   # Log details.
   def details
-		return "<p>Chamber pressure out of range.</p><p>IAO: <code>#{self.device}</code><br>Reading: <code>#{self.reading} IWC</code><br>Low limit: <code>#{self.low_limit} IWC</code><br>High limit: <code>#{self.high_limit} IWC</code></p>"
+		return "<p>Chamber pressure out of range.</p><p><small>IAO:</small> <code>#{self.device}</code><br>Reading: <code>#{self.reading} IWC</code><br>Low limit: <code>#{self.low_limit} IWC</code><br>High limit: <code>#{self.high_limit} IWC</code></p>"
   end
 
   # Returns human readable log type.

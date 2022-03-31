@@ -13,7 +13,7 @@ class Groov::IAOProfileFailedToStart < Groov::Log
 
   # Log details.
   def details
-		return "<p>IAO failed to start.</p><p>IAO: <code>#{self.device}</code>.</p>"
+		return "<p>IAO failed to start.</p><p><small>IAO:</small> <code>#{self.device}</code>.</p>"
   end
 
   # Returns human readable log type.

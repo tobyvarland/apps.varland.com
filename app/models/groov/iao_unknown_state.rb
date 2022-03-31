@@ -13,7 +13,7 @@ class Groov::IAOUnknownState < Groov::Log
 
   # Log details.
   def details
-		return "<p>IAO is in unknown state.</p><p>IAO: <code>#{self.device}</code>.</p>"
+		return "<p>IAO is in unknown state.</p><p><small>IAO:</small> <code>#{self.device}</code>.</p>"
   end
 
   # Returns human readable log type.
