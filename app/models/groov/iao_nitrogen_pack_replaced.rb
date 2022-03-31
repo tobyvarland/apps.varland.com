@@ -13,7 +13,7 @@ class Groov::IAONitrogenPackReplaced < Groov::Log
 
   # Log details.
   def details
-		return "<p>Nitrogen pack replaced.</p>"
+		return "<p>Nitrogen pack replaced.</p><p><small>Pack:</small> <code>#{self.device}</code><br><small>Replaced By:</small> <code>#{self.groov_user}</code><br><small>PSI Before:</small> <code>#{self.groov_data[:before].to_i} PSI</code><br><small>PSI After:</small> <code>#{self.groov_data[:after].to_i} PSI</code></p>"
   end
 
   # Returns human readable log type.

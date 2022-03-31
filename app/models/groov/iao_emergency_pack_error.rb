@@ -13,7 +13,7 @@ class Groov::IAOEmergencyPackError < Groov::Log
 
   # Log details.
   def details
-		return "<p>IAO can't start because emergency pack not ready.</p><p><small>IAO:</small> <code>#{self.device}</code></p>"
+		return "<p>IAO can't start because emergency pack not ready.</p><p><small>IAO:</small> <code>#{self.device}</code><br><small>Minimum Requirement:</small> <code>#{self.limit.to_i} PSI</code><br><small>Gas Available in Emergency Pack:</small> <code>#{self.reading.to_i} PSI</code></p>"
   end
 
   # Returns human readable log type.

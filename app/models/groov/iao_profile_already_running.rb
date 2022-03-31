@@ -13,7 +13,7 @@ class Groov::IAOProfileAlreadyRunning < Groov::Log
 
   # Log details.
   def details
-		return "<p>IAO can't start because profile is already running.</p><p><small>IAO:</small> <code>#{self.device}</code></p>"
+		return "<p>IAO can't start because a profile is already running.</p><p><small>IAO:</small> <code>#{self.device}</code><br><small>Profile:</small> <code>#{self.groov_data[:profile]}</code></p>"
   end
 
   # Returns human readable log type.

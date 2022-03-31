@@ -13,7 +13,7 @@ class Groov::IAOProfileTerminateFailed < Groov::Log
 
   # Log details.
   def details
-		return "<p>IAO profile termination failed.</p><p><small>IAO:</small> <code>#{self.device}</code></p>"
+		return "<p>IAO profile termination failed. Opto tried to terminate the profile due to low pressure during the purge, but the terminate command failed.</p><p><small>IAO:</small> <code>#{self.device}</code></p>"
   end
 
   # Returns human readable log type.
