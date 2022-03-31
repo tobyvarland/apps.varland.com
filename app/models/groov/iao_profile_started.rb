@@ -13,7 +13,7 @@ class Groov::IAOProfileStarted < Groov::Log
 
   # Log details.
   def details
-		return "<p>IAO profile started.</p><p><small>IAO:</small> <code>#{self.device}</code></p>"
+		return "<p>IAO profile started.</p><p><small>IAO:</small> <code>#{self.device}</code><br><small>Profile:</small> <code>#{self.groov_data[:profile]}</code><br><small>Started By:</small> <code>#{self.groov_user}</code><br><small>PSI Available:</small> <code>#{self.groov_data[:total_gas].to_i} PSI</code></p>"
   end
 
   # Returns human readable log type.
