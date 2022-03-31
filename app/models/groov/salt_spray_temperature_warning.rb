@@ -13,7 +13,7 @@ class Groov::SaltSprayTemperatureWarning < Groov::Log
 
   # Log details.
   def details
-		return "<p>Salt spray temperature is out of limits. Reading: <code>#{self.reading}º F</code>. Low limit: <code>#{self.low_limit}º F</code>. High limit: <code>#{self.high_limit}º F</code>.</p>"
+		return "<p>Salt spray temperature is out of limits. Reading: <code>#{self.reading}&deg; F</code>. Low limit: <code>#{self.low_limit}&deg; F</code>. High limit: <code>#{self.high_limit}&deg; F</code>.</p>"
   end
 
 end
