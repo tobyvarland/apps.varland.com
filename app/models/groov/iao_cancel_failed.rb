@@ -13,7 +13,7 @@ class Groov::IAOCancelFailed < Groov::Log
 
   # Log details.
   def details
-		return "<p>User tried to cancel profile, but termination failed. IAO: <code>#{self.device}</code>. Cancelled by: <code>#{self.groov_user}</code>. Reason: <code>#{self.groov_data[:reason]}</code>.</p>"
+		return "<p>User tried to cancel profile, but termination failed.</p><p>IAO: <code>#{self.device}</code><br>Cancelled by: <code>#{self.groov_user}</code><br>Reason: <code>#{self.groov_data[:reason]}</code></p>"
   end
 
   # Returns human readable log type.

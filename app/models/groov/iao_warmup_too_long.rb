@@ -14,7 +14,7 @@ class Groov::IAOWarmupTooLong < Groov::Log
   # Log details.
   def details
     ##{self.groov_data[:emergency_pack]}
-		return "<p>IAO warmup taking too long.</p>"
+		return "<p>IAO warmup taking too long.</p><p>IAO: <code>#{self.device}</code>.</p>"
   end
 
   # Returns human readable log type.

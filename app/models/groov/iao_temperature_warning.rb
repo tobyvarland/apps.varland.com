@@ -13,7 +13,7 @@ class Groov::IAOTemperatureWarning < Groov::Log
 
   # Log details.
   def details
-		return "<p>Temperature out of range. IAO: <code>#{self.device}</code>. Reading: <code>#{self.reading}º F</code>. Low limit: <code>#{self.low_limit}º F</code>. High limit: <code>#{self.high_limit}º F</code>.</p>"
+		return "<p>Temperature out of range.</p><p>IAO: <code>#{self.device}</code><br>Reading: <code>#{self.reading}º F</code><br>Low limit: <code>#{self.low_limit}º F</code><br>High limit: <code>#{self.high_limit}º F</code></p>"
   end
 
   # Returns human readable log type.

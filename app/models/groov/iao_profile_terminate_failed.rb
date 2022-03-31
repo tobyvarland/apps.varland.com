@@ -13,7 +13,7 @@ class Groov::IAOProfileTerminateFailed < Groov::Log
 
   # Log details.
   def details
-		return "<p>IAO profile termination failed.</p>"
+		return "<p>IAO profile termination failed.</p><p>IAO: <code>#{self.device}</code>.</p>"
   end
 
   # Returns human readable log type.

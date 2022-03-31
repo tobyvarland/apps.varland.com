@@ -14,7 +14,7 @@ class Groov::IAOOutOfGasError < Groov::Log
   # Log details.
   def details
     ##{self.groov_data[:emergency_pack]}
-		return "<p>IAO system is out of nitrogen gas and relying on emergency supply. Low limit: <code>#{self.limit} PSI</code>. Pack 1: <code>#{self.groov_data[:pack_1]} PSI</code>. Pack 2: <code>#{self.groov_data[:pack_2]} PSI</code>. Emergency supply: <code>#{self.groov_data[:emergency_pack]} PSI</code>.</p>"
+		return "<p>IAO system is out of nitrogen gas and relying on emergency supply.</p><p>Low limit: <code>#{self.limit} PSI</code><br>Pack 1: <code>#{self.groov_data[:pack_1]} PSI</code><br>Pack 2: <code>#{self.groov_data[:pack_2]} PSI</code><br>Emergency supply: <code>#{self.groov_data[:emergency_pack]} PSI</code></p>"
   end
 
   # Returns human readable log type.
