@@ -13,7 +13,7 @@ class Groov::IAONitrogenPackReplacementNeeded < Groov::Log
 
   # Log details.
   def details
-		return "<p>Nitrogen pack replacement needed.</p>"
+		return "<p>Nitrogen pack replacement needed.</p><p><small>PSI Empty Limit:</small> <code>#{self.limit.to_i} PSI</code><br><small>Pack 1:</small> <code>#{self.groov_data[:pack_1].to_i} PSI</code><br><small>Pack 1:</small> <code>#{self.groov_data[:pack_2].to_i} PSI</code></p>"
   end
 
   # Returns human readable log type.
