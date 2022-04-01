@@ -22,3 +22,6 @@ TED_MCKEEHAN_EMAIL = "ted.mckeehan@varland.com".freeze
 TED_MCKEEHAN_SMS = "5134768439@vtext.com".freeze
 TOBY_VARLAND_EMAIL = "toby.varland@varland.com".freeze
 TOBY_VARLAND_SMS = "8597508071@vtext.com".freeze
+TOBY_VARLAND_EMAIL_1 = "tvarland@varland.com".freeze
+TOBY_VARLAND_EMAIL_2 = "varland@gmail.com".freeze
+TOBY_VARLAND_EMAIL_3 = "toby@tobyvarland.com".freeze

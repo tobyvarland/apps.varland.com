@@ -44,12 +44,30 @@ class Groov::Log < ApplicationRecord
 
   # Instance methods.
 
+  # Returns notification subject. May be overridden in child class.
+  def notification_subject
+    return nil
+  end
+
+  # Parses groov notification recipients.
+  def parse_groov_recipients
+    return [] unless self.groov_data[:notifications].present?
+    return [] if self.groov_data[:notifications].to_i == 0
+    flags = self.groov_data[:notifications].to_i.to_s(2).rjust(32, '0').split("").map {|x| x == "1"}
+    recipients = []
+    recipients << TOBY_VARLAND_EMAIL if flags[0]
+    recipients << TOBY_VARLAND_EMAIL_1 if flags[1]
+    recipients << TOBY_VARLAND_EMAIL_2 if flags[2]
+    recipients << TOBY_VARLAND_EMAIL_3 if flags[3]
+  end
+
   # Returns notification settings. Must be overridden in child class to send email.
   def notification_settings
+    groov_recipients = self.parse_groov_recipients
     return {
-      enabled: false,
-      subject: nil,
-      recipients: nil
+      enabled: (groov_recipients.length > 0),
+      subject: self.notification_subject,
+      recipients: groov_recipients
     }
   end
 
