@@ -53,12 +53,13 @@ class Groov::Log < ApplicationRecord
   def parse_groov_recipients
     return [] unless self.groov_data[:notifications].present?
     return [] if self.groov_data[:notifications].to_i == 0
-    flags = self.groov_data[:notifications].to_i.to_s(2).rjust(32, '0').split("").map {|x| x == "1"}
+    flags = self.groov_data[:notifications].to_i.to_s(2).rjust(32, '0').split("").reverse().map {|x| x == "1"}
     recipients = []
     recipients << TOBY_VARLAND_EMAIL if flags[0]
     recipients << TOBY_VARLAND_EMAIL_1 if flags[1]
     recipients << TOBY_VARLAND_EMAIL_2 if flags[2]
     recipients << TOBY_VARLAND_EMAIL_3 if flags[3]
+    return recipients
   end
 
   # Returns notification settings. Must be overridden in child class to send email.
