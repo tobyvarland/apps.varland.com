@@ -159,9 +159,14 @@ class Groov::Log < ApplicationRecord
   # Humanizes log type.
   def self.humanize_log_type(type)
     formatted = type.demodulize.titleize
-    substitutions = [["Ph", "pH"], ["En", "EN"], ["Io", "I/O"], ["Iao", "IAO"], ["Psi", "PSI"], ["Iwc", "IWC"]]
+    substitutions = [['Ph', "pH"],
+                     ['En', "EN"],
+                     ['Io', "I/O"],
+                     ['Iao', "IAO"],
+                     ['Psi', "PSI"],
+                     ['Iwc', "IWC"]]
     substitutions.each do |sub|
-      formatted.gsub!(sub[0], sub[1])
+      formatted.gsub!("\\b#{sub[0]}\\b", sub[1])
     end
     return formatted
   end
