@@ -21,7 +21,8 @@ class Groov::Log < ApplicationRecord
   validates :log_at,
             presence: true
   validates :json_data,
-            presence: true
+            presence: true,
+            uniqueness: true
 
   # Scopes.
   scope :on_or_after, ->(value) { where("log_at >= ?", value) unless value.blank? }
