@@ -46,7 +46,7 @@ class Groov::Log < ApplicationRecord
 
   # Returns notification subject. May be overridden in child class.
   def notification_subject
-    return nil
+    return "#{self.controller_name}: #{self.log_type}"
   end
 
   # Parses groov notification recipients.
@@ -132,6 +132,16 @@ class Groov::Log < ApplicationRecord
         "#{n} #{n == 1 ? name : name.to_s.pluralize}" unless n == 0
       end
     }.compact.reverse.join(' ')
+  end
+
+  # Formats standard log message.
+  def format_log_data(text, fields)
+    data = "<p>#{text}</p><p>"
+    data_fields = []
+    fields.each {|key, value| data_fields << "<small>#{key.to_s.titleize}:</small> <code>#{value}</code>" }
+    data += data_fields.join("<br>")
+    data += "</p>"
+    return data
   end
 
   # Class methods.
