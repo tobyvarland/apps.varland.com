@@ -125,11 +125,19 @@ class Groov::Log < ApplicationRecord
   end
 
   # Humanizes seconds.
-  def humanize_seconds(seconds)
+  def humanize_seconds(seconds, decimals = 0)
     [[60, :second], [60, :minute], [24, :hour], [Float::INFINITY, :day]].map{ |count, name|
       if seconds > 0
         seconds, n = seconds.divmod(count)
-        "#{n} #{n == 1 ? name : name.to_s.pluralize}" unless n == 0
+        if name == :second
+          if decimals == 0
+            "#{n.to_i} #{n == 1 ? name : name.to_s.pluralize}" unless n == 0
+          else
+            "#{n.to_f.round(decimals)} #{n == 1 ? name : name.to_s.pluralize}" unless n == 0
+          end
+        else
+          "#{n} #{n == 1 ? name : name.to_s.pluralize}" unless n == 0
+        end
       end
     }.compact.reverse.join(' ')
   end
