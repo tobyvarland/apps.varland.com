@@ -144,10 +144,10 @@ class Groov::Log < ApplicationRecord
   end
 
   # Formats standard log message.
-  def format_log_data(text, fields)
+  def format_log_data(text, fields, lowercase_field_labels = false)
     data = "<p>#{text}</p><p>"
     data_fields = []
-    fields.each {|key, value| data_fields << "<small>#{key.to_s.titleize}:</small> <code>#{value}</code>" }
+    fields.each {|key, value| data_fields << "<small>#{lowercase_field_labels ? key.to_s : key.to_s.titleize}:</small> <code>#{value}</code>" }
     data += data_fields.join("<br>")
     data += "</p>"
     return data
