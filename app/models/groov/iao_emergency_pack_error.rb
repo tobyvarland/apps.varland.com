@@ -2,23 +2,13 @@ class Groov::IAOEmergencyPackError < Groov::Log
 
   # Instance methods.
 
-  # Notification settings.
-  def notification_settings
-    return {
-      enabled: true,
-      subject: "#{self.controller_name}: #{self.device} IAO Can't Start - Emergency Pack Not Ready",
-      recipients: [TOBY_VARLAND_EMAIL]
-    }
-  end
-
   # Log details.
   def details
-		return "<p>IAO can't start because emergency pack not ready.</p><p><small>IAO:</small> <code>#{self.device}</code><br><small>Minimum Requirement:</small> <code>#{self.limit.to_i} PSI</code><br><small>Gas Available in Emergency Pack:</small> <code>#{self.reading.to_i} PSI</code></p>"
-  end
-
-  # Returns human readable log type.
-  def log_type
-    return "IAO Emergency Pack Not Ready"
+    return self.format_log_data("IAO can't start because emergency pack not ready.", {
+      iao: self.device,
+      minimum_requirement: "#{self.limit.to_i} PSI",
+      gas_available_in_emergency_pack: "#{self.reading.to_i} PSI"
+    })
   end
 
 end
