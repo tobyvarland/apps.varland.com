@@ -55,10 +55,11 @@ class Groov::Log < ApplicationRecord
     return [] if self.groov_data[:notifications].to_i == 0
     flags = self.groov_data[:notifications].to_i.to_s(2).rjust(32, '0').split("").reverse().map {|x| x == "1"}
     recipients = []
-    recipients << TOBY_VARLAND_EMAIL if flags[0]
-    recipients << TOBY_VARLAND_EMAIL_1 if flags[1]
-    recipients << TOBY_VARLAND_EMAIL_2 if flags[2]
-    recipients << TOBY_VARLAND_EMAIL_3 if flags[3]
+    recipients << GROOV_IT_EMAIL if flags[0]
+    recipients << GROOV_MAINTENANCE_EMAIL if flags[1]
+    recipients << TOBY_VARLAND_EMAIL if flags[2]
+    recipients << GROOV_PRODUCTION_EMAIL if flags[3]
+    recipients << GROOV_LAB_EMAIL if flags[4]
     return recipients
   end
 
