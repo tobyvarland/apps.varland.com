@@ -147,7 +147,7 @@ class Groov::Log < ApplicationRecord
   def format_log_data(text, fields, lowercase_field_labels = false)
     data = "<p>#{text}</p><p>"
     data_fields = []
-    fields.each {|key, value| data_fields << "<small>#{lowercase_field_labels ? key.to_s : key.to_s.titleize}:</small> <code>#{value}</code>" }
+    fields.each {|key, value| data_fields << "<small>#{lowercase_field_labels ? key.to_s : Groov::Log.humanize_log_type(key.to_s)}:</small> <code>#{value}</code>" }
     data += data_fields.join("<br>")
     data += "</p>"
     return data
@@ -158,7 +158,7 @@ class Groov::Log < ApplicationRecord
   # Humanizes log type.
   def self.humanize_log_type(type)
     formatted = type.demodulize.titleize
-    substitutions = [["Ph", "pH"], ["En", "EN"], ["Io", "I/O"], ["Iao", "IAO"]]
+    substitutions = [["Ph", "pH"], ["En", "EN"], ["Io", "I/O"], ["Iao", "IAO"], ["Psi", "PSI"], ["Iwc", "IWC"]]
     substitutions.each do |sub|
       formatted.gsub!(sub[0], sub[1])
     end
