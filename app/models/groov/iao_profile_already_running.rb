@@ -2,23 +2,12 @@ class Groov::IAOProfileAlreadyRunning < Groov::Log
 
   # Instance methods.
 
-  # Notification settings.
-  def notification_settings
-    return {
-      enabled: true,
-      subject: "#{self.controller_name}: #{self.device} IAO Can't Start - Profile Already Running",
-      recipients: [TOBY_VARLAND_EMAIL]
-    }
-  end
-
   # Log details.
   def details
-		return "<p>IAO can't start because a profile is already running.</p><p><small>IAO:</small> <code>#{self.device}</code><br><small>Profile:</small> <code>#{self.groov_data[:profile]}</code></p>"
-  end
-
-  # Returns human readable log type.
-  def log_type
-    return "IAO Profile Already Running"
+    return self.format_log_data("IAO can't start because a profile is already running.", {
+      iao: self.device,
+      profile: self.groov_data[:profile]
+    })
   end
 
 end
