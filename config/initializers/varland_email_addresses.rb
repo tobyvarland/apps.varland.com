@@ -26,3 +26,4 @@ GROOV_IT_EMAIL = "groov_it@varland.com".freeze
 GROOV_MAINTENANCE_EMAIL = "groov_maintenance@varland.com".freeze
 GROOV_PRODUCTION_EMAIL = "groov_production@varland.com".freeze
 GROOV_LAB_EMAIL = "groov_lab@varland.com".freeze
+GROOV_QC_EMAIL = "groov_qc@varland.com".freeze

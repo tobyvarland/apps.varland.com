@@ -61,6 +61,7 @@ class Groov::Log < ApplicationRecord
     recipients << TOBY_VARLAND_EMAIL if flags[2]
     recipients << GROOV_PRODUCTION_EMAIL if flags[3]
     recipients << GROOV_LAB_EMAIL if flags[4]
+    recipients << GROOV_QC_EMAIL if flags[5]
     return recipients
   end
 
