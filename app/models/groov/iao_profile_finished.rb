@@ -6,7 +6,7 @@ class Groov::IAOProfileFinished < Groov::Log
   def details
     return self.format_log_data("IAO profile finished.", {
       iao: self.device,
-      profile: self.groov_data[:provile],
+      profile: self.groov_data[:profile],
       started_by: self.groov_user,
       total_warmup_time: self.humanize_seconds(self.groov_data[:warmup_time].to_i),
       total_soak_time: self.humanize_seconds(self.groov_data[:soak_time].to_i),
