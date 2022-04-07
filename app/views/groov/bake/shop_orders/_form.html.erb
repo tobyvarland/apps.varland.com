@@ -1,0 +1,21 @@
+
+<%= simple_form_for(@groov_bake_shop_order) do |f| %>
+  <%= f.error_notification %>
+  <%= f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present? %>
+
+  <div class="form-inputs">
+    <%= f.association :cycle %>
+    <%= f.association :as400_shop_order %>
+    <%= f.input :container_type %>
+    <%= f.input :operation_letter %>
+    <%= f.input :bake_profile %>
+    <%= f.input :setpoint %>
+    <%= f.input :minimum %>
+    <%= f.input :maximum %>
+    <%= f.input :soak_length %>
+  </div>
+
+  <div class="form-actions">
+    <%= f.button :submit %>
+  </div>
+<% end %>

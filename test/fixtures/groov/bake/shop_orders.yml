@@ -1,0 +1,23 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  cycle: one
+  as400_shop_order: one
+  container_type: 1
+  operation_letter: MyString
+  bake_profile: MyString
+  setpoint: 1
+  minimum: 1
+  maximum: 1
+  soak_length: 1
+
+two:
+  cycle: two
+  as400_shop_order: two
+  container_type: 1
+  operation_letter: MyString
+  bake_profile: MyString
+  setpoint: 1
+  minimum: 1
+  maximum: 1
+  soak_length: 1

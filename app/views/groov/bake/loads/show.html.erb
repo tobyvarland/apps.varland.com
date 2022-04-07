@@ -1,0 +1,29 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Shop order:</strong>
+  <%= @groov_bake_load.shop_order_id %>
+</p>
+
+<p>
+  <strong>Number:</strong>
+  <%= @groov_bake_load.number %>
+</p>
+
+<p>
+  <strong>Is rework:</strong>
+  <%= @groov_bake_load.is_rework %>
+</p>
+
+<p>
+  <strong>Is on bakestand:</strong>
+  <%= @groov_bake_load.is_on_bakestand %>
+</p>
+
+<p>
+  <strong>In oven at:</strong>
+  <%= @groov_bake_load.in_oven_at %>
+</p>
+
+<%= link_to 'Edit', edit_groov_bake_load_path(@groov_bake_load) %> |
+<%= link_to 'Back', groov_bake_loads_path %>

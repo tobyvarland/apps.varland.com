@@ -1,0 +1,9 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  cycle: one
+  shop_order: one
+
+two:
+  cycle: two
+  shop_order: two

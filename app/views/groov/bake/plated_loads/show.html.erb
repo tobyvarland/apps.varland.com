@@ -1,0 +1,34 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Load:</strong>
+  <%= @groov_bake_plated_load.load_id %>
+</p>
+
+<p>
+  <strong>AS400 shop order:</strong>
+  <%= @groov_bake_plated_load.as400_shop_order_id %>
+</p>
+
+<p>
+  <strong>Number:</strong>
+  <%= @groov_bake_plated_load.number %>
+</p>
+
+<p>
+  <strong>Department:</strong>
+  <%= @groov_bake_plated_load.department %>
+</p>
+
+<p>
+  <strong>Out of plating at:</strong>
+  <%= @groov_bake_plated_load.out_of_plating_at %>
+</p>
+
+<p>
+  <strong>Bake within:</strong>
+  <%= @groov_bake_plated_load.bake_within %>
+</p>
+
+<%= link_to 'Edit', edit_groov_bake_plated_load_path(@groov_bake_plated_load) %> |
+<%= link_to 'Back', groov_bake_plated_loads_path %>

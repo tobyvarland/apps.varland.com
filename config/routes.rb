@@ -3,6 +3,46 @@ require 'sidekiq-scheduler/web'
 
 Rails.application.routes.draw do
 
+  namespace :groov do
+    namespace :bake do
+      resources :containers
+    end
+  end
+  namespace :groov do
+    namespace :bake do
+      resources :plated_loads
+    end
+  end
+  namespace :groov do
+    namespace :bake do
+      resources :loads
+    end
+  end
+  namespace :groov do
+    namespace :bake do
+      resources :shop_orders
+    end
+  end
+  namespace :groov do
+    namespace :bake do
+      resources :cycles
+    end
+  end
+  namespace :groov do
+    namespace :baking do
+      resources :loads
+    end
+  end
+  namespace :groov do
+    namespace :baking do
+      resources :shop_orders
+    end
+  end
+  namespace :groov do
+    namespace :baking do
+      resources :cycles
+    end
+  end
   namespace :records do
     resources :devices
     resources :record_types

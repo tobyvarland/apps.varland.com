@@ -1,0 +1,31 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Groov Baking Loads</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Shop order</th>
+      <th>Number</th>
+      <th>Is rework</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @groov_baking_loads.each do |groov_baking_load| %>
+      <tr>
+        <td><%= groov_baking_load.shop_order_id %></td>
+        <td><%= groov_baking_load.number %></td>
+        <td><%= groov_baking_load.is_rework %></td>
+        <td><%= link_to 'Show', groov_baking_load %></td>
+        <td><%= link_to 'Edit', edit_groov_baking_load_path(groov_baking_load) %></td>
+        <td><%= link_to 'Destroy', groov_baking_load, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Groov Baking Load', new_groov_baking_load_path %>

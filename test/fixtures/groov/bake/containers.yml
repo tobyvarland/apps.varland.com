@@ -1,0 +1,23 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  load: one
+  description: MyString
+  bakestand_column: 1
+  bakestand_row: 1
+  rod_cart_shelf: 1
+  rod_cart_position: 1
+  oven_shelf: 1
+  oven_shelf_tray_position: 1
+  oven_shelf_rod_position: 1
+
+two:
+  load: two
+  description: MyString
+  bakestand_column: 1
+  bakestand_row: 1
+  rod_cart_shelf: 1
+  rod_cart_position: 1
+  oven_shelf: 1
+  oven_shelf_tray_position: 1
+  oven_shelf_rod_position: 1

@@ -1,0 +1,19 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Shop order:</strong>
+  <%= @groov_baking_load.shop_order_id %>
+</p>
+
+<p>
+  <strong>Number:</strong>
+  <%= @groov_baking_load.number %>
+</p>
+
+<p>
+  <strong>Is rework:</strong>
+  <%= @groov_baking_load.is_rework %>
+</p>
+
+<%= link_to 'Edit', edit_groov_baking_load_path(@groov_baking_load) %> |
+<%= link_to 'Back', groov_baking_loads_path %>

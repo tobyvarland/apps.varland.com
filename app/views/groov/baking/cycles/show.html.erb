@@ -1,0 +1,69 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Bake type:</strong>
+  <%= @groov_baking_cycle.bake_type %>
+</p>
+
+<p>
+  <strong>Oven:</strong>
+  <%= @groov_baking_cycle.oven %>
+</p>
+
+<p>
+  <strong>Cycle started at:</strong>
+  <%= @groov_baking_cycle.cycle_started_at %>
+</p>
+
+<p>
+  <strong>Purge ended at:</strong>
+  <%= @groov_baking_cycle.purge_ended_at %>
+</p>
+
+<p>
+  <strong>Soak started at:</strong>
+  <%= @groov_baking_cycle.soak_started_at %>
+</p>
+
+<p>
+  <strong>Soak ended at:</strong>
+  <%= @groov_baking_cycle.soak_ended_at %>
+</p>
+
+<p>
+  <strong>Gas off at:</strong>
+  <%= @groov_baking_cycle.gas_off_at %>
+</p>
+
+<p>
+  <strong>Cycle ended at:</strong>
+  <%= @groov_baking_cycle.cycle_ended_at %>
+</p>
+
+<p>
+  <strong>Setpoint:</strong>
+  <%= @groov_baking_cycle.setpoint %>
+</p>
+
+<p>
+  <strong>Minimum:</strong>
+  <%= @groov_baking_cycle.minimum %>
+</p>
+
+<p>
+  <strong>Maximum:</strong>
+  <%= @groov_baking_cycle.maximum %>
+</p>
+
+<p>
+  <strong>Soak length:</strong>
+  <%= @groov_baking_cycle.soak_length %>
+</p>
+
+<p>
+  <strong>Profile name:</strong>
+  <%= @groov_baking_cycle.profile_name %>
+</p>
+
+<%= link_to 'Edit', edit_groov_baking_cycle_path(@groov_baking_cycle) %> |
+<%= link_to 'Back', groov_baking_cycles_path %>

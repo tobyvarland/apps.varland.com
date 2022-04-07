@@ -16,13 +16,22 @@ module ShopOrderAssignable
 
   # Sets shop order association from shop order number.
   def shop_order_number=(value)
-    self.shop_order = AS400::ShopOrder.from_as400(value)
+    begin
+      self.shop_order = AS400::ShopOrder.from_as400(value)
+    rescue
+      self.as400_shop_order = AS400::ShopOrder.from_as400(value)
+    end
   end
 
   # Returns shop order number.
   def shop_order_number
-    return nil unless self.shop_order.present?
-    return self.shop_order.number
+    begin
+      return nil unless self.shop_order.present?
+      return self.shop_order.number
+    rescue
+      return nil unless self.as400_shop_order.present?
+      return self.as400_shop_order.number
+    end
   end
 
 end

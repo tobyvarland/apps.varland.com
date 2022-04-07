@@ -1,0 +1,51 @@
+- if @groov_baking_cycles.length == 0
+
+  .mt-3 No cycles found.
+
+- else
+
+  .d-flex.flex-row.align-items-center.justify-content-center
+    = render partial: "shared/pagination", locals: { label: "Cycles" }
+
+  .table-responsive.my-3
+    table.table.table-striped.table-hover
+      thead.table-dark
+        th.text-center.w-1 ID
+        th.text-center.w-1 Oven
+        th Baking Parameters
+        th Baking Timing
+        th.text-center.w-1 Options
+      tbody
+        - @groov_baking_cycles.each do |cycle|
+          tr
+            td.text-center.align-top
+              code.fw-700 = cycle.id
+            td.text-center.align-top.fw-700 = cycle.oven
+            td.align-top
+              div
+                small.text-uncolor.fw-200 Profile Name:
+                span.fw-700.ms-1 = cycle.profile_name
+              div.small == "#{cycle.setpoint}&deg; F <span class=\"text-uncolor\">/</span> #{cycle.minimum}&deg; F <span class=\"text-uncolor\">/</span> #{cycle.maximum}&deg; F <span class=\"text-uncolor\">/</span> #{pluralize cycle.soak_length / 60.0, "hour"}"
+            td.align-top
+              table.table.table-striped.mb-0
+                tbody
+                  tr
+                    td.text-right.w-1.small.text-uncolor.fw-200 Cycle Started:
+                    td.fw-700 = cycle.cycle_started_at.strftime("%m/%d/%y %I:%M%P")
+                  tr
+                    td.text-right.w-1.small.text-uncolor.fw-200 Purge Ended:
+                    td.fw-700 = cycle.purge_ended_at.strftime("%m/%d/%y %I:%M%P")
+                  tr
+                    td.text-right.w-1.small.text-uncolor.fw-200 Soak Started:
+                    td.fw-700 = cycle.soak_started_at.strftime("%m/%d/%y %I:%M%P")
+                  tr
+                    td.text-right.w-1.small.text-uncolor.fw-200 Soak Ended:
+                    td.fw-700 = cycle.soak_ended_at.strftime("%m/%d/%y %I:%M%P")
+                  tr
+                    td.text-right.w-1.small.text-uncolor.fw-200 Gas Off:
+                    td.fw-700 = cycle.gas_off_at.strftime("%m/%d/%y %I:%M%P")
+                  tr
+                    td.text-right.w-1.small.text-uncolor.fw-200 Cycle Ended:
+                    td.fw-700 = cycle.cycle_ended_at.strftime("%m/%d/%y %I:%M%P")
+            td.text-center.align-top
+              = link_to "#{fa "file-pdf", text_class: "text-varland-red"} Final Bakesheet".html_safe, groov_baking_cycle_path(cycle, format: :pdf), class: ["btn", "btn-sm", "btn-dark"], target: "_blank"

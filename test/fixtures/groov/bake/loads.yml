@@ -1,0 +1,15 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  shop_order: one
+  number: 1
+  is_rework: false
+  is_on_bakestand: false
+  in_oven_at: 2022-04-07 11:52:59
+
+two:
+  shop_order: two
+  number: 1
+  is_rework: false
+  is_on_bakestand: false
+  in_oven_at: 2022-04-07 11:52:59

@@ -1,0 +1,61 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Groov Bake Cycles</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Oven type</th>
+      <th>Oven</th>
+      <th>Side</th>
+      <th>Cycle started at</th>
+      <th>Loading finished at</th>
+      <th>Purge ended at</th>
+      <th>Soak started at</th>
+      <th>Soak ended at</th>
+      <th>Gas off at</th>
+      <th>Cycle ended at</th>
+      <th>Bake profile</th>
+      <th>Setpoint</th>
+      <th>Minimum</th>
+      <th>Maximum</th>
+      <th>Soak length</th>
+      <th>Bakestand number</th>
+      <th>Rod cart number</th>
+      <th>Discarded at</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @groov_bake_cycles.each do |groov_bake_cycle| %>
+      <tr>
+        <td><%= groov_bake_cycle.oven_type %></td>
+        <td><%= groov_bake_cycle.oven %></td>
+        <td><%= groov_bake_cycle.side %></td>
+        <td><%= groov_bake_cycle.cycle_started_at %></td>
+        <td><%= groov_bake_cycle.loading_finished_at %></td>
+        <td><%= groov_bake_cycle.purge_ended_at %></td>
+        <td><%= groov_bake_cycle.soak_started_at %></td>
+        <td><%= groov_bake_cycle.soak_ended_at %></td>
+        <td><%= groov_bake_cycle.gas_off_at %></td>
+        <td><%= groov_bake_cycle.cycle_ended_at %></td>
+        <td><%= groov_bake_cycle.bake_profile %></td>
+        <td><%= groov_bake_cycle.setpoint %></td>
+        <td><%= groov_bake_cycle.minimum %></td>
+        <td><%= groov_bake_cycle.maximum %></td>
+        <td><%= groov_bake_cycle.soak_length %></td>
+        <td><%= groov_bake_cycle.bakestand_number %></td>
+        <td><%= groov_bake_cycle.rod_cart_number %></td>
+        <td><%= groov_bake_cycle.discarded_at %></td>
+        <td><%= link_to 'Show', groov_bake_cycle %></td>
+        <td><%= link_to 'Edit', edit_groov_bake_cycle_path(groov_bake_cycle) %></td>
+        <td><%= link_to 'Destroy', groov_bake_cycle, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Groov Bake Cycle', new_groov_bake_cycle_path %>

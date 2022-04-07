@@ -1,0 +1,49 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Load:</strong>
+  <%= @groov_bake_container.load_id %>
+</p>
+
+<p>
+  <strong>Description:</strong>
+  <%= @groov_bake_container.description %>
+</p>
+
+<p>
+  <strong>Bakestand column:</strong>
+  <%= @groov_bake_container.bakestand_column %>
+</p>
+
+<p>
+  <strong>Bakestand row:</strong>
+  <%= @groov_bake_container.bakestand_row %>
+</p>
+
+<p>
+  <strong>Rod cart shelf:</strong>
+  <%= @groov_bake_container.rod_cart_shelf %>
+</p>
+
+<p>
+  <strong>Rod cart position:</strong>
+  <%= @groov_bake_container.rod_cart_position %>
+</p>
+
+<p>
+  <strong>Oven shelf:</strong>
+  <%= @groov_bake_container.oven_shelf %>
+</p>
+
+<p>
+  <strong>Oven shelf tray position:</strong>
+  <%= @groov_bake_container.oven_shelf_tray_position %>
+</p>
+
+<p>
+  <strong>Oven shelf rod position:</strong>
+  <%= @groov_bake_container.oven_shelf_rod_position %>
+</p>
+
+<%= link_to 'Edit', edit_groov_bake_container_path(@groov_bake_container) %> |
+<%= link_to 'Back', groov_bake_containers_path %>

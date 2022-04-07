@@ -1,0 +1,35 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Groov Bake Loads</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Shop order</th>
+      <th>Number</th>
+      <th>Is rework</th>
+      <th>Is on bakestand</th>
+      <th>In oven at</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @groov_bake_loads.each do |groov_bake_load| %>
+      <tr>
+        <td><%= groov_bake_load.shop_order_id %></td>
+        <td><%= groov_bake_load.number %></td>
+        <td><%= groov_bake_load.is_rework %></td>
+        <td><%= groov_bake_load.is_on_bakestand %></td>
+        <td><%= groov_bake_load.in_oven_at %></td>
+        <td><%= link_to 'Show', groov_bake_load %></td>
+        <td><%= link_to 'Edit', edit_groov_bake_load_path(groov_bake_load) %></td>
+        <td><%= link_to 'Destroy', groov_bake_load, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Groov Bake Load', new_groov_bake_load_path %>

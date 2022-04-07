@@ -91,7 +91,7 @@ class VarlandPdf < Prawn::Document
           left_margin: self.class::PAGE_MARGIN,
           right_margin: self.class::PAGE_MARGIN,
           page_layout: self.class::PAGE_ORIENTATION)
-    
+
     # Load fonts.
     self.load_fonts
 
@@ -145,7 +145,7 @@ class VarlandPdf < Prawn::Document
 
   # Loads single font using Prawn's font_families.update method.
   def load_single_font(name)
-    
+
     # Determine path to font file.
     font_file_name = name.gsub(/\s+/, "")
     path = Rails.root.join('lib', 'assets', 'fonts', "#{font_file_name}.ttf")
@@ -198,7 +198,7 @@ class VarlandPdf < Prawn::Document
       self.txtb("Graphic Error: #{graphic.to_s}", x, y, width, height, fill_color: 'ff0000', color: 'ffffff', style: :bold)
       return
     end
-    
+
     # Shade area.
     self.rect(x, y, width, height, fill_color: fill_color, line_color: nil)
 
@@ -533,21 +533,25 @@ class VarlandPdf < Prawn::Document
   end
 
   # Reads image data and auto-orients image if necessary.
-  def get_image(file, max_width, max_height)
-    max_width_pixels = max_width * 300
-    max_height_pixels = max_height * 300
-    magick = MiniMagick::Image.read(file.download)
+  def get_image(file, max_width, max_height, resolution = 300.0)
+    max_width_pixels = max_width * resolution.to_i
+    max_height_pixels = max_height * resolution.to_i
+    begin
+      magick = MiniMagick::Image.read(file.download)
+    rescue
+      magick = MiniMagick::Image.open(file)
+    end
     magick.auto_orient
     magick.resize("#{max_width_pixels}x#{max_height_pixels}") if magick.height > max_height_pixels || magick.width > max_width_pixels
     temp_path = "#{Dir.tmpdir}/#{SecureRandom.alphanumeric(50)}"
     magick.write(temp_path)
     ImageOptim.optimize_image!(temp_path)
-    return { path: temp_path, height: magick.height / 300.0, width: magick.width / 300.0 }
+    return { path: temp_path, height: magick.height / resolution, width: magick.width / resolution }
   end
 
   # Protected methods.
   protected
-  
+
     # Reference Rails helpers.
     def helpers
       ApplicationController.helpers

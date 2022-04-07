@@ -1,0 +1,14 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Cycle:</strong>
+  <%= @groov_baking_shop_order.cycle_id %>
+</p>
+
+<p>
+  <strong>Shop order:</strong>
+  <%= @groov_baking_shop_order.shop_order_id %>
+</p>
+
+<%= link_to 'Edit', edit_groov_baking_shop_order_path(@groov_baking_shop_order) %> |
+<%= link_to 'Back', groov_baking_shop_orders_path %>

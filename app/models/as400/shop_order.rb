@@ -67,12 +67,12 @@ class AS400::ShopOrder < ApplicationRecord
   def all_trico_checks_valid?
     self.is_valid_trico_order? && self.all_bin_weights_entered? && self.bin_weights_within_deviation_limit?
   end
-  
+
   # Returns if all bin weights are within deviation limit.
   def bin_weights_within_deviation_limit?
     return self.trico_bin_total_weight_deviation.abs < 5
   end
-  
+
   # Returns if all bin weights recorded and valid.
   def all_bin_weights_entered?
     return (self.trico_bins.length == self.container_count && self.trico_bins.where(scale_weight: 0).length == 0)
@@ -135,7 +135,7 @@ class AS400::ShopOrder < ApplicationRecord
     return fields
   end
 
-  # Retrieces properties from System i.
+  # Retrieves properties from System i.
   def get_from_as400
     return if self.number.blank?
     # return unless self.customer_code.blank?
@@ -160,6 +160,11 @@ class AS400::ShopOrder < ApplicationRecord
     self.container_type = as400[:container_type]
     self.equipment_used = as400[:equipment_used]
     self.received_at = as400[:received_at]
+    self.iao_profile = as400[:iao_profile]
+    self.iao_setpoint = as400[:iao_setpoint]
+    self.iao_minimum = as400[:iao_minimum]
+    self.iao_maximum = as400[:iao_maximum]
+    self.iao_soak_length = as400[:iao_soak_length]
   end
 
   # Class methods.
@@ -187,7 +192,12 @@ class AS400::ShopOrder < ApplicationRecord
       container_count: as400[:containers],
       container_type: as400[:container_type],
       equipment_used: as400[:equipment_used],
-      received_at: as400[:received_at]
+      received_at: as400[:received_at],
+      iao_profile: as400[:iao_profile],
+      iao_setpoint: as400[:iao_setpoint],
+      iao_minimum: as400[:iao_minimum],
+      iao_maximum: as400[:iao_maximum],
+      iao_soak_length: as400[:iao_soak_length]
     }
     create_with(attributes).find_or_create_by!(number: number)
   end

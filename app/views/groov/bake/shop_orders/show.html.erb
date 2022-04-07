@@ -1,0 +1,49 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Cycle:</strong>
+  <%= @groov_bake_shop_order.cycle_id %>
+</p>
+
+<p>
+  <strong>AS400 shop order:</strong>
+  <%= @groov_bake_shop_order.as400_shop_order_id %>
+</p>
+
+<p>
+  <strong>Container type:</strong>
+  <%= @groov_bake_shop_order.container_type %>
+</p>
+
+<p>
+  <strong>Operation letter:</strong>
+  <%= @groov_bake_shop_order.operation_letter %>
+</p>
+
+<p>
+  <strong>Bake profile:</strong>
+  <%= @groov_bake_shop_order.bake_profile %>
+</p>
+
+<p>
+  <strong>Setpoint:</strong>
+  <%= @groov_bake_shop_order.setpoint %>
+</p>
+
+<p>
+  <strong>Minimum:</strong>
+  <%= @groov_bake_shop_order.minimum %>
+</p>
+
+<p>
+  <strong>Maximum:</strong>
+  <%= @groov_bake_shop_order.maximum %>
+</p>
+
+<p>
+  <strong>Soak length:</strong>
+  <%= @groov_bake_shop_order.soak_length %>
+</p>
+
+<%= link_to 'Edit', edit_groov_bake_shop_order_path(@groov_bake_shop_order) %> |
+<%= link_to 'Back', groov_bake_shop_orders_path %>

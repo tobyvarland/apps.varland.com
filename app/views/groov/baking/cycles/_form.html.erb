@@ -1,0 +1,25 @@
+
+<%= simple_form_for(@groov_baking_cycle) do |f| %>
+  <%= f.error_notification %>
+  <%= f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present? %>
+
+  <div class="form-inputs">
+    <%= f.input :bake_type %>
+    <%= f.input :oven %>
+    <%= f.input :cycle_started_at %>
+    <%= f.input :purge_ended_at %>
+    <%= f.input :soak_started_at %>
+    <%= f.input :soak_ended_at %>
+    <%= f.input :gas_off_at %>
+    <%= f.input :cycle_ended_at %>
+    <%= f.input :setpoint %>
+    <%= f.input :minimum %>
+    <%= f.input :maximum %>
+    <%= f.input :soak_length %>
+    <%= f.input :profile_name %>
+  </div>
+
+  <div class="form-actions">
+    <%= f.button :submit %>
+  </div>
+<% end %>

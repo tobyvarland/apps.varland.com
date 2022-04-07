@@ -1,0 +1,41 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  oven_type: 
+  oven: MyString
+  side: MyString
+  cycle_started_at: 2022-04-07 11:34:22
+  loading_finished_at: 2022-04-07 11:34:22
+  purge_ended_at: 2022-04-07 11:34:22
+  soak_started_at: 2022-04-07 11:34:22
+  soak_ended_at: 2022-04-07 11:34:22
+  gas_off_at: 2022-04-07 11:34:22
+  cycle_ended_at: 2022-04-07 11:34:22
+  bake_profile: MyString
+  setpoint: 
+  minimum: 
+  maximum: 
+  soak_length: 
+  bakestand_number: 
+  rod_cart_number: 
+  discarded_at: 2022-04-07 11:34:22
+
+two:
+  oven_type: 
+  oven: MyString
+  side: MyString
+  cycle_started_at: 2022-04-07 11:34:22
+  loading_finished_at: 2022-04-07 11:34:22
+  purge_ended_at: 2022-04-07 11:34:22
+  soak_started_at: 2022-04-07 11:34:22
+  soak_ended_at: 2022-04-07 11:34:22
+  gas_off_at: 2022-04-07 11:34:22
+  cycle_ended_at: 2022-04-07 11:34:22
+  bake_profile: MyString
+  setpoint: 
+  minimum: 
+  maximum: 
+  soak_length: 
+  bakestand_number: 
+  rod_cart_number: 
+  discarded_at: 2022-04-07 11:34:22
