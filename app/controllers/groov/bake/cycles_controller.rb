@@ -14,7 +14,7 @@ class Groov::Bake::CyclesController < ApplicationController
       format.pdf {
         pdf = Groov::Bake::FinalBakesheetPdf.new(@groov_bake_cycle)
         send_data(pdf.render,
-                  filename: "FinalBakesheet.pdf",
+                  filename: "Bakesheet.pdf",
                   type: "application/pdf",
                   disposition: "inline")
       }

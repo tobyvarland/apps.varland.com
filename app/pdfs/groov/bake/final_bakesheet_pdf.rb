@@ -2,8 +2,8 @@ require "open-uri"
 
 class Groov::Bake::FinalBakesheetPdf < ::VarlandPdf
 
-  BACKGROUND_COLORS = ['7be042', 'ff657f', '9cb5f2', 'ffc72d', 'b677ff', '73fdff', 'fca7ff', 'bdffd1', 'ffd6bd', 'dcecff']
-  FOREGROUND_COLORS = ['000000', '000000', '000000', '000000', '000000', '000000', '000000', '000000', '000000', '000000']
+  BACKGROUND_COLORS = Groov::Bake::BakesheetPdf::BACKGROUND_COLORS
+  FOREGROUND_COLORS = Groov::Bake::BakesheetPdf::FOREGROUND_COLORS
 
   def initialize(cycle)
     super()
@@ -35,7 +35,7 @@ class Groov::Bake::FinalBakesheetPdf < ::VarlandPdf
               0.5,
               h_align: :left,
               variant: :mark
-    self.txtb "Final Bakesheet – Bakestand ##{@cycle.bakestand_number}",
+    self.txtb "Post-Bake ID/Approval Sheet – Stand ##{@cycle.bakestand_number}",
               0.85,
               10.75,
               6.75,
@@ -190,7 +190,7 @@ class Groov::Bake::FinalBakesheetPdf < ::VarlandPdf
               0.5,
               h_align: :left,
               variant: :mark
-    self.txtb "Final Bakesheet – Rod Cart ##{@cycle.rod_cart_number}",
+    self.txtb "Post Plate ID/Approval Sheet – Cart ##{@cycle.rod_cart_number}",
               0.85,
               10.75,
               6.75,
@@ -331,14 +331,13 @@ class Groov::Bake::FinalBakesheetPdf < ::VarlandPdf
               0.5,
               h_align: :left,
               variant: :mark
-    self.txtb "S.O. ##{so.as400_shop_order.number}",
+    self.txtb "BAKE LOG – S.O. ##{so.as400_shop_order.number} <color rgb=\"aaaaaa\"><font size=\"8\">CYCLE: #{@cycle.id}</font></color>",
               0.85,
               10.75,
               6.75,
               0.5,
               h_align: :left,
               style: :bold,
-              transform: :uppercase,
               size: 20
     self.txtb so.as400_shop_order.part_spec.join(" / "),
               0.25,
