@@ -4,7 +4,7 @@ class Groov::IAOProfileStarted < Groov::Log
 
   # Log details.
   def details
-    return self.format_log_data("IAO failed to start after all checks completed.", {
+    return self.format_log_data("IAO profile started.", {
       iao: self.device,
       profile: self.groov_data[:profile],
       started_by: self.groov_user,
