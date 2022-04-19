@@ -143,6 +143,10 @@ Rails.application.routes.draw do
   namespace :opto do
     post "log_trico_load",  to: "opto#log_trico_load"
   end
+  namespace :groov do
+    get "bake",             to: "bake#index"
+    get "bake/history",     to: "bake#history"
+  end
   get "shipping/trico_labels",      to: "shipping#trico_labels",        as: :trico_labels
   get "shipping/smalog_labels",     to: "shipping#smalog_labels",       as: :smalog_labels
   get "vcms/link_part_spec",        to: "vcms#link_part_spec",          as: :link_part_spec

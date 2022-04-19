@@ -1,0 +1,39 @@
+ruby:
+  provide(:title, 'Baking')
+
+- content_for :nav do
+  = render "groov/bake/nav"
+
+.d-flex.flex-row.align-items-center.justify-content-between.mt-3
+  h1.font-varland Baking
+
+.row
+
+  .col-12.col-md-4
+
+    .card.bg-light.mt-3
+      h6.card-header.px-2 Waiting to be Baked
+      - if @pre_bake_cycles.length == 0
+        .card-body.small.text-muted No jobs waiting to be baked.
+      - else
+        .card-body = @pre_bake_cycles.length
+
+  .col-12.col-md-4
+
+    .card.bg-light.mt-3
+      h6.card-header.px-2 Cycles Baking Right Now
+      - if @cycles_baking_now.length == 0
+        .card-body.small.text-muted Nothing baking right now.
+      - else
+        .card-body = @cycles_baking_now.length
+
+  .col-12.col-md-4
+
+    .card.bg-light.mt-3
+      h6.card-header.px-2 Recently Finished
+      - if @recently_finished_cycles.length == 0
+        .card-body.small.text-muted No recent cycles to show.
+      - else
+        .card-body = @recently_finished_cycles.length
+      .card-footer
+        = link_to "#{fa 'list-alt'} Full History".html_safe, groov_bake_history_url, class: ["btn", "btn-small", "btn-dark"]

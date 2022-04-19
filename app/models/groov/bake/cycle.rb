@@ -31,6 +31,11 @@ class Groov::Bake::Cycle < ApplicationRecord
             allow_blank: true
 
   # Scopes.
+  scope :pre_bake, -> { where(loading_finished_at: nil) }
+  scope :post_bake, -> { where.not(cycle_ended_at: nil) }
+  scope :baking_now, -> { where.not(loading_finished_at: nil).where(cycle_ended_at: nil) }
+  scope :by_cycle_started, -> { order(:cycle_started_at) }
+  scope :by_cycle_ended, -> { order(cycle_ended_at: :desc) }
 
   # Callbacks.
 
