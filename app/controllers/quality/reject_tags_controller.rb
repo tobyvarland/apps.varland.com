@@ -5,7 +5,7 @@ class Quality::RejectTagsController < ApplicationController
 
   def index
     authorize Quality::RejectTag
-    @reject_tags = Quality::RejectTag.includes(:user, :shop_order).all
+    @reject_tags = Quality::RejectTag.includes(:user, :shop_order).order(rejected_on: :desc)
   end
 
   def show
