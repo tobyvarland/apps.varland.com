@@ -74,7 +74,13 @@ class Records::RecordType < ApplicationRecord
 
 	# Returns whether or not has YouTube video.
 	def has_youtube_video?
-		return self.url.match(/\Ahttps:\/\/(www\.)?youtube\.com\/watch/)
+		return self.url.match?(/\Ahttps:\/\/www\.youtube\.com\/watch\?v=(\w+)\z/)
+	end
+
+	# Returns YouTube embed URL.
+	def youtube_embed_url
+		matches = self.url.match(/\Ahttps:\/\/www\.youtube\.com\/watch\?v=(\w+)\z/)
+		return "https://www.youtube.com/embed/#{matches[1]}?rel=0"
 	end
 
 	# Class methods.
