@@ -16,7 +16,7 @@
       = f.input :result_on, label: "Date:", required: true, as: :date, html5: true, input_html: { style: "margin: 0 !important;" }
 
   - if result.record_type.has_youtube_video?
-    .embed-responsive.embed-responsive-16by9.mt-3
+    .ratio.ratio-16by9.mt-3
       iframe.embed-responsive-item src="#{result.record_type.youtube_embed_url}" allowfullscreen="allowfullscreen"
 
   - unless result.record_type.instructions.blank?
