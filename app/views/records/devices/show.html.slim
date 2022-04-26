@@ -41,7 +41,7 @@ ruby:
                 div.ms-1 = @device.assignments.by_type.first.record_type.name
             div
               - @device.assignments.by_type.each do |obj|
-                - unless obj.record_type.url.blank?
+                - unless obj.record_type.url.blank?  || obj.record_type.has_youtube_video?
                   = link_to "#{fa "link"} Instructions".html_safe, obj.record_type.url, target: "_blank", class: ["btn", "btn-sm", "btn-dark", "record-instructions"], id: "#{obj.record_type.slug}-instructions"
           .card-body.p-0
             - @device.assignments.by_type.each do |obj|
