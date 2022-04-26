@@ -72,6 +72,11 @@ class Records::RecordType < ApplicationRecord
 		return self.assignments.for_active_device.by_device.map {|a| [a.device.name, a.device_id]}
 	end
 
+	# Returns whether or not has YouTube video.
+	def has_youtube_video?
+		return self.url.match(/\Ahttps:\/\/(www\.)?youtube\.com\/watch/)
+	end
+
 	# Class methods.
 
 	# Define data types for dropdown.

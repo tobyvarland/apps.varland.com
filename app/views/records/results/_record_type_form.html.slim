@@ -15,6 +15,11 @@
     .col-12.col-md-4.mt-3
       = f.input :result_on, label: "Date:", required: true, as: :date, html5: true, input_html: { style: "margin: 0 !important;" }
 
+  - if result.record_type.has_youtube_video?
+
+    .embed-responsive.embed-responsive-16by9.mt3
+      iframe.embed-responsive-item src="#{result.record_type.url}" allowfullscreen="allowfullscreen"
+
   - unless result.record_type.instructions.blank?
     .mt-3.border.rounded.shadow-sm.p-3.small == @markdown.render(result.record_type.instructions)
 
