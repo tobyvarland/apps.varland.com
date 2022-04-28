@@ -2,13 +2,9 @@ class Groov::GroovLog < Groov::Log
 
   # Instance methods.
 
-  # Notification settings.
-  def notification_settings
-    return {
-      enabled: true,
-      subject: "#{self.controller_name}: Unconfigured Groov Log",
-      recipients: [TOBY_VARLAND_EMAIL]
-    }
+  # Returns notification subject. May be overridden in child class.
+  def notification_subject
+    return "#{self.controller_name}: Unconfigured Groov Log"
   end
 
   # Log details.

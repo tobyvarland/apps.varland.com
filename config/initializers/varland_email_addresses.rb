@@ -11,6 +11,7 @@ IT_EMAIL = "it@varland.com".freeze
 IT_ONLY_EMAIL = "itdept@varland.com".freeze
 JOEL_PERRINE_EMAIL = "joel.perrine@varland.com".freeze
 JOEL_PERRINE_SMS = "5132564443@vtext.com".freeze
+JOHN_MCGUIRE_EMAIL = "john.mcguire@varland.com".freeze
 LAB_EMAIL = "varlandlab@gmail.com".freeze
 MARK_STRADER_EMAIL = "mark.strader@varland.com".freeze
 MARK_STRADER_SMS = "5137136499@txt.att.net".freeze
