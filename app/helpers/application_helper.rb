@@ -188,8 +188,10 @@ module ApplicationHelper
     type = options.fetch(:type, "fas")
     text_class = options.fetch(:text_class, nil)
     spin = options.fetch(:spin, false)
+    size = options.fetch(:size, nil)
     classes = ["fa-#{icon}", type]
     classes << "fa-fw" if fw
+    classes << "fa-#{size}" if size
     classes << "fa-spin" if spin
     classes << text_class unless text_class.blank?
     content_tag(:i, nil, class: classes)
