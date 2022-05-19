@@ -1,7 +1,5 @@
+= render partial: "shared/no_user_home"
+
 - if current_user
   - if lookup_context.exists?(current_user.username.downcase, ["users/user_home_pages"], true)
     = render partial: "users/user_home_pages/#{current_user.username.downcase}"
-  - else
-    = render partial: "shared/no_user_home"
-- else
-  = render partial: "shared/no_user_home"

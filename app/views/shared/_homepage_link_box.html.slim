@@ -1,6 +1,8 @@
-.bg-dark.text-white.border.border-dark.rounded-top.py-2.px-3.fw-700.text-uppercase = title
-.border.border-dark.rounded-bottom.pb-3.pe-3.d-flex.flex-row.flex-wrap
-  - links.each do |link|
-    = link_to link[:url], class: ["d-block", "ms-3", "mt-3", "text-center", "rounded-3", "shadow-sm", "p-2", "text-decoration-none", "bg-#{link[:color]}-100", "bg-hover-#{link[:color]}-200"], target: (link[:new_tab] ? "_blank" : "_self") do
-      = fa link[:icon], size: "7x", text_class: "text-#{link[:color]}-600 text-hover-#{link[:color]}-800", type: link[:icon_type]
-      .mt-1.lh-1.text-dark.font-size-85.fw-700.text-uppercase == link[:title]
+.card.bg-light.shadow-sm
+  h6.card-header.px-2.d-flex.flex-row.align-items-center.justify-content-between
+    = title
+  .card-body.p-0.pb-3.pe-3.small.d-flex.flex-row.flex-wrap
+    - links.each do |link|
+      = link_to link[:url], class: ["d-block", "ms-3", "mt-3", "text-center", "rounded-3", "shadow-sm", "p-2", "text-decoration-none", "bg-#{link[:color]}-100", "bg-hover-#{link[:color]}-200"], target: (link[:new_tab] ? "_blank" : "_self") do
+        = fa link[:icon], size: "7x", text_class: "text-#{link[:color]}-600 text-hover-#{link[:color]}-800", type: link[:icon_type]
+        .mt-1.lh-1.text-dark.font-size-85.fw-700.text-uppercase == link[:title]
