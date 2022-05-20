@@ -1,109 +1,181 @@
+ruby:
+  global_links = []
+  global_links << { url: "http://mail.varland.com",
+                    title: "Email",
+                    icon: "envelope",
+                    icon_type: "fas",
+                    new_tab: true,
+                    color: "gray" }
+  global_links << { url: vacation_calendars_url,
+                    title: "Vacation<br>Calendars",
+                    icon: "calendar-alt",
+                    icon_type: "fas",
+                    new_tab: false,
+                    color: "gray" }
+  global_links << { url: "https://drive.google.com/drive/u/0/shared-drives",
+                    title: "Shared<br>Drives",
+                    icon: "google-drive",
+                    icon_type: "fab",
+                    new_tab: true,
+                    color: "gray" }
+  global_links << { url: "javascript:(function()%7Bvar%20so%20%3D%20prompt(%22Enter%20SO%20%23%3A%22)%3Bif%20(so%20!%3D%3D%20null)%20%7Bvar%20url%20%3D%20%22http%3A%2F%2Fso.varland.com%2Fso%2F%22%20%2B%20so%20%2B%20%22.pdf%22%3Bwindow.open(url)%3B%7D%7D)()",
+                    title: "S.O.<br>Search",
+                    icon: "search",
+                    icon_type: "fas",
+                    new_tab: false,
+                    color: "gray" }
+  global_links << { url: "http://optoapi.varland.com/ovens",
+                    title: "Online<br>Bakesheet",
+                    icon: "bookmark",
+                    icon_type: "fas",
+                    new_tab: true,
+                    color: "gray" }
+  global_links << { url: "http://optoapi.varland.com/ovens/bake_cycles/",
+                    title: "Final<br>Bakesheets",
+                    icon: "bookmark",
+                    icon_type: "fas",
+                    new_tab: true,
+                    color: "gray" }
+  global_links << { url: new_quality_reject_tag_url,
+                    title: "Reject<br>Tag",
+                    icon: "times-circle",
+                    icon_type: "fas",
+                    new_tab: true,
+                    color: "red" }
+  specific_title = nil
+  specific_shortcuts = []
+  dept = nil
+  case request.remote_ip
+  when "192.168.82.94"
+    dept = :dept3a
+  when "192.168.82.95"
+    dept = :dept3b
+  when "192.168.82.89"
+    dept = :wastewater
+  when "192.168.82.92"
+    dept = :dept5
+  when "192.168.82.91"
+    dept = :robot
+  when "192.168.82.93"
+    dept = :bna
+  end
+  if dept.nil? && !params[:preview_dept].nil?
+    dept = params[:preview_dept].to_sym
+  end
+  case dept
+  when :dept3a
+    specific_title = "Dept. 3a Shortcuts"
+    specific_shortcuts << { url: "https://docs.google.com/spreadsheets/d/1_fMFdLscPI1eELn_EoVgnqlx83DVduYgcU0GyLwv1to/edit#gid=286970864",
+                            title: "Dept. 3<br>Loaded Bbls",
+                            icon: "file-excel",
+                            icon_type: "fas",
+                            new_tab: true,
+                            color: "green" }
+    specific_shortcuts << { url: "https://docs.google.com/spreadsheets/d/15iBdQroxNpUyhN6Q1ulNDX3hTBiJAomn66oldKqtwRM/edit?usp=sharing",
+                            title: "Hex Black<br>Log",
+                            icon: "file-excel",
+                            icon_type: "fas",
+                            new_tab: true,
+                            color: "green" }
+    specific_shortcuts << { url: "https://docs.google.com/spreadsheets/d/15q7gP66RpmqBESoq2MD8J2A2srVGqVQOIb5czhqz-ko/edit?usp=sharing",
+                            title: "Strip Log",
+                            icon: "file-excel",
+                            icon_type: "fas",
+                            new_tab: true,
+                            color: "green" }
+    specific_shortcuts << { url: "https://docs.google.com/spreadsheets/d/16h1CBzoGuWWf4kZ7e-_qEUkmGnH-_FzlUaHS1Mp8cbk/edit?usp=sharing",
+                            title: "EN Log",
+                            icon: "file-excel",
+                            icon_type: "fas",
+                            new_tab: true,
+                            color: "green" }
+  when :dept3b
+    specific_title = "Dept. 3b Shortcuts"
+    specific_shortcuts << { url: "https://docs.google.com/spreadsheets/d/15iBdQroxNpUyhN6Q1ulNDX3hTBiJAomn66oldKqtwRM/edit?usp=sharing",
+                            title: "Hex Black<br>Log",
+                            icon: "file-excel",
+                            icon_type: "fas",
+                            new_tab: true,
+                            color: "green" }
+    specific_shortcuts << { url: "https://docs.google.com/spreadsheets/d/15q7gP66RpmqBESoq2MD8J2A2srVGqVQOIb5czhqz-ko/edit?usp=sharing",
+                            title: "Strip Log",
+                            icon: "file-excel",
+                            icon_type: "fas",
+                            new_tab: true,
+                            color: "green" }
+    specific_shortcuts << { url: "https://docs.google.com/spreadsheets/d/16h1CBzoGuWWf4kZ7e-_qEUkmGnH-_FzlUaHS1Mp8cbk/edit?usp=sharing",
+                            title: "EN Log",
+                            icon: "file-excel",
+                            icon_type: "fas",
+                            new_tab: true,
+                            color: "green" }
+  when :wastewater
+    specific_title = "Waste Water Shortcuts"
+    specific_shortcuts << { url: "https://docs.google.com/spreadsheets/d/1PXSGPy8MvkA8EvlLUD1gM6A9QXUlqf09DgmiwuEgDL4/edit#usp=sharing",
+                            title: "Lab Sheets",
+                            icon: "file-excel",
+                            icon_type: "fas",
+                            new_tab: true,
+                            color: "green" }
+    specific_shortcuts << { url: "https://docs.google.com/spreadsheets/d/1na0VP9DckVVySIpZgKHi6CkURlrGA5BRDzunzB3TDEw/edit#usp=sharing",
+                            title: "Things To Do",
+                            icon: "file-excel",
+                            icon_type: "fas",
+                            new_tab: true,
+                            color: "green" }
+  when :robot, :bna, :dept5
+    specific_title = "Automatic Line Shortcuts"
+    specific_shortcuts << { url: "https://docs.google.com/spreadsheets/d/1W5ubKL5QRBcVvAsBdX4qUPDKkJvharUXDtlmWzUXs5s/edit?usp=sharing",
+                            title: "Boxes/Load<br>Calculator",
+                            icon: "file-excel",
+                            icon_type: "fas",
+                            new_tab: true,
+                            color: "green" }
+    specific_shortcuts << { url: "https://docs.google.com/spreadsheets/d/1U8iC3h8MrEQDPtBo_iNjEs2otat6LtXBuH8hIfM02fM/edit#usp=sharing",
+                            title: "Amp<br>Adjustment<br>Calculator",
+                            icon: "file-excel",
+                            icon_type: "fas",
+                            new_tab: true,
+                            color: "green" }
+    specific_shortcuts << { url: "https://docs.google.com/a/varland.com/spreadsheets/d/1Ur3nBHVQvd94O0C_DwJkWIvTLjyv3eiA3NdpTC3uSnc/edit?usp=sharing",
+                            title: "Cycle List<br>(BNA)",
+                            icon: "file-excel",
+                            icon_type: "fas",
+                            new_tab: true,
+                            color: "green" }
+    specific_shortcuts << { url: "https://docs.google.com/a/varland.com/spreadsheets/d/1lvXfAEr0EhnOXNyT1hWf6zpq9I2q1SrTZxZI1a7nwOU/edit?usp=sharing",
+                            title: "Cycle List<br>(Dept. 5)",
+                            icon: "file-excel",
+                            icon_type: "fas",
+                            new_tab: true,
+                            color: "green" }
+    specific_shortcuts << { url: "https://docs.google.com/spreadsheets/d/1Y-hnYR-CscBgzD9vjlyYwf6nLVe5XNUMz8jYKbjsvO0/edit?usp=sharing",
+                            title: "Cycle List<br>(Robot)",
+                            icon: "file-excel",
+                            icon_type: "fas",
+                            new_tab: true,
+                            color: "green" }
+    specific_shortcuts << { url: "https://docs.google.com/document/d/1AhmjY_aZsu9cIL5T-Bnb3Z8vIAKVvgQGlgsb8ARGZrk/edit?usp=sharing",
+                            title: "Training<br>(BNA)",
+                            icon: "file-word",
+                            icon_type: "fas",
+                            new_tab: true,
+                            color: "blue" }
+    specific_shortcuts << { url: "https://docs.google.com/document/d/1ghSU_CLJywfyah5YPawkJAJMwqG_9xLcyaP93kigi5w/edit?usp=sharing",
+                            title: "Training<br>(Dept. 5)",
+                            icon: "file-word",
+                            icon_type: "fas",
+                            new_tab: true,
+                            color: "blue" }
+  end
+  dept = nil if specific_shortcuts.length == 0
+
 .row.mt-3
   .col-12
     = render partial: "shared/homepage_link_box", locals: { title: "Global Shortcuts",
-                                                            links: [{ url: "http://mail.varland.com",
-                                                                      title: "Email",
-                                                                      icon: "envelope",
-                                                                      icon_type: "fas",
-                                                                      new_tab: true,
-                                                                      color: "red" },
-                                                                    { url: vacation_calendars_url,
-                                                                      title: "Vacation<br>Calendars",
-                                                                      icon: "calendar-alt",
-                                                                      icon_type: "fas",
-                                                                      new_tab: false,
-                                                                      color: "blue" },
-                                                                    { url: "https://drive.google.com/drive/u/0/shared-drives",
-                                                                      title: "Shared<br>Drives",
-                                                                      icon: "google-drive",
-                                                                      icon_type: "fab",
-                                                                      new_tab: true,
-                                                                      color: "yellow" },
-                                                                    { url: "javascript:(function()%7Bvar%20so%20%3D%20prompt(%22Enter%20SO%20%23%3A%22)%3Bif%20(so%20!%3D%3D%20null)%20%7Bvar%20url%20%3D%20%22http%3A%2F%2Fso.varland.com%2Fso%2F%22%20%2B%20so%20%2B%20%22.pdf%22%3Bwindow.open(url)%3B%7D%7D)()",
-                                                                      title: "S.O.<br>Search",
-                                                                      icon: "search",
-                                                                      icon_type: "fas",
-                                                                      new_tab: false,
-                                                                      color: "gray" }] }
-
-.row.mt-3.d-none
-  .col-12
-    = render partial: "shared/homepage_link_box", locals: { title: "Specific Shortcuts",
-                                                            links: [{ url: "https://mail.varland.com",
-                                                                      title: request.remote_ip,
-                                                                      icon: "file-excel",
-                                                                      icon_type: "fas",
-                                                                      new_tab: true,
-                                                                      color: "green" },
-                                                                    { url: "https://mail.varland.com",
-                                                                      title: request.remote_ip,
-                                                                      icon: "file-excel",
-                                                                      icon_type: "fas",
-                                                                      new_tab: true,
-                                                                      color: "green" },
-                                                                    { url: "https://mail.varland.com",
-                                                                      title: request.remote_ip,
-                                                                      icon: "file-excel",
-                                                                      icon_type: "fas",
-                                                                      new_tab: true,
-                                                                      color: "green" },
-                                                                    { url: "https://mail.varland.com",
-                                                                      title: request.remote_ip,
-                                                                      icon: "file-excel",
-                                                                      icon_type: "fas",
-                                                                      new_tab: true,
-                                                                      color: "green" },
-                                                                    { url: "https://mail.varland.com",
-                                                                      title: request.remote_ip,
-                                                                      icon: "file-excel",
-                                                                      icon_type: "fas",
-                                                                      new_tab: true,
-                                                                      color: "green" },
-                                                                    { url: "https://mail.varland.com",
-                                                                      title: request.remote_ip,
-                                                                      icon: "file-excel",
-                                                                      icon_type: "fas",
-                                                                      new_tab: true,
-                                                                      color: "green" },
-                                                                    { url: "https://mail.varland.com",
-                                                                      title: request.remote_ip,
-                                                                      icon: "file-excel",
-                                                                      icon_type: "fas",
-                                                                      new_tab: true,
-                                                                      color: "green" },
-                                                                    { url: "https://mail.varland.com",
-                                                                      title: request.remote_ip,
-                                                                      icon: "file-excel",
-                                                                      icon_type: "fas",
-                                                                      new_tab: true,
-                                                                      color: "green" },
-                                                                    { url: "https://mail.varland.com",
-                                                                      title: request.remote_ip,
-                                                                      icon: "file-excel",
-                                                                      icon_type: "fas",
-                                                                      new_tab: true,
-                                                                      color: "green" },
-                                                                    { url: "https://mail.varland.com",
-                                                                      title: request.remote_ip,
-                                                                      icon: "file-excel",
-                                                                      icon_type: "fas",
-                                                                      new_tab: true,
-                                                                      color: "green" },
-                                                                    { url: "https://mail.varland.com",
-                                                                      title: request.remote_ip,
-                                                                      icon: "file-excel",
-                                                                      icon_type: "fas",
-                                                                      new_tab: true,
-                                                                      color: "green" },
-                                                                    { url: "https://mail.varland.com",
-                                                                      title: request.remote_ip,
-                                                                      icon: "file-excel",
-                                                                      icon_type: "fas",
-                                                                      new_tab: true,
-                                                                      color: "green" },
-                                                                    { url: "https://mail.varland.com",
-                                                                      title: request.remote_ip,
-                                                                      icon: "file-excel",
-                                                                      icon_type: "fas",
-                                                                      new_tab: true,
-                                                                      color: "green" }] }
+                                                            links: global_links }
+- unless dept.nil?
+  .row.mt-3
+    .col-12
+      = render partial: "shared/homepage_link_box", locals: { title: specific_title,
+                                                              links: specific_shortcuts }
