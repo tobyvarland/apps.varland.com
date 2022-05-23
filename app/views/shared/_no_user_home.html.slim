@@ -177,6 +177,12 @@ ruby:
                             icon_type: "fas",
                             new_tab: true,
                             color: "green" }
+    specific_shortcuts << { url: "https://drive.google.com/drive/folders/0ACe2JsXoc7W_Uk9PVA",
+                            title: "Lab<br>Shared Drive",
+                            icon: "google-drive",
+                            icon_type: "fab",
+                            new_tab: true,
+                            color: "pink" }
   when :robot, :bna, :dept5
     specific_title = "Automatic Line Shortcuts"
     specific_shortcuts << { url: "https://docs.google.com/spreadsheets/d/1W5ubKL5QRBcVvAsBdX4qUPDKkJvharUXDtlmWzUXs5s/edit?usp=sharing",
@@ -221,12 +227,48 @@ ruby:
                             icon_type: "fas",
                             new_tab: true,
                             color: "blue" }
+    specific_shortcuts << { url: "https://docs.google.com/document/d/1wZ9Vxv4YnDPPXvSS75XCA5iyF-P7DvyQ4BGSlW9s7MQ/edit",
+                            title: "Line Checkout<br>(Robot)",
+                            icon: "file-word",
+                            icon_type: "fas",
+                            new_tab: true,
+                            color: "blue" }
+    specific_shortcuts << { url: "https://docs.google.com/document/d/1OQIb0JCmOPQcxezc_7aJc_-VLblIbsAmqHPEoQ60z7A/edit",
+                            title: "Line Checkout<br>(BNA)",
+                            icon: "file-word",
+                            icon_type: "fas",
+                            new_tab: true,
+                            color: "blue" }
+    specific_shortcuts << { url: "https://docs.google.com/document/d/1VAyeMwmRjoGZz7ZjKbi8wuLT0SlzEPIpURUT3ipJvXc/edit",
+                            title: "Line Checkout<br>(Dept. 5)",
+                            icon: "file-word",
+                            icon_type: "fas",
+                            new_tab: true,
+                            color: "blue" }
+    specific_shortcuts << { url: "https://drive.google.com/drive/folders/1Qz8MNcv0el1L028EC0G6QbxMcGcqeJqu",
+                            title: "Shared Drive<br>(Robot)",
+                            icon: "google-drive",
+                            icon_type: "fab",
+                            new_tab: true,
+                            color: "pink" }
+    specific_shortcuts << { url: "https://drive.google.com/drive/folders/1q4Tmu4_XtVuMvy6rD0Ih9_ndLXFBSchv",
+                            title: "Shared Drive<br>(BNA)",
+                            icon: "google-drive",
+                            icon_type: "fab",
+                            new_tab: true,
+                            color: "pink" }
+    specific_shortcuts << { url: "https://drive.google.com/drive/folders/1nH3xPKiZh_C8tYss_70vfdSDjiQlISMa",
+                            title: "Shared Drive<br>(Dept. 5)",
+                            icon: "google-drive",
+                            icon_type: "fab",
+                            new_tab: true,
+                            color: "pink" }
   end
   dept = nil if specific_shortcuts.length == 0
 
 .row.mt-3
   .col-12
-    = render partial: "shared/homepage_link_box", locals: { title: "Global Shortcuts",
+    = render partial: "shared/homepage_link_box", locals: { title: "Common Shortcuts",
                                                             links: global_links }
 - unless dept.nil?
   .row.mt-3
