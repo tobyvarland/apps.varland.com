@@ -14,7 +14,8 @@ ruby:
     "H/R",
     "Opto",
     "Sales",
-    "Training"
+    "Training",
+    "Materials"
   ].sort
 
   nav_links = []
@@ -24,6 +25,12 @@ ruby:
                   headings: ["General", "Training"],
                   external: true,
                   other_app: true }
+  nav_links << {  text: "Open Purchase Orders",
+                  url: vcms_materials_open_po_report_url,
+                  search: "po",
+                  headings: ["Materials"],
+                  external: false,
+                  other_app: false }
   nav_links << {  text: "Timeclock",
                   url: "http://timeclock.varland.com",
                   search: "break",

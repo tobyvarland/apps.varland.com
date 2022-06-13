@@ -1,0 +1,7 @@
+ruby:
+  provide(:title, 'Open Purchase Orders')
+
+.d-flex.flex-row.align-items-center.justify-content-between.mt-3
+  h1.font-varland Open Purchase Orders
+
+= render partial: "po_vendor", collection: @data[:vendors], as: :vendor

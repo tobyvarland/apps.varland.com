@@ -1,0 +1,42 @@
+.card.mt-3
+  .card-header.d-flex.flex-row.align-items-center.justify-content-between.px-2
+    div.d-flex.flex-row.align-items-center.justify-content-start
+      .fw-700 = vendor[:name]
+      .ms-1 == "(<code>#{vendor[:code]}</code>)"
+    div
+      == "<small class=\"text-uncolor\">Phone:</small> #{vendor[:phone]}" unless vendor[:phone].blank?
+  table.table.table-striped.mb-0
+    thead
+      tr
+        th.w-10 = "Material ID"
+        th.w-25 = "Description"
+        th.text-center.w-7 = "Account #"
+        th.text-center.w-7 = "PO #"
+        th.text-center.w-7 = "Order Date"
+        th.text-center.w-7 = "Due Date"
+        th.text-center.w-7 = "Order Qty"
+        th.text-center.w-7 = "Qty Remaining"
+        th.text-center.w-7 = "Status"
+        th.w-16 = "Comments"
+    tbody.small
+      - vendor[:purchase_orders].each do |po|
+        tr class="#{Date.current > Time.at(po[:due_date]).to_datetime && po[:partial_complete] != 'C' ? 'table-warning text-danger' : ''}"
+          td
+            - if po[:manual]
+              = po[:material]
+            - else
+              code = po[:material]
+          td == po[:description].join("<br>")
+          td.text-center = po[:account]
+          td.text-center = po[:po]
+          td.text-center = Time.at(po[:order_date]).to_datetime.strftime "%m/%d/%y"
+          td.text-center = Time.at(po[:due_date]).to_datetime.strftime "%m/%d/%y"
+          td.text-center == "#{po[:qty_ordered]} <span class=\"font-size-50\">#{po[:unit]}</span>"
+          td.text-center == (po[:qty_remaining] == 0 ? "" : "#{po[:qty_remaining]} <span class=\"font-size-50\">#{po[:unit]}</span>")
+          td.text-center
+            - case po[:partial_complete]
+              - when "C"
+                .badge.bg-success = "Complete"
+              - when "P"
+                .badge.bg-warning = "Partial"
+          td = po[:status]
