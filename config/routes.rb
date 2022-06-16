@@ -100,6 +100,7 @@ Rails.application.routes.draw do
     get "production/dept_5_recipes",      to: "production#dept_5_recipes",      as: :production_dept_5_recipes
     get "quality/final_inspect",          to: "quality#final_inspect",          as: :quality_final_inspect
     get "materials/open_purchase_orders", to: "materials#open_po_report",       as: :materials_open_po_report
+    get "materials/po_search",            to: "materials#po_search",            as: :materials_po_search
   end
   namespace :opto do
     post "log_trico_load",  to: "opto#log_trico_load"

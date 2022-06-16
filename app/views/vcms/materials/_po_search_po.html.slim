@@ -1,0 +1,19 @@
+tr class="#{po[:is_current] ? 'table-info' : ''}"
+  td.align-top.text-center = po[:po]
+  td.align-top
+    - if po[:is_manual]
+      = po[:material]
+    - else 
+      == "<code>#{po[:material]}</code>"
+  td.align-top = po[:vendor]
+  td.align-top = po[:account]
+  td.align-top.text-center = Date.strptime(po[:order_date], "%Y-%m-%d").strftime("%m/%d/%y")
+  td.align-top.text-center == "#{po[:quantity_ordered]} <span class=\"font-size-70\">#{po[:unit]}</span>"
+  td.align-top.text-center == "#{number_to_currency po[:unit_price]} <span class=\"font-size-70\">/ #{po[:unit]}</span>"
+  td.align-top
+    - unless po[:description].length == 0
+      small.fw-200.text-uncolor Material Description (PO File): 
+      .fw-500 == highlight_search_term search_term, po[:description].join("<br>")
+    - unless po[:extra_remarks].length == 0  
+      small.fw-200.text-uncolor Material Remarks (Remarks File): 
+      .fw-500 == highlight_search_term search_term, po[:extra_remarks].join("<br>")

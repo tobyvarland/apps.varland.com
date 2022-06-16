@@ -102,7 +102,16 @@ function updateRemaining() {
 
 function disableFormFieldsWaitingForSubmit() {
   $(".all-auto-submit :input").on("change", function() {
-    //if ($(this).val() == "") return;
+    if ($(this).hasClass("date")) return;
+    var $form = $(this).closest('form');
+    var $icon = $form.find('.loading-icon');
+    $icon.removeClass("d-none");
+    var $fields = $form.find('.form-fields');
+    $fields.addClass("d-none");
+    $form.trigger("submit");
+  });
+  $(".all-auto-submit :input").on("blur", function() {
+    if (!$(this).hasClass("date")) return;
     var $form = $(this).closest('form');
     var $icon = $form.find('.loading-icon');
     $icon.removeClass("d-none");

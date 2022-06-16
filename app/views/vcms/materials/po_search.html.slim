@@ -1,0 +1,52 @@
+ruby:
+  provide(:title, 'PO Search')
+
+- content_for :nav do
+  = render "nav"
+
+.d-flex.flex-row.align-items-center.justify-content-between.mt-3
+  h1.font-varland PO Search
+
+= simple_form_for(:filters, url: vcms_materials_po_search_url, method: "GET", html: {class: ["vp-gray-form", "my-3", "all-auto-submit"]}) do |f|
+
+  .row.loading-icon.d-none
+    .col-12.text-center.mt-3.fs-1 == fa "spinner", spin: true
+
+  .form-fields
+    .row
+      .col-12.col-md.mt-3
+        = f.input :search, required: true, label: "Search:", input_html: { value: params[:filters].blank? ? "" : params[:filters][:search] }
+    .row
+      .col-12.col-md-3.mt-3
+        = f.input :vendor, required: false, label: "Vendor:", input_html: { value: params[:filters].blank? ? "" : params[:filters][:vendor] }
+      .col-12.col-md-3.mt-3
+        = f.input :account, required: false, label: "Account:", input_html: { value: params[:filters].blank? ? "" : params[:filters][:account] }
+      .col-12.col-md-3.mt-3
+        = f.input :on_or_after, required: false, label: "PO On or After:", as: :date, html5: true, input_html: { style: "margin: 0 !important;", value: params[:filters].blank? ? "" : params[:filters][:on_or_after] }
+      .col-12.col-md-3.mt-3
+        = f.input :on_or_before, required: false, label: "PO On or Before:", as: :date, html5: true, input_html: { style: "margin: 0 !important;", value: params[:filters].blank? ? "" : params[:filters][:on_or_before] }
+
+
+- if @pos.present?
+
+  .d-flex.flex-row.align-items-center.justify-content-center
+    = render partial: "shared/pagination", locals: { label: "Purchase Orders" }
+
+  .table-responsive.mt-3
+    table.table.table-bordered.table-striped.table-hover
+      thead.table-dark
+        tr
+          th.w-1.text-center PO #
+          th.w-1 Material
+          th.w-1 Vendor 
+          th.w-1 Account 
+          th.w-1.text-center Order Date
+          th.w-1.text-center Quantity 
+          th.w-1.text-center Unit Price
+          th Remarks
+      tbody
+        = render partial: "po_search_po", collection: @pos, as: :po, locals: { search_term: params[:filters].blank? ? nil : params[:filters][:search] }
+
+
+  .d-flex.flex-row.align-items-center.justify-content-center
+    = render partial: "shared/pagination", locals: { label: "Purchase Orders" }
