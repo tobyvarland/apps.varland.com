@@ -11,7 +11,7 @@ class VCMS::MaterialsController < ApplicationController
   def po_search
     query_fields = {}
     if params[:filters].present?
-      [:search, :vendor, :account, :on_or_after, :on_or_before].each do |sym|
+      [:search, :vendor, :account, :material, :on_or_after, :on_or_before].each do |sym|
         if params[:filters][sym].present?
           query_fields[sym] = CGI.escape(params[:filters][sym])
         end

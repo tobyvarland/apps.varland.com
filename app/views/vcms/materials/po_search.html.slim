@@ -17,13 +17,15 @@ ruby:
       .col-12.col-md.mt-3
         = f.input :search, required: true, label: "Search:", input_html: { value: params[:filters].blank? ? "" : params[:filters][:search] }
     .row
-      .col-12.col-md-3.mt-3
+      .col-12.col-md.mt-3
+        = f.input :material, required: false, label: "Material:", input_html: { value: params[:filters].blank? ? "" : params[:filters][:material] }
+      .col-12.col-md.mt-3
         = f.input :vendor, required: false, label: "Vendor:", input_html: { value: params[:filters].blank? ? "" : params[:filters][:vendor] }
-      .col-12.col-md-3.mt-3
+      .col-12.col-md.mt-3
         = f.input :account, required: false, label: "Account:", input_html: { value: params[:filters].blank? ? "" : params[:filters][:account] }
-      .col-12.col-md-3.mt-3
+      .col-12.col-md.mt-3
         = f.input :on_or_after, required: false, label: "PO On or After:", as: :date, html5: true, input_html: { style: "margin: 0 !important;", value: params[:filters].blank? ? "" : params[:filters][:on_or_after] }
-      .col-12.col-md-3.mt-3
+      .col-12.col-md.mt-3
         = f.input :on_or_before, required: false, label: "PO On or Before:", as: :date, html5: true, input_html: { style: "margin: 0 !important;", value: params[:filters].blank? ? "" : params[:filters][:on_or_before] }
 
 
