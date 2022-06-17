@@ -18,6 +18,8 @@ ruby:
         = f.input :search, required: true, label: "Search:", input_html: { value: params[:filters].blank? ? "" : params[:filters][:search] }
     .row
       .col-12.col-md.mt-3
+        = f.input :po, required: false, label: "PO:", input_html: { value: params[:filters].blank? ? "" : params[:filters][:po] }
+      .col-12.col-md.mt-3
         = f.input :material, required: false, label: "Material:", input_html: { value: params[:filters].blank? ? "" : params[:filters][:material] }
       .col-12.col-md.mt-3
         = f.input :vendor, required: false, label: "Vendor:", input_html: { value: params[:filters].blank? ? "" : params[:filters][:vendor] }
