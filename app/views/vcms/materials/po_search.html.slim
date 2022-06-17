@@ -42,11 +42,12 @@ ruby:
         tr
           th.w-1.text-center PO #
           th.w-1 Material
-          th.w-1 Vendor 
-          th.w-1 Account 
+          th.w-1 Vendor
+          th.w-1 Account
           th.w-1.text-center Order Date
-          th.w-1.text-center Quantity 
-          th.w-1.text-center Unit Price
+          th.w-1.text-center Quantity
+          th.w-1.text-center Item Price
+          th.w-1.text-center PO Totals
           th Remarks
       tbody
         = render partial: "po_search_po", collection: @pos, as: :po, locals: { search_term: params[:filters].blank? ? nil : params[:filters][:search] }
