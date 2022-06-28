@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_12_17_174900) do
+ActiveRecord::Schema.define(version: 2022_06_28_211211) do
 
   create_table "active_storage_attachments", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "name", null: false
@@ -65,6 +65,11 @@ ActiveRecord::Schema.define(version: 2021_12_17_174900) do
     t.float "piece_weight", null: false
     t.boolean "printed_trico_labels", default: false, null: false
     t.string "slug"
+    t.string "iao_profile"
+    t.integer "iao_setpoint"
+    t.integer "iao_minimum"
+    t.integer "iao_maximum"
+    t.integer "iao_soak_length"
     t.index ["number"], name: "unique_shop_order", unique: true
     t.index ["slug"], name: "index_as400_shop_orders_on_slug", unique: true
   end
@@ -255,6 +260,125 @@ ActiveRecord::Schema.define(version: 2021_12_17_174900) do
     t.index ["user_id"], name: "index_employee_notes_on_user_id"
   end
 
+  create_table "groov_bake_containers", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.bigint "load_id", null: false
+    t.string "description", null: false
+    t.integer "bakestand_column"
+    t.integer "bakestand_row"
+    t.integer "rod_cart_shelf"
+    t.integer "rod_cart_position"
+    t.integer "oven_shelf"
+    t.integer "oven_shelf_tray_position"
+    t.integer "oven_shelf_rod_position"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["load_id"], name: "index_groov_bake_containers_on_load_id"
+  end
+
+  create_table "groov_bake_cycles", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.integer "oven_type", null: false
+    t.bigint "user_id"
+    t.string "oven"
+    t.string "side"
+    t.datetime "cycle_started_at"
+    t.datetime "loading_finished_at"
+    t.datetime "purge_ended_at"
+    t.datetime "soak_started_at"
+    t.datetime "soak_ended_at"
+    t.datetime "gas_off_at"
+    t.datetime "cycle_ended_at"
+    t.string "bake_profile"
+    t.integer "setpoint"
+    t.integer "minimum"
+    t.integer "maximum"
+    t.integer "soak_length"
+    t.integer "bakestand_number"
+    t.integer "rod_cart_number"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "discarded_at"
+    t.index ["user_id"], name: "index_groov_bake_cycles_on_user_id"
+  end
+
+  create_table "groov_bake_loads", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.bigint "shop_order_id", null: false
+    t.integer "number", null: false
+    t.boolean "is_rework", default: false, null: false
+    t.boolean "is_on_bakestand", default: true, null: false
+    t.datetime "in_oven_at"
+    t.integer "container_count", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["shop_order_id"], name: "index_groov_bake_loads_on_shop_order_id"
+  end
+
+  create_table "groov_bake_plated_loads", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.bigint "load_id"
+    t.bigint "as400_shop_order_id", null: false
+    t.integer "number", null: false
+    t.integer "department", null: false
+    t.datetime "out_of_plating_at", null: false
+    t.integer "bake_within", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["as400_shop_order_id"], name: "index_groov_bake_plated_loads_on_as400_shop_order_id"
+    t.index ["load_id"], name: "index_groov_bake_plated_loads_on_load_id"
+  end
+
+  create_table "groov_bake_shop_orders", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.bigint "cycle_id", null: false
+    t.bigint "as400_shop_order_id", null: false
+    t.integer "container_type", null: false
+    t.string "operation_letter", null: false
+    t.string "bake_profile"
+    t.integer "setpoint", null: false
+    t.integer "minimum", null: false
+    t.integer "maximum", null: false
+    t.integer "soak_length", null: false
+    t.integer "bake_within", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["as400_shop_order_id"], name: "index_groov_bake_shop_orders_on_as400_shop_order_id"
+    t.index ["cycle_id"], name: "index_groov_bake_shop_orders_on_cycle_id"
+  end
+
+  create_table "groov_baking_cycles", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.string "bake_type", null: false
+    t.string "oven"
+    t.datetime "cycle_started_at"
+    t.datetime "purge_ended_at"
+    t.datetime "soak_started_at"
+    t.datetime "soak_ended_at"
+    t.datetime "gas_off_at"
+    t.datetime "cycle_ended_at"
+    t.integer "setpoint"
+    t.integer "minimum"
+    t.integer "maximum"
+    t.integer "soak_length"
+    t.string "profile_name"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "discarded_at"
+  end
+
+  create_table "groov_baking_loads", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.bigint "shop_order_id", null: false
+    t.integer "number", null: false
+    t.boolean "is_rework", default: false, null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["shop_order_id"], name: "index_groov_baking_loads_on_shop_order_id"
+  end
+
+  create_table "groov_baking_shop_orders", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.bigint "cycle_id", null: false
+    t.bigint "shop_order_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["cycle_id"], name: "index_groov_baking_shop_orders_on_cycle_id"
+    t.index ["shop_order_id"], name: "index_groov_baking_shop_orders_on_shop_order_id"
+  end
+
   create_table "groov_logs", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "type", null: false
     t.string "controller_name", null: false
@@ -277,6 +401,29 @@ ActiveRecord::Schema.define(version: 2021_12_17_174900) do
     t.index ["discarded_at"], name: "index_groov_logs_on_discarded_at"
     t.index ["shop_order_id"], name: "index_groov_logs_on_shop_order_id"
     t.index ["user_id"], name: "index_groov_logs_on_user_id"
+  end
+
+  create_table "hosts", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.string "hostname", null: false
+    t.integer "vlan_number", null: false
+    t.integer "address", null: false
+    t.string "mac_address", null: false
+    t.string "device_type", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "discarded_at"
+    t.index ["discarded_at"], name: "index_hosts_on_discarded_at"
+  end
+
+  create_table "network_hosts", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.string "hostname", null: false
+    t.integer "vlan_number", null: false
+    t.integer "address", null: false
+    t.string "mac_address", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.datetime "discarded_at"
+    t.index ["discarded_at"], name: "index_network_hosts_on_discarded_at"
   end
 
   create_table "notifications", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
@@ -693,6 +840,16 @@ ActiveRecord::Schema.define(version: 2021_12_17_174900) do
   add_foreign_key "employee_note_subjects", "employee_notes"
   add_foreign_key "employee_note_subjects", "users"
   add_foreign_key "employee_notes", "users"
+  add_foreign_key "groov_bake_containers", "groov_bake_loads", column: "load_id"
+  add_foreign_key "groov_bake_cycles", "users"
+  add_foreign_key "groov_bake_loads", "groov_bake_shop_orders", column: "shop_order_id"
+  add_foreign_key "groov_bake_plated_loads", "as400_shop_orders"
+  add_foreign_key "groov_bake_plated_loads", "groov_bake_loads", column: "load_id"
+  add_foreign_key "groov_bake_shop_orders", "as400_shop_orders"
+  add_foreign_key "groov_bake_shop_orders", "groov_bake_cycles", column: "cycle_id"
+  add_foreign_key "groov_baking_loads", "groov_baking_shop_orders", column: "shop_order_id"
+  add_foreign_key "groov_baking_shop_orders", "as400_shop_orders", column: "shop_order_id"
+  add_foreign_key "groov_baking_shop_orders", "groov_baking_cycles", column: "cycle_id"
   add_foreign_key "groov_logs", "as400_shop_orders", column: "shop_order_id"
   add_foreign_key "groov_logs", "users"
   add_foreign_key "notifications", "users"

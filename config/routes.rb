@@ -3,6 +3,7 @@ require 'sidekiq-scheduler/web'
 
 Rails.application.routes.draw do
 
+  resources :network_hosts, except: :show
   namespace :records do
     resources :devices
     resources :record_types

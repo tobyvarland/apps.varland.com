@@ -373,3 +373,14 @@ mark.search-term {
     background-color: rgba(0, 0, 0, 0.05);
   }
 }
+
+.network-host-list-item {
+  &:hover {
+    a, .only-on-hover {
+      visibility: visible;
+    }
+  }
+  a, .only-on-hover {
+    visibility: hidden;
+  }
+}

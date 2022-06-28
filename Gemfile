@@ -33,7 +33,8 @@ group :test do
   gem 'webdrivers'
 end
 
-gem 'slim'
+#gem 'slim'
+gem 'slim-rails'
 gem 'pagy'
 gem 'pundit'
 gem 'devise'

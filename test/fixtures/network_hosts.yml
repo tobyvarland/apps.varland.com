@@ -1,0 +1,15 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  hostname: MyString
+  vlan_number: 1
+  address: 1
+  mac_address: MyString
+  device_type: MyString
+
+two:
+  hostname: MyString
+  vlan_number: 1
+  address: 1
+  mac_address: MyString
+  device_type: MyString

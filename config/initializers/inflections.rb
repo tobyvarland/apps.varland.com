@@ -19,4 +19,7 @@ ActiveSupport::Inflector.inflections(:en) do |inflect|
   inflect.acronym 'AS400'
   inflect.acronym 'VCMS'
   inflect.acronym 'IAO'
+  inflect.acronym 'PC'
+  inflect.acronym 'UPS'
+  inflect.acronym 'PLC'
 end
