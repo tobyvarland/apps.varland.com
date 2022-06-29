@@ -13,7 +13,7 @@ ruby:
   - NetworkHost.vlan_numbers.keys.sort.each do |key|
     ruby:
       count_hosts = NetworkHost.where(vlan_number: key).length
-    - if count_hosts > 0 || true
+    - if count_hosts > 0
       .accordion-item
         h2.accordion-header id="heading-#{key}"
           button.accordion-button.fw-700 type="button" data-bs-toggle="collapse" data-bs-target="#collapse-#{key}" == "#{key.titleize} VLAN <span class=\"ms-2 rounded-pill badge bg-warning text-dark\">#{count_hosts}</span>"
