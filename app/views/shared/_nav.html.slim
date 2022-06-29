@@ -55,6 +55,10 @@ ruby:
   nav_links << {  text: "Permissions",
                   url: permissions_url,
                   headings: ["Administration"] } if policy(Permission).index?
+  nav_links << {  text: "Network Hosts",
+                  url: network_hosts_url,
+                  search: "IPAM",
+                  headings: ["IT"] }
   if policy(:home).sidekiq?
     nav_links << {  text: "Reset Sidekiq",
                     url: reset_sidekiq_url,

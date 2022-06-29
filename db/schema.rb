@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_06_28_211211) do
+ActiveRecord::Schema.define(version: 2022_06_29_145601) do
 
   create_table "active_storage_attachments", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "name", null: false
@@ -423,6 +423,7 @@ ActiveRecord::Schema.define(version: 2022_06_28_211211) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.datetime "discarded_at"
+    t.string "location", null: false
     t.index ["discarded_at"], name: "index_network_hosts_on_discarded_at"
   end
 

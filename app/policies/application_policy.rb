@@ -12,6 +12,11 @@ class ApplicationPolicy
     user && user.permission.super_admin
   end
 
+  def is_it?
+    return false unless user
+    ["toby.varland@varland.com", "john.mcguire@varland.com", "mark.strader@varland.com"].include? user.email
+  end
+
   def require_permission_gte(permission, value, options = {})
     return false unless user && user.permission
     permission_value = user.permission.send(permission)
