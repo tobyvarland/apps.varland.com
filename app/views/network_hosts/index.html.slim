@@ -20,7 +20,7 @@ ruby:
         .accordion-collapse.show id="collapse-#{key}"
           .accordion-body
             - if lookup_context.exists?(key, ["network_hosts"], true)
-              .bg-dark.text-light.shadow-sm.small.p-2.mb-3.font-monospace
+              .bg-dark.text-light.shadow-sm.small.p-2.mb-3.font-monospace.overflow-scroll
                 = render partial: "network_hosts/#{key}"
             ul.list-unstyled.mb-0
               ruby:
