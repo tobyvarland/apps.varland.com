@@ -3,15 +3,15 @@ class NetworkHost < ApplicationRecord
   # Enumerations.
   enum vlan_number: {
     management: 1,
-    server: 10,
-    pc: 20,
-    printer: 30,
-    corrotec: 40,
-    opto: 50,
-    modbus: 60,
-    other: 70,
-    voice: 80,
-    video: 90
+    server: 2,
+    pc: 3,
+    printer: 4,
+    corrotec: 5,
+    opto: 6,
+    modbus: 7,
+    other: 8,
+    voice: 9,
+    video: 10
   }, _prefix: true
 
   # Soft deletes.
