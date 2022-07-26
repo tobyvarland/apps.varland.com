@@ -1,3 +1,15 @@
-.row
+ruby:
+  global_links = []
+  global_links << { url: "javascript:(function()%7Bvar%20so%20%3D%20prompt(%22Enter%20Quote%20%23%3A%22)%3Bif%20(so%20!%3D%3D%20null)%20%7Bvar%20url%20%3D%20%22http%3A%2F%2Fscanpdf.varland.com%2Fquote%2F%22%20%2B%20so%20%2B%20%22.pdf%22%3Bwindow.open(url)%3B%7D%7D)()",
+                    title: "Quote<br>Search",
+                    icon: "file-pdf",
+                    icon_type: "fas",
+                    new_tab: false,
+                    color: "purple" }
+
+.row.mt-3
+  .col-12
+    = render partial: "shared/homepage_link_box", locals: { title: "Sales Shortcuts",
+                                                            links: global_links }
   .col-12.mt-3
     = render "shared/home_page_widgets/part_quote_search"
