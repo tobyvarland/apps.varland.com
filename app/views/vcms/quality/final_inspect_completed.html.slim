@@ -1,0 +1,94 @@
+ruby:
+  provide(:title, 'Completed Final Inspection')
+
+- content_for :nav do
+  = render "nav"
+
+.d-flex.flex-row.align-items-center.justify-content-between.mt-3
+  h1.font-varland Completed Final Inspection
+
+.row.mt-3
+  .col-12
+    p.text-uncolor.fst-italic If you don't see an order listed here, it has likely been entered for shipment. Shipping will need to delete the shipment entry before the order shows up here.
+
+.row
+  .col-12.col-md-3
+    input.form-control.fs-2.mt-3#filter-so type="text" placeholder="S.O. #" autofocus="true"
+
+.table-responsive.mt-3
+  table.table.table-bordered.table-striped.table-hover
+    thead.table-dark
+      tr
+        th.w-1.text-center.d-md-none Options
+        th.text-center Shop Order
+        th Part Spec
+        th Inspected By
+        th.text-center Date
+        th.w-1.text-center.d-none.d-md-table-cell Options
+    tbody#final-inspect-orders
+      = render partial: "final_inspect_complete_job", collection: @data[:orders], as: :job
+
+javascript:
+
+  function getCookie(cname) {
+    let name = cname + "=";
+    let decodedCookie = decodeURIComponent(document.cookie);
+    let ca = decodedCookie.split(';');
+    for(let i = 0; i <ca.length; i++) {
+      let c = ca[i];
+      while (c.charAt(0) == ' ') {
+        c = c.substring(1);
+      }
+      if (c.indexOf(name) == 0) {
+        return c.substring(name.length, c.length);
+      }
+    }
+    return "";
+  }
+
+  function setCookie(cname, cvalue) {
+    const d = new Date();
+    d.setTime(d.getTime() + (2 * 60 * 1000));
+    let expires = "expires="+ d.toUTCString();
+    document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
+  }
+
+  $(document).on('turbolinks:load', function() {
+    var filter = getCookie("so_filter");
+    if (filter != "") {
+      setCookie("so_filter", filter);
+      $("#filter-so").val(filter).focus();
+      filterTable(filter);
+    }
+  });
+
+  $(".clear-final-inspect-button").on("click", function(event) {
+    var shopOrder = $(this).data("shop-order");
+    var confirmed = confirm("Are you sure you want to clear final inspection for S.O. #" + shopOrder + "?");
+    if (!confirmed) {
+      event.preventDefault();
+      return;
+    }
+    var filter = $("#filter-so").val();
+    if (filter.length == 6) {
+      document.cookie = "so_filter=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+    }
+  });
+
+  $("#filter-so").on("keyup", function() {
+    var filter = $(this).val();
+    filterTable(filter);
+    setCookie("so_filter", filter);
+  });
+
+  function filterTable(filter) {
+    $("#final-inspect-orders tr").each(function() {
+      var row = $(this);
+      var so = row.data("so").toString();
+      if (so.includes(filter)) {
+        row.removeClass("d-none");
+      } else {
+        row.addClass("d-none");
+      }
+    })
+  }

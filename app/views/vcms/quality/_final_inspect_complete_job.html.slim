@@ -1,0 +1,12 @@
+- if job[:inspected] && !job[:entered_for_shipment]
+  tr data-so="#{job[:shop_order]}"
+    td.text-center.d-md-none
+      - if policy(:home).record_final_inspection?
+        = link_to "#{fa("times-circle")} Clear".html_safe, clear_final_inspect_path(shop_order: job[:shop_order]), data: { shop_order: job[:shop_order] }, class: ["btn", "btn-sm", "btn-dark", "clear-final-inspect-button"]
+    td.text-center = job[:shop_order]
+    td == [job[:customer], job[:process], job[:part], job[:sub]].reject(&:blank?).join(" <span class=\"text-uncolor\">/</span> ")
+    td == User.where(username: job[:final_inspect_operator]).first.name
+    td.text-center = Date.strptime(job[:final_inspect_date].to_s, "%s").strftime("%m/%d/%y")
+    td.text-center.d-none.d-md-table-cell
+      - if policy(:home).record_final_inspection?
+        = link_to "#{fa("times-circle")} Clear".html_safe, clear_final_inspect_path(shop_order: job[:shop_order]), data: { shop_order: job[:shop_order] }, class: ["btn", "btn-sm", "btn-dark", "clear-final-inspect-button"]

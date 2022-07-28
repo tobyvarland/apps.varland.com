@@ -154,6 +154,10 @@ ruby:
                   url: vcms_quality_final_inspect_url,
                   search: "green dot",
                   headings: ["Quality"] } if policy(:home).view_final_inspection?
+  nav_links << {  text: "Completed Final Inspection",
+                  url: vcms_quality_final_inspect_completed_url,
+                  search: "green dot",
+                  headings: ["Quality"] } if policy(:home).view_final_inspection?
   nav_links << {  text: "Hardness Tests",
                   url: quality_hardness_tests_url,
                   headings: ["Quality"] } if policy(Quality::HardnessTest).index?

@@ -100,6 +100,7 @@ Rails.application.routes.draw do
     get "sales/recent_customers",         to: "sales#recent_customers",         as: :sales_recent_customers
     get "production/dept_5_recipes",      to: "production#dept_5_recipes",      as: :production_dept_5_recipes
     get "quality/final_inspect",          to: "quality#final_inspect",          as: :quality_final_inspect
+    get "quality/final_inspect_completed",          to: "quality#final_inspect_completed",          as: :quality_final_inspect_completed
     get "materials/open_purchase_orders", to: "materials#open_po_report",       as: :materials_open_po_report
     get "materials/po_search",            to: "materials#po_search",            as: :materials_po_search
   end
@@ -110,6 +111,7 @@ Rails.application.routes.draw do
   get "shipping/smalog_labels",     to: "shipping#smalog_labels",       as: :smalog_labels
   get "vcms/link_part_spec",        to: "vcms#link_part_spec",          as: :link_part_spec
   get "vcms/record_final_inspect",  to: "vcms#record_final_inspect",    as: :record_final_inspect
+  get "vcms/clear_final_inspect",  to: "vcms#clear_final_inspect",    as: :clear_final_inspect
   post "vcms/clear_opto_code",  to: "vcms#clear_opto_code",    as: :clear_opto_code
   get "vacation_calendars",         to: "pages#vacation_calendars"
 
