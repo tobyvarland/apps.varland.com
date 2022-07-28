@@ -13,7 +13,7 @@
       - if job[:opto_codes].length == 0
         | &nbsp;
       - else
-        ul.list-unstyled.mb-0
+        ul.list-unstyled.mb-0.opto-code-list
           - job[:opto_codes].each do |code|
             li
               - if policy(:home).record_final_inspection?

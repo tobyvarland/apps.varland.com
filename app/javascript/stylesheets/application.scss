@@ -384,3 +384,9 @@ mark.search-term {
     visibility: hidden;
   }
 }
+
+.opto-code-list {
+  li + li {
+    margin-top: 0.5rem;
+  }
+}
