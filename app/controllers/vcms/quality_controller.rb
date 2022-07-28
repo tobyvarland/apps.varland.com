@@ -4,7 +4,7 @@ class VCMS::QualityController < ApplicationController
 
   def final_inspect
     authorize :home, :view_final_inspection?
-    @jobs = load_json "http://vcmsapi.varland.com/final_inspect_list"
+    @data = load_json "http://json400.varland.com/final_inspect_orders"
   end
 
 end

@@ -18,17 +18,75 @@ ruby:
         th.w-1.text-center.d-md-none Options
         th.text-center Shop Order
         th Part Spec
-        th.text-center Opto Codes
+        th Opto Codes
         th.text-center Reject Tags
         th.text-center Thickness Data
         th.w-1.text-center.d-none.d-md-table-cell Options
     tbody#final-inspect-orders
-      = render partial: "final_inspect_job", collection: @jobs, as: :job
+      = render partial: "final_inspect_job", collection: @data[:orders], as: :job
 
 javascript:
 
+  function getCookie(cname) {
+    let name = cname + "=";
+    let decodedCookie = decodeURIComponent(document.cookie);
+    let ca = decodedCookie.split(';');
+    for(let i = 0; i <ca.length; i++) {
+      let c = ca[i];
+      while (c.charAt(0) == ' ') {
+        c = c.substring(1);
+      }
+      if (c.indexOf(name) == 0) {
+        return c.substring(name.length, c.length);
+      }
+    }
+    return "";
+  }
+
+  function setCookie(cname, cvalue) {
+    const d = new Date();
+    d.setTime(d.getTime() + (2 * 60 * 1000));
+    let expires = "expires="+ d.toUTCString();
+    document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
+  }
+
+  $(document).on('turbolinks:load', function() {
+    var filter = getCookie("so_filter");
+    if (filter != "") {
+      setCookie("so_filter", filter);
+      $("#filter-so").val(filter).focus();
+      filterTable(filter);
+    }
+    //console.log("cookie value: " + getCookie("so_filter"));
+  });
+
+  $(".record-final-inspect-button").on("click", function(event) {
+    var shopOrder = $(this).data("shop-order");
+    var confirmed = confirm("Are you sure you want to record final inspection for S.O. #" + shopOrder + "?");
+    if (!confirmed) {
+      event.preventDefault();
+      return;
+    }
+    var filter = $("#filter-so").val();
+    if (filter.length == 6) {
+      document.cookie = "so_filter=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+    }
+  });
+
   $("#filter-so").on("keyup", function() {
     var filter = $(this).val();
+    filterTable(filter);
+    setCookie("so_filter", filter);
+    /*
+    const d = new Date();
+    d.setTime(d.getTime() + (2 * 60 * 1000));
+    let expires = "expires="+ d.toUTCString();
+    document.cookie = "so_filter=" + filter + ";" + expires + ";path=/";
+    console.log("set cookie value to " + filter)
+    */
+  });
+
+  function filterTable(filter) {
     $("#final-inspect-orders tr").each(function() {
       var row = $(this);
       var so = row.data("so").toString();
@@ -38,4 +96,4 @@ javascript:
         row.addClass("d-none");
       }
     })
-  });
+  }
