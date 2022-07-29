@@ -3,6 +3,10 @@ require 'sidekiq-scheduler/web'
 
 Rails.application.routes.draw do
 
+  namespace :scan do
+    resources :documents, only: [:create]
+    resources :shop_orders
+  end
   resources :network_hosts, except: :show
   namespace :records do
     resources :devices

@@ -64,6 +64,7 @@ gem 'activerecord_where_assoc', '~> 1.0'
 gem 'paper_trail'
 gem 'sidekiq-scheduler'
 gem 'redcarpet'
+gem 'poppler'
 
 gem 'capistrano', '~> 3.11'
 gem 'capistrano-rails', '~> 1.4'

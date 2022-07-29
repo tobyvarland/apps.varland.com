@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_06_29_145601) do
+ActiveRecord::Schema.define(version: 2022_07_29_155217) do
 
   create_table "active_storage_attachments", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "name", null: false
@@ -742,6 +742,19 @@ ActiveRecord::Schema.define(version: 2022_06_29_145601) do
     t.index ["user_id"], name: "index_reviews_on_user_id"
   end
 
+  create_table "scan_documents", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "scan_shop_orders", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.bigint "shop_order_id", null: false
+    t.text "contents", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["shop_order_id"], name: "index_scan_shop_orders_on_shop_order_id"
+  end
+
   create_table "shift_notes", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.bigint "user_id", null: false
     t.date "note_on", null: false
@@ -877,6 +890,7 @@ ActiveRecord::Schema.define(version: 2022_06_29_145601) do
   add_foreign_key "records_results", "users"
   add_foreign_key "records_xray_calibration_checks", "records_results", column: "result_id"
   add_foreign_key "reviews", "users"
+  add_foreign_key "scan_shop_orders", "as400_shop_orders", column: "shop_order_id"
   add_foreign_key "shift_notes", "users"
   add_foreign_key "shipping_receiving_priority_notes", "users", column: "completed_by_user_id", name: "fk_recnotes_comp_user"
   add_foreign_key "shipping_receiving_priority_notes", "users", column: "requested_by_user_id", name: "fk_recnotes_req_user"

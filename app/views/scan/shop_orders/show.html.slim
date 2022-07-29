@@ -1,0 +1,13 @@
+p#notice = notice
+
+p
+  strong Shop order:
+  = @scan_shop_order.shop_order
+
+p
+  strong Document:
+  = @scan_shop_order.document
+
+=> link_to "Edit", edit_scan_shop_order_path(@scan_shop_order)
+'|
+=< link_to "Back", scan_shop_orders_path
