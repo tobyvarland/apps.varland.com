@@ -1,23 +1,5 @@
-h1 Listing scan_shop_orders
+ruby:
+  provide(:title, 'Scanned Shop Orders')
 
-table
-  thead
-    tr
-      th Shop order
-      th Document
-      th
-      th
-      th
-
-  tbody
-    - @scan_shop_orders.each do |scan_shop_order|
-      tr
-        td = scan_shop_order.shop_order
-        td = scan_shop_order.document
-        td = link_to "Show", scan_shop_order
-        td = link_to "Edit", edit_scan_shop_order_path(scan_shop_order)
-        td = link_to "Destroy", scan_shop_order, data: {confirm: "Are you sure?"}, method: :delete
-
-br
-
-= link_to "New Shop order", new_scan_shop_order_path
+.d-flex.flex-row.align-items-center.justify-content-between.mt-3
+  h1.font-varland Scanned Shop Orders
