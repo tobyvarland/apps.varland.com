@@ -13,6 +13,11 @@ document.addEventListener('turbolinks:load', function() {
       received(data) {
         var container = $("#scan-shop-order-live-container");
         var so = $(data.so);
+        container.children().each(function() {
+          if (parseInt($(this).data('shop-order')) == parseInt(data.number)) {
+            $(this).remove();
+          }
+        });
         container.prepend(so);
         $("#today-count").text(container.children().length);
         so.addClass("live-highlight");

@@ -17,6 +17,10 @@ class Scan::AnalyzeScannedFileJob < ApplicationJob
     so_regex = /VMS(\d{6})/
     if contents.match?(so_regex)
       match_data = contents.match(so_regex)
+      Scan::ShopOrder.with_shop_order(match_data[1].to_i).each do |old|
+        old.scanned_file.purge
+        old.destroy
+      end
       scan_so = Scan::ShopOrder.new
       scan_so.shop_order_number = match_data[1].to_i
       scan_so.contents = contents

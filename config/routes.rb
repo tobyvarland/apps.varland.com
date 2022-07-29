@@ -5,7 +5,7 @@ Rails.application.routes.draw do
 
   namespace :scan do
     resources :documents, only: [:create]
-    resources :shop_orders, only: [:index] do
+    resources :shop_orders, only: [:index, :show] do
       collection do
         get :today
       end

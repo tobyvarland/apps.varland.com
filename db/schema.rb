@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_07_29_155217) do
+ActiveRecord::Schema.define(version: 2022_07_29_201648) do
 
   create_table "active_storage_attachments", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "name", null: false
@@ -752,7 +752,9 @@ ActiveRecord::Schema.define(version: 2022_07_29_155217) do
     t.text "contents", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.string "slug"
     t.index ["shop_order_id"], name: "index_scan_shop_orders_on_shop_order_id"
+    t.index ["slug"], name: "index_scan_shop_orders_on_slug", unique: true
   end
 
   create_table "shift_notes", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|

@@ -1,5 +1,9 @@
 class Scan::ShopOrder < ApplicationRecord
 
+  # Use FriendlyID.
+  extend FriendlyId
+  friendly_id :shop_order_number, use: :slugged
+
   # Uploads.
   has_one_attached  :scanned_file
 

@@ -1,5 +1,5 @@
-tr.scanned_shop_order
+tr.scanned_shop_order data-shop-order="#{so.shop_order_number}"
   td.text-center = so.shop_order.number
   td = so.shop_order.part_spec.join " / "
   td = so.created_at.strftime("%m/%d/%y %l:%M%P")
-  td.text-center = link_to fa('file-pdf'), rails_blob_path(so.scanned_file, disposition: "inline"), class: "text-danger", target: "_blank"
+  td.text-center = link_to fa('file-pdf'), so, class: "text-danger", target: "_blank"

@@ -3,7 +3,7 @@ class Scan::ShopOrderBroadcastJob < ApplicationJob
   queue_as :default
 
   def perform(shop_order)
-    ActionCable.server.broadcast("scan_shop_orders_channel", so: render_so(shop_order))
+    ActionCable.server.broadcast("scan_shop_orders_channel", so: render_so(shop_order), number: shop_order.shop_order_number)
   end
 
   private
