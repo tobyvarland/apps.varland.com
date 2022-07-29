@@ -1,8 +1,9 @@
 ruby:
   provide(:title, 'Shop Orders Scanned Today')
 
-.d-flex.flex-row.align-items-center.justify-content-between.mt-3
+.d-flex.flex-row.align-items-center.justify-content-start.mt-3
   h1.font-varland Shop Orders Scanned Today
+  .badge.bg-pink-300.text-dark.ms-3.rounded-pill.fs-6#today-count = @scan_shop_orders.length
 
 .table-responsive.mt-3
   table.table.table-bordered.table-striped.table-hover

@@ -7,7 +7,7 @@ Rails.application.routes.draw do
     resources :documents, only: [:create]
     resources :shop_orders, only: [:index] do
       collection do
-        get :live
+        get :today
       end
     end
   end

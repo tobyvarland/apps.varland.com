@@ -10,7 +10,7 @@ class Scan::ShopOrdersController < ApplicationController
   has_scope :with_process
   has_scope :with_part
 
-  def live
+  def today
     @scan_shop_orders = Scan::ShopOrder.includes(:shop_order).today.order(created_at: :desc)
   end
 
