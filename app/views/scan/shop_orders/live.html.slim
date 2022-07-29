@@ -1,0 +1,16 @@
+ruby:
+  provide(:title, 'Shop Orders Scanned Today')
+
+.d-flex.flex-row.align-items-center.justify-content-between.mt-3
+  h1.font-varland Shop Orders Scanned Today
+
+.table-responsive.mt-3
+  table.table.table-bordered.table-striped.table-hover
+    thead.table-dark
+      tr
+        td.text-center Shop Order
+        th Part Spec
+        th Date/Time Scanned
+        td.text-center PDF File
+    tbody#scan-shop-order-live-container
+      = render partial: "shop_order", collection: @scan_shop_orders, as: :so

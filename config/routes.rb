@@ -5,7 +5,11 @@ Rails.application.routes.draw do
 
   namespace :scan do
     resources :documents, only: [:create]
-    resources :shop_orders
+    resources :shop_orders, only: [:index] do
+      collection do
+        get :live
+      end
+    end
   end
   resources :network_hosts, except: :show
   namespace :records do

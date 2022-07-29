@@ -3,3 +3,24 @@ ruby:
 
 .d-flex.flex-row.align-items-center.justify-content-between.mt-3
   h1.font-varland Scanned Shop Orders
+
+= render "filter_form"
+
+- if @scan_shop_orders.present?
+
+  .d-flex.flex-row.align-items-center.justify-content-center
+    = render partial: "shared/pagination", locals: { label: "Scanned Shop Orders" }
+
+  .table-responsive.mt-3
+    table.table.table-bordered.table-striped.table-hover
+      thead.table-dark
+        tr
+          td.text-center Shop Order
+          th Part Spec
+          th Date/Time Scanned
+          td.text-center PDF File
+      tbody
+        = render partial: "shop_order", collection: @scan_shop_orders, as: :so
+
+  .d-flex.flex-row.align-items-center.justify-content-center
+    = render partial: "shared/pagination", locals: { label: "Scanned Shop Orders" }
