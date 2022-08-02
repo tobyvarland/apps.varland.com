@@ -4,7 +4,11 @@ require 'sidekiq-scheduler/web'
 Rails.application.routes.draw do
 
   namespace :scan do
-    resources :documents, only: [:create]
+    resources :documents, only: [:index, :show, :create] do
+      member do
+        post :convert_to_shop_order
+      end
+    end
     resources :shop_orders, only: [:index, :show] do
       collection do
         get :today

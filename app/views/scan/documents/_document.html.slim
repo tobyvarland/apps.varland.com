@@ -1,0 +1,7 @@
+tr.scanned_document
+  td = document.created_at.strftime("%m/%d/%y %l:%M%P")
+  td
+    = simple_form_for(:shop_order, :url => convert_to_shop_order_scan_document_path(document), html: {class: []}) do |f|
+      = f.input :number, required: true, label: false, input_html: { placeholder: "S.O. #" }
+
+  td.text-center = link_to fa('file-pdf'), document, class: "text-danger", target: "_blank"

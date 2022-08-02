@@ -1,0 +1,23 @@
+ruby:
+  provide(:title, 'Scanned Documents')
+
+.d-flex.flex-row.align-items-center.justify-content-between.mt-3
+  h1.font-varland Scanned Documents
+
+- if @scan_documents.present?
+
+  .d-flex.flex-row.align-items-center.justify-content-center
+    = render partial: "shared/pagination", locals: { label: "Scanned Documents" }
+
+  .table-responsive.mt-3
+    table.table.table-bordered.table-striped.table-hover
+      thead.table-dark
+        tr
+          th Date/Time Scanned
+          td Shop Order Details
+          td.text-center PDF File
+      tbody
+        = render partial: "document", collection: @scan_documents, as: :document
+
+  .d-flex.flex-row.align-items-center.justify-content-center
+    = render partial: "shared/pagination", locals: { label: "Scanned Documents" }
