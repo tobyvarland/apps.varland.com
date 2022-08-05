@@ -9,7 +9,7 @@ class Scan::ShopOrdersController < ApplicationController
   has_scope :with_search_term
   has_scope :with_shop_order
   has_scope :with_customer
-  has_scope :with_process
+  has_scope :with_process_code
   has_scope :with_part
 
   def today
