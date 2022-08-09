@@ -12,7 +12,7 @@ set :keep_releases, 5
 task :restart_sidekiq do
   on roles(:app) do
     #execute "systemctl restart sidekiq-apps"
-    execute "sudo service sidekiq-apps restart"
+    execute "sudo -S service sidekiq-apps restart"
   end
 end
 
