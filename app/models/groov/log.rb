@@ -188,15 +188,6 @@ class Groov::Log < ApplicationRecord
     formatted.gsub!(/\bIwc\b/, 'IWC')
     formatted.gsub!(/\bOrp\b/, 'ORP')
     formatted.gsub!(/\bAa\b/, 'AA')
-    #substitutions = [['Ph', "pH"],
-    #                 ['En', "EN"],
-    #                 ['Io', "I/O"],
-    #                 ['Iao', "IAO"],
-    #                 ['Psi', "PSI"],
-    #                 ['Iwc', "IWC"]]
-    #substitutions.each do |sub|
-    #  formatted.gsub!("\\b#{sub[0]}\\b", sub[1])
-    #end
     return formatted
   end
 
