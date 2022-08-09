@@ -26,8 +26,8 @@ class Groov::Log < ApplicationRecord
 
   # Scopes.
   include TextSearchable
-  scope :on_or_after, ->(value) { where("log_at >= ?", value) unless value.blank? }
-  scope :on_or_before, ->(value) { where("log_at <= ?", value) unless value.blank? }
+  scope :on_or_after, ->(value) { where("DATE(log_at) >= ?", value) unless value.blank? }
+  scope :on_or_before, ->(value) { where("DATE(log_at) <= ?", value) unless value.blank? }
   scope :for_controller, ->(value) { where(controller_name: value) unless value.blank? }
   scope :for_device, ->(value) { where(device: value) unless value.blank? }
   scope :of_type, ->(value) { where(type: value) unless value.blank? }
