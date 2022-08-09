@@ -280,6 +280,7 @@ module ApplicationHelper
     return string if term.blank?
     re = /'.*?'|".*?"|\S+/
     term.scan(re) do |individual_term|
+      next if individual_term.blank?
       unquoted_term = individual_term
       unquoted_term = individual_term.delete_prefix("'").delete_suffix("'") if individual_term[0] == "'" && individual_term[-1] == "'"
       unquoted_term = individual_term.delete_prefix("\"").delete_suffix("\"") if individual_term[0] == "\"" && individual_term[-1] == "\""
