@@ -25,11 +25,16 @@ class Groov::Log < ApplicationRecord
             uniqueness: true
 
   # Scopes.
+  include TextSearchable
   scope :on_or_after, ->(value) { where("log_at >= ?", value) unless value.blank? }
   scope :on_or_before, ->(value) { where("log_at <= ?", value) unless value.blank? }
   scope :for_controller, ->(value) { where(controller_name: value) unless value.blank? }
   scope :for_device, ->(value) { where(device: value) unless value.blank? }
   scope :of_type, ->(value) { where(type: value) unless value.blank? }
+  scope :with_search_term, ->(value) {
+    return if value.blank?
+    with_text_containing(:description, value)
+  }
   scope :sorted_by, ->(value) {
     case value
     when 'oldest'
@@ -42,8 +47,20 @@ class Groov::Log < ApplicationRecord
   # Callbacks.
   after_create_commit { Groov::LogBroadcastJob.perform_now self }
   after_create_commit { Groov::ProcessNotificationJob.perform_later self }
+  before_save { self.update_description }
 
   # Instance methods.
+
+  # Updates description in database before save.
+  def update_description
+    description = self.details
+    substitutions = [["<br>", "\n"],
+                     ["<br />", "\n"]]
+    substitutions.each do |sub|
+      description.gsub!(sub[0], sub[1])
+    end
+    self.description = ActionView::Base.full_sanitizer.sanitize(description)
+  end
 
   # Returns notification subject. May be overridden in child class.
   def notification_subject

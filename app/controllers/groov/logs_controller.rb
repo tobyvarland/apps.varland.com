@@ -5,17 +5,22 @@ class Groov::LogsController < ApplicationController
 
   before_action :set_log, only: %i[ reclassify destroy ]
 
-  #has_scope :on_or_after
-  #has_scope :on_or_before
+  has_scope :on_or_after
+  has_scope :on_or_before
+  has_scope :for_controller
+  has_scope :of_type
+  has_scope :with_search_term
   has_scope :sorted_by, default: "newest", allow_blank: true
 
 	def index
     authorize(Groov::Log)
+    filters_to_cookies
     begin
       @pagy, @logs = pagy(apply_scopes(Groov::Log.all), items: 50)
     rescue
       @pagy, @logs = pagy(apply_scopes(Groov::Log.all), items: 50, page: 1)
     end
+    @all_logs = apply_scopes(Groov::Log.all)
 	end
 
   def live

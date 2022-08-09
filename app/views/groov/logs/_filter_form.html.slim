@@ -1,0 +1,13 @@
+= simple_form_for(:filters, method: "GET", html: {class: ["vp-gray-form", "my-3", "all-auto-submit"]}) do |f|
+
+  .row.loading-icon.d-none
+    .col-12.text-center.mt-3.fs-1 == fa "spinner", spin: true
+
+  .form-fields
+    .row
+      .col-12.col-md.mt-3 = f.input :for_controller, collection: @all_logs.pluck(:controller_name).uniq.sort, selected: params[:filters].blank? ? "" : params[:filters][:for_controller], required: false, label: "Controller:", include_blank: true, input_html: { class: "form-select" }
+      .col-12.col-md.mt-3 = f.input :of_type, collection: @all_logs.map {|l| [l.log_type, l.type]}.uniq.sort, selected: params[:filters].blank? ? "" : params[:filters][:of_type], required: false, label: "Type:", include_blank: true, input_html: { class: "form-select" }
+      .col-12.col-md.mt-3 = f.input :on_or_after, as: :datetime, html5: true, required: false, label: "Start Date:", input_html: { value: params[:filters].blank? ? nil : params[:filters][:on_or_after] }
+      .col-12.col-md.mt-3 = f.input :on_or_before, as: :datetime, html5: true, required: false, label: "End Date:", input_html: { value: params[:filters].blank? ? nil : params[:filters][:on_or_before] }
+    .row
+      .col-12.mt-3 = f.input :with_search_term, required: false, label: "Search:", input_html: { value: params[:filters].blank? ? nil : params[:filters][:with_search_term] }

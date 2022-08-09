@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_07_29_201648) do
+ActiveRecord::Schema.define(version: 2022_08_09_132731) do
 
   create_table "active_storage_attachments", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "name", null: false
@@ -398,6 +398,7 @@ ActiveRecord::Schema.define(version: 2022_07_29_201648) do
     t.datetime "updated_at", precision: 6, null: false
     t.datetime "discarded_at"
     t.bigint "user_id"
+    t.text "description"
     t.index ["discarded_at"], name: "index_groov_logs_on_discarded_at"
     t.index ["shop_order_id"], name: "index_groov_logs_on_shop_order_id"
     t.index ["user_id"], name: "index_groov_logs_on_user_id"

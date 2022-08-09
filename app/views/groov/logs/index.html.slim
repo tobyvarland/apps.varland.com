@@ -7,6 +7,8 @@ ruby:
 .d-flex.flex-row.align-items-center.justify-content-between.mt-3
   h1.font-varland Groov Logs
 
+= render "filter_form"
+
 .d-flex.flex-row.align-items-center.justify-content-center
   = render partial: "shared/pagination", locals: { label: "Groov Logs" }
 
@@ -20,3 +22,6 @@ ruby:
         th Details
     tbody
       == render partial: "log", collection: @logs
+
+.d-flex.flex-row.align-items-center.justify-content-center
+  = render partial: "shared/pagination", locals: { label: "Groov Logs" }
