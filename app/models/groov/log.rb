@@ -186,6 +186,8 @@ class Groov::Log < ApplicationRecord
     formatted.gsub!(/\bIao\b/, 'IAO')
     formatted.gsub!(/\bPsi\b/, 'PSI')
     formatted.gsub!(/\bIwc\b/, 'IWC')
+    formatted.gsub!(/\bOrp\b/, 'ORP')
+    formatted.gsub!(/\bAa\b/, 'AA')
     #substitutions = [['Ph', "pH"],
     #                 ['En', "EN"],
     #                 ['Io', "I/O"],
