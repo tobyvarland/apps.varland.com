@@ -1,7 +1,6 @@
 lock "~> 3.16.0"
 
 set :application, "apps.varland.com"
-set :pty, true
 set :repo_url, "git@github.com:tobyvarland/apps.varland.com.git"
 
 set :deploy_to, "/home/varland/#{fetch :application}"
