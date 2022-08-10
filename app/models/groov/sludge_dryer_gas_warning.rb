@@ -4,7 +4,7 @@ class Groov::SludgeDryerGasWarning < Groov::Log
 
   # Log details.
   def details
-    return "Power to the sludge dryer is turned on but gas has been turned off for too long."
+    return "Power to the sludge dryer is turned on but the gas is turned off."
   end
 
 end
