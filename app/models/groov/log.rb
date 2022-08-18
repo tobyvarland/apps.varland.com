@@ -188,8 +188,6 @@ class Groov::Log < ApplicationRecord
     formatted.gsub!(/\bIwc\b/, 'IWC')
     formatted.gsub!(/\bOrp\b/, 'ORP')
     formatted.gsub!(/\bAa\b/, 'AA')
-    formatted.gsub!(/\bPm\b/, 'PM')
-    formatted.gsub!(/\bKwh\b/, 'kWh')
     return formatted
   end
 
