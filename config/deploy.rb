@@ -15,4 +15,4 @@ task :restart_sidekiq do
   end
 end
 
-after :"passenger:restart", :restart_sidekiq
+# after :"passenger:restart", :restart_sidekiq
