@@ -12,8 +12,8 @@
       = f.input :address, required: true, label: "Address:", hint: "Last group of IP address only."
     .col-12.col-md.mt-3
       = f.input :mac_address, required: true, label: "MAC:", input_html: { placeholder: "12:34:56:78:90:ab" }
-    .col-12.col-md.mt-3
-      = f.input :location, required: true, label: "Location:", input_html: { placeholder: "L[1-5][A-J][0-9]" }
+    .col-12.col-md.mt-3.d-none
+      = f.input :location, required: true, label: "Location:", input_html: { placeholder: "L[1-5]-[A-J]-[0-9]", value: "L1-A-0" }
 
   .form-actions
     = link_to "#{fa "times"} Cancel".html_safe, :back, class: ["btn", "btn-light", "btn-sm", "me-3"], tabindex: -1

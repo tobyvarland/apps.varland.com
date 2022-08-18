@@ -43,7 +43,7 @@ ruby:
                     .font-monospace.font-size-75 = pluralize gap, "empty address"
                 li.d-flex.flex-row.align-items-baseline.justify-content-start.network-host-list-item.text-nowrap.overflow-scroll
                   .font-monospace.fw-700 = host.ip_address
-                  .font-monospace.fw-700.ms-3.text-purple-500 = host.location.upcase
+                  .font-monospace.fw-700.ms-3.text-purple-500.d-none = host.location.upcase
                   code.ms-3.fw-700 = host.fqdn
                   .font-size-70.font-monospace.ms-1.only-on-hover = host.mac_address.downcase
                   small.ms-3 = link_to fa("edit"), edit_network_host_path(host)

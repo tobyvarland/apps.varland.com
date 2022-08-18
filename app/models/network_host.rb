@@ -45,7 +45,7 @@ class NetworkHost < ApplicationRecord
 
   # Returns FQDN.
   def fqdn
-    return "#{self.hostname}.vp.local"
+    return "#{self.hostname}.varland.com"
   end
 
 end
