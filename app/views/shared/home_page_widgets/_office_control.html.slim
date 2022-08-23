@@ -1,0 +1,11 @@
+.card.bg-light.shadow-sm
+  h6.card-header.px-2.d-flex.flex-row.align-items-center.justify-content-between
+    div = "Office Control"
+  .card-body.small
+    .row
+      .col-4
+        = link_to "Open Gate", open_parking_lot_gate_url, method: :post, class: ["btn", "btn-primary", "w-100"]
+      .col-4
+        = link_to "Open Front Door", open_front_door_url, method: :post, class: ["btn", "btn-primary", "w-100"]
+      .col-4
+        = link_to "Open Hallway Door", open_hallway_door_url, method: :post, class: ["btn", "btn-primary", "w-100"]

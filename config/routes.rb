@@ -126,6 +126,9 @@ Rails.application.routes.draw do
   get "vcms/clear_final_inspect",  to: "vcms#clear_final_inspect",    as: :clear_final_inspect
   post "vcms/clear_opto_code",  to: "vcms#clear_opto_code",    as: :clear_opto_code
   get "vacation_calendars",         to: "pages#vacation_calendars"
+  post "open_parking_lot_gate",     to: "pages#open_parking_lot_gate",  as: :open_parking_lot_gate
+  post "open_font_door",            to: "pages#open_front_door",        as: :open_front_door
+  post "open_hallway_door",         to: "pages#open_hallway_door",      as: :open_hallway_door
 
   # Mount Sidekiq.
   mount Sidekiq::Web => "/sidekiq"
