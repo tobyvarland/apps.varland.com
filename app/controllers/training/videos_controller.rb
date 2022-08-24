@@ -1,5 +1,7 @@
 class Training::VideosController < ApplicationController
 
+  skip_before_action :authenticate_user!
+
   before_action :set_training_video,
                 only: %i[ show edit update destroy ]
 
