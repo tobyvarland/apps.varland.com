@@ -3,6 +3,9 @@ require 'sidekiq-scheduler/web'
 
 Rails.application.routes.draw do
 
+  namespace :training do
+    resources :videos
+  end
   namespace :scan do
     resources :documents, only: [:index, :show, :create] do
       member do

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_08_09_132731) do
+ActiveRecord::Schema.define(version: 2022_08_24_172730) do
 
   create_table "active_storage_attachments", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "name", null: false
@@ -416,6 +416,12 @@ ActiveRecord::Schema.define(version: 2022_08_09_132731) do
     t.index ["discarded_at"], name: "index_hosts_on_discarded_at"
   end
 
+  create_table "it_opto_strategies", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.string "name", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
   create_table "network_hosts", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "hostname", null: false
     t.integer "vlan_number", null: false
@@ -801,6 +807,17 @@ ActiveRecord::Schema.define(version: 2022_08_09_132731) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["shop_order_id"], name: "index_shipping_trico_bins_on_shop_order_id"
+  end
+
+  create_table "training_videos", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.string "title", null: false
+    t.text "description", null: false
+    t.string "url", null: false
+    t.string "slug", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["slug"], name: "index_training_videos_on_slug", unique: true
+    t.index ["title"], name: "index_training_videos_on_title", unique: true
   end
 
   create_table "users", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|

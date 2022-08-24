@@ -1,0 +1,3 @@
+li.nav-item = primary_nav_link "list-alt", "All Training Videos", training_videos_url
+- if policy(Training::Video).create?
+  li.nav-item = primary_nav_link "plus", "New Training Video", new_training_video_path

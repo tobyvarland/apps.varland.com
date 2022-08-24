@@ -1,0 +1,8 @@
+= simple_form_for(:filters, method: "GET", html: {class: ["vp-gray-form", "my-3", "all-auto-submit"]}) do |f|
+
+  .row.loading-icon.d-none
+    .col-12.text-center.mt-3.fs-1 == fa "spinner", spin: true
+
+  .form-fields
+    .row
+      .col-12.mt-3 = f.input :with_search_term, required: false, label: "Search:", input_html: { value: params[:filters].blank? ? nil : params[:filters][:with_search_term] }

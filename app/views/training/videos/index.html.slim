@@ -1,0 +1,47 @@
+ruby:
+  provide(:title, 'Training Videos')
+
+- content_for :nav do
+  = render "nav"
+
+.d-flex.flex-row.align-items-center.justify-content-between.mt-3
+  h1.font-varland Training Videos
+  div
+    - if policy(Training::Video).create?
+      = link_to "#{fa 'plus'} Video".html_safe, new_training_video_path, class: ["btn", "btn-sm", "btn-primary"]
+
+= render "filter_form"
+
+.d-flex.flex-row.align-items-center.justify-content-center
+  = render partial: "shared/pagination", locals: { label: "Training Video" }
+
+.table-responsive.mt-3
+  table.table.table-bordered.table-striped.table-hover
+    thead.table-dark
+      tr
+        th.w-1 Video
+        th Details
+        th.text-center.w-1 Options
+    tbody
+      - @training_videos.each do |video|
+        tr
+          td.align-top.w-20
+            .ratio.ratio-16x9
+              iframe src="#{video.url}" allowfullscreen="allowfullscreen"
+          td.align-top
+            - if params[:filters] && !params[:filters][:with_search_term].blank?
+              strong == highlight_search_term(params[:filters][:with_search_term], video.title)
+              == highlight_search_term(params[:filters][:with_search_term], simple_format(video.description))
+            - else
+              strong = video.title
+              == simple_format(video.description)
+          td.text-center.align-top
+            - if policy(video).show?
+              = link_to "#{fa 'eye'} View".html_safe, video, class: ["btn", "btn-sm", "btn-primary"]
+            - if policy(video).edit?
+                = link_to "#{fa 'edit'} Edit".html_safe, edit_training_video_path(video), class: ["btn", "btn-sm", "btn-primary", "ms-1"]
+            - if policy(video).destroy?
+              = link_to "#{fa 'trash-alt'} Delete".html_safe, video, method: :delete, data: { confirm: "Are you sure you want to delete this video?" }, class: ["btn", "btn-sm", "btn-danger", "ms-1"]
+
+.d-flex.flex-row.align-items-center.justify-content-center
+  = render partial: "shared/pagination", locals: { label: "Training Video" }
