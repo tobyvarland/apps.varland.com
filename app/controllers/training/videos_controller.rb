@@ -13,9 +13,9 @@ class Training::VideosController < ApplicationController
     authorize(Training::Video)
     filters_to_cookies
     begin
-      @pagy, @training_videos = pagy(apply_scopes(Training::Video.all), items: 100)
+      @pagy, @training_videos = pagy(apply_scopes(Training::Video.order(:title)), items: 100)
     rescue
-      @pagy, @training_videos = pagy(apply_scopes(Training::Video.all), items: 100, page: 1)
+      @pagy, @training_videos = pagy(apply_scopes(Training::Video.order(:title)), items: 100, page: 1)
     end
   end
 

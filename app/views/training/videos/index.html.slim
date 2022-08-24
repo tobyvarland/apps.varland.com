@@ -28,7 +28,7 @@ ruby:
           td.align-top.w-20
             .ratio.ratio-16x9
               iframe src="#{video.url}" allowfullscreen="allowfullscreen"
-          td.align-top
+          td.align-top.text-wrap
             - if params[:filters] && !params[:filters][:with_search_term].blank?
               strong == highlight_search_term(params[:filters][:with_search_term], video.title)
               == highlight_search_term(params[:filters][:with_search_term], simple_format(video.description))
