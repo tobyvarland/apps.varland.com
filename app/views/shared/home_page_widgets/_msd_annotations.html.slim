@@ -3,6 +3,8 @@
     div = "MSD Chart Annotations"
   .card-body.small
     .row
+      .col-12.fst-italic.text-muted == "Entering annotations as <code class=\"fw-700\">#{current_user.name}</code>. Rember to sign out and back in if this isn't you."
+    .row.mt-3
       .col-4
         = simple_form_for(:annotation, url: msd_annotation_path, method: "POST", html: {class: ["single-button-form"]}) do |f|
           = f.input :type, as: :hidden, input_html: { value: "eight_hour" }
