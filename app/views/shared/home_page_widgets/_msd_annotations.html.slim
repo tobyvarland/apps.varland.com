@@ -1,0 +1,17 @@
+.card.bg-light.shadow-sm
+  h6.card-header.px-2.d-flex.flex-row.align-items-center.justify-content-between
+    div = "MSD Chart Annotations"
+  .card-body.small
+    .row
+      .col-4
+        = simple_form_for(:annotation, url: msd_annotation_path, method: "POST", html: {class: ["single-button-form"]}) do |f|
+          = f.input :type, as: :hidden, input_html: { value: "eight_hour" }
+          = f.button :button, "8 Hour Verification", class: ["btn-primary", "w-100"]
+      .col-4
+        = simple_form_for(:annotation, url: msd_annotation_path, method: "POST", html: {class: ["single-button-form"]}) do |f|
+          = f.input :type, as: :hidden, input_html: { value: "calibration" }
+          = f.button :button, "Weekly pH Meter Calibration", class: ["btn-primary", "w-100"]
+      .col-4
+        = simple_form_for(:annotation, url: msd_annotation_path, method: "POST", html: {class: ["single-button-form"]}) do |f|
+          = f.input :type, as: :hidden, input_html: { value: "weekly" }
+          = f.button :button, "Weekly Verification of Previous Week", class: ["btn-primary", "w-100"]

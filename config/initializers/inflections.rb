@@ -22,4 +22,5 @@ ActiveSupport::Inflector.inflections(:en) do |inflect|
   inflect.acronym 'PC'
   inflect.acronym 'UPS'
   inflect.acronym 'PLC'
+  inflect.acronym 'MSD'
 end
