@@ -7,14 +7,13 @@ class HistorianController < ApplicationController
     record_type_name = nil
     case params[:annotation][:type].to_sym
     when :eight_hour
-      record_type_name = "Every Shift Final pH Verification"
+      record_type_name = "Every Shift Final pH Verification xxx"
     when :weekly
-      record_type_name = "Weekly Final pH Verification"
+      record_type_name = "Weekly Final pH Verification xxx"
     when :calibration
-      record_type_name = "Final pH Probe Calibration"
+      record_type_name = "Final pH Probe Calibration xxx"
     end
     new_record.record_type = Records::RecordType.where(name: record_type_name).first
-    return unless new_record.valid?
     if new_record.save
       redirect_back fallback_location: root_path, notice: "Annotation added to MSD chart in historian."
     else
