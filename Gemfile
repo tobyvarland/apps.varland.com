@@ -66,6 +66,8 @@ gem 'sidekiq-scheduler'
 gem 'redcarpet'
 gem 'poppler'
 gem 'aws-sdk-s3'
+gem 'ed25519'
+gem 'bcrypt_pbkdf'
 
 gem 'capistrano', '~> 3.11'
 gem 'capistrano-rails', '~> 1.4'
