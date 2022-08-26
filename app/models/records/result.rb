@@ -101,8 +101,24 @@ class Records::Result < ApplicationRecord
   after_commit      :update_assignment
   after_initialize  :load_defaults
   after_create_commit   :generate_notifications
+  after_create_commit   :add_msd_annotations
 
   # Instance methods.
+
+  # Adds annotations to MSD historian chart for specified record types.
+  def add_msd_annotations
+    type = nil
+    case self.record_type.name
+    when "Final pH Probe Calibration"
+      type = :calibration
+    when "Weekly Final pH Verification"
+      type = :weekly
+    when "Every Shift Final pH Verification"
+      type = :eight_hour
+    end
+    return if type.nil?
+    StoreMSDAnnotationJob.perform_later self.user.name, type
+  end
 
   # Generates notifications.
   def generate_notifications
