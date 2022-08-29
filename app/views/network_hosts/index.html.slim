@@ -45,7 +45,6 @@ ruby:
                   .font-monospace.fw-700 = host.ip_address
                   .font-monospace.fw-700.ms-3.text-purple-500.d-none = host.location.upcase
                   code.ms-3.fw-700 = host.fqdn
-                  .font-size-70.font-monospace.ms-1.only-on-hover = host.mac_address.downcase
                   small.ms-3 = link_to fa("edit"), edit_network_host_path(host)
                   small.ms-1 = link_to fa("trash-alt"), host, method: :delete, data: { confirm: "Are you sure you want to delete #{host.fqdn}?" }, class: "text-danger"
               - if last != 254

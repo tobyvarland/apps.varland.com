@@ -10,8 +10,6 @@
       = f.input :vlan_number, required: true, label: "VLAN:", collection: NetworkHost.vlan_numbers.keys.sort.map { |value| [value.titleize, value] }, input_html: { class: "form-select" }
     .col-12.col-md.mt-3
       = f.input :address, required: true, label: "Address:", hint: "Last group of IP address only."
-    .col-12.col-md.mt-3
-      = f.input :mac_address, required: true, label: "MAC:", input_html: { placeholder: "12:34:56:78:90:ab" }
     .col-12.col-md.mt-3.d-none
       = f.input :location, required: true, label: "Location:", input_html: { placeholder: "L[1-5]-[A-J]-[0-9]", value: "L1-A-0" }
 

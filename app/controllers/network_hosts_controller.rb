@@ -52,7 +52,6 @@ class NetworkHostsController < ApplicationController
       params.require(:network_host).permit(:hostname,
                                            :vlan_number,
                                            :address,
-                                           :mac_address,
                                            :location)
     end
 

@@ -22,15 +22,13 @@ class NetworkHost < ApplicationRecord
   scope :by_vlan_and_address, -> { order(:vlan_number, :address) }
 
   # Validations.
-  validates :hostname, :vlan_number, :address, :mac_address, :location,
+  validates :hostname, :vlan_number, :address, :location,
             presence: true
-  validates :hostname, :mac_address,
+  validates :hostname,
             uniqueness: true
   validates :address,
             uniqueness: { scope: :vlan_number },
             numericality: { only_integer: true, greater_than: 1, less_than: 251 }
-  validates :mac_address,
-            format: { with: /\A[a-f\d]{2}(:[a-f\d]{2}){5}\z/i }
   validates :hostname,
             format: { with: /\A[a-z]([\-]?[a-z\d]+)*\z/ }
   validates :location,
