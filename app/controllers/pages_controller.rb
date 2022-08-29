@@ -31,11 +31,4 @@ class PagesController < ApplicationController
   def screenshots
   end
 
-  def screenshots_app
-    send_data(Rails.root.join('lib', 'assets', 'programs', "VarlandSS.exe"),
-              filename: "VarlandSS.exe",
-              type: "application/octet-stream",
-              disposition: "inline")
-  end
-
 end
