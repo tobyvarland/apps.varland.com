@@ -11,6 +11,7 @@ class HistorianController < ApplicationController
     when :weekly
       record_type_name = "Weekly Final pH Verification xxx"
     when :calibration
+      new_record.reason_code = Records::ReasonCode.where(name: "Weekly Calibration").first
       record_type_name = "Final pH Probe Calibration xxx"
     end
     new_record.record_type = Records::RecordType.where(name: record_type_name).first
