@@ -1,0 +1,23 @@
+ruby:
+  provide(:title, 'Clocked In Now')
+
+.d-flex.flex-row.align-items-center.justify-content-between.mt-3
+  h1.font-varland Clocked In Right Now
+
+.row.mt-3
+  - if @clocked_in.nil?
+    .col-12.fw-700.text-danger
+      | Error retrieving data from Payroll Partners. Please contact IT for help.
+  - else
+    - [:platers, :maintenance, :lab, :shipping, :supervisors, :office].each do |group|
+      .col
+        .card
+          .card-header.fw-700 = group.to_s.titleize
+          - if @clocked_in[group].length == 0
+            .card-body.fst-italic.text-muted.py-2.small Nobody clocked in right now.
+          - else
+            ul.list-group.list-group-flush
+              - @clocked_in[group].each do |employee|
+                li.list-group-item.small.d-flex.flex-row.align-items-center.justify-content-between
+                  div == "#{employee[:name]}"
+                  div = employee[:in_at].strftime "%l:%M%P"

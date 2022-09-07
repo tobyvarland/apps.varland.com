@@ -31,4 +31,31 @@ class PagesController < ApplicationController
   def screenshots
   end
 
+  def now
+
+    # Check for existing bearer token.
+    cookie_token = nil
+    if cookies["pp_bearer"] && !cookies["pp_bearer"].blank?
+      puts "🔴 ===> Loading value from cookie: pp_bearer = #{cookies["pp_bearer"]}"
+      cookie_token = cookies["pp_bearer"]
+    end
+
+    # Set up client and retrieve data.
+    client = PayrollPartnersApiClient.new
+    unless cookie_token.nil?
+      client.token = cookie_token
+    end
+    @clocked_in = client.get_employees_in_now
+
+    # If data retrieved successfully and didn't already have cookie, set cookie.
+    if !@clocked_in.nil? && cookie_token.nil?
+      cookies["pp_bearer"] = { value: client.token, expires: 59.minutes.from_now }
+      puts "🔴 ===> Setting value of cookie: pp_bearer = #{client.token}"
+    end
+
+    # Define auto refresh interval.
+    @auto_refresh = 300
+
+  end
+
 end

@@ -134,6 +134,7 @@ Rails.application.routes.draw do
   post "open_hallway_door",         to: "pages#open_hallway_door",      as: :open_hallway_door
   post "historian/msd_annotation",  to: "historian#msd_annotation",     as: :msd_annotation
   get "screenshots",                to: "pages#screenshots",            as: :screenshots
+  get "now",                        to: "pages#now",                    as: :clocked_in_now
 
   # Mount Sidekiq.
   mount Sidekiq::Web => "/sidekiq"
