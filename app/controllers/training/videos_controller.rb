@@ -65,7 +65,7 @@ class Training::VideosController < ApplicationController
 
 
     def training_video_params
-      params.require(:training_video).permit(:title, :description, :url)
+      params.require(:training_video).permit(:title, :description, :url, :has_sound)
     end
 
 end

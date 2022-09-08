@@ -35,6 +35,7 @@ ruby:
             - else
               strong = video.title
               == simple_format(video.description)
+              .mt-3.fst-italic.text-muted.small == "#{fa(video.has_sound ? "volume-up" : "volume-mute")} #{video.has_sound ? "This video has sound." : "This video does not have sound."}"
           td.text-center.align-top
             - if policy(video).show?
               = link_to "#{fa 'eye'} View".html_safe, video, class: ["btn", "btn-sm", "btn-primary"]

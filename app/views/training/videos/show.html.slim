@@ -15,7 +15,9 @@ ruby:
 
 .row
   .col-12.col-lg-8.offset-lg-2
-    .bg-light.mt-3.px-3.pt-3.shadow-sm.overflow-auto.rounded.small.fst-italic == simple_format(@training_video.description)
+    .bg-light.mt-3.px-3.pt-3.shadow-sm.overflow-auto.rounded.small.fst-italic
+      div == simple_format(@training_video.description)
+      .my-3.text-muted.small == "#{fa(@training_video.has_sound ? "volume-up" : "volume-mute")} #{@training_video.has_sound ? "This video has sound." : "This video does not have sound."}"
 
 .row
   .col-12.col-lg-8.offset-lg-2

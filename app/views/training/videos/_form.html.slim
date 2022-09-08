@@ -10,6 +10,8 @@
           = f.input :title, required: true, label: "Title:", input_html: { autofocus: true }
         .col-12.col-md.mt-3
           = f.input :url, required: true, label: "URL:"
+        .col-12.col-md.mt-3
+          = f.input :has_sound, collection: [["Yes", true], ["No", false]], required: true, label: "Has Sound?", input_html: { class: "form-select" }
       .row
         .col-12.col-md-12.mt-3
           = f.input :description, label: "Description:", input_html: { rows: 3 }
