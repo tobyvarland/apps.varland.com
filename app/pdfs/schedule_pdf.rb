@@ -62,7 +62,7 @@ class SchedulePdf < ::VarlandPdf
   def print_page_header(rows, rows_2 = nil, rows_3 = nil)
 
     # Draw week ending title.
-    self.txtb "Week Ending #{Date.parse(@schedule[:end_date]).strftime "%m/%d/%Y"}",
+    self.txtb "Week Ending #{@schedule[:end_date].strftime "%m/%d/%Y"}",
               0.25,
               8.25,
               SchedulePdf::SCHEDULE_WIDTH - 0.5,
