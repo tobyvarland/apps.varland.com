@@ -197,7 +197,7 @@ class SchedulePdf < ::VarlandPdf
       @schedule[:employees].each do |employee|
         next unless employee[:schedule] == target_schedule
         next unless employee[:employee][:number] == target_employee[:number]
-        self.txtb "#{employee[:employee][:first][0]}. #{employee[:employee][:last]}",
+        self.txtb "#{employee[:employee][:first][0]}. #{employee[:employee][:last]}".titleize,
                   0.25,
                   current_y,
                   SchedulePdf::SCHEDULE_WIDTH - 0.5,

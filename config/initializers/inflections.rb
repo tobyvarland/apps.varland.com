@@ -23,4 +23,7 @@ ActiveSupport::Inflector.inflections(:en) do |inflect|
   inflect.acronym 'UPS'
   inflect.acronym 'PLC'
   inflect.acronym 'MSD'
+  inflect.acronym "McGuire"
+  inflect.acronym "McClure"
+  inflect.acronym "McKeehan"
 end
