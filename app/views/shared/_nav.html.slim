@@ -19,6 +19,18 @@ ruby:
   ].sort
 
   nav_links = []
+  nav_links << {  text: "Weekly Schedule",
+                  url: schedule_url,
+                  search: "payroll partners",
+                  headings: ["Timeclock"],
+                  external: false,
+                  other_app: false }
+  nav_links << {  text: "Clocked In Right Now",
+                  url: clocked_in_now_url,
+                  search: "payroll partners",
+                  headings: ["Timeclock"],
+                  external: false,
+                  other_app: false }
   nav_links << {  text: "Training Videos",
                   url: training_videos_url,
                   search: "screen screencast",

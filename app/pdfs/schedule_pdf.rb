@@ -11,14 +11,10 @@ class SchedulePdf < ::VarlandPdf
   PAGE_ORIENTATION = :landscape
   PAGE_SIZE = [612.00, SchedulePdf::SCHEDULE_WIDTH * 72.0]
 
-  def initialize()
+  def initialize(schedule)
     super()
-    self.load_data
+    @schedule = schedule
     self.print_data
-  end
-
-  def load_data
-    @schedule = JSON.parse(File.read(Rails.root.join('tmp', 'schedule.json')), symbolize_names: true)
   end
 
   def print_data

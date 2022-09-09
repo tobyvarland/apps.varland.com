@@ -45,13 +45,12 @@ class PagesController < ApplicationController
       client.token = cookie_token
     end
     @schedule = client.get_schedule
-    File.write(Rails.root.join('tmp', 'schedule.json'), @schedule.to_json)
 
     respond_to do |format|
       format.json {
       }
       format.pdf {
-        pdf = SchedulePdf.new
+        pdf = SchedulePdf.new(@schedule)
         send_data(pdf.render,
                   filename: "WeeklySchedule.pdf",
                   type: "application/pdf",
