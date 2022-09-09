@@ -37,6 +37,9 @@ class VarlandPdf < Prawn::Document
   # Default color for text. May be overridden in child classes.
   DEFAULT_FONT_COLOR = '000000'
 
+  # Default page size for Varland documents. May be overridden in child classes.
+  PAGE_SIZE = [612.00, 792.00]
+
   # Formats number.
   def format_number(number, options = {})
 
@@ -90,8 +93,9 @@ class VarlandPdf < Prawn::Document
           bottom_margin: self.class::PAGE_MARGIN,
           left_margin: self.class::PAGE_MARGIN,
           right_margin: self.class::PAGE_MARGIN,
-          page_layout: self.class::PAGE_ORIENTATION)
-    
+          page_layout: self.class::PAGE_ORIENTATION,
+          page_size: self.class::PAGE_SIZE)
+
     # Load fonts.
     self.load_fonts
 
@@ -145,7 +149,7 @@ class VarlandPdf < Prawn::Document
 
   # Loads single font using Prawn's font_families.update method.
   def load_single_font(name)
-    
+
     # Determine path to font file.
     font_file_name = name.gsub(/\s+/, "")
     path = Rails.root.join('lib', 'assets', 'fonts', "#{font_file_name}.ttf")
@@ -198,7 +202,7 @@ class VarlandPdf < Prawn::Document
       self.txtb("Graphic Error: #{graphic.to_s}", x, y, width, height, fill_color: 'ff0000', color: 'ffffff', style: :bold)
       return
     end
-    
+
     # Shade area.
     self.rect(x, y, width, height, fill_color: fill_color, line_color: nil)
 
@@ -407,6 +411,7 @@ class VarlandPdf < Prawn::Document
     v_pad = options.fetch(:v_pad, 0)
     transform = options.fetch(:transform, nil)
     rotate = options.fetch(:rotate, nil)
+    rotate_around = options.fetch(:rotate_around, nil)
 
     # If stroke/fill options passed, draw rectangle.
     if fill_color || line_color
@@ -444,6 +449,7 @@ class VarlandPdf < Prawn::Document
                   align: h_align,
                   valign: v_align,
                   rotate: rotate,
+                  rotate_around: rotate_around,
                   inline_format: true,
                   overflow: :shrink_to_fit)
 
@@ -547,7 +553,7 @@ class VarlandPdf < Prawn::Document
 
   # Protected methods.
   protected
-  
+
     # Reference Rails helpers.
     def helpers
       ApplicationController.helpers

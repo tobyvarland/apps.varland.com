@@ -31,6 +31,42 @@ class PagesController < ApplicationController
   def screenshots
   end
 
+  def schedule
+
+    # Check for existing bearer token.
+    cookie_token = nil
+    if cookies["pp_bearer"] && !cookies["pp_bearer"].blank?
+      puts "🔴 ===> Loading value from cookie: pp_bearer = #{cookies["pp_bearer"]}"
+      cookie_token = cookies["pp_bearer"]
+    end
+
+    client = PayrollPartnersApiClient.new
+    unless cookie_token.nil?
+      client.token = cookie_token
+    end
+    @schedule = client.get_schedule
+    File.write(Rails.root.join('tmp', 'schedule.json'), @schedule.to_json)
+
+    respond_to do |format|
+      format.json {
+      }
+      format.pdf {
+        pdf = SchedulePdf.new
+        send_data(pdf.render,
+                  filename: "WeeklySchedule.pdf",
+                  type: "application/pdf",
+                  disposition: "inline")
+      }
+    end
+
+    # If data retrieved successfully and didn't already have cookie, set cookie.
+    if !@schedule.nil? && cookie_token.nil?
+      cookies["pp_bearer"] = { value: client.token, expires: 59.minutes.from_now }
+      puts "🔴 ===> Setting value of cookie: pp_bearer = #{client.token}"
+    end
+
+  end
+
   def now
 
     # Check for existing bearer token.

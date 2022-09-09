@@ -135,6 +135,7 @@ Rails.application.routes.draw do
   post "historian/msd_annotation",  to: "historian#msd_annotation",     as: :msd_annotation
   get "screenshots",                to: "pages#screenshots",            as: :screenshots
   get "now",                        to: "pages#now",                    as: :clocked_in_now
+  get "schedule",                   to: "pages#schedule",               as: :schedule
 
   # Mount Sidekiq.
   mount Sidekiq::Web => "/sidekiq"
