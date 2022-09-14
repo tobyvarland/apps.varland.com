@@ -52,6 +52,8 @@ class FinancialReportPdf < ::VarlandPdf
     @pages = []
     current_page = []
     current_line = 0
+    line4 = nil
+    line5 = nil
     @lines.each do |line|
       current_line += 1
       if line.match(/PAGE\s+\d+/)
@@ -60,8 +62,8 @@ class FinancialReportPdf < ::VarlandPdf
         current_page = []
       end
       case current_line
-      when 1, 4
-        # Ignore lines
+      when 1
+        # Ignore
       when 2
         @report_title = line.strip if @report_title.blank?
       when 3
@@ -70,11 +72,39 @@ class FinancialReportPdf < ::VarlandPdf
           @report_month = matches[1]
           @report_year = matches[2].to_i
         end
+      when 4
+        line4 = line #.gsub("\n",'')
+      when 5
+        line5 = line #.gsub("\n",'')
+        current_page << self.format_column_headers(line4, line5)
       else
-        current_page << self.format_leading_spaces(line)
+        current_page << self.format_leading_spaces(line) #.gsub("\n",''))
       end
     end
     @pages << current_page if current_page.length > 0
+  end
+
+  def format_column_headers(line4, line5)
+    formatted = line5
+    formatted2 = ""
+    line4_bytes = line4.bytes
+    (0...line4.length).each do |i|
+      if line4_bytes[i] >= 33 && line4_bytes[i] <= 126
+        formatted[i] = line4_bytes[i].chr
+      end
+    end
+    formatted_bytes = formatted.bytes
+    (0...formatted_bytes.length).each do |i|
+      if i != 0 && formatted_bytes[i] == 32 && formatted_bytes[i - 1] != 32
+        formatted2 << "</u>"
+      end
+      formatted2 << formatted_bytes[i].chr
+      if (i != formatted_bytes.length - 1) && formatted_bytes[i] == 32 && formatted_bytes[i + 1] != 32
+        formatted2 << "<u>"
+      end
+    end
+    formatted2 << "</u>"
+    return self.format_leading_spaces(formatted2.gsub("_", " "))
   end
 
   def format_leading_spaces(line)
