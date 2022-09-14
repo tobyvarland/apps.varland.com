@@ -15,10 +15,17 @@ ruby:
     "Opto",
     "Sales",
     "Training",
-    "Materials"
+    "Materials",
+    "Accounting"
   ].sort
 
   nav_links = []
+  nav_links << {  text: "Financial Report Formatter",
+                  url: format_report_url,
+                  search: "general ledger",
+                  headings: ["Accounting"],
+                  external: false,
+                  other_app: false }
   nav_links << {  text: "Weekly Schedule",
                   url: schedule_url(format: :pdf),
                   search: "payroll partners",

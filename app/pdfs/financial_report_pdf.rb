@@ -3,7 +3,7 @@ class FinancialReportPdf < ::VarlandPdf
   PAGE_ORIENTATION = :landscape
   LINE_HEIGHT = 0.16
 
-  def initialize
+  def initialize(file)
 
     # Initialize report.
     super()
@@ -12,6 +12,7 @@ class FinancialReportPdf < ::VarlandPdf
     @report_year = nil
 
     # Load data.
+    @file = file
     self.load_data
     self.split_data
 
@@ -44,7 +45,7 @@ class FinancialReportPdf < ::VarlandPdf
   end
 
   def load_data
-    @lines = File.readlines(Rails.root.join('lib', 'assets', 'temp', "bs.txt"))
+    @lines = File.readlines(@file)
   end
 
   def split_data

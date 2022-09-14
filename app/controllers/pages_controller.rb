@@ -94,11 +94,15 @@ class PagesController < ApplicationController
   end
 
   def fin_report
-    pdf = FinancialReportPdf.new
+    redirect_to format_report_url if params[:report_file].blank?
+    pdf = FinancialReportPdf.new(params[:report_file])
     send_data(pdf.render,
               filename: "FinancialReport.pdf",
               type: "application/pdf",
               disposition: "inline")
+  end
+
+  def format_report
   end
 
 end

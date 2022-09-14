@@ -1,0 +1,11 @@
+ruby:
+  provide(:title, 'Financial Report Formatter')
+
+.d-flex.flex-row.align-items-center.justify-content-between.mt-3
+  h1.font-varland Financial Report Formatter
+
+.row
+  .col-12.col-md-4
+    = form_with(url: fin_report_url, local: true, class: ["form-inline", "bg-light", "p-3", "shadow-sm", "mt-3"]) do |form|
+      .form-group
+        = form.file_field :report_file, class: ["form-control", "form-control-sm"], onchange: 'this.form.submit();'
