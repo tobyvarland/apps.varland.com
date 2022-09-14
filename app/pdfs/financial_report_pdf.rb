@@ -1,7 +1,7 @@
 class FinancialReportPdf < ::VarlandPdf
 
   PAGE_ORIENTATION = :landscape
-  LINE_HEIGHT = 0.16
+  LINE_HEIGHT = 0.155
 
   def initialize(file)
 
