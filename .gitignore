@@ -44,3 +44,6 @@ yarn-debug.log*
 
 /app/models/groov/potentiometer_error.rb
 /app/models/groov/temperature_error.rb
+
+# Ignore local-only assets.
+/lib/assets/temp/*

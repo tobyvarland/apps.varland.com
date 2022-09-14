@@ -93,4 +93,12 @@ class PagesController < ApplicationController
 
   end
 
+  def fin_report
+    pdf = FinancialReportPdf.new
+    send_data(pdf.render,
+              filename: "FinancialReport.pdf",
+              type: "application/pdf",
+              disposition: "inline")
+  end
+
 end

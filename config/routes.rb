@@ -136,6 +136,7 @@ Rails.application.routes.draw do
   get "screenshots",                to: "pages#screenshots",            as: :screenshots
   get "now",                        to: "pages#now",                    as: :clocked_in_now
   get "schedule",                   to: "pages#schedule",               as: :schedule
+  get "fin_report",                 to: "pages#fin_report",             as: :fin_report
 
   # Mount Sidekiq.
   mount Sidekiq::Web => "/sidekiq"
