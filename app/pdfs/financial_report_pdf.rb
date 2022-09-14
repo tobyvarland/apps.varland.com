@@ -85,7 +85,7 @@ class FinancialReportPdf < ::VarlandPdf
   end
 
   def format_column_headers(line4, line5)
-    formatted = line5
+    formatted = line5.gsub("\n", "")
     formatted2 = ""
     line4_bytes = line4.bytes
     (0...line4.length).each do |i|
