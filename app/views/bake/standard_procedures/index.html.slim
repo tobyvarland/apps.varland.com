@@ -1,0 +1,34 @@
+ruby:
+  provide(:title, 'Standard Procedures - Baking')
+
+- content_for :nav do
+  = render "bake/nav"
+
+.d-flex.flex-row.align-items-center.justify-content-between.mt-3
+  h1.font-varland Standard Procedures
+  div
+    = link_to "#{fa 'plus'} Standard Procedure".html_safe, new_bake_standard_procedure_path, class: ["btn", "btn-sm", "btn-primary"]
+
+.table-responsive.my-3
+  table.table.table-striped.table-hover
+    thead.table-dark
+      tr
+        th Name
+        th Process Codes
+        th.text-center Temperature
+        th.text-center Soak Length
+        th.text-center Bake Within
+        th.text-center Profile Name
+        th.w-1.text-center Options
+    tbody
+      - @bake_standard_procedures.each do |procedure|
+        tr
+          td = procedure.name
+          td == procedure.process_codes.split(",").sort.map {|code| "<code>#{code}</code>"}.join(", ")
+          td.text-center == "#{procedure.setpoint}&deg; F set <small class=\"text-uncolor\">/</small> #{procedure.minimum}&deg; F min <small class=\"text-uncolor\">/</small> #{procedure.maximum}&deg; F max"
+          td.text-center = pluralize procedure.soak_hours, "hour"
+          td.text-center == procedure.within_hours.blank? ? "<small class=\"text-uncolor\">n/a</small>" : pluralize(procedure.within_hours, "hour")
+          td.text-center == procedure.profile_name.blank? ? "<small class=\"text-uncolor\">n/a</small>" : procedure.profile_name
+          td.text-center
+              = link_to "#{fa 'edit'} Edit".html_safe, edit_bake_standard_procedure_path(procedure), class: ["btn", "btn-sm", "btn-primary"]
+              = link_to "#{fa 'trash-alt'} Delete".html_safe, procedure, method: :delete, data: { confirm: "Are you sure you want to delete this standard procedure?" }, class: ["btn", "btn-sm", "btn-danger", "ms-1"]

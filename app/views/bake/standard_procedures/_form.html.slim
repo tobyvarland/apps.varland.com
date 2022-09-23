@@ -1,0 +1,29 @@
+= simple_form_for(@bake_standard_procedure, html: {class: ["vp-gray-form", "my-3"]}) do |f|
+
+  = f.error_notification
+  = f.error_notification message: f.object.errors[:base].to_sentence if f.object.errors[:base].present?
+
+  .row
+    .col-12.col-md
+      .row
+        .col-12.col-md.mt-3
+          = f.input :name, label: "Name:", input_html: { autofocus: true }
+        .col-12.col-md.mt-3
+          = f.input :process_codes, label: "Process Codes:", hint: "Leave blank to allow any.", input_html: { placeholder: "NI,ZN" }
+      .row
+        .col-12.col-md.mt-3
+          = f.input :setpoint, label: "Setpoint:"
+        .col-12.col-md.mt-3
+          = f.input :minimum, label: "Minimum:"
+        .col-12.col-md.mt-3
+          = f.input :maximum, label: "Maximum:"
+        .col-12.col-md.mt-3
+          = f.input :soak_hours, label: "Soak Length:", hint: "Enter soak length in hours."
+        .col-12.col-md.mt-3
+          = f.input :within_hours, label: "Bake Within:", hint: "Enter hours or leave blank."
+        .col-12.col-md.mt-3
+          = f.input :profile_name, label: "Profile Name:"
+
+  .form-actions
+    = link_to "#{fa "times"} Cancel".html_safe, :back, class: ["btn", "btn-light", "btn-sm", "me-3"], tabindex: -1
+    = f.button :button, "#{fa "check"} Save Standard Procedure".html_safe, class: ["btn-primary", "btn-sm"]

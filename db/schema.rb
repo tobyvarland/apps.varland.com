@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_09_08_132934) do
+ActiveRecord::Schema.define(version: 2022_09_23_172551) do
 
   create_table "active_storage_attachments", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "name", null: false
@@ -82,6 +82,20 @@ ActiveRecord::Schema.define(version: 2022_09_08_132934) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["attachable_type", "attachable_id"], name: "index_attachments_on_attachable"
+  end
+
+  create_table "bake_standard_procedures", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.string "name", null: false
+    t.string "process_codes"
+    t.integer "setpoint", null: false
+    t.integer "minimum", null: false
+    t.integer "maximum", null: false
+    t.float "soak_hours", null: false
+    t.float "within_hours"
+    t.string "profile_name"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["name"], name: "index_bake_standard_procedures_on_name", unique: true
   end
 
   create_table "baking_containers", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
