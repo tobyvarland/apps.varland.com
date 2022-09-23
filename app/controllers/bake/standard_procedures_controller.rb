@@ -4,7 +4,7 @@ class Bake::StandardProceduresController < ApplicationController
                 only: %i[ show edit update destroy ]
 
   def index
-    @bake_standard_procedures = Bake::StandardProcedure.all
+    @bake_standard_procedures = Bake::StandardProcedure.order(:name)
   end
 
   def new
