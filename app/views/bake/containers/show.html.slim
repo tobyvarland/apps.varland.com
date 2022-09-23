@@ -1,0 +1,13 @@
+p#notice = notice
+
+p
+  strong Stand:
+  = @bake_container.stand
+
+p
+  strong Number:
+  = @bake_container.number
+
+=> link_to "Edit", edit_bake_container_path(@bake_container)
+'|
+=< link_to "Back", bake_containers_path

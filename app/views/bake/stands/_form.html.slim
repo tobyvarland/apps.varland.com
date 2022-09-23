@@ -1,0 +1,18 @@
+= form_for @bake_stand do |f|
+  - if @bake_stand.errors.any?
+    #error_explanation
+      h2 = "#{pluralize(@bake_stand.errors.count, "error")} prohibited this bake_stand from being saved:"
+      ul
+        - @bake_stand.errors.full_messages.each do |message|
+          li = message
+
+  .field
+    = f.label :cycle
+    = f.text_field :cycle
+  .field
+    = f.label :type
+    = f.text_field :type
+  .field
+    = f.label :name
+    = f.text_field :name
+  .actions = f.submit

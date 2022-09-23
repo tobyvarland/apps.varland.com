@@ -1,0 +1,35 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  type: 
+  oven: MyString
+  side: MyString
+  is_locked: false
+  cycle_started_at: 2022-09-23 14:39:23
+  loadings_finished_at: 2022-09-23 14:39:23
+  purge_finished_at: 2022-09-23 14:39:23
+  soak_started_at: 2022-09-23 14:39:23
+  soak_ended_at: 2022-09-23 14:39:23
+  gas_off_at: 2022-09-23 14:39:23
+  cooling_finished_at: 2022-09-23 14:39:23
+  cycle_ended_at: 2022-09-23 14:39:23
+  psi_consumed: 1.5
+  used_cooling_profile: false
+  user: one
+
+two:
+  type: 
+  oven: MyString
+  side: MyString
+  is_locked: false
+  cycle_started_at: 2022-09-23 14:39:23
+  loadings_finished_at: 2022-09-23 14:39:23
+  purge_finished_at: 2022-09-23 14:39:23
+  soak_started_at: 2022-09-23 14:39:23
+  soak_ended_at: 2022-09-23 14:39:23
+  gas_off_at: 2022-09-23 14:39:23
+  cooling_finished_at: 2022-09-23 14:39:23
+  cycle_ended_at: 2022-09-23 14:39:23
+  psi_consumed: 1.5
+  used_cooling_profile: false
+  user: two

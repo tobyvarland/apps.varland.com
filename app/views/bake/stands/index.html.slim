@@ -1,0 +1,25 @@
+h1 Listing bake_stands
+
+table
+  thead
+    tr
+      th cycle
+      th Type
+      th Name
+      th
+      th
+      th
+
+  tbody
+    - @bake_stands.each do |bake_stand|
+      tr
+        td = bake_stand.cycle
+        td = bake_stand.type
+        td = bake_stand.name
+        td = link_to "Show", bake_stand
+        td = link_to "Edit", edit_bake_stand_path(bake_stand)
+        td = link_to "Destroy", bake_stand, data: {confirm: "Are you sure?"}, method: :delete
+
+br
+
+= link_to "New Stand", new_bake_stand_path

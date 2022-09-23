@@ -1,0 +1,23 @@
+h1 Listing bake_containers
+
+table
+  thead
+    tr
+      th Stand
+      th Number
+      th
+      th
+      th
+
+  tbody
+    - @bake_containers.each do |bake_container|
+      tr
+        td = bake_container.stand
+        td = bake_container.number
+        td = link_to "Show", bake_container
+        td = link_to "Edit", edit_bake_container_path(bake_container)
+        td = link_to "Destroy", bake_container, data: {confirm: "Are you sure?"}, method: :delete
+
+br
+
+= link_to "New Container", new_bake_container_path

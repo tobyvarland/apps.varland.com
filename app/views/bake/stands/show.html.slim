@@ -1,0 +1,17 @@
+p#notice = notice
+
+p
+  strong cycle:
+  = @bake_stand.cycle
+
+p
+  strong Type:
+  = @bake_stand.type
+
+p
+  strong Name:
+  = @bake_stand.name
+
+=> link_to "Edit", edit_bake_stand_path(@bake_stand)
+'|
+=< link_to "Back", bake_stands_path

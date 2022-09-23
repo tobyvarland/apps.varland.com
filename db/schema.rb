@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_09_23_172551) do
+ActiveRecord::Schema.define(version: 2022_09_23_193619) do
 
   create_table "active_storage_attachments", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "name", null: false
@@ -84,6 +84,36 @@ ActiveRecord::Schema.define(version: 2022_09_23_172551) do
     t.index ["attachable_type", "attachable_id"], name: "index_attachments_on_attachable"
   end
 
+  create_table "bake_containers", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.bigint "stand_id", null: false
+    t.integer "number", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["stand_id", "number"], name: "unique_number_on_stand", unique: true
+    t.index ["stand_id"], name: "index_bake_containers_on_stand_id"
+  end
+
+  create_table "bake_cycles", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.string "type", null: false
+    t.string "oven"
+    t.string "side"
+    t.boolean "is_locked", default: false, null: false
+    t.datetime "cycle_started_at"
+    t.datetime "loadings_finished_at"
+    t.datetime "purge_finished_at"
+    t.datetime "soak_started_at"
+    t.datetime "soak_ended_at"
+    t.datetime "gas_off_at"
+    t.datetime "cooling_finished_at"
+    t.datetime "cycle_ended_at"
+    t.float "psi_consumed"
+    t.boolean "used_cooling_profile"
+    t.bigint "user_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["user_id"], name: "index_bake_cycles_on_user_id"
+  end
+
   create_table "bake_standard_procedures", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "name", null: false
     t.string "process_codes"
@@ -96,6 +126,15 @@ ActiveRecord::Schema.define(version: 2022_09_23_172551) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["name"], name: "index_bake_standard_procedures_on_name", unique: true
+  end
+
+  create_table "bake_stands", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.bigint "cycle_id", null: false
+    t.string "type", null: false
+    t.string "name"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["cycle_id"], name: "index_bake_stands_on_cycle_id"
   end
 
   create_table "baking_containers", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
@@ -867,6 +906,9 @@ ActiveRecord::Schema.define(version: 2022_09_23_172551) do
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "bake_containers", "bake_stands", column: "stand_id"
+  add_foreign_key "bake_cycles", "users"
+  add_foreign_key "bake_stands", "bake_cycles", column: "cycle_id"
   add_foreign_key "baking_containers", "baking_cycles", column: "cycle_id"
   add_foreign_key "baking_containers", "baking_loads", column: "load_id"
   add_foreign_key "baking_cycles", "baking_oven_types", column: "oven_type_id"

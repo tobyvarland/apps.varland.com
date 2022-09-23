@@ -4,6 +4,15 @@ require 'sidekiq-scheduler/web'
 Rails.application.routes.draw do
 
   namespace :bake do
+    resources :containers
+  end
+  namespace :bake do
+    resources :stands
+  end
+  namespace :bake do
+    resources :cycles
+  end
+  namespace :bake do
     resources :standard_procedures
   end
   namespace :training do

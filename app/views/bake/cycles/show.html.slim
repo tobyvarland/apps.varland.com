@@ -1,0 +1,65 @@
+p#notice = notice
+
+p
+  strong Type:
+  = @bake_cycle.type
+
+p
+  strong Oven:
+  = @bake_cycle.oven
+
+p
+  strong Side:
+  = @bake_cycle.side
+
+p
+  strong Is locked:
+  = @bake_cycle.is_locked
+
+p
+  strong Cycle started at:
+  = @bake_cycle.cycle_started_at
+
+p
+  strong Loadings finished at:
+  = @bake_cycle.loadings_finished_at
+
+p
+  strong Purge finished at:
+  = @bake_cycle.purge_finished_at
+
+p
+  strong Soak started at:
+  = @bake_cycle.soak_started_at
+
+p
+  strong Soak ended at:
+  = @bake_cycle.soak_ended_at
+
+p
+  strong Gas off at:
+  = @bake_cycle.gas_off_at
+
+p
+  strong Cooling finished at:
+  = @bake_cycle.cooling_finished_at
+
+p
+  strong Cycle ended at:
+  = @bake_cycle.cycle_ended_at
+
+p
+  strong Psi consumed:
+  = @bake_cycle.psi_consumed
+
+p
+  strong Used cooling profile:
+  = @bake_cycle.used_cooling_profile
+
+p
+  strong User:
+  = @bake_cycle.user
+
+=> link_to "Edit", edit_bake_cycle_path(@bake_cycle)
+'|
+=< link_to "Back", bake_cycles_path

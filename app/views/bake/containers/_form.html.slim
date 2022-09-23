@@ -1,0 +1,15 @@
+= form_for @bake_container do |f|
+  - if @bake_container.errors.any?
+    #error_explanation
+      h2 = "#{pluralize(@bake_container.errors.count, "error")} prohibited this bake_container from being saved:"
+      ul
+        - @bake_container.errors.full_messages.each do |message|
+          li = message
+
+  .field
+    = f.label :stand
+    = f.text_field :stand
+  .field
+    = f.label :number
+    = f.number_field :number
+  .actions = f.submit

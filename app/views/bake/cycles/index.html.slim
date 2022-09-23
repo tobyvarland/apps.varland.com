@@ -1,0 +1,49 @@
+h1 Listing bake_cycles
+
+table
+  thead
+    tr
+      th Type
+      th Oven
+      th Side
+      th Is locked
+      th Cycle started at
+      th Loadings finished at
+      th Purge finished at
+      th Soak started at
+      th Soak ended at
+      th Gas off at
+      th Cooling finished at
+      th Cycle ended at
+      th Psi consumed
+      th Used cooling profile
+      th User
+      th
+      th
+      th
+
+  tbody
+    - @bake_cycles.each do |bake_cycle|
+      tr
+        td = bake_cycle.type
+        td = bake_cycle.oven
+        td = bake_cycle.side
+        td = bake_cycle.is_locked
+        td = bake_cycle.cycle_started_at
+        td = bake_cycle.loadings_finished_at
+        td = bake_cycle.purge_finished_at
+        td = bake_cycle.soak_started_at
+        td = bake_cycle.soak_ended_at
+        td = bake_cycle.gas_off_at
+        td = bake_cycle.cooling_finished_at
+        td = bake_cycle.cycle_ended_at
+        td = bake_cycle.psi_consumed
+        td = bake_cycle.used_cooling_profile
+        td = bake_cycle.user
+        td = link_to "Show", bake_cycle
+        td = link_to "Edit", edit_bake_cycle_path(bake_cycle)
+        td = link_to "Destroy", bake_cycle, data: {confirm: "Are you sure?"}, method: :delete
+
+br
+
+= link_to "New Cycle", new_bake_cycle_path
