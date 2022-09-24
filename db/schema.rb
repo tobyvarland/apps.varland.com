@@ -106,6 +106,7 @@ ActiveRecord::Schema.define(version: 2022_09_23_193619) do
     t.datetime "gas_off_at"
     t.datetime "cooling_finished_at"
     t.datetime "cycle_ended_at"
+    t.string "profile_name"
     t.float "psi_consumed"
     t.boolean "used_cooling_profile"
     t.bigint "user_id"

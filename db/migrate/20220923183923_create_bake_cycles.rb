@@ -13,6 +13,7 @@ class CreateBakeCycles < ActiveRecord::Migration[6.1]
       t.datetime    :gas_off_at,            null: true,   default: nil
       t.datetime    :cooling_finished_at,   null: true,   default: nil
       t.datetime    :cycle_ended_at,        null: true,   default: nil
+      t.string      :profile_name,          null: true,   default: nil
       t.float       :psi_consumed,          null: true,   default: nil
       t.boolean     :used_cooling_profile,  null: true,   default: nil
       t.references  :user,                  null: true,   default: nil, foreign_key: true

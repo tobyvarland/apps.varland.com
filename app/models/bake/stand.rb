@@ -6,10 +6,6 @@ class Bake::Stand < ApplicationRecord
             inverse_of: 'stand',
             foreign_key: 'stand_id'
 
-  # Validations.
-  validates :type,
-            presence: true
-
   # Callbacks.
   after_create_commit :create_containers
 
