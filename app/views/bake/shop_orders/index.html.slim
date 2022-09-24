@@ -1,0 +1,45 @@
+h1 Listing bake_shop_orders
+
+table
+  thead
+    tr
+      th Cycle
+      th Number
+      th Customer
+      th Process
+      th Part
+      th Sub
+      th Operation
+      th Setpoint
+      th Minimum
+      th Maximum
+      th Soak hours
+      th Within hours
+      th Profile name
+      th
+      th
+      th
+
+  tbody
+    - @bake_shop_orders.each do |bake_shop_order|
+      tr
+        td = bake_shop_order.cycle
+        td = bake_shop_order.number
+        td = bake_shop_order.customer
+        td = bake_shop_order.process
+        td = bake_shop_order.part
+        td = bake_shop_order.sub
+        td = bake_shop_order.operation
+        td = bake_shop_order.setpoint
+        td = bake_shop_order.minimum
+        td = bake_shop_order.maximum
+        td = bake_shop_order.soak_hours
+        td = bake_shop_order.within_hours
+        td = bake_shop_order.profile_name
+        td = link_to "Show", bake_shop_order
+        td = link_to "Edit", edit_bake_shop_order_path(bake_shop_order)
+        td = link_to "Destroy", bake_shop_order, data: {confirm: "Are you sure?"}, method: :delete
+
+br
+
+= link_to "New Shop order", new_bake_shop_order_path

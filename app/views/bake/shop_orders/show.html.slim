@@ -1,0 +1,57 @@
+p#notice = notice
+
+p
+  strong Cycle:
+  = @bake_shop_order.cycle
+
+p
+  strong Number:
+  = @bake_shop_order.number
+
+p
+  strong Customer:
+  = @bake_shop_order.customer
+
+p
+  strong Process:
+  = @bake_shop_order.process
+
+p
+  strong Part:
+  = @bake_shop_order.part
+
+p
+  strong Sub:
+  = @bake_shop_order.sub
+
+p
+  strong Operation:
+  = @bake_shop_order.operation
+
+p
+  strong Setpoint:
+  = @bake_shop_order.setpoint
+
+p
+  strong Minimum:
+  = @bake_shop_order.minimum
+
+p
+  strong Maximum:
+  = @bake_shop_order.maximum
+
+p
+  strong Soak hours:
+  = @bake_shop_order.soak_hours
+
+p
+  strong Within hours:
+  = @bake_shop_order.within_hours
+
+p
+  strong Profile name:
+  = @bake_shop_order.profile_name
+
+=> link_to "Edit", edit_bake_shop_order_path(@bake_shop_order)
+'|
+=< link_to "Back", bake_shop_orders_path

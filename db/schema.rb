@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_09_23_193619) do
+ActiveRecord::Schema.define(version: 2022_09_24_135115) do
 
   create_table "active_storage_attachments", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.string "name", null: false
@@ -113,6 +113,46 @@ ActiveRecord::Schema.define(version: 2022_09_23_193619) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["user_id"], name: "index_bake_cycles_on_user_id"
+  end
+
+  create_table "bake_loadings", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.bigint "container_id", null: false
+    t.bigint "load_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["container_id"], name: "index_bake_loadings_on_container_id"
+    t.index ["load_id"], name: "index_bake_loadings_on_load_id"
+  end
+
+  create_table "bake_loads", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.bigint "shop_order_id", null: false
+    t.integer "number", null: false
+    t.boolean "not_loaded", default: false, null: false
+    t.datetime "started_baking_at"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["shop_order_id", "number"], name: "unique_load_on_order", unique: true
+    t.index ["shop_order_id"], name: "index_bake_loads_on_shop_order_id"
+  end
+
+  create_table "bake_shop_orders", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
+    t.bigint "cycle_id", null: false
+    t.integer "number", null: false
+    t.string "customer", null: false
+    t.string "process", null: false
+    t.string "part", null: false
+    t.string "sub"
+    t.string "operation", null: false
+    t.integer "setpoint", null: false
+    t.integer "minimum", null: false
+    t.integer "maximum", null: false
+    t.float "soak_hours", null: false
+    t.float "within_hours"
+    t.string "profile_name"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["cycle_id", "number"], name: "unique_order_on_cycle", unique: true
+    t.index ["cycle_id"], name: "index_bake_shop_orders_on_cycle_id"
   end
 
   create_table "bake_standard_procedures", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
@@ -909,6 +949,10 @@ ActiveRecord::Schema.define(version: 2022_09_23_193619) do
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "bake_containers", "bake_stands", column: "stand_id"
   add_foreign_key "bake_cycles", "users"
+  add_foreign_key "bake_loadings", "bake_containers", column: "container_id"
+  add_foreign_key "bake_loadings", "bake_loads", column: "load_id"
+  add_foreign_key "bake_loads", "bake_shop_orders", column: "shop_order_id"
+  add_foreign_key "bake_shop_orders", "bake_cycles", column: "cycle_id"
   add_foreign_key "bake_stands", "bake_cycles", column: "cycle_id"
   add_foreign_key "baking_containers", "baking_cycles", column: "cycle_id"
   add_foreign_key "baking_containers", "baking_loads", column: "load_id"

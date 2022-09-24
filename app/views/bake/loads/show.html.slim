@@ -1,0 +1,21 @@
+p#notice = notice
+
+p
+  strong Shop order:
+  = @bake_load.shop_order
+
+p
+  strong Number:
+  = @bake_load.number
+
+p
+  strong Not loaded:
+  = @bake_load.not_loaded
+
+p
+  strong Started baking at:
+  = @bake_load.started_baking_at
+
+=> link_to "Edit", edit_bake_load_path(@bake_load)
+'|
+=< link_to "Back", bake_loads_path

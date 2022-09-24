@@ -1,0 +1,48 @@
+= form_for @bake_shop_order do |f|
+  - if @bake_shop_order.errors.any?
+    #error_explanation
+      h2 = "#{pluralize(@bake_shop_order.errors.count, "error")} prohibited this bake_shop_order from being saved:"
+      ul
+        - @bake_shop_order.errors.full_messages.each do |message|
+          li = message
+
+  .field
+    = f.label :cycle
+    = f.text_field :cycle
+  .field
+    = f.label :number
+    = f.number_field :number
+  .field
+    = f.label :customer
+    = f.text_field :customer
+  .field
+    = f.label :process
+    = f.text_field :process
+  .field
+    = f.label :part
+    = f.text_field :part
+  .field
+    = f.label :sub
+    = f.text_field :sub
+  .field
+    = f.label :operation
+    = f.text_field :operation
+  .field
+    = f.label :setpoint
+    = f.number_field :setpoint
+  .field
+    = f.label :minimum
+    = f.number_field :minimum
+  .field
+    = f.label :maximum
+    = f.number_field :maximum
+  .field
+    = f.label :soak_hours
+    = f.text_field :soak_hours
+  .field
+    = f.label :within_hours
+    = f.text_field :within_hours
+  .field
+    = f.label :profile_name
+    = f.text_field :profile_name
+  .actions = f.submit

@@ -4,6 +4,12 @@ require 'sidekiq-scheduler/web'
 Rails.application.routes.draw do
 
   namespace :bake do
+    resources :loads
+  end
+  namespace :bake do
+    resources :shop_orders
+  end
+  namespace :bake do
     resources :containers
   end
   namespace :bake do

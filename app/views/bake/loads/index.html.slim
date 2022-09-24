@@ -1,0 +1,27 @@
+h1 Listing bake_loads
+
+table
+  thead
+    tr
+      th Shop order
+      th Number
+      th Not loaded
+      th Started baking at
+      th
+      th
+      th
+
+  tbody
+    - @bake_loads.each do |bake_load|
+      tr
+        td = bake_load.shop_order
+        td = bake_load.number
+        td = bake_load.not_loaded
+        td = bake_load.started_baking_at
+        td = link_to "Show", bake_load
+        td = link_to "Edit", edit_bake_load_path(bake_load)
+        td = link_to "Destroy", bake_load, data: {confirm: "Are you sure?"}, method: :delete
+
+br
+
+= link_to "New Load", new_bake_load_path

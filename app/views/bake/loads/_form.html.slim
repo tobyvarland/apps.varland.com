@@ -1,0 +1,21 @@
+= form_for @bake_load do |f|
+  - if @bake_load.errors.any?
+    #error_explanation
+      h2 = "#{pluralize(@bake_load.errors.count, "error")} prohibited this bake_load from being saved:"
+      ul
+        - @bake_load.errors.full_messages.each do |message|
+          li = message
+
+  .field
+    = f.label :shop_order
+    = f.text_field :shop_order
+  .field
+    = f.label :number
+    = f.number_field :number
+  .field
+    = f.label :not_loaded
+    = f.check_box :not_loaded
+  .field
+    = f.label :started_baking_at
+    = f.datetime_select :started_baking_at
+  .actions = f.submit
