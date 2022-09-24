@@ -1,0 +1,12 @@
+= simple_form_for(cycle, url: :bake_cycles, html: {class: ["vp-gray-form", "my-3"]}) do |f|
+
+  = f.input :type, as: :hidden
+
+  .row
+    = f.simple_fields_for :stands do |form|
+      .col-12.col-md.mt-3
+        = form.input :type, as: :hidden
+        = form.input :name, label: "#{oven_label} Stand #:", required: true, input_html: { autofocus: true }
+
+  .form-actions
+    = f.button :button, "#{fa "check"} Create #{oven_label} Oven Cycle".html_safe, class: ["btn-primary", "btn-sm"]

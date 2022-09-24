@@ -19,12 +19,19 @@ class Bake::ShopOrder < ApplicationRecord
             allow_blank: true
   validate  :ensure_cycle_fit
   validate  :ensure_unlocked_cycle
+  validate  :verify_profile_name_presence
 
   # Callbacks.
   before_validation :set_properties_for_manual_shop_order
   after_save        :set_cycle_profile_name
 
   # Instance methods.
+
+  # Verifies profile name is present if required.
+  def verify_profile_name_presence
+    errors.add(:profile_name, "must be present for this cycle type") if self.profile_name.blank? && self.cycle.class::REQUIRES_BAKE_PROFILE
+    errors.add(:profile_name, "can't be present for this cycle type") if !self.profile_name.blank? && !self.cycle.class::REQUIRES_BAKE_PROFILE
+  end
 
   # Custom validation method to ensure cycle is not locked.
   def ensure_unlocked_cycle

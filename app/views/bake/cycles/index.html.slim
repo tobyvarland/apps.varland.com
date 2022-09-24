@@ -1,49 +1,18 @@
-h1 Listing bake_cycles
+ruby:
+  provide(:title, 'Online Bakesheet - Baking')
 
-table
-  thead
-    tr
-      th Type
-      th Oven
-      th Side
-      th Is locked
-      th Cycle started at
-      th Loadings finished at
-      th Purge finished at
-      th Soak started at
-      th Soak ended at
-      th Gas off at
-      th Cooling finished at
-      th Cycle ended at
-      th Psi consumed
-      th Used cooling profile
-      th User
-      th
-      th
-      th
+- content_for :nav do
+  = render "bake/nav"
 
-  tbody
-    - @bake_cycles.each do |bake_cycle|
-      tr
-        td = bake_cycle.type
-        td = bake_cycle.oven
-        td = bake_cycle.side
-        td = bake_cycle.is_locked
-        td = bake_cycle.cycle_started_at
-        td = bake_cycle.loadings_finished_at
-        td = bake_cycle.purge_finished_at
-        td = bake_cycle.soak_started_at
-        td = bake_cycle.soak_ended_at
-        td = bake_cycle.gas_off_at
-        td = bake_cycle.cooling_finished_at
-        td = bake_cycle.cycle_ended_at
-        td = bake_cycle.psi_consumed
-        td = bake_cycle.used_cooling_profile
-        td = bake_cycle.user
-        td = link_to "Show", bake_cycle
-        td = link_to "Edit", edit_bake_cycle_path(bake_cycle)
-        td = link_to "Destroy", bake_cycle, data: {confirm: "Are you sure?"}, method: :delete
+.d-flex.flex-row.align-items-center.justify-content-between.mt-3
+  h1.font-varland Online Bakesheet
 
-br
-
-= link_to "New Cycle", new_bake_cycle_path
+.row
+  .col-12.col-md
+    == render partial: "create_non_iao_form", locals: { cycle: @new_large_oven_cycle, oven_label: "Large" }
+  .col-12.col-md
+    == render partial: "create_non_iao_form", locals: { cycle: @new_small_oven_cycle, oven_label: "Small" }
+  .col-12.col-md
+    == render partial: "create_iao_form", locals: { cycle: @new_grieve_cycle, iao_label: "Grieve" }
+  .col-12.col-md
+    == render partial: "create_iao_form", locals: { cycle: @new_jpw_cycle, iao_label: "JPW" }
