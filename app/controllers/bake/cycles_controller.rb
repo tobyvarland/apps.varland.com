@@ -4,7 +4,7 @@ class Bake::CyclesController < ApplicationController
                 only: %i[ show edit update destroy ]
 
   def index
-    @bake_cycles = Bake::Cycle.all
+    @bake_cycles = Bake::Cycle.not_started
     @new_large_oven_cycle = Bake::LargeOvenCycle.new
     @new_large_oven_cycle.stands.build(type: "Bake::LargeStand")
     @new_small_oven_cycle = Bake::SmallOvenCycle.new
@@ -18,6 +18,8 @@ class Bake::CyclesController < ApplicationController
   end
 
   def show
+    @bake_shop_order = @bake_cycle.shop_orders.build
+    @bake_load = Bake::Load.new
   end
 
   def new
@@ -25,40 +27,30 @@ class Bake::CyclesController < ApplicationController
     @bake_cycle.stands.build
   end
 
-  def edit
-  end
-
   def create
     @bake_cycle = Bake::Cycle.new(bake_cycle_params)
-    respond_to do |format|
-      if @bake_cycle.save
-        format.html { redirect_to bake_cycle_path(@bake_cycle), notice: "Cycle was successfully created." }
-        format.json { render :show, status: :created, location: @bake_cycle }
-      else
-        format.html { render :new, status: :unprocessable_entity }
-        format.json { render json: @bake_cycle.errors, status: :unprocessable_entity }
-      end
+    if @bake_cycle.save
+      redirect_to bake_cycle_path(@bake_cycle)
+    else
+      redirect_to bake_cycles_path, alert: "Error creating cycle. Contact IT for help."
     end
   end
 
   def update
     respond_to do |format|
       if @bake_cycle.update(bake_cycle_params)
-        format.html { redirect_to @bake_cycle, notice: "Cycle was successfully updated." }
-        format.json { render :show, status: :ok, location: @bake_cycle }
+        format.html { redirect_to bake_cycle_path(@bake_cycle) }
+        format.json { head :ok }
       else
-        format.html { render :edit, status: :unprocessable_entity }
-        format.json { render json: @bake_cycle.errors, status: :unprocessable_entity }
+        format.html { redirect_to bake_cycle_path(@bake_cycle), alert: "Error updating cycle. Contact IT for help." }
+        format.json { head :unprocessable_entity }
       end
     end
   end
 
   def destroy
     @bake_cycle.destroy
-    respond_to do |format|
-      format.html { redirect_to bake_cycles_url, notice: "Cycle was successfully destroyed." }
-      format.json { head :no_content }
-    end
+    redirect_to bake_cycles_url, notice: "Cycle was successfully destroyed."
   end
 
   private
@@ -77,7 +69,7 @@ class Bake::CyclesController < ApplicationController
       elsif params[:bake_jpw_cycle].present?
         params.require(:bake_jpw_cycle).permit(:type, stands_attributes: [:type, :name])
       else
-        params.require(:bake_cycle).permit(:type, :oven, :side, :is_locked, :cycle_started_at, :loadings_finished_at, :purge_finished_at, :soak_started_at, :soak_ended_at, :gas_off_at, :cooling_finished_at, :cycle_ended_at, :psi_consumed, :used_cooling_profile, :user_id)
+        params.require(:bake_cycle).permit(:oven, :side, :is_locked, :cycle_started_at, :loadings_finished_at, :purge_finished_at, :soak_started_at, :soak_ended_at, :gas_off_at, :cooling_finished_at, :cycle_ended_at, :psi_consumed, :used_cooling_profile, :user_id)
       end
     end
 

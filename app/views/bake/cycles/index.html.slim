@@ -8,6 +8,8 @@ ruby:
   h1.font-varland Online Bakesheet
 
 .row
+  .col-12
+    h2.font-varland.mt-3.mb-0 Set Up New Cycle
   .col-12.col-md
     == render partial: "create_non_iao_form", locals: { cycle: @new_large_oven_cycle, oven_label: "Large" }
   .col-12.col-md
@@ -16,3 +18,34 @@ ruby:
     == render partial: "create_iao_form", locals: { cycle: @new_grieve_cycle, iao_label: "Grieve" }
   .col-12.col-md
     == render partial: "create_iao_form", locals: { cycle: @new_jpw_cycle, iao_label: "JPW" }
+
+- unless @bake_cycles.length == 0
+  .row
+    .col-12
+      h2.font-varland.my-0 Cycles Not Yet Baked
+      .table-responsive.my-3
+        table.table.table-striped.table-hover
+          thead.table-dark
+            tr
+              th.w-1.text-center Cycle ID
+              th.w-1.text-center Type
+              th.text-center # Orders
+              th.text-center # Loads
+              th.text-center Setpoint
+              th.text-center Minimum
+              th.text-center Maximum
+              th.text-center Soak Length
+              th.w-1.text-center Options
+          tbody
+            - @bake_cycles.each do |cycle|
+              tr
+                td.text-center
+                  code.fw-700 = cycle.id
+                td.text-center = cycle.cycle_type
+                td.text-center = cycle.shop_orders.length
+                td.text-center = cycle.loads.length
+                td.text-center == cycle.setpoint.nil? ? "" : "#{cycle.setpoint}&deg; F"
+                td.text-center == cycle.minimum.nil? ? "" : "#{cycle.minimum}&deg; F"
+                td.text-center == cycle.maximum.nil? ? "" : "#{cycle.maximum}&deg; F"
+                td.text-center == cycle.setpoint.nil? ? "" : pluralize(cycle.soak_hours, "hour")
+                td.text-center = link_to "#{fa 'eye'} Details".html_safe, bake_cycle_path(cycle), class: ["btn", "btn-sm", "btn-primary"]

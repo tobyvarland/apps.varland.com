@@ -3,6 +3,9 @@ class Bake::Cycle < ApplicationRecord
   # Class constants.
   REQUIRES_BAKE_PROFILE = nil
 
+  # Scopes.
+  scope :not_started, -> { where(is_locked: false) }
+
   # Associations.
   belongs_to  :user,
               optional: true
@@ -68,22 +71,31 @@ class Bake::Cycle < ApplicationRecord
 
   # Returns cycle minimum temperature.
   def minimum
+    return nil if self.shop_orders.length == 0
     return self.shop_orders.maximum(:minimum)
   end
 
   # Returns cycle maximum temperature.
   def maximum
+    return nil if self.shop_orders.length == 0
     return self.shop_orders.minimum(:maximum)
   end
 
   # Returns cycle setpoint.
   def setpoint
+    return nil if self.shop_orders.length == 0
     return (self.minimum + self.maximum) / 2.0
   end
 
   # Returns cycle soak length
   def soak_hours
+    return nil if self.shop_orders.length == 0
     return self.shop_orders.maximum(:soak_hours)
+  end
+
+  # Returns cycle type.
+  def cycle_type
+    return self.type.demodulize.underscore.titleize.sub(" Cycle", "")
   end
 
 end

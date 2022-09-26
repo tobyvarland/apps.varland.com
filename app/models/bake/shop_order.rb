@@ -64,6 +64,7 @@ class Bake::ShopOrder < ApplicationRecord
     self.process = "X" * 3
     self.part = "X" * 17
     self.sub = "X"
+    self.operation = "X"
   end
 
   # Sets profile name on cycle if necessary.

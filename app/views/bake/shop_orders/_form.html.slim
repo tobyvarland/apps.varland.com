@@ -1,48 +1,279 @@
-= form_for @bake_shop_order do |f|
-  - if @bake_shop_order.errors.any?
-    #error_explanation
-      h2 = "#{pluralize(@bake_shop_order.errors.count, "error")} prohibited this bake_shop_order from being saved:"
-      ul
-        - @bake_shop_order.errors.full_messages.each do |message|
-          li = message
+= simple_form_for(@bake_shop_order, html: {class: ["vp-gray-form", "mt-3"], data: { profile: @bake_shop_order.cycle.class::REQUIRES_BAKE_PROFILE }}) do |f|
 
-  .field
-    = f.label :cycle
-    = f.text_field :cycle
-  .field
-    = f.label :number
-    = f.number_field :number
-  .field
-    = f.label :customer
-    = f.text_field :customer
-  .field
-    = f.label :process
-    = f.text_field :process
-  .field
-    = f.label :part
-    = f.text_field :part
-  .field
-    = f.label :sub
-    = f.text_field :sub
-  .field
-    = f.label :operation
-    = f.text_field :operation
-  .field
-    = f.label :setpoint
-    = f.number_field :setpoint
-  .field
-    = f.label :minimum
-    = f.number_field :minimum
-  .field
-    = f.label :maximum
-    = f.number_field :maximum
-  .field
-    = f.label :soak_hours
-    = f.text_field :soak_hours
-  .field
-    = f.label :within_hours
-    = f.text_field :within_hours
-  .field
-    = f.label :profile_name
-    = f.text_field :profile_name
-  .actions = f.submit
+  = f.input :cycle_id, as: :hidden
+  = f.input :customer, as: :hidden
+  = f.input :process, as: :hidden
+  = f.input :part, as: :hidden
+  = f.input :sub, as: :hidden
+
+  .row
+    .col-12.mt-3
+      = f.input :number, label: "S.O. #:"
+      div.bg-danger.fw-700.rounded.p-1.small.mt-1.d-none.text-white#invalid-order-error Invalid shop order #.
+      div.bg-danger.fw-700.rounded.p-1.small.mt-1.d-none.text-white#no-bakes-error No bake procedures.
+      table.table.table-striped.table-borderless.mt-3.mb-0.table-sm.d-none#shop-order-info
+        tbody.small.border
+          tr
+            td.w-1.text-uncolor.text-end.small Customer:
+            td.fw-700#shop-order-customer XXX
+          tr
+            td.w-1.text-uncolor.text-end.small Process:
+            td.fw-700#shop-order-process XXX
+          tr
+            td.w-1.text-uncolor.text-end.small Part:
+            td.fw-700#shop-order-part XXX
+          tr
+            td.w-1.text-uncolor.text-end.small Sub:
+            td.fw-700#shop-order-sub XXX
+    .col-12.mt-3#bake-choices-container.d-none
+      .form-group
+        label Bake:
+        select.form-select#bake-choices
+    .col-12.col-md-6.mt-3
+      = f.input :setpoint, label: "Setpoint:", readonly: true
+    .col-12.col-md-6.mt-3
+      = f.input :soak_hours, label: "Hours:", readonly: true
+    .col-12.col-md-6.mt-3
+      = f.input :minimum, label: "Min:", readonly: true
+    .col-12.col-md-6.mt-3
+      = f.input :maximum, label: "Max:", readonly: true
+    .col-12.col-md-6.mt-3
+      = f.input :within_hours, label: "Within:", readonly: true, hint: "(In hours)"
+    .col-12.mt-3#profile-field-container
+      = f.input :profile_name, label: "Profile:", required: @bake_shop_order.cycle.class::REQUIRES_BAKE_PROFILE, readonly: true
+
+  .form-actions
+    = f.button :button, "#{fa "plus"} Add Shop Order".html_safe, class: ["btn-primary", "btn-sm"]
+
+javascript:
+
+  var CreateShopOrderForm = {
+
+    selectors: {
+      form: "#new_bake_shop_order",
+      shopOrderField: "#bake_shop_order_number",
+      orderInfoContainer: "#shop-order-info",
+      customerField: "#bake_shop_order_customer",
+      customerLabel: "#shop-order-customer",
+      processField: "#bake_shop_order_process",
+      processLabel: "#shop-order-process",
+      partField: "#bake_shop_order_part",
+      partLabel: "#shop-order-part",
+      subField: "#bake_shop_order_sub",
+      subLabel: "#shop-order-sub",
+      setpointField: "#bake_shop_order_setpoint",
+      soakLengthField: "#bake_shop_order_soak_hours",
+      minimumField: "#bake_shop_order_minimum",
+      maximumField: "#bake_shop_order_maximum",
+      withinHoursField: "#bake_shop_order_within_hours",
+      profileNameField: "#bake_shop_order_profile_name",
+      profileFieldContainer: "#profile-field-container",
+      bakeChoicesContainer: "#bake-choices-container",
+      bakeChoicesField: "#bake-choices",
+      invalidOrderError: "#invalid-order-error",
+      noBakesError: "#no-bakes-error",
+    },
+    form: null,
+    shopOrderField: null,
+    orderInfoContainer: null,
+    customerField: null,
+    customerLabel: null,
+    processField: null,
+    processLabel: null,
+    partField: null,
+    partLabel: null,
+    subField: null,
+    subLabel: null,
+    setpointField: null,
+    soakLengthField: null,
+    minimumField: null,
+    maximumField: null,
+    withinHoursField: null,
+    profileNameField: null,
+    profileFieldContainer: null,
+    bakeChoicesContainer: null,
+    bakeChoicesField: null,
+    invalidOrderError: null,
+    noBakesError: null,
+    standardBakes: [
+    ],
+
+    handleShopOrderEntry: function(shopOrder) {
+      var url = "http://json400.varland.com/shop_order_bake_info?shop_order=" + shopOrder;
+      $.ajax(url).done(function(data) {
+        console.log(data);
+        if (data.valid) {
+          CreateShopOrderForm.customerField.val(data.customer);
+          CreateShopOrderForm.customerLabel.text(data.customer);
+          CreateShopOrderForm.processField.val(data.process_code);
+          CreateShopOrderForm.processLabel.text(data.process_code);
+          CreateShopOrderForm.partField.val(data.part);
+          CreateShopOrderForm.partLabel.text(data.part);
+          CreateShopOrderForm.subField.val(data.sub);
+          CreateShopOrderForm.subLabel.text(data.sub);
+          CreateShopOrderForm.orderInfoContainer.removeClass("d-none");
+          if (data.has_bake && data.bake_operations.length == 1) {
+            CreateShopOrderForm.setpointField.val(data.bake_operations[0].setpoint);
+            CreateShopOrderForm.minimumField.val(data.bake_operations[0].minimum);
+            CreateShopOrderForm.maximumField.val(data.bake_operations[0].maximum);
+            CreateShopOrderForm.soakLengthField.val(data.bake_operations[0].soak_hours);
+            CreateShopOrderForm.withinHoursField.val(data.bake_operations[0].within_hours);
+            CreateShopOrderForm.profileNameField.val(data.bake_operations[0].profile_name);
+          } else {
+            $(CreateShopOrderForm.selectors.bakeChoicesField + " option").remove();
+            CreateShopOrderForm.bakeChoicesContainer.removeClass("d-none");
+            var defaultOption = $("<option>");
+            defaultOption.attr("selected", "selected");
+            defaultOption.appendTo(CreateShopOrderForm.bakeChoicesField);
+            if (!data.has_bake) {
+              var countStandardBakes = 0;
+              for (var i = 0, c = CreateShopOrderForm.standardBakes.length; i < c; i++) {
+                var std = CreateShopOrderForm.standardBakes[i];
+                var processCodes = std.codes == "" ? [] : std.codes.split(",");
+                if (processCodes.length == 0 || processCodes.includes(data.sanitized_process_code)) {
+                  countStandardBakes++;
+                  var standardOption = $("<option>");
+                  standardOption.html(std.description);
+                  standardOption.attr("data-setpoint", std.setpoint);
+                  standardOption.attr("data-minimum", std.minimum);
+                  standardOption.attr("data-maximum", std.maximum);
+                  standardOption.attr("data-soak", std.soak);
+                  standardOption.attr("data-within", std.within);
+                  standardOption.attr("data-profile", std.profile);
+                  standardOption.attr("data-letter", "X");
+                  standardOption.appendTo(CreateShopOrderForm.bakeChoicesField);
+                }
+              }
+              if (countStandardBakes == 0) {
+                $(CreateShopOrderForm.selectors.bakeChoicesField + " option").remove();
+                CreateShopOrderForm.bakeChoicesContainer.addClass("d-none");
+                CreateShopOrderForm.noBakesError.removeClass("d-none");
+              }
+            } else {
+              for (var i = 0, c = data.bake_operations.length; i < c; i++) {
+                var op = data.bake_operations[i];
+                var operationOption = $("<option>");
+                var parts = [
+                  "Op. " + op.letter + ":",
+                  op.setpoint + "&deg; F for " + op.soak_hours + " hour" + (op.soak_hours == 1 ? "" : "s"),
+                  "(" + op.minimum + "&deg; F min / " + op.maximum + "&deg; F max)"
+                ];
+                if (op.within_hours) {
+                  parts.push("[Within " + op.within_hours + " hour" + (op.within_hours == 1 ? "" : "s") + "]")
+                }
+                if (op.profile_name) {
+                  parts.push("[Profile: " + op.profile_name + "]");
+                }
+                operationOption.html(parts.join(" "));
+                operationOption.attr("data-setpoint", op.setpoint);
+                operationOption.attr("data-minimum", op.minimum);
+                operationOption.attr("data-maximum", op.maximum);
+                operationOption.attr("data-soak", op.soak_hours);
+                operationOption.attr("data-within", op.within_hours);
+                operationOption.attr("data-profile", op.profile_name);
+                operationOption.attr("data-letter", op.letter);
+                operationOption.appendTo(CreateShopOrderForm.bakeChoicesField);
+              }
+            }
+          }
+        } else {
+          CreateShopOrderForm.invalidOrderError.removeClass("d-none");
+        }
+      });
+    },
+
+    handleShopOrderChanges: function() {
+
+      // When key pressed in shop order field, hide and clear fields.
+      CreateShopOrderForm.shopOrderField.on("keydown", function(event) {
+        if (event.which == 9) return;
+        CreateShopOrderForm.orderInfoContainer.addClass("d-none");
+        CreateShopOrderForm.invalidOrderError.addClass("d-none");
+        CreateShopOrderForm.noBakesError.addClass("d-none");
+        CreateShopOrderForm.bakeChoicesContainer.addClass("d-none");
+        CreateShopOrderForm.customerField.val("");
+        CreateShopOrderForm.processField.val("");
+        CreateShopOrderForm.partField.val("");
+        CreateShopOrderForm.subField.val("");
+        CreateShopOrderForm.customerLabel.text("");
+        CreateShopOrderForm.processLabel.text("");
+        CreateShopOrderForm.partLabel.text("");
+        CreateShopOrderForm.subLabel.text("");
+        CreateShopOrderForm.setpointField.val("");
+        CreateShopOrderForm.soakLengthField.val("");
+        CreateShopOrderForm.minimumField.val("");
+        CreateShopOrderForm.maximumField.val("");
+        CreateShopOrderForm.withinHoursField.val("");
+        CreateShopOrderForm.profileNameField.val("");
+        $(CreateShopOrderForm.selectors.bakeChoicesField + " option").remove();
+      });
+
+      // When key released in shop order field, process value.
+      CreateShopOrderForm.shopOrderField.on("keyup keypress blur change", function() {
+        var currentShopOrder = CreateShopOrderForm.shopOrderField.val().toString();
+        if (currentShopOrder == "111") {
+          CreateShopOrderForm.setpointField.attr("readonly", false);
+          CreateShopOrderForm.soakLengthField.attr("readonly", false);
+          CreateShopOrderForm.minimumField.attr("readonly", false);
+          CreateShopOrderForm.maximumField.attr("readonly", false);
+          CreateShopOrderForm.profileNameField.attr("readonly", false);
+        } else if (currentShopOrder.length == 6) {
+          CreateShopOrderForm.handleShopOrderEntry(currentShopOrder);
+        }
+      });
+
+    },
+
+    initialize: function() {
+
+      // Reference form controls.
+      CreateShopOrderForm.form = $(CreateShopOrderForm.selectors.form);
+      CreateShopOrderForm.shopOrderField = $(CreateShopOrderForm.selectors.shopOrderField);
+      CreateShopOrderForm.orderInfoContainer = $(CreateShopOrderForm.selectors.orderInfoContainer);
+      CreateShopOrderForm.customerField = $(CreateShopOrderForm.selectors.customerField);
+      CreateShopOrderForm.customerLabel = $(CreateShopOrderForm.selectors.customerLabel);
+      CreateShopOrderForm.processField = $(CreateShopOrderForm.selectors.processField);
+      CreateShopOrderForm.processLabel = $(CreateShopOrderForm.selectors.processLabel);
+      CreateShopOrderForm.partField = $(CreateShopOrderForm.selectors.partField);
+      CreateShopOrderForm.partLabel = $(CreateShopOrderForm.selectors.partLabel);
+      CreateShopOrderForm.subField = $(CreateShopOrderForm.selectors.subField);
+      CreateShopOrderForm.subLabel = $(CreateShopOrderForm.selectors.subLabel);
+      CreateShopOrderForm.setpointField = $(CreateShopOrderForm.selectors.setpointField);
+      CreateShopOrderForm.soakLengthField = $(CreateShopOrderForm.selectors.soakLengthField);
+      CreateShopOrderForm.minimumField = $(CreateShopOrderForm.selectors.minimumField);
+      CreateShopOrderForm.maximumField = $(CreateShopOrderForm.selectors.maximumField);
+      CreateShopOrderForm.withinHoursField = $(CreateShopOrderForm.selectors.withinHoursField);
+      CreateShopOrderForm.profileNameField = $(CreateShopOrderForm.selectors.profileNameField);
+      CreateShopOrderForm.profileFieldContainer = $(CreateShopOrderForm.selectors.profileFieldContainer);
+      CreateShopOrderForm.bakeChoicesContainer = $(CreateShopOrderForm.selectors.bakeChoicesContainer);
+      CreateShopOrderForm.bakeChoicesField = $(CreateShopOrderForm.selectors.bakeChoicesField);
+      CreateShopOrderForm.invalidOrderError = $(CreateShopOrderForm.selectors.invalidOrderError);
+      CreateShopOrderForm.noBakesError = $(CreateShopOrderForm.selectors.noBakesError);
+
+      // Hide profile name field if cycle doesn't require/allow profile names.
+      if (!CreateShopOrderForm.form.data("profile")) {
+        CreateShopOrderForm.profileFieldContainer.addClass("d-none");
+      }
+
+      // Set up handlers.
+      CreateShopOrderForm.handleShopOrderChanges();
+
+    },
+
+  }
+  $(function() {
+    CreateShopOrderForm.initialize();
+  });
+
+- Bake::StandardProcedure.order(:name).each do |procedure|
+  javascript:
+    CreateShopOrderForm.standardBakes.push({
+      description: "#{{procedure.description}}",
+      codes: "#{{procedure.process_codes}}",
+      setpoint: "#{{procedure.setpoint}}",
+      minimum: "#{{procedure.minimum}}",
+      maximum: "#{{procedure.maximum}}",
+      soak: "#{{procedure.soak_hours}}",
+      within: "#{{procedure.within_hours}}",
+      profile: "#{{procedure.profile_name}}",
+    });

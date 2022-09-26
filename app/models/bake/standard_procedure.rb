@@ -16,4 +16,18 @@ class Bake::StandardProcedure < ApplicationRecord
             numericality: { greater_than: 0 },
             allow_blank: true
 
+  # Instance methods.
+
+  # Returns description for dropdown.
+  def description
+    parts = [
+      "#{self.name}:",
+      "#{self.setpoint}&deg; F for #{ApplicationController.helpers.pluralize self.soak_hours, "hour"}",
+      "(#{self.minimum}&deg; F min / #{self.maximum}&deg; F max)"
+    ]
+    parts << "[Within #{ApplicationController.helpers.pluralize self.within_hours, "hour"}]" unless self.within_hours.blank?
+    parts << "[Profile: #{self.profile_name}]" unless self.profile_name.blank?
+    return parts.join " "
+  end
+
 end

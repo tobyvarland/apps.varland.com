@@ -1,0 +1,12 @@
+.row
+  .col-12.col-md-2
+    .row
+      .col-12
+        h2.font-varland.mt-3.mb-0 Add Parts to Cycle
+      .col-12
+        h4.font-varland.mt-3.mb-0 Add Shop Order
+        == render partial: "bake/shop_orders/form"
+      - if @bake_cycle.shop_orders.length > 0
+        .col-12
+          h4.font-varland.mt-3.mb-0 Add Load
+          == render partial: "bake/loads/form", locals: { orders: @bake_cycle.shop_orders }
