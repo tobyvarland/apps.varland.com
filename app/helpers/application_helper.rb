@@ -2,6 +2,16 @@ module ApplicationHelper
 
   include Pagy::Frontend
 
+  def bake_params(shop_order)
+    parts = []
+    parts << "Op. #{shop_order.operation}" unless shop_order.number == 111
+    parts << "#{shop_order.setpoint}&deg; F"
+    parts << pluralize(shop_order.soak_hours, "hr")
+    parts << "#{shop_order.minimum}&deg; F min"
+    parts << "#{shop_order.maximum}&deg; F max"
+    return parts.join(" / ")
+  end
+
   def dropdown_human_readable(list, value)
     list.each do |l|
       return l[0] if l[1] == value

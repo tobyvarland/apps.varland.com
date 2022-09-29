@@ -2,11 +2,26 @@
   .col-12.col-md-2
     .row
       .col-12
-        h2.font-varland.mt-3.mb-0 Add Parts to Cycle
+        h2.font-varland.mt-3.mb-0.lh-1 Add Parts to Cycle
       .col-12
-        h4.font-varland.mt-3.mb-0 Add Shop Order
+        h4.font-varland.mt-3.mb-0.lh-1 Add Shop Order
         == render partial: "bake/shop_orders/form"
-      - if @bake_cycle.shop_orders.length > 0
+      - if @bake_cycle.shop_orders.where.not(id: nil).length > 0
         .col-12
-          h4.font-varland.mt-3.mb-0 Add Load
+          h4.font-varland.mt-3.mb-0.lh-1 Add Load
           == render partial: "bake/loads/form", locals: { orders: @bake_cycle.shop_orders }
+  .col-12.col-md-2
+    .row
+      .col-12
+        h2.font-varland.mt-3.mb-0 Parts on Cycle
+        - @bake_cycle.shop_orders.where.not(id: nil).order(:number).each do |shop_order|
+          .bg-light.rounded.shadow-sm.mt-3.p-3
+            .fw-700.lh-1 = "S.O. ##{shop_order.number}"
+            - unless shop_order.number == 111
+              .font-size-65.fw-500.text-uncolor.lh-1 = shop_order.part_spec_keys.join(" / ")
+            .font-size-65.lh-1.mt-2 == bake_params(shop_order)
+            .mt-2.lh-1 == "<span class=\"font-size-75\">Loads:</span> <span class=\"fw-500\">#{shop_order.load_numbers}</span>"
+  .col-12.col-md-8
+    .row
+      .col-12
+        h2.font-varland.mt-3.mb-0 Stand Loadings

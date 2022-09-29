@@ -1,36 +1,28 @@
 class Bake::ShopOrdersController < ApplicationController
-  before_action :set_bake_shop_order, only: %i[ show edit update destroy ]
 
-  # GET /bake/shop_orders or /bake/shop_orders.json
+  before_action :set_bake_shop_order,
+                only: %i[ show edit update destroy ]
+
   def index
     @bake_shop_orders = Bake::ShopOrder.all
   end
 
-  # GET /bake/shop_orders/1 or /bake/shop_orders/1.json
   def show
   end
 
-  # GET /bake/shop_orders/new
   def new
     @bake_shop_order = Bake::ShopOrder.new
   end
 
-  # GET /bake/shop_orders/1/edit
   def edit
   end
 
-  # POST /bake/shop_orders or /bake/shop_orders.json
   def create
     @bake_shop_order = Bake::ShopOrder.new(bake_shop_order_params)
-
-    respond_to do |format|
-      if @bake_shop_order.save
-        format.html { redirect_to @bake_shop_order, notice: "Shop order was successfully created." }
-        format.json { render :show, status: :created, location: @bake_shop_order }
-      else
-        format.html { render :new, status: :unprocessable_entity }
-        format.json { render json: @bake_shop_order.errors, status: :unprocessable_entity }
-      end
+    if @bake_shop_order.save
+      redirect_to bake_cycle_path(@bake_shop_order.cycle)
+    else
+      redirect_to bake_cycle_path(@bake_shop_order.cycle), alert: "Error adding shop order. Contact IT for help."
     end
   end
 

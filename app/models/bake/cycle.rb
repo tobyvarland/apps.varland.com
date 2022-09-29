@@ -51,6 +51,11 @@ class Bake::Cycle < ApplicationRecord
     msg = "No stands added to cycle." if self.stands.length == 0
     msg = "No shop orders added to cycle." if self.shop_orders.length == 0
 
+    # Return false if any shop order does not have loads.
+    self.shop_orders.each do |shop_order|
+      msg = "Cycle contains order(s) without loads." if shop_order.loads.length == 0
+    end
+
     # Return false if any load not placed in container.
     self.loads.each do |load|
       msg = "Cycle contains load(s) without container specified." if load.loadings.length == 0

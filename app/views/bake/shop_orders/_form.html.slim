@@ -1,10 +1,11 @@
-= simple_form_for(@bake_shop_order, html: {class: ["vp-gray-form", "mt-3"], data: { profile: @bake_shop_order.cycle.class::REQUIRES_BAKE_PROFILE }}) do |f|
+= simple_form_for(@bake_shop_order, html: {class: ["vp-gray-form", "mt-3"], autocomplete: "off", data: { profile: @bake_shop_order.cycle.class::REQUIRES_BAKE_PROFILE }}) do |f|
 
   = f.input :cycle_id, as: :hidden
   = f.input :customer, as: :hidden
   = f.input :process, as: :hidden
   = f.input :part, as: :hidden
   = f.input :sub, as: :hidden
+  = f.input :operation, as: :hidden
 
   .row
     .col-12.mt-3
@@ -67,6 +68,7 @@ javascript:
       maximumField: "#bake_shop_order_maximum",
       withinHoursField: "#bake_shop_order_within_hours",
       profileNameField: "#bake_shop_order_profile_name",
+      operationField: "#bake_shop_order_operation",
       profileFieldContainer: "#profile-field-container",
       bakeChoicesContainer: "#bake-choices-container",
       bakeChoicesField: "#bake-choices",
@@ -90,6 +92,7 @@ javascript:
     maximumField: null,
     withinHoursField: null,
     profileNameField: null,
+    operationField: null,
     profileFieldContainer: null,
     bakeChoicesContainer: null,
     bakeChoicesField: null,
@@ -98,10 +101,37 @@ javascript:
     standardBakes: [
     ],
 
+    handleBakeChoiceSelection: function() {
+
+      // Find selected option.
+      var selectedOption = null;
+      CreateShopOrderForm.bakeChoicesField.children("option").each(function() {
+        if ($(this).is(':selected')) {
+          selectedOption = $(this);
+        }
+      });
+
+      // Return if no selected option.
+      if (selectedOption === null) return;
+
+      // Extract details and move values to fields.
+      console.log(selectedOption);
+      CreateShopOrderForm.setpointField.val(selectedOption.data("setpoint"));
+      CreateShopOrderForm.minimumField.val(selectedOption.data("minimum"));
+      CreateShopOrderForm.maximumField.val(selectedOption.data("maximum"));
+      CreateShopOrderForm.soakLengthField.val(selectedOption.data("soak"));
+      CreateShopOrderForm.withinHoursField.val(selectedOption.data("within"));
+      CreateShopOrderForm.profileNameField.val(selectedOption.data("profile"));
+      CreateShopOrderForm.operationField.val(selectedOption.data("letter"));
+
+      // Hide bake choices.
+      CreateShopOrderForm.bakeChoicesContainer.addClass("d-none");
+
+    },
+
     handleShopOrderEntry: function(shopOrder) {
       var url = "http://json400.varland.com/shop_order_bake_info?shop_order=" + shopOrder;
       $.ajax(url).done(function(data) {
-        console.log(data);
         if (data.valid) {
           CreateShopOrderForm.customerField.val(data.customer);
           CreateShopOrderForm.customerLabel.text(data.customer);
@@ -119,6 +149,7 @@ javascript:
             CreateShopOrderForm.soakLengthField.val(data.bake_operations[0].soak_hours);
             CreateShopOrderForm.withinHoursField.val(data.bake_operations[0].within_hours);
             CreateShopOrderForm.profileNameField.val(data.bake_operations[0].profile_name);
+            CreateShopOrderForm.operationField.val(data.bake_operations[0].letter);
           } else {
             $(CreateShopOrderForm.selectors.bakeChoicesField + " option").remove();
             CreateShopOrderForm.bakeChoicesContainer.removeClass("d-none");
@@ -205,6 +236,7 @@ javascript:
         CreateShopOrderForm.maximumField.val("");
         CreateShopOrderForm.withinHoursField.val("");
         CreateShopOrderForm.profileNameField.val("");
+        CreateShopOrderForm.operationField.val("");
         $(CreateShopOrderForm.selectors.bakeChoicesField + " option").remove();
       });
 
@@ -244,6 +276,7 @@ javascript:
       CreateShopOrderForm.maximumField = $(CreateShopOrderForm.selectors.maximumField);
       CreateShopOrderForm.withinHoursField = $(CreateShopOrderForm.selectors.withinHoursField);
       CreateShopOrderForm.profileNameField = $(CreateShopOrderForm.selectors.profileNameField);
+      CreateShopOrderForm.operationField = $(CreateShopOrderForm.selectors.operationField);
       CreateShopOrderForm.profileFieldContainer = $(CreateShopOrderForm.selectors.profileFieldContainer);
       CreateShopOrderForm.bakeChoicesContainer = $(CreateShopOrderForm.selectors.bakeChoicesContainer);
       CreateShopOrderForm.bakeChoicesField = $(CreateShopOrderForm.selectors.bakeChoicesField);
@@ -257,6 +290,7 @@ javascript:
 
       // Set up handlers.
       CreateShopOrderForm.handleShopOrderChanges();
+      CreateShopOrderForm.bakeChoicesField.on("change", CreateShopOrderForm.handleBakeChoiceSelection);
 
     },
 

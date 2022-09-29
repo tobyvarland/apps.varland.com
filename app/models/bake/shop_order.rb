@@ -27,6 +27,28 @@ class Bake::ShopOrder < ApplicationRecord
 
   # Instance methods.
 
+  # Returns load numbers.
+  def load_numbers
+    numbers = self.loads.order(:number).pluck(:number)
+    case numbers.length
+    when 0
+      return ""
+    when 1
+      return numbers[0]
+    when 2
+      return numbers.join(" & ")
+    else
+      return numbers.join(", ")
+    end
+  end
+
+  # Returns part spec key fields.
+  def part_spec_keys
+    keys = [self.customer, self.process, self.part]
+    keys << self.sub unless self.sub.blank?
+    return keys
+  end
+
   # Verifies profile name is present if required.
   def verify_profile_name_presence
     errors.add(:profile_name, "must be present for this cycle type") if self.profile_name.blank? && self.cycle.class::REQUIRES_BAKE_PROFILE
