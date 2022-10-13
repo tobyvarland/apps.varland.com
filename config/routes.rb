@@ -118,6 +118,8 @@ Rails.application.routes.draw do
     get "quality/final_inspect_completed",          to: "quality#final_inspect_completed",          as: :quality_final_inspect_completed
     get "materials/open_purchase_orders", to: "materials#open_po_report",       as: :materials_open_po_report
     get "materials/po_search",            to: "materials#po_search",            as: :materials_po_search
+    get "materials/monthly_department_cost_report", to: "materials#monthly_department_cost_report", as: :monthly_department_cost_report
+    get "production/print_part_spec",     to: "production#print_part_spec",     as: :print_part_spec
   end
   namespace :opto do
     post "log_trico_load",  to: "opto#log_trico_load"

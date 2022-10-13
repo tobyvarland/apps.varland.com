@@ -6,7 +6,7 @@ class VCMS::MaterialsController < ApplicationController
   def open_po_report
     @data = load_json "http://json400.varland.com/open_po_report"
 
-  end  
+  end
 
   def po_search
     query_fields = {}
@@ -20,17 +20,26 @@ class VCMS::MaterialsController < ApplicationController
     url = nil
     @count_filters = query_fields.size
     @data = nil
-    if query_fields.size > 0 
+    if query_fields.size > 0
       url = "http://vcmsapi.varland.com/purchase_orders?"
       query_fields.each {|key, value|
         url << (url[-1] == "?" ? "" : "&") << "#{key}=#{value}"
       }
       #puts "🔴 #{url}"
     @data = load_json url
-   
+
       @pagy, @pos = pagy_array(@data[:matches], items: 50)
       puts @pos
-    end      
+    end
 
   end
-end  
+
+  def monthly_department_cost_report
+    pdf = AS400::MonthlyDepartmentCostReportPdf.new()
+    send_data(pdf.render,
+              filename: "MonthlyDepartmentCostReport.pdf",
+              type: "application/pdf",
+              disposition: "inline")
+  end
+
+end

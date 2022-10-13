@@ -311,6 +311,23 @@ class VarlandPdf < Prawn::Document
     self.restore_saved_properties
   end
 
+  # Draws circle.
+  def draw_circle(x, y, width, options = {})
+    self.save_current_properties
+    line_color = options.fetch(:line_color, self.class::DEFAULT_LINE_COLOR)
+    fill_color = options.fetch(:fill_color, nil)
+    unless fill_color.blank?
+      self.fill_color(fill_color)
+      self.fill_circle([x.in, y.in], width.in)
+    end
+    unless line_color.blank?
+      self.stroke_color(line_color)
+      self.line_width = options[:line_width].in if options.key?(:line_width) && !options[:line_width].blank?
+      self.stroke_circle([x.in, y.in], width.in)
+    end
+    self.restore_saved_properties
+  end
+
   # Draws horizontal line.
   def hline(x, y, length, options = {})
     should_print = options.fetch(:print, true)
@@ -452,6 +469,7 @@ class VarlandPdf < Prawn::Document
                   rotate_around: rotate_around,
                   inline_format: true,
                   overflow: :shrink_to_fit)
+    self.fill_color(self.class::DEFAULT_FONT_COLOR)
 
   end
 
