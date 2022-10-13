@@ -10,6 +10,7 @@ class AS400::PartSpecPdf < ::VarlandPdf
   DEVELOPMENTAL_BADGE_TEXT_COLOR = "ffffff"
   DEFAULT_BADGE_COLOR = "dddddd"
   DEFAULT_BADGE_TEXT_COLOR = "000000"
+  PART_NAME_LINE_HEIGHT = 0.15
 
   def initialize(customer, process, part, sub)
 
@@ -44,11 +45,11 @@ class AS400::PartSpecPdf < ::VarlandPdf
       self.developmental_badge(x: badge_x, y: 8)
 
       # Draw update information.
-      self.txtb "Last Update".upcase, 8.95, 8.25, 1.8, 0.2, fill_color: "000000", color: "ffffff", size: 6, style: :bold, line_color: "000000"
+      self.txtb "Last Update".upcase, 8.95, 8.25, 1.8, 0.2, fill_color: "333333", color: "ffffff", size: 6, style: :bold, line_color: "000000"
       update_time = Time.parse(@data[:update_info][:timestamp])
-      self.txtb "#{@data[:update_info][:operator]}:#{@data[:update_info][:authorizer]}", 8.95, 8.05, 0.6, 0.2, size: 7, style: :bold, line_color: "000000"
-      self.txtb update_time.strftime("%m/%d/%y"), 9.55, 8.05, 0.6, 0.2, size: 7, style: :bold, line_color: "000000"
-      self.txtb update_time.strftime("%H:%I:%M"), 10.15, 8.05, 0.6, 0.2, size: 7, style: :bold, line_color: "000000"
+      self.txtb "#{@data[:update_info][:operator]}:#{@data[:update_info][:authorizer]}", 8.95, 8.05, 0.6, 0.2, size: 7, line_color: "000000", h_pad: 0.05
+      self.txtb update_time.strftime("%m/%d/%y"), 9.55, 8.05, 0.6, 0.2, size: 7, line_color: "000000", h_pad: 0.05
+      self.txtb update_time.strftime("%H:%I:%M"), 10.15, 8.05, 0.6, 0.2, size: 7, line_color: "000000", h_pad: 0.05
 
     end
 
@@ -78,6 +79,26 @@ class AS400::PartSpecPdf < ::VarlandPdf
   end
 
   def print_data
+
+    # Print part name, description, process spec, and application.
+    y = 7.75
+    self.txtb "Part Name".upcase, 0.25, y, 3.5, self.class::PART_NAME_LINE_HEIGHT, style: :bold, fill_color: "333333", color: "ffffff", line_color: "000000", size: 6, h_align: :left, h_pad: 0.05
+    self.txtb "Process Specification".upcase, 3.75, y, 3.5, self.class::PART_NAME_LINE_HEIGHT, style: :bold, fill_color: "333333", color: "ffffff", line_color: "000000", size: 6, h_align: :left, h_pad: 0.05
+    self.txtb "Industry".upcase, 7.25, y, 1.75, self.class::PART_NAME_LINE_HEIGHT, style: :bold, fill_color: "333333", color: "ffffff", line_color: "000000", size: 6, h_align: :left, h_pad: 0.05
+    self.txtb "Sub-Industry".upcase, 9, y, 1.75, self.class::PART_NAME_LINE_HEIGHT, style: :bold, fill_color: "333333", color: "ffffff", line_color: "000000", size: 6, h_align: :left, h_pad: 0.05
+    y -= self.class::PART_NAME_LINE_HEIGHT
+    self.txtb @data[:part_name].join("\n"), 0.25, y, 3.5, self.class::PART_NAME_LINE_HEIGHT * 4, size: 7, h_align: :left, v_align: :top, h_pad: 0.05, v_pad: 0.05, line_color: "000000", print_blank: true
+    self.txtb @data[:process_spec].join("\n"), 3.75, y, 3.5, self.class::PART_NAME_LINE_HEIGHT * 9, size: 7, h_align: :left, v_align: :top, h_pad: 0.05, v_pad: 0.05, line_color: "000000", print_blank: true
+    self.txtb @data[:industry], 7.25, y, 1.75, self.class::PART_NAME_LINE_HEIGHT, size: 7, h_align: :left, h_pad: 0.05, v_align: :center, line_color: "000000", print_blank: true
+    self.txtb @data[:sub_industry], 9, y, 1.75, self.class::PART_NAME_LINE_HEIGHT, size: 7, h_align: :left, h_pad: 0.05, v_align: :center, line_color: "000000", print_blank: true
+    y -= self.class::PART_NAME_LINE_HEIGHT
+    self.txtb "Application".upcase, 7.25, y, 3.5, self.class::PART_NAME_LINE_HEIGHT, style: :bold, fill_color: "333333", color: "ffffff", line_color: "000000", size: 6, h_align: :left, h_pad: 0.05
+    y -= self.class::PART_NAME_LINE_HEIGHT
+    self.txtb @data[:application].join("\n"), 7.25, y, 3.5, self.class::PART_NAME_LINE_HEIGHT * 7, size: 7, h_align: :left, v_align: :top, h_pad: 0.05, v_pad: 0.05, line_color: "000000", print_blank: true
+    y -= self.class::PART_NAME_LINE_HEIGHT * 2
+    self.txtb "Part Description".upcase, 0.25, y, 3.5, self.class::PART_NAME_LINE_HEIGHT, style: :bold, fill_color: "333333", color: "ffffff", line_color: "000000", size: 6, h_align: :left, h_pad: 0.05
+    y -= self.class::PART_NAME_LINE_HEIGHT
+    self.txtb @data[:part_description].join("\n"), 0.25, y, 3.5, self.class::PART_NAME_LINE_HEIGHT * 4, size: 7, h_align: :left, v_align: :top, h_pad: 0.05, v_pad: 0.05, line_color: "000000", print_blank: true
 
   end
 
