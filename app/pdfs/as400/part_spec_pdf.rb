@@ -41,12 +41,14 @@ class AS400::PartSpecPdf < ::VarlandPdf
       badge_x += self.price_badge(x: badge_x, y: 8) + self.class::BADGE_SPACING
       badge_x += self.automatic_pricing_badge(x: badge_x, y: 8) + self.class::BADGE_SPACING
       badge_x += self.inactive_badge(x: badge_x, y: 8) + self.class::BADGE_SPACING
-      badge_x += self.developmental_badge(x: badge_x, y: 8) + self.class::BADGE_SPACING
+      self.developmental_badge(x: badge_x, y: 8)
 
       # Draw update information.
-      self.rect 7.6, 8.25, 2, 0.4
-      self.txtb "Last Update".upcase, 7.6, 8.25, 2, 0.2, fill_color: "000000", color: "ffffff", size: 6, style: bold
-      self.txtb "#{@data[:update_info][:operator]}:#{@data[:update_info][:authorizer]}", 7.6, 8.05, 2, 0.2, size: 8, style: :bold
+      self.txtb "Last Update".upcase, 7.8, 8.25, 1.8, 0.2, fill_color: "000000", color: "ffffff", size: 6, style: :bold, line_color: "000000"
+      update_time = Time.parse(@data[:update_info][:timestamp])
+      self.txtb "#{@data[:update_info][:operator]}:#{@data[:update_info][:authorizer]}", 7.8, 8.05, 0.6, 0.2, size: 7, style: :bold, line_color: "000000"
+      self.txtb update_time.strftime("%m/%d/%y"), 8.4, 8.05, 0.6, 0.2, size: 7, style: :bold, line_color: "000000"
+      self.txtb update_time.strftime("%H:%I:%M"), 9, 8.05, 0.6, 0.2, size: 7, style: :bold, line_color: "000000"
 
     end
 
