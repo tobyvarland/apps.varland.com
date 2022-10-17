@@ -165,23 +165,23 @@ class AS400::PartSpecPdf < ::VarlandPdf
 
     other_properties_y -= self.class::PART_NAME_LINE_HEIGHT
     self.txtb "<u>PRICING INFORMATION</u>", 0.25, other_properties_y, 4, self.class::DEFAULT_LINE_HEIGHT, size: 8, style: :bold, h_align: :left
-    self.txtb("<u>QUOTATION INFORMATION</u>", 2.75, other_properties_y, 4, self.class::DEFAULT_LINE_HEIGHT, size: 8, style: :bold, h_align: :left) unless @data[:quote][:number].nil?
+    self.txtb("<u>QUOTATION INFORMATION</u>", 2.75, other_properties_y, 4, self.class::DEFAULT_LINE_HEIGHT, size: 8, style: :bold, h_align: :left) unless @data[:quote][:number].nil? || @data[:quote][:number].to_i == 0
     other_properties_y -= self.class::PART_NAME_LINE_HEIGHT
     self.txtb "PRICE: <strong><font name='SF Mono' size='7'>$#{@data[:price][:price]}/#{@data[:price][:per].downcase} #{@data[:price][:price_date].nil? ? "" : Date.parse(@data[:price][:price_date]).strftime("(%m/%d/%y)")}</font></strong>", 0.25, other_properties_y, 4, self.class::DEFAULT_LINE_HEIGHT, style: :normal, size: 6, h_align: :left
-    self.txtb("QUOTE #: <strong><font name='SF Mono' size='7'>#{@data[:quote][:number]}</font></strong>", 2.75, other_properties_y, 4, self.class::DEFAULT_LINE_HEIGHT, style: :normal, size: 6, h_align: :left) unless @data[:quote][:number].nil?
+    self.txtb("QUOTE #: <strong><font name='SF Mono' size='7'>#{@data[:quote][:number]}</font></strong>", 2.75, other_properties_y, 4, self.class::DEFAULT_LINE_HEIGHT, style: :normal, size: 6, h_align: :left) unless @data[:quote][:number].nil? || @data[:quote][:number].to_i == 0
     other_properties_y -= self.class::PART_NAME_LINE_HEIGHT
     self.txtb "SETUP: <strong><font name='SF Mono' size='7'>$#{@data[:price][:setup]} #{@data[:price][:setup_date].nil? ? "" : Date.parse(@data[:price][:setup_date]).strftime("(%m/%d/%y)")}</font></strong>", 0.25, other_properties_y, 4, self.class::DEFAULT_LINE_HEIGHT, style: :normal, size: 6, h_align: :left
-    self.txtb("VALID: <strong><font name='SF Mono' size='7'>#{@data[:quote][:valid] ? "YES" : "NO"}</font></strong>", 2.75, other_properties_y, 4, self.class::DEFAULT_LINE_HEIGHT, style: :normal, size: 6, h_align: :left) unless @data[:quote][:number].nil?
+    self.txtb("VALID: <strong><font name='SF Mono' size='7'>#{@data[:quote][:valid] ? "YES" : "NO"}</font></strong>", 2.75, other_properties_y, 4, self.class::DEFAULT_LINE_HEIGHT, style: :normal, size: 6, h_align: :left) unless @data[:quote][:number].nil? || @data[:quote][:number].to_i == 0
     other_properties_y -= self.class::PART_NAME_LINE_HEIGHT
     self.txtb "MINIMUM: <strong><font name='SF Mono' size='7'>$#{@data[:price][:minimum]} #{@data[:price][:minimum_date].nil? ? "" : Date.parse(@data[:price][:minimum_date]).strftime("(%m/%d/%y)")}</font></strong>", 0.25, other_properties_y, 4, self.class::DEFAULT_LINE_HEIGHT, style: :normal, size: 6, h_align: :left
-    self.txtb("EFFECTIVE DATE: <strong><font name='SF Mono' size='7'>#{Date.parse(@data[:quote][:effective_date]).strftime("%m/%d/%y")}</font></strong>", 2.75, other_properties_y, 4, self.class::DEFAULT_LINE_HEIGHT, style: :normal, size: 6, h_align: :left) unless @data[:quote][:number].nil?
+    self.txtb("EFFECTIVE DATE: <strong><font name='SF Mono' size='7'>#{Date.parse(@data[:quote][:effective_date]).strftime("%m/%d/%y")}</font></strong>", 2.75, other_properties_y, 4, self.class::DEFAULT_LINE_HEIGHT, style: :normal, size: 6, h_align: :left) unless @data[:quote][:number].nil? || @data[:quote][:number].to_i == 0
     other_properties_y -= self.class::PART_NAME_LINE_HEIGHT
     self.txtb "DIFFICULTY FACTOR: <strong><font name='SF Mono' size='7'>#{@data[:price][:difficulty_factor]}</font></strong>", 0.25, other_properties_y, 4, self.class::DEFAULT_LINE_HEIGHT, style: :normal, size: 6, h_align: :left
-    self.txtb("PRICE: <strong><font name='SF Mono' size='7'>$#{@data[:quote][:price]}/#{@data[:quote][:per].downcase}</font></strong>", 2.75, other_properties_y, 4, self.class::DEFAULT_LINE_HEIGHT, style: :normal, size: 6, h_align: :left) unless @data[:quote][:number].nil?
+    self.txtb("PRICE: <strong><font name='SF Mono' size='7'>$#{@data[:quote][:price]}/#{@data[:quote][:per].downcase}</font></strong>", 2.75, other_properties_y, 4, self.class::DEFAULT_LINE_HEIGHT, style: :normal, size: 6, h_align: :left) unless @data[:quote][:number].nil? || @data[:quote][:number].to_i == 0
     other_properties_y -= self.class::PART_NAME_LINE_HEIGHT
-    self.txtb("SETUP: <strong><font name='SF Mono' size='7'>$#{@data[:quote][:setup]}</font></strong>", 2.75, other_properties_y, 4, self.class::DEFAULT_LINE_HEIGHT, style: :normal, size: 6, h_align: :left) unless @data[:quote][:number].nil?
+    self.txtb("SETUP: <strong><font name='SF Mono' size='7'>$#{@data[:quote][:setup]}</font></strong>", 2.75, other_properties_y, 4, self.class::DEFAULT_LINE_HEIGHT, style: :normal, size: 6, h_align: :left) unless @data[:quote][:number].nil? || @data[:quote][:number].to_i == 0
     other_properties_y -= self.class::PART_NAME_LINE_HEIGHT
-    self.txtb("MINIMUM: <strong><font name='SF Mono' size='7'>$#{@data[:quote][:minimum]}</font></strong>", 2.75, other_properties_y, 4, self.class::DEFAULT_LINE_HEIGHT, style: :normal, size: 6, h_align: :left) unless @data[:quote][:number].nil?
+    self.txtb("MINIMUM: <strong><font name='SF Mono' size='7'>$#{@data[:quote][:minimum]}</font></strong>", 2.75, other_properties_y, 4, self.class::DEFAULT_LINE_HEIGHT, style: :normal, size: 6, h_align: :left) unless @data[:quote][:number].nil? || @data[:quote][:number].to_i == 0
     other_properties_y -= self.class::PART_NAME_LINE_HEIGHT
 
     unless @data[:remarks].nil? && @data[:review_date].nil?
