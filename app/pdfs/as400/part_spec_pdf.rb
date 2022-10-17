@@ -206,7 +206,7 @@ class AS400::PartSpecPdf < ::VarlandPdf
 
     # Print procedure.
     line_count = @data[:operations].length + 2
-    y = (@format == "1" ? 0.25 : 0.5) + line_count * self.class::DEFAULT_LINE_HEIGHT
+    y = ((@format == "1" || @data[:alternate_procedures].length == 0) ? 0.25 : 0.5) + line_count * self.class::DEFAULT_LINE_HEIGHT
     self.print_procedure y, "PROCEDURE & LOADINGS", "Primary Department", @data[:primary_department], nil, @data[:operations]
 
     # If part has alternate procedures, print.
