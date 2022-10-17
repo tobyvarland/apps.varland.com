@@ -10,7 +10,7 @@ class AS400::PartSpecPdf < ::VarlandPdf
   DEVELOPMENTAL_BADGE_TEXT_COLOR = "ffffff"
   DEFAULT_BADGE_COLOR = "dddddd"
   DEFAULT_BADGE_TEXT_COLOR = "000000"
-  PART_NAME_LINE_HEIGHT = 0.125
+  PART_NAME_LINE_HEIGHT = 0.175
   DEFAULT_LINE_HEIGHT = 0.2
 
   def initialize(customer, process, part, sub, format)
