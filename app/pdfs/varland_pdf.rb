@@ -312,7 +312,7 @@ class VarlandPdf < Prawn::Document
   end
 
   # Draws circle.
-  def draw_circle(x, y, width, options = {})
+  def circ(x, y, width, options = {})
     self.save_current_properties
     line_color = options.fetch(:line_color, self.class::DEFAULT_LINE_COLOR)
     fill_color = options.fetch(:fill_color, nil)

@@ -80,7 +80,11 @@ class VCMS::ProductionController < ApplicationController
   end
 
   def print_part_spec
-    pdf = AS400::PartSpecPdf.new("SMALOG", "EN", "567400P", nil)
+    pdf = AS400::PartSpecPdf.new  params[:customer],
+                                  params[:process],
+                                  params[:part],
+                                  params[:sub],
+                                  params[:format]
     send_data(pdf.render,
               filename: "PartSpec.pdf",
               type: "application/pdf",
