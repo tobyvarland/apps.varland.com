@@ -84,7 +84,7 @@ class VCMS::ProductionController < ApplicationController
                                   params[:process],
                                   params[:part],
                                   params[:sub],
-                                  params[:format]
+                                  params[:fmt]
     send_data(pdf.render,
               filename: "PartSpec.pdf",
               type: "application/pdf",
