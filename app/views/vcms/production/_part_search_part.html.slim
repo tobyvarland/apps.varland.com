@@ -8,9 +8,9 @@ tr.part-search-part
       .fw-500 == fa("file-pdf", text_class: "text-vp-red")
       .ms-1.small = link_to "1st Page".html_safe, vcms_print_part_spec_path(customer: part[:customer_code], process: part[:process_code], part: part[:part], sub: part[:sub], fmt: "1"), target: "_blank"
       .ms-1.small = link_to "Alt Procs".html_safe, vcms_print_part_spec_path(customer: part[:customer_code], process: part[:process_code], part: part[:part], sub: part[:sub], fmt: "H"), target: "_blank"
-      .ms-1.small = link_to "Part Hist".html_safe, vcms_print_part_spec_path(customer: part[:customer_code], process: part[:process_code], part: part[:part], sub: part[:sub], fmt: "S"), target: "_blank"
-      .ms-1.small = link_to "Sales Hist".html_safe, vcms_print_part_spec_path(customer: part[:customer_code], process: part[:process_code], part: part[:part], sub: part[:sub], fmt: "T"), target: "_blank"
-      .ms-1.small = link_to "All Hist".html_safe, vcms_print_part_spec_path(customer: part[:customer_code], process: part[:process_code], part: part[:part], sub: part[:sub], fmt: "L"), target: "_blank"
+      .ms-1.small.d-none = link_to "Part Hist".html_safe, vcms_print_part_spec_path(customer: part[:customer_code], process: part[:process_code], part: part[:part], sub: part[:sub], fmt: "S"), target: "_blank"
+      .ms-1.small.d-none = link_to "Sales Hist".html_safe, vcms_print_part_spec_path(customer: part[:customer_code], process: part[:process_code], part: part[:part], sub: part[:sub], fmt: "T"), target: "_blank"
+      .ms-1.small = link_to "Include History".html_safe, vcms_print_part_spec_path(customer: part[:customer_code], process: part[:process_code], part: part[:part], sub: part[:sub], fmt: "L"), target: "_blank"
     table.table.table-bordered.table-striped.mt-1.small.mb-0
       tbody
         - unless part[:last_used_on].blank?
