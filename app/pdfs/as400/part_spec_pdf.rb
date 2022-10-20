@@ -52,7 +52,7 @@ class AS400::PartSpecPdf < ::VarlandPdf
       self.txtb update_time.strftime("%H:%M:%S"), 10.15, self.page_number.to_i == 1 ? 7.8 : 8.05, 0.6, 0.2, size: 6, line_color: "000000", h_pad: 0.05, line_width: 0.005, font: "SF Mono"
 
       # Draw date/time printed & number pages.
-      self.txtb(timestamp, 0.25, 0.5, 10.5, 0.25, h_align: :left, size: 6, font: self.class::DEFAULT_FONT_FAMILY, v_align: :bottom) unless self.page_count == 1
+      self.txtb(timestamp, 0.25, 0.5, 10.5, 0.25, h_align: :left, size: 6, font: self.class::DEFAULT_FONT_FAMILY, v_align: :bottom)
       self.txtb("Page #{self.page_number} of #{self.page_count}", 0.25, 0.5, 10.5, 0.25, h_align: :right, size: 6, font: self.class::DEFAULT_FONT_FAMILY, v_align: :bottom) unless self.page_count == 1
 
     end
