@@ -2,7 +2,7 @@ class AS400::PartSpecPdf < ::VarlandPdf
 
   PAGE_ORIENTATION = :landscape
   BADGE_SPACING = 0.05
-  VALID_BADGE_BACKGROUND_COLOR = "149911"
+  VALID_BADGE_BACKGROUND_COLOR = "000000"
   VALID_BADGE_TEXT_COLOR = "ffffff"
   INVALID_BADGE_BACKGROUND_COLOR = "f55d3e"
   INVALID_BADGE_TEXT_COLOR = "ffffff"
@@ -35,65 +35,38 @@ class AS400::PartSpecPdf < ::VarlandPdf
     self.print_sales_history_notes
 
     # Print header and title on all pages.
-    self.repeat([1]) do
+    timestamp = Time.current.strftime "%m/%d/%y %-l:%M:%S%P"
+    self.repeat(:all, dynamic: true) do
 
-      # Draw header & logo.
-      self.logo(0.25, 8, 10.5, 0.4, variant: :mark, mono: false, h_align: :left)
+      # Draw logo & title.
+      self.logo(0.25, self.page_number.to_i == 1 ? 8 : 8.25, 10.5, 0.4, variant: :mark, mono: true, h_align: :left)
       keys = [@customer, @process, @part]
       keys << @sub unless @sub.blank?
-      self.txtb("<strong>#{keys.join("</strong> / <strong>")}</strong> <font size='9'>#{@data[:customer_name]}</font>", 0.7, 8, 8.5, 0.25, h_align: :left, style: :normal, size: 14, v_align: :top)
+      self.txtb("<strong>#{keys.join("</strong> / <strong>")}</strong> <font size='9'>#{@data[:customer_name]}</font>", 0.7, self.page_number.to_i == 1 ? 8 : 8.25, 8.5, self.page_number.to_i == 1 ? 0.25 : 0.4, h_align: :left, style: :normal, size: 14, v_align: (self.page_number.to_i == 1 ? :top : :center))
+
+      # Draw update information.
+      self.txtb "Last Update".upcase, 9.05, self.page_number.to_i == 1 ? 8 : 8.25, 1.7, 0.2, fill_color: "333333", color: "ffffff", size: 6, style: :bold, line_color: "000000", line_width: 0.005
+      update_time = Time.parse(@data[:update_info][:timestamp])
+      self.txtb "#{@data[:update_info][:operator]}:#{@data[:update_info][:authorizer]}", 9.05, self.page_number.to_i == 1 ? 7.8 : 8.05, 0.5, 0.2, size: 6, line_color: "000000", h_pad: 0.05, line_width: 0.005, font: "SF Mono"
+      self.txtb update_time.strftime("%m/%d/%y"), 9.55, self.page_number.to_i == 1 ? 7.8 : 8.05, 0.6, 0.2, size: 6, line_color: "000000", h_pad: 0.05, line_width: 0.005, font: "SF Mono"
+      self.txtb update_time.strftime("%H:%M:%S"), 10.15, self.page_number.to_i == 1 ? 7.8 : 8.05, 0.6, 0.2, size: 6, line_color: "000000", h_pad: 0.05, line_width: 0.005, font: "SF Mono"
+
+      # Draw date/time printed & number pages.
+      self.txtb(timestamp, 0.25, 0.5, 10.5, 0.25, h_align: :left, size: 6, font: self.class::DEFAULT_FONT_FAMILY, v_align: :bottom) unless self.page_count == 1
+      self.txtb("Page #{self.page_number} of #{self.page_count}", 0.25, 0.5, 10.5, 0.25, h_align: :right, size: 6, font: self.class::DEFAULT_FONT_FAMILY, v_align: :bottom) unless self.page_count == 1
+
+    end
+
+    # First page specific header.
+    self.repeat([1]) do
+
+      # Draw badges.
       badge_x = 0.7
       badge_x += self.procedure_badge(x: badge_x, y: 7.75) + self.class::BADGE_SPACING
       badge_x += self.price_badge(x: badge_x, y: 7.75) + self.class::BADGE_SPACING
-      #badge_x += self.automatic_pricing_badge(x: badge_x, y: 7.75) + self.class::BADGE_SPACING
       badge_x += self.inactive_badge(x: badge_x, y: 7.75) + self.class::BADGE_SPACING
       self.developmental_badge(x: badge_x, y: 7.75)
 
-      # Draw update information.
-      self.txtb "Last Update".upcase, 9.05, 8, 1.7, 0.2, fill_color: "333333", color: "ffffff", size: 6, style: :bold, line_color: "000000", line_width: 0.005
-      update_time = Time.parse(@data[:update_info][:timestamp])
-      self.txtb "#{@data[:update_info][:operator]}:#{@data[:update_info][:authorizer]}", 9.05, 7.8, 0.5, 0.2, size: 6, line_color: "000000", h_pad: 0.05, line_width: 0.005, font: "SF Mono"
-      self.txtb update_time.strftime("%m/%d/%y"), 9.55, 7.8, 0.6, 0.2, size: 6, line_color: "000000", h_pad: 0.05, line_width: 0.005, font: "SF Mono"
-      self.txtb update_time.strftime("%H:%M:%S"), 10.15, 7.8, 0.6, 0.2, size: 6, line_color: "000000", h_pad: 0.05, line_width: 0.005, font: "SF Mono"
-
-    end
-
-    # Print header and title on all pages.
-    self.repeat(2..self.page_count) do
-
-      # Draw header & logo.
-      self.logo(0.25, 8.25, 10.5, 0.4, variant: :mark, mono: false, h_align: :left)
-      keys = [@customer, @process, @part]
-      keys << @sub unless @sub.blank?
-      self.txtb("<strong>#{keys.join("</strong> / <strong>")}</strong> <font size='9'>#{@data[:customer_name]}</font>", 0.7, 8.25, 8.5, 0.25, h_align: :left, style: :normal, size: 14, v_align: :top)
-      badge_x = 0.7
-      badge_x += self.procedure_badge(x: badge_x, y: 8) + self.class::BADGE_SPACING
-      badge_x += self.price_badge(x: badge_x, y: 8) + self.class::BADGE_SPACING
-      #badge_x += self.automatic_pricing_badge(x: badge_x, y: 10.5) + self.class::BADGE_SPACING
-      badge_x += self.inactive_badge(x: badge_x, y: 8) + self.class::BADGE_SPACING
-      self.developmental_badge(x: badge_x, y: 8)
-
-      # Draw update information.
-      self.txtb "Last Update".upcase, 9.05, 8.25, 1.7, 0.2, fill_color: "333333", color: "ffffff", size: 6, style: :bold, line_color: "000000", line_width: 0.005
-      update_time = Time.parse(@data[:update_info][:timestamp])
-      self.txtb "#{@data[:update_info][:operator]}:#{@data[:update_info][:authorizer]}", 9.05, 8.05, 0.5, 0.2, size: 6, line_color: "000000", h_pad: 0.05, line_width: 0.005, font: "SF Mono"
-      self.txtb update_time.strftime("%m/%d/%y"), 9.55, 8.05, 0.6, 0.2, size: 6, line_color: "000000", h_pad: 0.05, line_width: 0.005, font: "SF Mono"
-      self.txtb update_time.strftime("%H:%M:%S"), 10.15, 8.05, 0.6, 0.2, size: 6, line_color: "000000", h_pad: 0.05, line_width: 0.005, font: "SF Mono"
-
-    end
-
-    # Number pages.
-    if self.page_count > 1
-      string = "<font name='#{self.class::DEFAULT_FONT_FAMILY}'>Page <page> of <total></font>"
-      options = { at: [0.25.in, 0.5.in],
-                  width: 10.5.in,
-                  height: 0.25.in,
-                  align: :right,
-                  size: 6,
-                  start_count_at: 1,
-                  valign: :bottom,
-                  inline_format: true }
-      self.number_pages(string, options)
     end
 
   end
@@ -111,9 +84,7 @@ class AS400::PartSpecPdf < ::VarlandPdf
     return unless @format == "L" || @format == "T"
     start_pages = self.page_count
     self.start_new_page
-    y = 7.75
-    self.txtb "<u>CUSTOMER SALES HISTORY NOTES</u>", 0.25, y, 8, self.class::DEFAULT_LINE_HEIGHT, size: 8, style: :bold, h_align: :left
-    y -= self.class::DEFAULT_LINE_HEIGHT
+    y = 7.75 - self.class::DEFAULT_LINE_HEIGHT
     self.font_size(7.5)
     self.fill_color("000000")
     self.font("SF Mono", style: :normal)
@@ -121,13 +92,15 @@ class AS400::PartSpecPdf < ::VarlandPdf
     @data[:sales_history_notes].each do |note|
       notes << "<font size=\'6\' name=\'Helvetica\''><color rgb=\'555555\'>#{Date.parse(note[:date]).strftime("%m/%d/%y")}:</color></font>\n<strong>#{note[:lines].join("\n")}</strong>"
     end
+    notes << "\n<color rgb=\'555555\'><font name='Helvetica'><em>No notes available.</em></font></color>" if notes.length == 0
     text = notes.join("\n\n")
     column_box([0.25.in, y.in], width: 10.5.in, height: (y - 0.5).in, columns: 2) do
       self.text text, inline_format: true
     end
     end_pages = self.page_count
-    self.repeat((start_pages + 2)..end_pages) do
-      self.txtb "<u>CUSTOMER SALES HISTORY NOTES (continued)</u>", 0.25, 7.75, 8, self.class::DEFAULT_LINE_HEIGHT, size: 8, style: :bold, h_align: :left
+    total_count = end_pages - start_pages
+    self.repeat((start_pages + 1)..end_pages, dynamic: true) do
+      self.txtb "<strong><u>CUSTOMER SALES HISTORY NOTES</u></strong> (Page #{self.page_number - start_pages} of #{total_count})", 0.25, 7.75, 8, self.class::DEFAULT_LINE_HEIGHT, size: 8, style: :normal, h_align: :left
     end
   end
 
@@ -135,9 +108,7 @@ class AS400::PartSpecPdf < ::VarlandPdf
     return unless @format == "L" || @format == "S"
     start_pages = self.page_count
     self.start_new_page
-    y = 7.75
-    self.txtb "<u>PART HISTORY NOTES</u>", 0.25, y, 8, self.class::DEFAULT_LINE_HEIGHT, size: 8, style: :bold, h_align: :left
-    y -= self.class::DEFAULT_LINE_HEIGHT
+    y = 7.75- self.class::DEFAULT_LINE_HEIGHT
     self.font_size(7.5)
     self.fill_color("000000")
     self.font("SF Mono", style: :normal)
@@ -145,13 +116,15 @@ class AS400::PartSpecPdf < ::VarlandPdf
     @data[:part_history_notes].each do |note|
       notes << "<font size=\'6\' name=\'Helvetica\''><color rgb=\'555555\'>#{Date.parse(note[:date]).strftime("%m/%d/%y")} (pg. #{note[:page]}):</color></font>\n<strong>#{note[:lines].join("\n")}</strong>"
     end
+    notes << "\n<color rgb=\'555555\'><font name='Helvetica'><em>No notes available.</em></font></color>" if notes.length == 0
     text = notes.join("\n\n")
     column_box([0.25.in, y.in], width: 10.5.in, height: (y - 0.5).in, columns: 2) do
       self.text text, inline_format: true
     end
     end_pages = self.page_count
-    self.repeat((start_pages + 2)..end_pages) do
-      self.txtb "<u>PART HISTORY NOTES (continued)</u>", 0.25, 7.75, 8, self.class::DEFAULT_LINE_HEIGHT, size: 8, style: :bold, h_align: :left
+    total_count = end_pages - start_pages
+    self.repeat((start_pages + 1)..end_pages, dynamic: true) do
+      self.txtb "<strong><u>PART HISTORY NOTES</u></strong> (Page #{self.page_number - start_pages} of #{total_count})", 0.25, 7.75, 8, self.class::DEFAULT_LINE_HEIGHT, size: 8, style: :normal, h_align: :left
     end
   end
 
@@ -204,7 +177,7 @@ class AS400::PartSpecPdf < ::VarlandPdf
     #self.txtb "<u>PART CALCULATIONS</u>", 2.75, other_properties_y, 4, self.class::DEFAULT_LINE_HEIGHT, size: 8, style: :bold, h_align: :left
     #area_y -= self.class::PART_NAME_LINE_HEIGHT
     self.txtb "AREA: <strong><font name='SF Mono' size='7'><color rgb='#{self.class::HIGHLIGHTED_FIELD_TEXT_COLOR}'>#{@data[:area][:value]} #{@data[:area][:unit] == 'F' ? 'ft' : 'in'}<sup>2</sup>/#{@data[:area][:per] == 'E' ? 'pc' : 'lb'}</color></font></strong>", 3, area_y, 1.375, self.class::PART_NAME_LINE_HEIGHT, style: :normal, size: 6, h_align: :left
-    self.txtb "PC. WEIGHT: <strong><font name='SF Mono' size='7'><color rgb='#{self.class::HIGHLIGHTED_FIELD_TEXT_COLOR}'>#{@data[:piece_weight]} lbs</color></font></strong>", 4.375, area_y, 1.375, self.class::PART_NAME_LINE_HEIGHT, style: :normal, size: 6, h_align: :left
+    self.txtb "PC. WT: <strong><font name='SF Mono' size='7'><color rgb='#{self.class::HIGHLIGHTED_FIELD_TEXT_COLOR}'>#{@data[:piece_weight]} lbs</color></font></strong>", 4.375, area_y, 1.375, self.class::PART_NAME_LINE_HEIGHT, style: :normal, size: 6, h_align: :left
     self.txtb "FT<sup>3</sup>: <strong><font name='SF Mono' size='7'><color rgb='#{self.class::HIGHLIGHTED_FIELD_TEXT_COLOR}'>#{@data[:pounds_per_cubic]} lbs/ft<sup>3</sup></color></font></strong>", 5.75, area_y, 1.375, self.class::PART_NAME_LINE_HEIGHT, style: :normal, size: 6, h_align: :left
     area_y -= self.class::PART_NAME_LINE_HEIGHT * 3
     self.txtb "PCS / LB: <strong><font name='SF Mono' size='7'>#{@data[:pcs_per_lb]}</font></strong>", 3, area_y, 1.375, self.class::PART_NAME_LINE_HEIGHT, style: :normal, size: 6, h_align: :left
@@ -290,7 +263,7 @@ class AS400::PartSpecPdf < ::VarlandPdf
 
     # Print procedure.
     line_count = @data[:operations].length + 2
-    y = ((@format == "1" || @data[:alternate_procedures].length == 0) ? 0.25 : 0.5) + line_count * self.class::DEFAULT_LINE_HEIGHT
+    y = 0.5 + line_count * self.class::DEFAULT_LINE_HEIGHT
     self.print_procedure y, "PROCEDURE & LOADINGS", "Primary Department", @data[:primary_department], nil, @data[:operations]
 
     # If part has alternate procedures, print.
@@ -303,72 +276,6 @@ class AS400::PartSpecPdf < ::VarlandPdf
       end
     end
 
-  end
-
-  def print_procedure_old(y, label, dept_label, dept, valid_badge, operations)
-    thead_options = { color: "ffffff", size: 6, style: :bold, h_pad: 0.05 }
-    td_options = { size: 6, font: "SF Mono", h_pad: 0.05, print_blank: true }
-    line_count = operations.length + 2
-    self.txtb "<u>#{label}</u>", 0.25, y, 8, self.class::DEFAULT_LINE_HEIGHT, h_align: :left, size: 8, style: :bold
-    if dept && valid_badge.nil?
-      self.badge  text: "#{dept_label.upcase}: #{dept}",
-                  x: 8.25,
-                  y: y - ((self.class::DEFAULT_LINE_HEIGHT - 0.15) / 2.0),
-                  color: self.class::DEFAULT_BADGE_COLOR,
-                  height: 0.15,
-                  text_color: self.class::DEFAULT_BADGE_TEXT_COLOR,
-                  x_align: :right
-    end
-    unless valid_badge.nil?
-      self.badge  text: "Dept. #{dept} Procedure: #{(valid_badge ? "Valid" : "Invalid")}",
-                  x: 8.25,
-                  y: y - ((self.class::DEFAULT_LINE_HEIGHT - 0.15) / 2.0),
-                  color: (valid_badge ? self.class::VALID_BADGE_BACKGROUND_COLOR : self.class::INVALID_BADGE_BACKGROUND_COLOR),
-                  height: 0.15,
-                  text_color: (valid_badge ? self.class::VALID_BADGE_TEXT_COLOR : self.class::INVALID_BADGE_TEXT_COLOR),
-                  x_align: :right
-    end
-    y -= self.class::DEFAULT_LINE_HEIGHT
-    self.rect 0.25, y, 5.05, self.class::DEFAULT_LINE_HEIGHT, fill_color: "333333", line_color: "000000", line_width: 0.005
-    self.rect 5.3, y, 2.95, self.class::DEFAULT_LINE_HEIGHT, fill_color: "555555", line_color: "000000", line_width: 0.005
-    self.txtb("Op".upcase, 0.25, y, 0.25, self.class::DEFAULT_LINE_HEIGHT, thead_options)
-    self.txtb("Account".upcase, 0.5, y, 1.5, self.class::DEFAULT_LINE_HEIGHT, thead_options.merge({ h_align: :left }))
-    self.txtb("Code".upcase, 2, y, 0.75, self.class::DEFAULT_LINE_HEIGHT, thead_options.merge({ h_align: :left }))
-    self.txtb("Thickness".upcase, 2.75, y, 0.75, self.class::DEFAULT_LINE_HEIGHT, thead_options.merge({ h_align: :right }))
-    self.txtb("Price".upcase, 3.5, y, 0.6, self.class::DEFAULT_LINE_HEIGHT, thead_options.merge({ h_align: :right }))
-    self.txtb("Setup".upcase, 4.1, y, 0.6, self.class::DEFAULT_LINE_HEIGHT, thead_options.merge({ h_align: :right }))
-    self.txtb("Minimum".upcase, 4.7, y, 0.6, self.class::DEFAULT_LINE_HEIGHT, thead_options.merge({ h_align: :right }))
-    self.txtb("Pounds".upcase, 5.3, y, 0.59, self.class::DEFAULT_LINE_HEIGHT, thead_options)
-    self.txtb("Amps".upcase, 5.89, y, 0.59, self.class::DEFAULT_LINE_HEIGHT, thead_options)
-    self.txtb("Minutes".upcase, 6.48, y, 0.59, self.class::DEFAULT_LINE_HEIGHT, thead_options)
-    self.txtb("RPM".upcase, 7.07, y, 0.59, self.class::DEFAULT_LINE_HEIGHT, thead_options)
-    self.txtb("Volts".upcase, 7.66, y, 0.59, self.class::DEFAULT_LINE_HEIGHT, thead_options)
-    y -= self.class::DEFAULT_LINE_HEIGHT
-    save_y = y
-    alt = true
-    operations.each do |op|
-      self.rect(0.25, y, 8, self.class::DEFAULT_LINE_HEIGHT, fill_color: "dddddd", line_color: nil) if alt
-      self.txtb(op[:letter], 0.25, y, 0.25, self.class::DEFAULT_LINE_HEIGHT, td_options)
-      self.txtb("#{op[:account]}: #{op[:description]}", 0.5, y, 1.5, self.class::DEFAULT_LINE_HEIGHT, td_options.merge({ h_align: :left }))
-      self.txtb(op[:procedure], 2, y, 0.75, self.class::DEFAULT_LINE_HEIGHT, td_options.merge({ h_align: :left }))
-      self.txtb(self.format_number(op[:thickness], decimals: 6), 2.75, y, 0.75, self.class::DEFAULT_LINE_HEIGHT, td_options.merge({ h_align: :right })) if op[:thickness] > 0
-      self.txtb(op[:price], 3.5, y, 0.6, self.class::DEFAULT_LINE_HEIGHT, td_options.merge({ h_align: :right })) if op[:price] > 0
-      self.txtb(self.format_number(op[:setup], decimals: 2), 4.1, y, 0.6, self.class::DEFAULT_LINE_HEIGHT, td_options.merge({ h_align: :right })) if op[:setup] > 0
-      self.txtb(self.format_number(op[:minimum], decimals: 2), 4.7, y, 0.6, self.class::DEFAULT_LINE_HEIGHT, td_options.merge({ h_align: :right })) if op[:minimum] > 0
-      if op[:has_loading]
-        self.txtb(op[:pounds], 5.3, y, 0.59, self.class::DEFAULT_LINE_HEIGHT, td_options) if op[:pounds] > 0
-        self.txtb(op[:amps], 5.89, y, 0.59, self.class::DEFAULT_LINE_HEIGHT, td_options) if op[:amps] > 0
-        self.txtb(op[:minutes], 6.48, y, 0.59, self.class::DEFAULT_LINE_HEIGHT, td_options) if op[:minutes] > 0
-        self.txtb(op[:rpm], 7.07, y, 0.59, self.class::DEFAULT_LINE_HEIGHT, td_options) if op[:rpm] > 0
-        self.txtb(op[:volt_limit], 7.66, y, 0.59, self.class::DEFAULT_LINE_HEIGHT, td_options) if op[:volt_limit] > 0
-      end
-      alt = !alt
-      y -= self.class::DEFAULT_LINE_HEIGHT
-    end
-    self.rect 0.25, save_y, 5.05, self.class::DEFAULT_LINE_HEIGHT * operations.length, line_color: "000000", line_width: 0.005
-    self.rect 5.3, save_y, 2.95, self.class::DEFAULT_LINE_HEIGHT * operations.length, line_color: "000000", line_width: 0.005
-    y -= (self.class::DEFAULT_LINE_HEIGHT / 2)
-    return y
   end
 
   def print_procedure(y, label, dept_label, dept, valid_badge, operations)
@@ -463,17 +370,6 @@ class AS400::PartSpecPdf < ::VarlandPdf
     return self.badge(options)
   end
 
-  def automatic_pricing_badge(options = {})
-    options[:color] = self.class::DEFAULT_BADGE_COLOR
-    options[:text_color] = self.class::DEFAULT_BADGE_TEXT_COLOR
-    if @data[:flags][:automatic_pricing]
-      options[:text] = "Automatic Pricing: Yes"
-    else
-      options[:text] = "Automatic Pricing: No"
-    end
-    return self.badge(options)
-  end
-
   def inactive_badge(options = {})
     return -1 * self.class::BADGE_SPACING unless @data[:flags][:inactive_part]
     options[:color] = self.class::DEFAULT_BADGE_COLOR
@@ -528,89 +424,6 @@ class AS400::PartSpecPdf < ::VarlandPdf
 
   end
 
-  def annual_comparison(y)
-
-    # Define column widths.
-    widths = [1, 0.75]
-    total_width = widths[0] + widths[1] * 2
-
-    # Define starting coordinates.
-    x = 8.25 - widths[0] - widths[1] * 2
-    x1 = x + widths[0]
-    x2 = x1 + widths[1]
-
-    # Print table.
-    self.txtb "<u>ANNUAL COMPARISON</u>", x, y, total_width, self.class::DEFAULT_LINE_HEIGHT, size: 8, style: :bold, h_align: :left
-    y -= self.class::DEFAULT_LINE_HEIGHT
-    self.txtb "YTD".upcase, x1, y, widths[1], self.class::DEFAULT_LINE_HEIGHT, fill_color: "333333", line_color: "000000", color: "ffffff", size: 6, style: :bold, line_width: 0.005
-    self.txtb "Last Year".upcase, x2, y, widths[1], self.class::DEFAULT_LINE_HEIGHT, fill_color: "333333", line_color: "000000", color: "ffffff", size: 6, style: :bold, line_width: 0.005
-    y -= self.class::DEFAULT_LINE_HEIGHT
-    self.rect x, y, total_width, self.class::DEFAULT_LINE_HEIGHT, fill_color: "dddddd", line_color: nil
-    self.txtb "# Orders".upcase, x, y, widths[0], self.class::DEFAULT_LINE_HEIGHT, line_color: "000000", size: 6, style: :bold, line_width: 0.005, h_align: :left, h_pad: 0.05
-    self.txtb self.format_number(@data[:ytd][:orders]), x1, y, widths[1], self.class::DEFAULT_LINE_HEIGHT, line_color: "000000", size: 6, line_width: 0.005, h_align: :right, h_pad: 0.05, font: "SF Mono"
-    self.txtb self.format_number(@data[:last_year][:orders]), x2, y, widths[1], self.class::DEFAULT_LINE_HEIGHT, line_color: "000000", size: 6, line_width: 0.005, h_align: :right, h_pad: 0.05, font: "SF Mono"
-    y -= self.class::DEFAULT_LINE_HEIGHT
-    self.rect x, y, widths[0], 1.75 * self.class::DEFAULT_LINE_HEIGHT, line_width: 0.005
-    self.rect x1, y, widths[1], 1.75 * self.class::DEFAULT_LINE_HEIGHT, line_width: 0.005
-    self.rect x2, y, widths[1], 1.75 * self.class::DEFAULT_LINE_HEIGHT, line_width: 0.005
-    self.txtb "Sales".upcase, x, y, widths[0], self.class::DEFAULT_LINE_HEIGHT, size: 6, style: :bold, line_width: 0.005, h_align: :left, h_pad: 0.05
-    self.txtb "Total".upcase, x, y, widths[0], self.class::DEFAULT_LINE_HEIGHT, size: 6, style: :normal, line_width: 0.005, h_align: :right, h_pad: 0.05
-    self.txtb self.format_number(@data[:ytd][:sales], decimals: 2), x1, y, widths[1], self.class::DEFAULT_LINE_HEIGHT, size: 6, h_align: :right, h_pad: 0.05, font: "SF Mono"
-    self.txtb self.format_number(@data[:last_year][:sales], decimals: 2), x2, y, widths[1], self.class::DEFAULT_LINE_HEIGHT, size: 6, h_align: :right, h_pad: 0.05, font: "SF Mono"
-    y -= self.class::DEFAULT_LINE_HEIGHT * 0.75
-    self.txtb "Avg / Order".upcase, x, y, widths[0], self.class::DEFAULT_LINE_HEIGHT, size: 6, style: :normal, line_width: 0.005, h_align: :right, h_pad: 0.05
-    self.txtb self.format_number(@data[:ytd][:orders] == 0 ? 0 : @data[:ytd][:sales].to_f / @data[:ytd][:orders].to_f, decimals: 2), x1, y, widths[1], self.class::DEFAULT_LINE_HEIGHT, size: 6, h_align: :right, h_pad: 0.05, font: "SF Mono"
-    self.txtb self.format_number(@data[:last_year][:orders] == 0 ? 0 : @data[:last_year][:sales].to_f / @data[:last_year][:orders].to_f, decimals: 2), x2, y, widths[1], self.class::DEFAULT_LINE_HEIGHT, size: 6, h_align: :right, h_pad: 0.05, font: "SF Mono"
-    y -= self.class::DEFAULT_LINE_HEIGHT
-    self.rect x, y, total_width, 1.75 * self.class::DEFAULT_LINE_HEIGHT, fill_color: "dddddd", line_color: nil
-    self.rect x, y, widths[0], 1.75 * self.class::DEFAULT_LINE_HEIGHT, line_width: 0.005
-    self.rect x1, y, widths[1], 1.75 * self.class::DEFAULT_LINE_HEIGHT, line_width: 0.005
-    self.rect x2, y, widths[1], 1.75 * self.class::DEFAULT_LINE_HEIGHT, line_width: 0.005
-    self.txtb "Pieces".upcase, x, y, widths[0], self.class::DEFAULT_LINE_HEIGHT, size: 6, style: :bold, line_width: 0.005, h_align: :left, h_pad: 0.05
-    self.txtb "Total".upcase, x, y, widths[0], self.class::DEFAULT_LINE_HEIGHT, size: 6, style: :normal, line_width: 0.005, h_align: :right, h_pad: 0.05
-    self.txtb self.format_number(@data[:ytd][:pieces], decimals: 0), x1, y, widths[1], self.class::DEFAULT_LINE_HEIGHT, size: 6, h_align: :right, h_pad: 0.05, font: "SF Mono"
-    self.txtb self.format_number(@data[:last_year][:pieces], decimals: 0), x2, y, widths[1], self.class::DEFAULT_LINE_HEIGHT, size: 6, h_align: :right, h_pad: 0.05, font: "SF Mono"
-    y -= self.class::DEFAULT_LINE_HEIGHT * 0.75
-    self.txtb "Avg / Order".upcase, x, y, widths[0], self.class::DEFAULT_LINE_HEIGHT, size: 6, style: :normal, line_width: 0.005, h_align: :right, h_pad: 0.05
-    self.txtb self.format_number(@data[:ytd][:orders] == 0 ? 0 : @data[:ytd][:pieces].to_f / @data[:ytd][:orders].to_f, decimals: 0), x1, y, widths[1], self.class::DEFAULT_LINE_HEIGHT, size: 6, h_align: :right, h_pad: 0.05, font: "SF Mono"
-    self.txtb self.format_number(@data[:last_year][:orders] == 0 ? 0 : @data[:last_year][:pieces].to_f / @data[:last_year][:orders].to_f, decimals: 0), x2, y, widths[1], self.class::DEFAULT_LINE_HEIGHT, size: 6, h_align: :right, h_pad: 0.05, font: "SF Mono"
-    y -= self.class::DEFAULT_LINE_HEIGHT
-    self.rect x, y, widths[0], 1.75 * self.class::DEFAULT_LINE_HEIGHT, line_width: 0.005
-    self.rect x1, y, widths[1], 1.75 * self.class::DEFAULT_LINE_HEIGHT, line_width: 0.005
-    self.rect x2, y, widths[1], 1.75 * self.class::DEFAULT_LINE_HEIGHT, line_width: 0.005
-    self.txtb "Pounds".upcase, x, y, widths[0], self.class::DEFAULT_LINE_HEIGHT, size: 6, style: :bold, line_width: 0.005, h_align: :left, h_pad: 0.05
-    self.txtb "Total".upcase, x, y, widths[0], self.class::DEFAULT_LINE_HEIGHT, size: 6, style: :normal, line_width: 0.005, h_align: :right, h_pad: 0.05
-    self.txtb self.format_number(@data[:ytd][:pounds], decimals: 0), x1, y, widths[1], self.class::DEFAULT_LINE_HEIGHT, size: 6, h_align: :right, h_pad: 0.05, font: "SF Mono"
-    self.txtb self.format_number(@data[:last_year][:pounds], decimals: 0), x2, y, widths[1], self.class::DEFAULT_LINE_HEIGHT, size: 6, h_align: :right, h_pad: 0.05, font: "SF Mono"
-    y -= self.class::DEFAULT_LINE_HEIGHT * 0.75
-    self.txtb "Avg / Order".upcase, x, y, widths[0], self.class::DEFAULT_LINE_HEIGHT, size: 6, style: :normal, line_width: 0.005, h_align: :right, h_pad: 0.05
-    self.txtb self.format_number(@data[:ytd][:orders] == 0 ? 0 : @data[:ytd][:pounds].to_f / @data[:ytd][:orders].to_f, decimals: 0), x1, y, widths[1], self.class::DEFAULT_LINE_HEIGHT, size: 6, h_align: :right, h_pad: 0.05, font: "SF Mono"
-    self.txtb self.format_number(@data[:last_year][:orders] == 0 ? 0 : @data[:last_year][:pounds].to_f / @data[:last_year][:orders].to_f, decimals: 0), x2, y, widths[1], self.class::DEFAULT_LINE_HEIGHT, size: 6, h_align: :right, h_pad: 0.05, font: "SF Mono"
-    y -= self.class::DEFAULT_LINE_HEIGHT
-    self.rect x, y, total_width, 2.5 * self.class::DEFAULT_LINE_HEIGHT, fill_color: "dddddd", line_color: nil
-    self.rect x, y, widths[0], 2.5 * self.class::DEFAULT_LINE_HEIGHT, line_width: 0.005
-    self.rect x1, y, widths[1], 2.5 * self.class::DEFAULT_LINE_HEIGHT, line_width: 0.005
-    self.rect x2, y, widths[1], 2.5 * self.class::DEFAULT_LINE_HEIGHT, line_width: 0.005
-    self.txtb "Rework".upcase, x, y, widths[0], self.class::DEFAULT_LINE_HEIGHT, size: 6, style: :bold, line_width: 0.005, h_align: :left, h_pad: 0.05
-    self.txtb "Cost".upcase, x, y, widths[0], self.class::DEFAULT_LINE_HEIGHT, size: 6, style: :normal, line_width: 0.005, h_align: :right, h_pad: 0.05
-    self.txtb self.format_number(@data[:ytd][:rework], decimals: 2), x1, y, widths[1], self.class::DEFAULT_LINE_HEIGHT, size: 6, h_align: :right, h_pad: 0.05, font: "SF Mono"
-    self.txtb self.format_number(@data[:last_year][:rework], decimals: 2), x2, y, widths[1], self.class::DEFAULT_LINE_HEIGHT, size: 6, h_align: :right, h_pad: 0.05, font: "SF Mono"
-    y -= self.class::DEFAULT_LINE_HEIGHT * 0.75
-    self.txtb "# Orders".upcase, x, y, widths[0], self.class::DEFAULT_LINE_HEIGHT, size: 6, style: :normal, line_width: 0.005, h_align: :right, h_pad: 0.05
-    self.txtb self.format_number(@data[:ytd][:rework_orders], decimals: 0), x1, y, widths[1], self.class::DEFAULT_LINE_HEIGHT, size: 6, h_align: :right, h_pad: 0.05, font: "SF Mono"
-    self.txtb self.format_number(@data[:last_year][:rework_orders], decimals: 0), x2, y, widths[1], self.class::DEFAULT_LINE_HEIGHT, size: 6, h_align: :right, h_pad: 0.05, font: "SF Mono"
-    y -= self.class::DEFAULT_LINE_HEIGHT * 0.75
-    self.txtb "% Sales".upcase, x, y, widths[0], self.class::DEFAULT_LINE_HEIGHT, size: 6, style: :normal, line_width: 0.005, h_align: :right, h_pad: 0.05
-    self.txtb "#{self.format_number(@data[:ytd][:sales] == 0 ? 0 : 100 * @data[:ytd][:rework].to_f / @data[:ytd][:sales].to_f, decimals: 3)}%", x1, y, widths[1], self.class::DEFAULT_LINE_HEIGHT, size: 6, h_align: :right, h_pad: 0.05, font: "SF Mono"
-    self.txtb "#{self.format_number(@data[:last_year][:sales] == 0 ? 0 : 100 * @data[:last_year][:rework].to_f / @data[:last_year][:sales].to_f, decimals: 3)}%", x2, y, widths[1], self.class::DEFAULT_LINE_HEIGHT, size: 6, h_align: :right, h_pad: 0.05, font: "SF Mono"
-    y -= self.class::DEFAULT_LINE_HEIGHT * 0.75
-
-    # Return y position.
-    y -= self.class::DEFAULT_LINE_HEIGHT
-    return y
-
-  end
-
   def recent_order_summary(y)
 
     # Define column widths.
@@ -635,105 +448,6 @@ class AS400::PartSpecPdf < ::VarlandPdf
       self.txtb Date.parse(info[:date]).strftime("%m/%d/%y"), x, y, widths[0], self.class::DEFAULT_LINE_HEIGHT, line_color: "000000", size: 6, line_width: 0.005, h_pad: 0.05, font: "SF Mono"
       self.txtb info[:shop_order], x1, y, widths[1], self.class::DEFAULT_LINE_HEIGHT, line_color: "000000", size: 6, line_width: 0.005, h_pad: 0.05, font: "SF Mono"
       self.txtb self.format_number(info[:order_count]), x2, y, widths[2], self.class::DEFAULT_LINE_HEIGHT, line_color: "000000", size: 6, line_width: 0.005, h_pad: 0.05, font: "SF Mono"
-      alt = !alt
-      y -= self.class::DEFAULT_LINE_HEIGHT
-    end
-
-    # Return y position.
-    y -= self.class::DEFAULT_LINE_HEIGHT
-    return y
-
-  end
-
-  def download_to_tempfile(url)
-    uri = URI.parse(url)
-    Net::HTTP.start(uri.host, uri.port) do |http|
-      resp = http.get(uri.path)
-      file = Tempfile.new('shop_order')
-      file.binmode
-      file.write(resp.body)
-      file.flush
-      file
-    end
-  end
-
-  def draw_photo(y)
-
-    # Attempt to load photo.
-    found_photo = false
-    url, photo = nil
-    ["jpg", "png"].each do |extension|
-      url = "http://so.varland.com/so_photos/#{@data[:control_number]}.#{extension}";
-      photo = self.download_to_tempfile(url)
-      if photo.size >= 10.kilobytes
-        found_photo = true
-        break
-      end
-    end
-
-    # If no photo found, return.
-    return y unless found_photo
-
-    # Draw heading.
-    self.txtb "<u>PART PHOTO</u>", 6.45, y, 1.8, self.class::DEFAULT_LINE_HEIGHT, size: 8, style: :bold, h_align: :left
-    y -= self.class::DEFAULT_LINE_HEIGHT
-
-    # Read image dimensions and calculate rendered size.
-    photo_width, photo_height = FastImage.size(photo.path)
-    photo_ratio = photo_height.to_f / photo_width.to_f
-    render_width = 1.8
-    render_height = photo_ratio * 1.8
-    if render_height > 2
-      render_height = 2
-      render_width = render_height / photo_ratio
-    end
-
-    # Determine position.
-    x_buffer = (1.8 - render_width) * 0.5
-    y_buffer = (2 - render_height) * 0.5
-    photo_x = 6.45 + x_buffer
-    photo_y = y - y_buffer
-
-    # Draw photo centered in box.
-    self.image(photo.path, at: [photo_x.in, photo_y.in], width: render_width.in, height: render_height.in)
-    self.rect photo_x, photo_y, 1.8, 2, line_width: 0.005
-
-    # Return success.
-    y -= (2 + self.class::DEFAULT_LINE_HEIGHT)
-    return y
-
-  end
-
-  def price_history(y)
-
-    # Return if no history.
-    return if @data[:price][:history].length == 0
-
-    # Define column widths.
-    widths = [0.75, 0.75, 0.5, 0.5]
-    total_width = widths[0] + widths[1] + widths[2] + widths[3]
-
-    # Define starting coordinates.
-    x = 8.25 - total_width
-    x1 = x + widths[0]
-    x2 = x1 + widths[1]
-    x3 = x2 + widths[2]
-
-    # Print table.
-    self.txtb "<u>PRICE HISTORY</u>", x, y, total_width, self.class::DEFAULT_LINE_HEIGHT, size: 8, style: :bold, h_align: :left
-    y -= self.class::DEFAULT_LINE_HEIGHT
-    self.txtb "Date".upcase, x, y, widths[0], self.class::DEFAULT_LINE_HEIGHT, fill_color: "333333", line_color: "000000", color: "ffffff", size: 6, style: :bold, line_width: 0.005
-    self.txtb "Price".upcase, x1, y, widths[1], self.class::DEFAULT_LINE_HEIGHT, fill_color: "333333", line_color: "000000", color: "ffffff", size: 6, style: :bold, line_width: 0.005
-    self.txtb "Setup".upcase, x2, y, widths[2], self.class::DEFAULT_LINE_HEIGHT, fill_color: "333333", line_color: "000000", color: "ffffff", size: 6, style: :bold, line_width: 0.005
-    self.txtb "Min".upcase, x3, y, widths[3], self.class::DEFAULT_LINE_HEIGHT, fill_color: "333333", line_color: "000000", color: "ffffff", size: 6, style: :bold, line_width: 0.005
-    alt = true
-    y -= self.class::DEFAULT_LINE_HEIGHT
-    @data[:price][:history].each do |info|
-      self.rect(x, y, total_width, self.class::DEFAULT_LINE_HEIGHT, fill_color: "dddddd", line_color: nil) if alt
-      self.txtb Date.parse(info[:date]).strftime("%m/%d/%y"), x, y, widths[0], self.class::DEFAULT_LINE_HEIGHT, line_color: "000000", size: 6, line_width: 0.005, h_pad: 0.05, font: "SF Mono"
-      self.txtb "$#{info[:price] == 0 ? "–" : info[:price]}/#{info[:per].downcase}", x1, y, widths[1], self.class::DEFAULT_LINE_HEIGHT, line_color: "000000", size: 6, line_width: 0.005, h_pad: 0.05, font: "SF Mono"
-      self.txtb "$#{info[:setup] == 0 ? "–" : info[:setup]}", x2, y, widths[2], self.class::DEFAULT_LINE_HEIGHT, line_color: "000000", size: 6, line_width: 0.005, h_pad: 0.05, font: "SF Mono"
-      self.txtb "$#{info[:minimum] == 0 ? "–" : info[:minimum]}", x3, y, widths[3], self.class::DEFAULT_LINE_HEIGHT, line_color: "000000", size: 6, line_width: 0.005, h_pad: 0.05, font: "SF Mono"
       alt = !alt
       y -= self.class::DEFAULT_LINE_HEIGHT
     end
