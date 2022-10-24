@@ -283,7 +283,7 @@ module ApplicationHelper
       unquoted_term = individual_term
       unquoted_term = individual_term.delete_prefix("'").delete_suffix("'") if individual_term[0] == "'" && individual_term[-1] == "'"
       unquoted_term = individual_term.delete_prefix("\"").delete_suffix("\"") if individual_term[0] == "\"" && individual_term[-1] == "\""
-      string.gsub!(/#{unquoted_term}/i) do |match|
+      string.gsub(/#{unquoted_term}/i) do |match|
         "<mark class=\"search-term\">#{match}</mark>"
       end
     end
