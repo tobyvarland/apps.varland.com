@@ -1,4 +1,4 @@
-class Groov::HCLFeederDrumLow < Groov::Log
+class Groov::HclFeederDrumLow < Groov::Log
 
   # Instance methods.
 
