@@ -20,7 +20,7 @@ class Groov::IAOProfileFinished < Groov::Log
       gas_off_at: self.groov_data[:gas_off],
       profile_ended_at: self.groov_data[:profile_ended],
       switched_to_cooling_profile: (self.groov_data[:used_cooling_profile].to_i == 1 ? "Yes" : "No"),
-      total_gas_usage: "#{self.groov_data[:total_gas_usage].to_i} PSI"
+      total_gas_usage: self.groov_data[:other_oven_gas].to_i == 1 ? "Not Reported Because Both Ovens Running @ Same Time" : "#{self.groov_data[:total_gas_usage].to_i} PSI"
     })
   end
 
