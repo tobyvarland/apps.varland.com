@@ -21,7 +21,7 @@ end
 
 task :load_varland_environment do
   on roles(:app, :db, :web) do
-    #set :default_env, { _CAPISTRANO: false }
+    set :default_env, { path: "$HOME/.nvm/versions/node/v14.21.1/bin:$PATH" }
     puts execute(:printenv)
   end
 end
