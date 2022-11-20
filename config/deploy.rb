@@ -29,7 +29,7 @@ end
 
 #before 'git:wrapper', 'load_varland_environment'
 
-Rake::Task["deploy:compile_assets"].clear_actions
+#Rake::Task["deploy:compile_assets"].clear_actions
 
 ##after :"passenger:restart", :restart_sidekiq
 
