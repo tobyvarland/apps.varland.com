@@ -15,13 +15,14 @@ task :restart_sidekiq do
   end
 end
 
+set :default_env, { path: "/usr/bin:/bin:/usr/sbin:/sbin:Users/varland/.nvm/versions/node/v14.21.1/bin" }
 #set :default_env, {
 #  path: "$HOME/.nvm/versions/node/v14.21.1/bin/" # this will add "$HOME/nodejs/bin" into PATH environment variable during Capistrano command execution
 #}
 
 task :load_varland_environment do
   on roles(:app, :db, :web) do
-    set :default_env, { path: "$HOME/.nvm/versions/node/v14.21.1/bin:$PATH" }
+    set :default_env, { path: "/usr/bin:/bin:/usr/sbin:/sbin:Users/varland/.nvm/versions/node/v14.21.1/bin" }
     puts execute(:printenv)
   end
 end
