@@ -15,6 +15,10 @@ task :restart_sidekiq do
   end
 end
 
+set :default_env, {
+  path: "$HOME/.nvm/versions/node/v14.21.1/bin/" # this will add "$HOME/nodejs/bin" into PATH environment variable during Capistrano command execution
+}
+
 #after :"passenger:restart", :restart_sidekiq
 
 # namespace :nvm do
