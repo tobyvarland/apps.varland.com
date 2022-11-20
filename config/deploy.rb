@@ -15,19 +15,21 @@ task :restart_sidekiq do
   end
 end
 
-set :default_env, { path: "/usr/bin:/bin:/usr/sbin:/sbin:Users/varland/.nvm/versions/node/v14.21.1/bin" }
+#set :default_env, { path: "/usr/bin:/bin:/usr/sbin:/sbin:Users/varland/.nvm/versions/node/v14.21.1/bin" }
 #set :default_env, {
 #  path: "$HOME/.nvm/versions/node/v14.21.1/bin/" # this will add "$HOME/nodejs/bin" into PATH environment variable during Capistrano command execution
 #}
 
-task :load_varland_environment do
-  on roles(:app, :db, :web) do
-    set :default_env, { path: "/usr/bin:/bin:/usr/sbin:/sbin:Users/varland/.nvm/versions/node/v14.21.1/bin" }
-    puts execute(:printenv)
-  end
-end
+#task :load_varland_environment do
+#  on roles(:app, :db, :web) do
+#    set :default_env, { path: "/usr/bin:/bin:/usr/sbin:/sbin:Users/varland/.nvm/versions/node/v14.21.1/bin" }
+#    puts execute(:printenv)
+#  end
+#end
 
-before 'git:wrapper', 'load_varland_environment'
+#before 'git:wrapper', 'load_varland_environment'
+
+Rake::Task["deploy:compile_assets"].clear_actions
 
 ##after :"passenger:restart", :restart_sidekiq
 
