@@ -9,8 +9,9 @@ class Scan::AnalyzeScannedFileJob < ApplicationJob
 
     # Extract text.
     path = ActiveStorage::Blob.service.path_for(doc.scanned_file.blob.key)
-    document = Poppler::Document.new(path)
-    contents = document.map { |page| page.get_text }.join
+    #document = Poppler::Document.new(path)
+    #contents = document.map { |page| page.get_text }.join
+    contents = ""
 
     # Classify document.
     should_delete = false

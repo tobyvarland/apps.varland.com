@@ -63,8 +63,9 @@ class Scan::DocumentsController < ApplicationController
 private
 
   def extract_pdf_contents(path)
-    pdf = Poppler::Document.new(path)
-    return pdf.map { |page| page.get_text }.join
+    #pdf = Poppler::Document.new(path)
+    #return pdf.map { |page| page.get_text }.join
+    return ""
   end
 
   def analyze_uploaded_file(path)
