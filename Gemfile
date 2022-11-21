@@ -35,7 +35,7 @@ end
 
 #gem 'slim'
 gem 'slim-rails'
-gem 'pagy'
+gem 'pagy', '~> 3.13.0'
 gem 'pundit'
 gem 'devise'
 gem 'omniauth', '~> 1.9'

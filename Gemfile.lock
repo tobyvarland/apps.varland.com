@@ -220,8 +220,7 @@ GEM
       oauth2 (>= 1.4, < 3)
       omniauth (>= 1.9, < 3)
     orm_adapter (0.5.0)
-    pagy (5.10.1)
-      activesupport
+    pagy (3.13.0)
     paper_trail (13.0.0)
       activerecord (>= 5.2)
       request_store (~> 1.1)
@@ -408,7 +407,7 @@ DEPENDENCIES
   mysql2 (~> 0.5)
   omniauth (~> 1.9)
   omniauth-google-oauth2
-  pagy
+  pagy (~> 3.13.0)
   paper_trail
   prawn
   puma (~> 5.0)
