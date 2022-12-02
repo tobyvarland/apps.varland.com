@@ -28,6 +28,7 @@ class User < ApplicationRecord
   scope :active, -> { where("is_active IS TRUE") }
   scope :clocked_in, -> { where.not(clocked_in_at: nil).by_number }
   scope :as_foreman, -> { clocked_in.where(is_foreman: true) }
+  scope :for_pp_time_clock, -> { where.not("(employee_number >= 700 AND employee_number <= 799)").where.not("employee_number >= 900") }
 
   # Validations.
   validates :email, :name, :employee_number,

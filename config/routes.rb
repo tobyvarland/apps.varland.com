@@ -142,6 +142,7 @@ Rails.application.routes.draw do
   get "format_report",              to: "pages#format_report",          as: :format_report
   get "foremen_email",              to: "pages#foremen_email",          as: :foremen_email
   get "pp_account_ids",             to: "pages#pp_account_ids",         as: :pp_account_ids
+  post "punch_clock",               to: "users#punch_clock",            as: :punch_clock
 
   # Mount Sidekiq.
   mount Sidekiq::Web => "/sidekiq"
