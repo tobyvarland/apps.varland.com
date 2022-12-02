@@ -9,11 +9,11 @@ class UsersController < ApplicationController
 	end
 
 	def punch_clock
-		user = User.where(email: params[:email]).first
+		user = User.where(employee_number: params[:number]).first
 		if user
 			tstamp = nil
 			if params[:status] == "in"
-				tstamp = params[:clocked_in_at]
+				tstamp = Time.at(params[:clocked_in_at].to_i)
 			end
 			user.update(clocked_in_at: tstamp)
 		end

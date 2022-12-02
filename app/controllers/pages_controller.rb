@@ -112,7 +112,7 @@ class PagesController < ApplicationController
         @clocked_in[:shipping] << employee
       when 600...700
         @clocked_in[:supervisors] << employee
-      when 800...900
+      when 800...999
         @clocked_in[:office] << employee
       when 1500...1600
         @clocked_in[:shipping] << employee
