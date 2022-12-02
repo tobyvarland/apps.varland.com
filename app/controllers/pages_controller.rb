@@ -67,30 +67,60 @@ class PagesController < ApplicationController
 
   end
 
+  def pp_account_ids
+    api_client = PayrollPartnersApiClient.new
+    @employee_ids = api_client.get_account_ids
+  end
+
+  def foremen_email
+    @foremen = User.as_foreman
+    if @foremen.blank?
+      @foremen = User.where(aux_foreman: true)
+    end
+    @email_addresses = ["vmsforemen@gmail.com"]
+    @foremen.each do |f|
+      @email_addresses << f.foreman_email
+    end
+  end
+
   def now
 
-    # Check for existing bearer token.
-    cookie_token = nil
-    if cookies["pp_bearer"] && !cookies["pp_bearer"].blank?
-      puts "🔴 ===> Loading value from cookie: pp_bearer = #{cookies["pp_bearer"]}"
-      cookie_token = cookies["pp_bearer"]
+    # Get and categorize clocked in users.
+    @foremen = []
+    User.as_foreman.each do |employee|
+      @foremen << employee.name
     end
-
-    # Set up client and retrieve data.
-    client = PayrollPartnersApiClient.new
-    unless cookie_token.nil?
-      client.token = cookie_token
-    end
-    @clocked_in = client.get_employees_in_now
-
-    # If data retrieved successfully and didn't already have cookie, set cookie.
-    if !@clocked_in.nil? && cookie_token.nil?
-      cookies["pp_bearer"] = { value: client.token, expires: 59.minutes.from_now }
-      puts "🔴 ===> Setting value of cookie: pp_bearer = #{client.token}"
+    @foremen << "Nobody" if @foremen.empty?
+    employees = User.clocked_in
+    @clocked_in = {
+      platers: [],
+      maintenance: [],
+      lab: [],
+      shipping: [],
+      supervisors: [],
+      office: []
+    }
+    employees.each do |employee|
+      case employee.employee_number
+      when 0...200
+        @clocked_in[:platers] << employee
+      when 200...300
+        @clocked_in[:maintenance] << employee
+      when 300...400
+        @clocked_in[:lab] << employee
+      when 400...500
+        @clocked_in[:shipping] << employee
+      when 600...700
+        @clocked_in[:supervisors] << employee
+      when 800...900
+        @clocked_in[:office] << employee
+      when 1500...1600
+        @clocked_in[:shipping] << employee
+      end
     end
 
     # Define auto refresh interval.
-    @auto_refresh = 300
+    @auto_refresh = 30
 
   end
 

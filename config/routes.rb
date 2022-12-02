@@ -140,6 +140,8 @@ Rails.application.routes.draw do
   get "schedule",                   to: "pages#schedule",               as: :schedule
   post "fin_report",                to: "pages#fin_report",             as: :fin_report
   get "format_report",              to: "pages#format_report",          as: :format_report
+  get "foremen_email",              to: "pages#foremen_email",          as: :foremen_email
+  get "pp_account_ids",             to: "pages#pp_account_ids",         as: :pp_account_ids
 
   # Mount Sidekiq.
   mount Sidekiq::Web => "/sidekiq"

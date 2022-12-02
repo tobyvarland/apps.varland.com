@@ -26,6 +26,8 @@ class User < ApplicationRecord
   # Scopes.
   scope :by_number, -> { order(:employee_number) }
   scope :active, -> { where("is_active IS TRUE") }
+  scope :clocked_in, -> { where.not(clocked_in_at: nil).by_number }
+  scope :as_foreman, -> { clocked_in.where(is_foreman: true) }
 
   # Validations.
   validates :email, :name, :employee_number,
@@ -42,6 +44,12 @@ class User < ApplicationRecord
 
   # Instance methods.
 
+  # Return foreman specific email address or fallback to standard email.
+  def foreman_email
+    return self.foreman_email_address if self.foreman_email_address.present?
+    return self.email
+  end
+
   # Shortcut method for converting object to string.
   def to_s
     return self.name_and_number
@@ -50,12 +58,6 @@ class User < ApplicationRecord
   # Returns user name and number.
   def name_and_number
     "<code class=\"fw-700\">#{self.employee_number}</code> #{self.name}".html_safe
-  end
-
-  # Method to be run after user logs in.
-  def after_login
-    self.create_permissions_if_not_exist
-    self.update_fields_from_system_i
   end
 
   # Creates user permission record if does not exist.
@@ -79,17 +81,34 @@ class User < ApplicationRecord
 
   # Method to create from Google authentication.
   def self.from_google(email:, name:, uid:)
-    system_i = self.system_i_json(email)
-    return nil if system_i.blank? || !system_i[:valid]
-    user_attributes = {
-      uid: uid,
-      name: name,
-      employee_number: system_i[:number],
-      title: system_i[:title],
-      username: system_i[:username],
-      pin: system_i[:pin]
-    }
-    create_with(user_attributes).find_or_create_by!(email: email)
+    user = User.where(email: email).first
+    if user.blank?
+      system_i = self.system_i_json(email)
+      return nil if system_i.blank? || !system_i[:valid]
+      api_client = PayrollPartnersApiClient.new
+      user_attributes = {
+        uid: uid,
+        name: name,
+        employee_number: system_i[:number],
+        title: system_i[:title],
+        username: system_i[:username],
+        pin: system_i[:pin],
+        payroll_account_id: api_client.get_account_id(system_i[:number])
+      }
+      user = User.create(user_attributes)
+    end
+    return user
+    #system_i = self.system_i_json(email)
+    #return nil if system_i.blank? || !system_i[:valid]
+    #user_attributes = {
+    #  uid: uid,
+    #  name: name,
+    #  employee_number: system_i[:number],
+    #  title: system_i[:title],
+    #  username: system_i[:username],
+    #  pin: system_i[:pin]
+    #}
+    #create_with(user_attributes).find_or_create_by!(email: email)
   end
 
   # Method to lookup user information from System i.
