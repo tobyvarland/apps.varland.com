@@ -1,7 +1,7 @@
 class FinancialReportPdf < ::VarlandPdf
 
   PAGE_ORIENTATION = :landscape
-  LINE_HEIGHT = 0.155
+  LINE_HEIGHT = 0.135
 
   def initialize(file)
 
@@ -23,7 +23,7 @@ class FinancialReportPdf < ::VarlandPdf
     self.repeat(:all) do
 
       # Draw title & logo.
-      self.logo(0.25, 8, 10.5, 0.5, variant: :stacked, mono: true, h_align: :right)
+      self.logo(0.25, 8, 10.5, 0.5, variant: :stacked, mono: false, h_align: :right)
       self.txtb("#{@report_title}\n<font size=\"11\">#{@report_month} #{@report_year}</font>", 0.25, 8, 10.5, 0.5, h_align: :left, style: :bold, size: 14)
 
     end
@@ -62,7 +62,7 @@ class FinancialReportPdf < ::VarlandPdf
         current_page = []
       end
       case current_line
-      when 1
+      when 1, 4, 5
         # Ignore
       when 2
         @report_title = line.strip if @report_title.blank?
@@ -72,9 +72,9 @@ class FinancialReportPdf < ::VarlandPdf
           @report_month = matches[1]
           @report_year = matches[2].to_i
         end
-      when 4
+      when 6
         line4 = line #.gsub("\n",'')
-      when 5
+      when 7
         line5 = line #.gsub("\n",'')
         current_page << self.format_column_headers(line4, line5)
       else
@@ -115,6 +115,13 @@ class FinancialReportPdf < ::VarlandPdf
         formatted_line << " "
       else
         formatted_line << byte.chr
+      end
+    end
+    formatted_line = " " if formatted_line.strip  == ".........."
+    negatives = formatted_line.scan(/[\d,]*\.\d+-/)
+    if negatives.length > 0
+      negatives.each do |num|
+        formatted_line.gsub!(num, "<color rgb='ff0000'>#{num}</color>")
       end
     end
     return formatted_line
