@@ -135,7 +135,7 @@ class AS400::ShopOrder < ApplicationRecord
     return fields
   end
 
-  # Retrieces properties from System i.
+  # Retrieves properties from System i.
   def get_from_as400
     return if self.number.blank?
     # return unless self.customer_code.blank?

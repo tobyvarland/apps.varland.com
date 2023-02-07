@@ -115,6 +115,7 @@ class Quality::RejectTagsController < ApplicationController
                                                  :cause_description,
                                                  :department,
                                                  :print_partial_tag,
+                                                 :reason, 
                                                  attachments_attributes: [:id, :name, :description, :file, :_destroy],
                                                  loads_attributes: [:id, :number, :barrel, :station, :_destroy])
     end

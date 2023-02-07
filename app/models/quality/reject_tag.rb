@@ -61,7 +61,8 @@ class Quality::RejectTag < ApplicationRecord
                                         process: self.shop_order.process_code,
                                         part: self.shop_order.part,
                                         sub: self.shop_order.sub,
-                                        note: "Reject Tag #{self.description}: http://apps.varland.com/quality/reject_tags/#{self.slug}")
+                                        note: "Reject Tag #{self.description}: http://apps.varland.com/quality/reject_tags/#{self.slug}", 
+                                        reason: self.reason.to_s)
     return response.is_a?(Net::HTTPSuccess)
   end
 
