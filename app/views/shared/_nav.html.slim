@@ -232,6 +232,11 @@ ruby:
                   search: "external historian groov",
                   external: true,
                   headings: ["External Links"] }
+  nav_links << {  text: "Sales Queries",
+                  url: "http://rails.varland.com/reporting/sales",
+                  search: "graphs",
+                  external: true,
+                  headings: ["Sales"] }
   nav_links.each do |nav|
     nav[:target] = "_self"
     nav[:target] = "_blank" if nav[:external].present? || nav[:other_app].present?
