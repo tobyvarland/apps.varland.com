@@ -5,7 +5,7 @@ class Groov::GroovLog < Groov::Log
   # Returns notification settings. Must be overridden in child class to send email.
   def notification_settings
     groov_recipients = self.parse_groov_recipients
-    groov_recipients << "itdept@varland.com"
+    groov_recipients << "toby.varland@varland.com"
     return {
       enabled: (groov_recipients.length > 0),
       subject: self.notification_subject,

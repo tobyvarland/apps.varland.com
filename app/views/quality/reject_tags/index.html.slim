@@ -13,6 +13,7 @@ ruby:
   table.table.table-striped.table-hover
     thead.table-dark
       th.text-center.w-1 Shop Order
+      th.text-center.w-1 Part Spec
       th.text-center.w-1 Reject Tag #
       th.text-center.w-1 Source
       th.text-center.w-1 Date
@@ -27,6 +28,7 @@ ruby:
       - @reject_tags.each do |reject_tag|
         tr
           td.text-center.align-top = reject_tag.shop_order.number
+          td.text-center.align-top = reject_tag.shop_order.part_spec.join(" / ")
           td.text-center.align-top = reject_tag.number
           td.text-center.align-top = reject_tag.source_description
           td.text-center.align-top = reject_tag.rejected_on.strftime("%m/%d/%Y")
